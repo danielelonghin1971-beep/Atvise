@@ -1,0 +1,6 @@
+Navigation
+##########
+
+This Quick Dynamic generates a navigation bar based on the existing display structure.
+
+The use of this Quick Dynamic is not recommended. Instead, the corresponding object display :ref:`navigation <od_navigation>` should be used.

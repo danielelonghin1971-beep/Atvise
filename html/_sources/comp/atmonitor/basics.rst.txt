@@ -1,0 +1,62 @@
+Basics
+######
+
+.. rubric:: Starting the atvise monitor manually
+
+The atvise monitor is automatically registered as an autostart program by atvise setup. You can start the atvise monitor manually by selecting "Programs-> atvise-> atvise monitor" from the Windows start menu or by directly launching the atmonitor.exe in your atvise installation directory.
+
+.. hint::
+
+    If you want to open the project console and start the atvise server via atvise monitor, it must run as administrator. Users without administrator rights need the necessary permission for the *atserver* service, otherwise it is not possible to use the atvise monitor and project console. Tools like SetACL (https://helgeklein.com/setacl) can be used to define the necessary permissions for users or groups. 
+
+    Using SetACL, the following command must be entered in the Windows command prompt:
+
+    .. code-block:: bat
+
+        SetACL.exe -on "atserver" -ot srv -actn ace -ace "n:domain1\user1;p:full"
+
+    This will give the user the permission to use the atvise server. If the user shall also be able to configure settings, the following commands must be entered:
+
+    .. code-block:: bat
+
+        SetACL.exe -on "path_to_file\atserver.ini" -ot file -actn ace -ace "n:domain1\user1;p:full"
+        SetACL.exe -on "path_to_file\project.ini" -ot file -actn ace -ace "n:domain1\user1;p:full"
+
+.. rubric:: atvise monitor icon
+
+The atvise monitor adds an icon to the Windows system tray. The color of the icon represents the state of the atvise server service:
+
+.. csv-table::
+    :widths: auto
+
+    |monitor_starting|, atvise is starting
+    |monitor_running|, atvise is running
+    |monitor_stopping|, atvise is stopping
+    |monitor_stopped|, atvise is stopped
+
+.. rubric:: Context menu
+
+The context menu of the atvise monitor icon offers you the following functions:
+
+License
+    Opens the license dialog.
+
+Help
+    Opens the atvise documentation.
+
+Community
+    Opens the atvise homepage in your default browser.
+
+Language
+    Change the language of the user interface of the atvise monitor.
+
+Project Console
+    Opens the Project Console.
+
+Quit
+    Quits the atvise monitor (not the atvise server).
+
+.. |monitor_running| image:: images/monitor_running.png
+.. |monitor_starting| image:: images/monitor_starting.png
+.. |monitor_stopped| image:: images/monitor_stopped.png
+.. |monitor_stopping| image:: images/monitor_stopping.png

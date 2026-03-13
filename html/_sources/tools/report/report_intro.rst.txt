@@ -1,0 +1,80 @@
+.. _report_intro:
+
+Introduction
+############
+
+The atvise report allows to evaluate process data of atvise in Microsoft Excel® [1]_. A template is necessary to define which data shall be retrieved. Afterwards, the data is queried from atvise and written to the configured target file. Reports can be automatically generated at definable intervals. Available report formats are XLSX and PDF.
+
+Requirements
+************
+
+- .NET Runtime
+- Excel template
+
+.. attention:: 
+    
+    - The atvise report supports two operating modes (see :ref:`useSelfContainedDotnet<ini_script>`):
+
+        - self-contained (Default) -- The ASP.NET Core Runtime provided by atvise is used.
+        - framework-dependent -- The ASP.NET Core Runtime installed on the system is used. Version 8.0 is required to properly run the atvise report (see install instructions for `Windows <https://learn.microsoft.com/en-us/dotnet/core/install/windows>`_ and `Linux <https://learn.microsoft.com/en-us/dotnet/core/install/linux>`_).
+
+Basics
+******
+
+Installing Microsoft Excel® on a computer is only necessary for creating report templates. It is not required for generating reports. Thus, the atvise report can be used platform independent on all `operating systems supported by atvise scada <https://www.atvise.com/en/products/system-requirements>`_. 
+
+The cross-platform library *Aspose.Cells for .NET* is used to generate XSLX and PDF reports. This library emulates Excel to a great extent. However, there are restrictions to supported functions and PDF generation (refer to https://docs.aspose.com/cells/net/ for further information).
+
+The library receives the data queried from atvise and creates the report based on the Excel template. Therefore, the template must be designed properly in Excel or it may not be possible to correctly insert the queried data.
+Since the behavior of atvise report generally corresponds with Excel, data handling, for the most part, is also analog to Excel. For example, if several datasets are copied to an Excel cell, the result may not be as desired, however, it still may be Excel-compliant (see :ref:`Behavior when inserting data<template_insert>`). 
+
+Moreover, because of platform independence, generated PDFs may not look exactly the same as the corresponding Excel report. However, the PDFs will be displayed the same on all platforms.
+
+.. rubric:: Fonts
+
+It is necessary to correctly install fonts that are used by Excel. The installation depends on the respective platform. Otherwise, the library cannot use the fonts when converting the report into PDF and the *Arial* font is used by default.
+
+- **Windows:**
+
+ Windows fonts must be installed with administrator rights and located under C:\\Windows\\Fonts. If you download cloud fonts directly in Excel, they are only stored for the user under \\<user name>\\AppData\\Local\\Microsoft\\Windows\\Fonts. Thus, these fonts must be installed with administrator rights afterwards. Right-click the respective font to open the context menu and select "Install for all users" to install the font in C:\\Windows\\Fonts.
+
+    .. figure:: images/report_fonts.png
+
+- **Linux:**
+
+ It may be necessary to install the proper Windows fonts on Linux systems to correctly display PDF reports. Copy the respective fonts to *~/.fonts* or */usr/local/share/fonts* (see also https://docs.aspose.com/words/net/installing-truetype-fonts-on-linux/). 
+
+.. hint:: The atvise server must be restarted after installing new fonts.
+
+Overview
+********
+
+.. figure:: images/report_overview.png
+    :scale: 60%
+
+#. Create a :ref:`template<report_template>`
+
+    - XLSX file format
+    - Allows individual designs and using charts and functions for data evaluation
+    - Defines the data that shall be queried using specific :ref:`markups<report_markup>`:
+
+        - Current process values
+        - Historical data
+        - Alarms
+        - Custom metadata
+
+#. Load the template into atvise and query the defined data
+
+    - Via :ref:`Report configurations<report_generate>`
+
+        - Allows to generate reports manually or automatically in definable intervals
+        - :ref:`Object displays<report_objectdisplay>` for configuration are provided 
+
+    - Via script, using :ref:`report functions<report_functions>`
+
+#. Generate the report
+  
+    - Markups of the template are replaced by queried data
+    - The specified reports are created (XLSX, PDF)
+
+.. [1] Microsoft Excel® is a registered trademark of Microsoft Corporation in the United States and/or other countries.

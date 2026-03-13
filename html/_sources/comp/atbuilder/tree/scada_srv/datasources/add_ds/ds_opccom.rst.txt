@@ -1,0 +1,54 @@
+Add OPC COM data source
+#######################
+
+.. figure:: images/add_ds_opccom_1.png
+
+    Add OPC COM data source - General
+
+Name
+    OPC COM data source name. This name will be used as group name in the communication.
+
+Source URL
+    URL to connect to the OPC COM data source - only local data sources are supported! (e.g. ``opcda://localhost/Graybox.Simulator.1``)
+
+Connection status
+    Status information about the connectivity of the data source.
+
+Connected
+    Indicator, whether or not the data source is connected.
+
+Activated
+    Activates or deactivates the data source connection
+
+.. figure:: images/add_ds_opccom_2.png
+
+    Add OPC COM data source - Connection
+
+Canonical datatype precedence
+    Indicator of mirroring data type determination:
+
+    - **true** -- Mirroring will use the canonical data type of the variable (=default)
+    - **false** -- Mirroring will use data type of the actual value
+
+Sampling interval
+    The interval that defines the fastest rate at which the data source should access data. This interval is defined in milliseconds.
+
+    The data source may revise this interval.
+
+    The field "Revised" shows the actual interval used by the data source.
+
+Deadband
+    Defines in which case the data source will send a notification to atvise. The range of the deadband is from 0.0 to 100.0 percent. The deadband will only apply to items of the data source that have a dwEUType property of "Analog" available and their properties "EU Low" and "EU High" are set. The data source will only send a notification if:
+
+    absolute value of (last cached value - current value) > (deadband/100.0) \* (EU high - EU Low)
+
+Connection timeout
+    The timeout for watchdog calls in milliseconds. After one unsuccessful call the connection status to the data source will be set to WatchdogWarning and the timeout will be two times this value for the next call. Mirrored variables are not affected.
+
+    After the second unsuccessful call the connection status to the data source will be set to LostConnection and atvise will try to reconnect to the data source. The status of the mirrored variables will be set to BadServerNotConnected.
+
+    The default value is 1000 milliseconds.
+
+String encoding
+    Encoding schema for strings: (empty = UTF-8) (default), ASCII, Windows-1252, UTF-16, ISO-8859-1, ISO-8859-15.
+

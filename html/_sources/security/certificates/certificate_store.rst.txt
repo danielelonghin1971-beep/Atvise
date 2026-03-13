@@ -1,0 +1,166 @@
+.. _cert_store:
+
+Certificate store
+#################
+
+Certificate stores are required for managing certificates in atvise. Every communication partner, i.e. each server and client application, requires a specific certificate store in the file system. 
+
+.. caution:: 
+  
+  - The *System Certificate Store* of the respective operating system is **not** used for managing certificates in atvise. 
+  - The respective application must have write permissions for the directory to create or move certificates.
+
+Server applications
+*******************
+
+Each server application in atvise must have a dedicated directory in the file system as its certificate store:
+
+    - Windows: <atvise_directory>\\PKI\\<Application>
+    - Linux: /var/lib/atvise/PKI/<Application>
+
+.. list-table:: Certificate store for atvise applications 
+   :header-rows: 1
+   :widths: auto
+   :stub-columns: 1
+
+   * - 
+     - Windows
+     - Linux
+     - Description
+   * - atvise server
+     - | <atvise_directory>\\PKI\\atserver
+       | <atvise_directory>\\PKI\\atserver\\mirror
+       | <atvise_directory>\\PKI\\atserver\\https
+     - | var/lib/atvise/PKI/atserver
+       | var/lib/atvise/PKI/atserver/mirror 
+       | var/lib/atvise/PKI/atserver/https
+     - | In addition to its own OPC UA server certificates, the certificate stores for data sources (\\mirror) and web servers (\\https) are also located in the certificate store of the atvise server.  
+       | The certificate store of the atvise server can be managed via :ref:`Certificate Manager<cert_management_server>`.
+   * - opcuatestserver
+     - <atvise_directory>\\PKI\\opcuatestserver
+     - var/lib/atvise/PKI/opcuatestserver
+     -   
+   * - webmitestserver
+     - --
+     - --
+     - The webmitestserver does not require a certificate store. If a certificate shall be used for the connection, an HTTPS certificate (a PEM file containing the certificate and the private key) is necessary. This can be created, for example, by using the :ref:`Certificate Manager<cert_management_server>` in atvise. It must be passed as command line parameter (*webmitestserver.exe -ssl <port> <certificate path/name>*) when starting the webmitestserver.
+   * - licenseserver
+     - <licenseserver_directory>\\PKI\\licenseserver
+     - <licenseserver_directory>/PKI/licenseserver
+     - 
+
+.. rubric:: User certificates
+
+Each OPC UA server application in atvise has its own user certificate store to manage user certificates received from OPC UA clients:
+
+- Windows: *<atvise_directory>\\PKI\\<Application>\\users*
+- Linux: *var/lib/atvise/PKI/<Application>/users*
+
+The user certificate store of OPC UA server applications does not contain an "own" directory (see directory structure below), since only certificates of clients must be accepted or rejected.
+
+Client applications
+*******************
+
+Each client application in atvise must have a dedicated directory in the file system as its certificate store:
+
+    - Windows: %LOCALAPPDATA%\\atvise\\PKI\\<Application>
+    - Linux: $HOME/.config/atvise/PKI/<Application>
+
+.. list-table:: Certificate store for atvise applications 
+   :header-rows: 1
+   :widths: auto
+   :stub-columns: 1
+
+   * - 
+     - Windows
+     - Linux
+     - Description
+   * - atvise builder 
+     - %LOCALAPPDATA%\\atvise\\PKI\\atbuilder
+     - $HOME/.config/atvise/PKI/atbuilder
+     - The certificate store can be managed directly in the atvise builder (see :ref:`Certificate management - atvise builder<cert_management>`.
+   * - opcua2database
+     - %LOCALAPPDATA%\\atvise\\PKI\\opcua2database
+     - $HOME/.config/atvise/PKI/opcua2database
+     - 
+
+.. rubric:: User certificates
+
+All  OPC UA client applications in atvise share a common user certificate store for loading user certificates and corresponding private keys to authenticate to the OPC UA server:
+
+    - Windows: *%LOCALAPPDATA%\\atvise\\PKI\\users*
+    - Linux: *$HOME/.config/atvise/PKI/users*
+
+The user certificate store of OPC UA client applications does not contain a "trusted" or "rejected" directory (see directory structure below), since no certificates are received from any peer.
+
+.. _cert_store_dir:
+
+Directory structure
+*******************
+
+The directory structure required for the certificate store is automatically created for each atvise application under PKI\\<application>\\: 
+
+.. list-table:: Directory structure for certificate store 
+   :header-rows: 1
+   :widths: auto
+   :stub-columns: 1
+
+   * - Directory
+     - Subdirectory
+     - Content
+     - Description
+     - Administrator tasks
+   * - issuers 
+     - certs
+     - Intermediate and root certificates of certificate authorities
+     - Links the end certificate (of the own application or the peer) to the root certificate. If a certificate chain is not trustworthy, all certificates in the chain must be moved to the "rejected" folder. **Note**: The "issuers" folder is not needed for *\\atserver\\https*, since the entire certificate chain is included in the certificate itself.
+     - Placing the required intermediate and root certificates.
+   * - 
+     - crl
+     - CRLs in DER format with file extension .crl
+     - A CRL (Certificate Revocation List) is a list signed and issued by a certificate authority. It contains the serial numbers of certificates revoked before their expiration date. The CRLs in this folder are used to check whether root or intermediate certificates have been revoked, rendering all subsequent certificates in the respective chain invalid. **Note:** CRLs have a limited validity period. Therefore, they must be updated regularly, since the respective communication partner will abort the connection in case of expired CRLs. The verification of CRLs must be enabled using the :ref:`ignoreIssuerTime<ini_certificates>` entry. 
+     - Download CRLs from certificate authorities regularly and replace them in the directory.
+   * - own
+     - certs
+     - Self-signed certificate or end certificate of a chains
+     - These certificates are used to identify the application when connecting with others.
+     - Ensure that certificates are valid and up-to-date.
+   * - 
+     - private 
+     - Private keys in PEM format
+     - Contains the private key matching the own certificate.
+     - Ensure that the private keys are securely stored and protected against unauthorized access.
+   * - rejected
+     - certs
+     - Rejected certificates from peers.
+     - All certificates from peers are automatically rejected when establishing the initial connection (e.g., the builder certificate :file:`atbuilder@myatviseworkstation.der` in the server certificate store and vice versa). This also applies to certificates from certificate authorities if the chain is stored only in the "issuers" folder.
+     - Move rejected certificates to the "trusted" folder if they are trustworthy. When a root certificate is moved to the "trusted\\certs" directory, the intermediate certificates can be moved to "issuers\\certs" and the end certificate can be deleted, since every end certificate in this chain will be automatically trusted during connection establishment.
+   * - trusted
+     - certs
+     - Trusted certificates from peers
+     - May include certificates that are not automatically trusted (invalid certificates from a certificate authority, self-signed certificates), but were moved here by an administrator. If a root or intermediate certificate is located here, the entire chain from this point forward is trusted too. 
+     - Manually add certificates to trust them. Placing intermediate or root certificates if end certificates in that chain shall be trusted automatically when establish a connection.
+   * - 
+     - crl 
+     - CRLS in DER format with file extension .crl
+     - CRLs (Certificate Revocation Lists) in this directory are used to check if a trusted end, intermediate or root certificate from a certificate authority has been revoked.
+     - Download CRLs from certificate authorities regularly and replace them in the directory.
+
+.. hint:: 
+    
+    - When starting an application, the certificate store is detected in the following order: 
+
+      - Command line parameter */cert_store*
+      - Settings in ini file (if available for the respective application)
+      - Project directory (if available for the respective application)
+      - *Store* entry in :ref:`cert.ini<cert_ini>` file
+      - Default directory
+
+Certificate chains in atvise
+++++++++++++++++++++++++++++
+
+This section describes how certificate chains are handled in atvise, if a peer transmits the end, intermediate and root certificate and none are yet present in the own certificate store. When using the atvise :ref:`certificate management<cert_management>`, certificates are automatically moved to the correct directories upon rejection or acceptance.
+
+- **Trust an end certificate** -- The end certificate is moved to "trusted", the received intermediate and root certificate to "issuers". If a peer attempts to establish the connection with a different end certificate from the same chain, the end certificate is rejected and must be explicitly trusted again.
+- **Trust intermediate certificate** -- The end certificate is deleted, the intermediate certificate is moved to "trusted" and the root certificate to "issuers". If a peer attempts to establish the connection with a different end certificate from the same chain, the end certificate will be trusted automatically. 
+- **Trust root certificate** -- The end certificate is deleted, the intermediate certificate is moved to "issuers", the root certificate to "trusted". Any certificate issued by the root certificate will be automatically trusted when establishing a connection.

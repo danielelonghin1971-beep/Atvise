@@ -1,0 +1,69 @@
+Add atvise connect data source
+##############################
+
+*atvise connect* is an OPC UA server that allows the communication between OPC UA clients and PLCs of different manufacturers. The data of the PLCs is mapped to the OPC UA address space of the *atvise connect* server. OPC UA clients use the OPC UA interface to communicate with *atvise connect* and access the provided data. The PLCs are connected via native protocols. The following PLC types and protocols are supported:
+
+- Siemens SIMATIC S7-300/400/1200/1500 including optimized data block access
+- Rockwell Compact/Control Logix
+- Mitsubishi Melsec Q/QL/FX5
+- BACnet
+- Modbus TCP
+
+The *atvise connect* server is a separate application which can be installed locally or on any server in your network. It is available on all platforms supported by atvise scada. You can download the respective installation package via https://www.atvise.com.
+The installation includes a configuration tool, which allows to set up *atvise connect* and configure connections to your PLCs. Refer to the *atvise connect* help provided by the configuration tool for further information.
+
+General
+*******
+
+.. figure:: images/add_ds_atviseconnect_1.png
+
+    Add Data Source: atvise connect - General
+
+.. include::  ds_opcua.rst
+        :start-after: .. start_general
+        :end-before: .. stop_general
+
+Connection
+**********
+
+.. figure:: images/add_ds_atviseconnect_2.png
+
+    Add Data Source: atvise connect - Connection
+
+.. include::  ds_opcua.rst
+        :start-after: .. start_connection
+        :end-before: .. stop_connection
+
+Licensing Method
+    A license is necessary for using *atvise connect*. There are several license packages available. Connection establishment and configuration depends on the selected license type. 
+
+- **internal** - No additional *atvise connect* license file is necessary for this option. The appropriate entry must be set in your atvise license. As a result, the *atvise server* automatically enables the license when establishing the connection to the *atvise connect* server.
+
+- **standard** - This option requires a separate *atvise connect* license. Request the license via https://www.atvise.com and enable it with the configuration tool. When using this license method, there is no license activation by atvise and the connection is handled and established like a normal OPC UA data source. 
+
+.. hint:: You cannot establish the connection to the data source if no valid license is available. The *Connection status* of the data source will be *NotLicensed*. It will be *LicenseRejected* in case of a communication error during the license activation via atvise.
+
+For more information and a detailed list of license packages, please contact your local distributor or visutec@bachmann.info.
+
+Security
+********
+
+.. figure:: images/add_ds_atviseconnect_3.png
+
+.. include::  ds_opcua.rst
+        :start-after: .. start_security
+        :end-before: .. stop_security
+
+
+Authentication
+**************
+
+.. figure:: images/add_ds_atviseconnect_4.png
+
+.. include::  ds_opcua.rst
+        :start-after: .. start_authentication1
+        :end-before: .. stop_authentication1
+
+.. include::  ds_opcua.rst
+        :start-after: .. start_authentication2
+        :end-before: .. stop_authentication2

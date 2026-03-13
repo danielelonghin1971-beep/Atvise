@@ -1,0 +1,101 @@
+Mirror alarms considering access control and user mapping
+#########################################################
+
+This chapter describes how to :ref:`mirror alarms<alarm_mirroring>` and configure :ref:`access control<access_control_intro>` as well as :ref:`user mapping<user_mapping>` accordingly. For this use case, a second atvise server is added as data source "ds_atvise" to the project (refer to :ref:`Add data sources<add_datasource>` for further information).
+
+.. rubric:: Requirements
+
+A sufficient atvise license is necessary to follow this tutorial. If both atvise servers are operated on one computer, an atvise license with "maxservers >= 2" is required. Otherwise, the second atvise server must be operated on another computer with a separate atvise license.
+
+Data source configuration
+*************************
+
+Open the "Authentication" tab in the data source settings to define the main connection to "ds_atvise". In this step, default authentication is set to *Use main connection*. 
+
+.. figure:: images/mirroring_ds_settings.png
+
+Now you can browse the data source: 
+
+.. figure:: images/mirroring_ds_browse.png
+
+Configuring "ds_atvise"
+***********************
+
+.. rubric:: Nodes 
+
+The following nodes and alarm configurations are created on "ds_atvise":
+
+- ALARMS/InternalMalfunction -- Boolean, *true* triggers the alarm.
+- ALARMS/MaxLimit -- Int32, values > 100 trigger the alarm.
+
+.. figure:: images/mirroring_ds_nodes.png 
+
+.. rubric:: Users
+
+The user "ds_u1" is created and assigned to group "ds_g1". This is necessary for setting up the user mapping in a later step. The user needs the access right *OPC UA server (Engineering)* (see :ref:`Editing user information<user_settings>`). Open the access control settings (:menuselection:`Access Control --> Assign Access Rights...`) to assign the group the necessary rights for acknowledging alarms. 
+
+.. figure:: images/mirroring_ds_ac.png 
+    
+Configuring the main project
+****************************
+
+.. rubric:: Mirroring nodes
+
+The nodes of "ds_atvise" are mirrored to nodes in the main project:
+
+- testAlarm -- Mirroring input (absolute), Data source: ds_atvise, Namespace: 1, Type: String, Address: AGENT.OBJECTS.ALARMS.InternalMalfunction
+- testAlarm2 -- Mirroring input (absolute), Data source: ds_atvise, Namespace: 1, Type: String, Address: AGENT.OBJECTS.ALARMS.MaxLimit
+
+.. figure:: images/mirroring_add.png 
+
+.. rubric:: Alarm mirrorring
+
+The data source "ds_atvise" must be added to :treeselection:`Servers --> My Server --> Alarming --> Mirroring --> Sources` to enable the alarm mirroring for this data source. 
+
+.. figure:: images/mirroring_add_ds.png
+
+    Add data source
+
+.. figure:: images/mirroring_enable.png
+
+    Enable alarm mirroring
+
+.. rubric:: Access Control
+
+The users "u1" and "u2" are created in the main project and added to the respective group "g1" and "g2". Both users need the access right *Visualization* (see :ref:`Editing user information<user_settings>`). Moreover, it is necessary to set the rights to display and acknowledge mirrored alarms for users that are not project administrators:
+
+- System function "Data sources"
+
+    - Group "g1": Rights "Acknowledge alarms" & "Remote Alarms"
+    - Group "g2": Rights "Acknowledge alarms" & "Remote Alarms"
+
+.. figure:: images/mirroring_ac.png
+
+.. rubric:: Visualization
+
+Open the visualization and log in with the respective user. Both users can display and acknowledge mirrored alarms of "ds_atvise" in the alarm list. Since both users access the data source via the main connection (see data source configuration at the beginning), alarms are acknowledged by the user "ds_atvise/root".
+
+.. figure:: images/mirroring_visu_ack1.png
+
+    Acknowledging alarms with user "u1"
+
+
+.. figure:: images/mirroring_visu_ack2.png
+
+    Acknowledging alarms with user "u2"
+
+.. rubric:: User mapping
+
+User mapping can be enabled to improve security. In this case, accessing the data source or acknowledging alarms is only possible if the user of the main project is mapped to a data source user with sufficient rights. Open the data source settings of "ds_atvise" and go to the "Authentication" tab for configuring User Mapping.
+
+.. figure:: images/mirroring_usermapping.png
+
+Default authentication is set to "Anonymous". User "u1" is mapped to the data source user "ds_u1" which has sufficient rights for acknowledging alarms. User "u2" is mapped to "ds_u2". Since "ds_u2" does not exist, "u2" cannot acknowledge mirrored alarms anymore. This is shown via a corresponding notification in the visualization. 
+
+.. figure:: images/mirroring_visu_ack_map1.png
+
+    Acknowledging alarms with "u1" is possible
+
+.. figure:: images/mirroring_visu_ack_map2.png
+
+    "u2" has insufficient rights for acknowledging alarms

@@ -1,0 +1,20 @@
+Disk Space Monitoring
+#####################
+
+Allows monitoring the disk space. You can set thresholds for the history, swapin, backup and restore directories which are checked in defined intervals.
+
+- **threshold_historydir_warning** (*historydir warning from (%)*) -- Used disk space in % (of the drive the history directory is located on) when *Warning* threshold is reached (default: 70)
+- **threshold_historydir_critical** (*historydir critical from (%)*) -- Used disk space in % (of the drive the history directory is located on) when *Critical* threshold is reached (default: 90)
+- **threshold_swapin_warning** (*swapin warning from (%)*) -- Used disk space in % (of the drive the swapin directory is located on) when *Warning* threshold is reached  (default: 70) 
+- **threshold_swapin_critical** (*swapin critical from (%)*) -- Used disk space in % (of the drive the swapin directory is located on) when *Critical* threshold is reached (default: 90)
+- **threshold_backup_warning** (*backup warning from (%)*) -- Used disk space in % (of the drive the backup directory is located on) when *Warning* threshold is reached (default: 70)
+- **threshold_backup_critical** (*backup critical from (%)*) -- Used disk space in % (of the drive the backup directory is located on) when *Critical* threshold is reached (default: 90) 
+- **threshold_restore_warning** (*restore warning from (%)*) -- Used disk space in % (of the drive the restore directory is located on) when *Warning* threshold is reached (default: 70)
+- **threshold_restore_critical** (*restore critical from (%)*) -- Used disk space in % (of the drive the restore directory is located on) when *Critical* threshold is reached (default: 90)
+- **interval** (*checking interval (min)*) -- Defines the interval between checking the disk space (default: 5)
+- **config_node** (*configuration node*) -- Address where the structure for the configuration is created (default: SYSTEM.INFORMATION.DIAGNOSTICS.DirectoryMonitoringConfig)
+- **active** (*active*) -- Enables the disk space monitoring
+
+.. hint:: To use the quick dynamic, the configuration structure must be created. Therefore, it is necessary to open the display with the included quick dynamic in a browser once by a user with sufficient access rights (see :ref:`atvise builder > Menu > Access control > Information & notes - Visualization<ac_visualization>` for further information.
+
+When the structure is created, the disk space monitoring can be enabled and the disk space is checked at the specified intervals and the properties *exceeded_warning* and *exceeded_critical* are updated according to the respective thresholds.

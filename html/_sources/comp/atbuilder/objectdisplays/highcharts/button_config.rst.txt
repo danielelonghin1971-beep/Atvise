@@ -1,0 +1,30 @@
+Configuration Selector
+######################
+
+This display will be used to change the configuration of the chart.
+
+This display can be used together with the "highcarts" display. It contains a combobox for setting the desired configuration.
+
+.. rubric:: Parameters
+
+The following parameters are available:
+
+- **chart name** -- Unique name of the chart instance (default: trend1)
+- **font color** -- Color which will be applied to the labels (default: global parameter atvFontColor (advanced), #000000 (standard))
+- **necessary right for export** -- Necessary right for export
+
+Appearance:
+
+- :advstyle:`Advanced` **border color** -- Defines the border color for the display (default: global parameter atvBorderColor)
+- **sort configurations by name** -- If true, configurations are sorted in alphabetical order. However, the *autosave* configuration is always first in the list (default: true)
+- **load configurations by selection** -- Defines if a configuration is loaded when selected in the combobox or a confirmation via |load| button is necessary (default: false)
+
+Options:
+
+- **zoom type** -- The zoom behavior (*x axis*, *y axis* or *xy axis*) when an area in the highchart is selected via left mouse click (default: x axis)
+
+.. rubric:: Examples
+
+Create a display and add a trend display and this display by drag & drop. Set the desired chartname on both displays, they have to be identical.
+
+.. |load| image:: ../../images/load_config.png

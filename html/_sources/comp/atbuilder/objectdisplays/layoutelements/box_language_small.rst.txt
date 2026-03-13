@@ -1,0 +1,31 @@
+Language Box (178x65)
+######################
+
+This display shows the current language and contains a button for changing the language.
+
+.. rubric:: Parameters
+
+This control has the following generic parameters:
+
+- **background color** -- Background color of language box (default: global parameter atvFillColor)
+
+Font:
+
+- **font family** -- Font family which will be applied to text and the button's label (default: Arial)
+- **font size** -- Font size which will be applied to text and the button's label (default: 18)
+- **font color** -- Color which will be applied to text and the button's label (default: global parameter atvFontColor)
+
+Appearance:
+
+- **symbol** -- Symbol to be shown (default: SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Symbols.language)
+- **symbol color** -- Color of the symbol to be used (default: global parameter atvSymbolColor)
+- **context menu style** -- Style settings for the context menu in JSON format
+
+Context menu:
+
+- **font family** -- Font family which will be applied to texts of the context menu (default: Arial)
+- **font size** -- Font size which will be applied to texts of the context menu (default: 18)
+- **font color** -- Color which will be applied to texts of the context menu (default: global parameter atvFontColor2)
+- **symbol color hover** -- Symbol color at mouseover (default: global parameter atvFontColor)
+- **background color** -- Background color of context menu's option elements (default: global parameter atvFillColor2)
+- **hover color** -- Background color of context menu's option elements at mouseover (default: global parameter atvFillColor)

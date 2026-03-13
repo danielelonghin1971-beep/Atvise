@@ -1,0 +1,68 @@
+Legend Table
+############
+
+The legend gives the following information about the data shown in the chart:
+
+- Name
+- Address
+- Aggregate
+- Axis
+- Value
+- Marker 1 x-value
+- Marker 2 x-value
+- Delta x-value
+- Marker 1 y-value
+- Marker 2 y-value
+- Delta y-value
+- Type
+- Visibility
+- Color
+- Settings
+
+Some of the columns are turned off (invisible) in the standard configuration, but can be activated within the parameters.
+
+The visibility of the data and the color of the line can be set directly in the table of the legend.
+
+.. rubric:: Parameters
+
+The following common Parameters exists:
+
+- **chart name** -- Unique name of the chart instance (default: trend1)
+- **necessary right** -- The user must have the respective right
+- **date time format** -- Format of the measured value on the x-axis (default: %Y-%m-%d %H:%M:%S)
+- **date time delta format** -- Format of the time delta of the measured values on the x-axis (default: &H:%M:%S)
+- **legend update interval (min. 100ms)** -- Defines the update interval for values displayed in the legend. Intervals under 1 second may affect the operability (default: 1000)
+
+Parameters for columns: 
+
+In addition to the above-mentioned columns, there is also the possibility of configuring the following individual parameters:
+
+- **name** -- Custom column name 
+- **visibility** -- Visibility of the column (Default: true (Name), true (Address), true (Aggregate), false (Axis), true (Value), true (Marker 1 x-value), true (Marker 2 x-value), false (Delta x-value), true (Marker 1 y-value), true (Marker 2 y-value), false (Delta y-value), true (Type), true (Visibility), true (Color), true (Settings))
+- **width** -- Column width (Default: 250 (Name), 350 (Address), 100 (Aggregate), 65 (Axis), 65 (Value), 140 (Marker 1 x-value), 140 (Marker 2 x-value), 100 (Delta x-value), 100 (Marker 1 y-value), 100 (Marker 2 y-value), 100 (Delta y-value), 60 (Type), 30 (Visibility), 30 (Color), 30 (Settings))
+
+Settings:
+
+- **node entry path** -- Defines the entry path for the tree view in the configuration dialog (default: AGENT.OBJECTS).
+
+Appearance:
+
+- **table header fill color** -- Background color for the table header (default: #878787)
+- **table footer fill color** -- Background color for the table footer; (default: #4f4f4f)
+- **highlight fill color** -- Color for highlighting (default: #b7b7b7)
+- **highlight selected color** -- Color for selection (default: #d0d0d0)
+- **show full node address names** -- Defines if full address names or short address names shall be displayed in the legend (default: true)
+
+Font:
+
+- **table header font color** -- Font color in the table header (default: #e5e5e5)
+- **table footer font color** -- Font color in the table footer (default: #e5e5e5)
+
+Subdisplay:
+
+- **dialog for color picker** -- Opens the dialog for picking a color (default: "color picker" object display)
+- **dialog for options** -- Opens the configuration dialog (default: "configuration - top display" object display)
+
+.. rubric:: Example
+
+Create a display and add this display together with the "highcharts" display by drag & drop. Set the name of the chart instance as value for the parameter "chart name".

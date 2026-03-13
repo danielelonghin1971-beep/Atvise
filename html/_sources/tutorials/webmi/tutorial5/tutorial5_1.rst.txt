@@ -1,0 +1,49 @@
+5.1 Using predefined controls
+##############################
+
+In this section we will take a look at how to use predefined controls to create dynamic elements.
+
+.. rubric:: 5.1.1 Bar control
+
+1. Create and open a display "TestDisplay2"  as described in section 3.1.
+
+2. In the bottom area of the graphics editor you can see a selection of predefined controls. Drag & drop the "Bar vertical" control into your drawing area.
+
+3. On the right side, you can see a list of all parameters of the referenced control. Select the "VariableNumber" data variable from the DemoServer as the base address for this control by using the |pointpointpoint| selector.
+
+4. The control is now fully operative; you can also change the other parameters if you want to.
+
+.. figure:: images/predefined_controls_add_scale.png
+
+    Adding a bar control
+
+.. rubric:: 5.1.2 Increment control
+
+1. Drag & drop a "Button Increment/Decrement" control into your drawing area.
+
+2. Select the "VariableNumber" data variable as the base address for this control by using the |pointpointpoint| selector.
+
+3. Enter "10" as the step. Now the value of the base will be increased by 10 every time you click on the button.
+
+.. figure:: /common_images/predefined_controls_add_increase.png
+
+    Adding an increment control
+
+.. hint:: You can also change other parameters if you want to. Mandatory parameters are highlighted in red, all other parameters are optional. For example, to adjust the font size of the control, change the value of the parameter "Font -> size".
+
+.. rubric:: 5.1.3 Decrement control
+
+1. Copy & paste the increment control.
+
+2. Choose -10 instead of 10 for the "step" parameter.
+
+.. figure:: /common_images/predefined_controls_add_decrease.png
+
+Adding a decrement control
+
+.. rubric:: 5.1.4 Opening the browser and testing the controls
+
+Save the display by clicking |save_button| and generate the visualization by choosing :menuselection:`Guided Actions --> Distribute to Webserver --> DemoServer`. Then start the web browser and open "TestDisplay2" (as described in section 4) to view the predefined controls you have created in this section. Try setting the value of "VariableNumber" by using your increment and decrement buttons. Now the bar should change according to the value of "VariableNumber".
+
+.. |pointpointpoint| image:: /common_images/pointpointpoint.png
+.. |save_button| image:: /common_images/save_button.png

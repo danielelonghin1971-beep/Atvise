@@ -1,0 +1,110 @@
+6 Object-oriented engineering
+#############################
+
+In this section we will take a look at object-oriented engineering. Our goal in the following example is to design a type which displays and controls the state of electric lights in an office building. For this purpose, we will handle the following variables:
+
+- Light intensity (0-100, display and set the value)
+- Internal malfunction (handle alarm states)
+
+If you browse in the "TestServer" you will find the counterparts to the objects we want to create:
+
+.. figure:: images/object_structure_other_server.png
+
+Object structure on the other server
+
+.. rubric:: 6.1 Adding a new object type
+
+1. Right-click on "Object Types" in the tree structure.
+
+2. Choose "Add Node -> Object Type".
+
+3. In the dialog which appears you can now type in a name for the new type; for our example we will choose "Light".
+
+4. After acknowledging the type name by clicking the "OK" button, we can see the object type node "Light" in the object types list.
+
+.. figure:: images/add_objecttype.png
+
+    Adding a new object type
+
+.. rubric:: 6.2 Adding data structure
+
+To get a clear data structure, we will add folders to the new type.
+
+1. Right-click on the "Light" type.
+
+2. Choose "Add Node-> Folder" from the menu which appears.
+
+3. Name the folder "ALARMS" (contains data variables with alarm configurations) and add it to the "Light" type by clicking "OK".
+
+4. Choose "Add Node-> Folder" and add the folder "COMMANDS" (contains data variables which are mirrored to another server) to the "Light" type.
+
+5. Choose "Add Node -> Folder" and add the folder "SIGNALS" (contains data variables which are mirrored from another server) to the "Light" type.
+
+.. figure:: images/add_folders.png
+
+    Add folders to the type to obtain a clear data structure
+
+.. rubric:: 6.3 Adding relatively-mirrored variables to the object type
+
+In the next step, we will add relatively-mirrored variables to these folders.
+
+1. First, we have to browse to the server that we want to use for mirroring. Choose the "TestServer" from the server list and open the browsing window as described in section 5.3.
+
+2. In the node tree which appears, browse to "Objects". There you will find "L001 - L005", the complements of the objects we want to add to our local server.
+
+3. Open the structure of one of these objects, right-click on "LightIntensity" and choose "Copy" from the menu.
+
+.. figure:: images/copy_relative_variable.png
+
+    Copying & pasting a data variable relatively into the object type
+
+4. Then go back to the "Object Types" tab, right-click on the "Light -> COMMANDS" folder and choose "Paste & mirror-> Output -> node" from the menu.
+
+.. figure:: images/copy_relative_variable2.png
+
+    Copying & pasting a data variable relatively into the object type
+
+5. In the dialog which appears, we have to select the start index of the browse path. "L001" is the base node of the object, so we have to choose this node. It is already selected in the list, so we can apply the dialog by clicking "OK".
+
+6. Apply the dialog to create the mirrored variable.
+
+.. figure:: images/copy_relative_variable3.png
+
+    Copying & pasting a data variable relatively into the object type
+
+7. Paste the "LightIntensity" variable from the other server into the SIGNALS folder as input as described in steps 3 - 6 above.
+
+8. Paste the "InternalMalfunction" variable from the other server into the ALARMS folder as input as described in steps 3 - 6 above.
+
+The structure of the "Light" type should now look like this:
+
+.. figure:: images/type_structure.png
+
+    Object type structure with three relatively-mirrored data variables
+
+.. hint:: If you right-click on one of the new variables and open the "ModellingRule" submenu, you will notice that "New" is checked (default modellingrule for data variables). This means that for every instance of this type, the variables will be added as a new node.
+
+.. rubric:: 6.4 Creating object instances
+
+In this step we will create five instances of our object type.
+
+1. Right-click on "Servers -> My Server -> Objects" and choose "Add Node-> Object". In the submenu which appears, you will see an entry for our "Light" type. Click on the entry to open the dialog for creating object instances.
+
+2. Our goal is to create five numbered object instances, so we click on "Numbered" to the left in the dialog.
+
+3. To get clear object names, we replace "NewNode_%1" with "OfficeLight_%1". The "%1" is a wild card and will be replaced by 001-005.
+
+4. The default start index is set to "001", so we do not need to change this value.
+
+5. We want to instantiate five objects, so we set the object count to 5.
+
+6.
+    .. hint:: In the last section, we added relatively-mirrored variables to the type, so we have to add a "RelMirrorBase" to the instances to make the mirroring work. The individual object mirror base plus the relative mirror part of the data variable give the full mirror path of this variable.
+
+    Activate the check box and click on the select button. Now choose "Testserver -> Objects -> L001" from the menu which appears and click "OK". Then you have to change "L001" into "L%1" as in Step 3.
+
+7. Now that all the required information is typed in, you can apply the current dialog by clicking "OK". Afterwards, the five mirrored objects are added to your local server structure.
+
+.. figure:: images/create_instances.png
+
+    Creating object instances

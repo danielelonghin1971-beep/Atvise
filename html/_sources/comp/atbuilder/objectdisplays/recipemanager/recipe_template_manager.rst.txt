@@ -1,0 +1,38 @@
+.. _od_recipe_template_manager:
+
+Recipe Template Manager
+#######################
+
+Overview and management display for recipe templates. See also chapter :ref:`atvise visualization > Recipe management - Manage recipe templates<recipe_template_manager>`.
+
+.. rubric:: Parameters
+
+General:
+
+- **config node** -- Node for configuration of templates and recipes (Default: AGENT.OBJECTS.recipes)
+
+Columns:
+
+- **configuration for template** -- Global parameter for column configuration (default: atvObjectDisplays.RecipeManager.recipe_template_manager.TemplateColumns)
+- **configuration for parameter** -- Global parameter for column configuration (default: atvObjectDisplays.RecipeManager.recipe_template_manager.ParameterColumns)
+
+Table:
+
+- **table ID templates** -- ID of the table used for templates (Default: atvise_template)
+- **table ID parameters** -- ID of the table used for recipes (Default: atvise_parameter)
+- **table header height** -- Height of the table header (Default: 35)
+- **table row height** -- Height of the table row (Default: 40)
+
+Font:
+
+- **font family** -- Font family (Default: Arial)
+- **font color** -- Font color (Default: SYSTEM.GLOBALS.atvFontColor)
+- **table header font size** -- Font size of table header (Default: 12)
+- **table row font size** -- Font size of table row (Default: 18)
+- **table detail font size** -- Font size (Default: 12)
+- **table footer font size** -- Font size table footer (Default: 12)
+
+Appearance:
+
+- **border color** -- Border color (Default: SYSTEM.GLOBALS.atvBorderColor)
+- **fill color** -- Fill color (Default: SYSTEM.GLOBALS.atvFillColor)

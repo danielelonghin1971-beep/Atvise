@@ -1,0 +1,209 @@
+.. _cert_management:
+
+Certificate management
+######################
+
+Certificates in atvise can be managed via graphical user interface (depending on the application) or the atpkicli.exe command line tool.
+
+atvise builder
+**************
+
+Certificate management in atvise builder can be opened for connection and user certificates separately. 
+
+Connection certificates
++++++++++++++++++++++++
+
+The certificate management can be opened via :menuselection:`builder --> Connection certificates` or the *Connection certificate* tab in the :ref:`Login dialog<builder_conn_dialog>`.
+
+.. figure:: images/builder_conn_store.png
+
+The dropdown list allows to select the respective subdirectory of the certificate store (\\PKI\\builder):
+
+- Own
+- Peers (\\rejected and \\trusted)
+- Issuers 
+
+.. rubric:: Create certificates
+
+|add| creates a self-signed certificate for the builder. The file name and CommonName must be defined in the following dialog. Additional information is automatically taken from the :ref:`cert.ini<cert_ini>` file.
+
+.. figure:: images/builder_conn_cert.png
+
+.. rubric:: Delete certificates
+
+|delete| deletes the selected certificates (as well as the corresponding private keys) from the file system.
+
+.. rubric:: Import certificates 
+    
+|import| allows to import self-signed or issued certificates into the respective directory.
+
+.. rubric:: Accept or reject certificates
+
+|trust| and |reject| allows to trust or reject certificates received from peers. The certificates are moved to the "trusted" or "rejected" directories respectively. 
+
+User certificates
++++++++++++++++++
+
+The user certificate management can be opened via the *User* tab in the :ref:`Login dialog<builder_conn_dialog>`. 
+
+.. figure:: images/builder_user_store.png
+
+The dropdown list allows to select the respective subdirectory of the certificate store (\\PKI\\users):
+
+- Own
+- Issuers 
+
+.. rubric:: Create certificate
+
+|add| creates a self-signed user certificate for server authentication. The file name and CommonName (must be a username, e.g., the atvise user) must be specified in the following dialog. Additional information is automatically taken from the :ref:`cert.ini<cert_ini>` file. The user certificate must be assigned to the atvise user by an admin (see :ref:`user management<user_settings>`).
+
+.. figure:: images/builder_user_cert.png
+
+.. rubric:: Delete certificates
+
+|delete| deletes the selected certificates (as well as the corresponding private keys) from the file system.
+
+.. rubric:: Import certificates 
+    
+|import| allows to import self-signed or issued user certificates into the respective directory.
+
+.. _cert_management_server:
+
+atvise server
+*************
+
+Authorized users (project administrators or users with right *Engineer* for :ref:`system function<ac_systemfunctions>` "Security") can manage certificates and create self-signed certificates using the *Certificate Manager* display. This display is available in the browser when opening the visualization with :ref:`URL-Parameter<url_parameters>` "/?admin=true". This means that this display is accessible as soon as the atvise server is started.
+
+.. figure:: images/certificate_manager.png
+
+The table lists all available certificates with information regarding issuer type (ROOT, INTERMEDIATE, END), status, validity period and other certificate fields.
+
+The dropdown lists *Store* and *Type* are meant for selecting the respective :ref:`certificate stores<cert_store>`:
+
+- OPC UA Server (\\PKI\\atserver)
+
+    - Own
+    - Peers (\\rejected bzw. \\trusted)
+    - Issuers
+    - Users (\\users\\rejected bzw. \\users\\issuers)
+
+- OPC UA Datasources (\\PKI\\atserver\\mirror)
+
+    - Own
+    - Peers (\\rejected bzw. \\trusted)
+    - Issuers
+    - Users (\\users\\own)
+    - User issuers (\\users\\issuers)
+
+- HTTPS (\\PKI\\atserver\\https)
+
+    - Own
+
+.. rubric:: Create certificate
+
+Self-signed certificates can be created for the "own" directory of the respective certificate store via :guilabel:`Create`. Only the CommonName must be specified in the following dialog, all other information is automatically taken from the :ref:`cert.ini<cert_ini>` file.
+
+.. figure:: images/server_new_cert.png
+
+.. rubric:: Upload certificates 
+
+Self-signed or issued certificates can be uploaded into the respective directories via :guilabel:`Upload`. In the following dialog, the certificate (and the corresponding private key in case of own certificates) must be selected. 
+
+.. figure:: images/server_upload.png
+
+.. hint:: In case of HTTPS, only a PEM file can be selected because the file must contain the certificate (or the certificate chain) and the private key.
+
+The field *Common Name* allows to define a name, that will be used for the certificate and the private key.
+
+.. rubric:: Accept or reject certificates
+
+Certificates can be moved to the "trusted" or "rejected" directories by using the :guilabel:`Trust` and :guilabel:`Reject` buttons.
+
+.. rubric:: Show certificate information
+
+Detail information of the respective certificate can be displayed by clicking the respective |info| button.
+
+.. figure:: images/visu_cert_info.png
+
+atpkicli.exe
+*************
+
+The tool :file:`atpkicli.exe` is located in the installation directory of atvise and must be started via command line. To manage certificates of a specific certificate store, the relative or absolute path to the store must be specified when starting the tool. For example:
+
+- *atpkicli.exe "PKI/atserver"*
+- *atpkicli.exe "C:\\Users\\myUser\\AppData\\Local\\atvise\\PKI\\atbuilder"*
+
+After that, the selected certificate store and the current directory are displayed:
+
+.. figure:: images/atpkicli.png
+
+.. rubric:: Show available certificate stores
+
+The *ls* command lists all certificate stores available in the current context: 
+
+.. figure:: images/atpkicli_ls.png
+
+.. rubric:: Show available certificate types
+
+The *lt* command lists all available certificate types (Own, Peers, Issuers, Users, User Issuer):
+
+.. figure:: images/atpkicli_lt.png
+
+.. rubric:: Navigate within certificate store
+
+The commands *cs* and *ct* are available to navigate within the selected certificate store. *cs <index>* can be used to switch to another certificate store, if the current certificate store contains other stores (e.g., like \\PKI\\atserver):
+
+.. figure:: images/atpkicli_cs.png
+
+The *ct <index>* command changes the subdirectory of the certificate store to match the selected certificate type (Own, Peers, Issuers, Users, User Issuer):
+
+.. figure:: images/atpkicli_ct.png
+
+.. rubric:: Show certificates
+
+The *lc* command lists all certificates in the selected directory:
+
+.. figure:: images/atpkicli_lc.png
+
+The displayed detail information can be defined with the commands *show <column indices>* and *hide <column indices>*. The *ac* command shows a list of the currently shown and hidden columns:
+
+.. figure:: images/atpkicli_ac.png
+
+After entering the *hide* command, the license information is displayed without the specified columns (in this case Valid, ValidTo and CommonName):
+
+.. figure:: images/atpkicli_hide.png
+
+The *show* command enables additional columns in the output:
+
+.. figure:: images/atpkicli_show.png
+
+.. rubric:: Actions
+
+Depending on the current store and certificate type, the following actions are available:
+
+- *create <name>* -- Creates an own self-signed certificate and the corresponding private key with the specified name:
+
+    .. figure:: images/atpkicli_create.png
+
+- *delete <index>* -- Deletes the specified certificate:
+
+    .. figure:: images/atpkicli_delete.png
+
+- *trust <index>* -- Accepts and trusts the selected peer certificate:
+
+    .. figure:: images/atpkicli_trust.png
+
+- *reject <index>* -- Rejects the selected peer certificate: 
+
+    .. figure:: images/atpkicli_reject.png
+
+- *clear*, *cls* -- Clears the command line output.
+- *exit*, *quit* -- Closes the atpkicli application.
+- *help* -- Shows the full list of available commands. 
+
+.. |add| image:: /common_images/icon_edit_add.png
+.. |delete| image:: /common_images/icon_edit_delete.png
+.. |info| image:: /common_images/icon_info.png
+.. |import| image:: /common_images/icon_import.png
+.. |reject| image:: /common_images/no.png
+.. |trust| image:: /common_images/yes.png

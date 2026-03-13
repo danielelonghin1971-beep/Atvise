@@ -1,0 +1,4 @@
+Timed Shelve Dialog
+###################
+
+This control is opened by the alarm list for entering the shelving time when doing a timed shelve.

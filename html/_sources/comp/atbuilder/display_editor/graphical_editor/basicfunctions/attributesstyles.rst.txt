@@ -1,0 +1,150 @@
+.. _attributes_and_styles:
+
+Attributes and styles
+#####################
+
+The controls at the bottom of the graphics editor interface enable you to change the graphic attributes of the currently-selected element.
+
+.. figure:: images/tools_color.png
+
+.. rubric:: Positioning and dimensions
+
+By entering a value for x or/and y, objects can be placed even more exactly.
+
+The w (width) and h (height) values let you set any exact dimension for an object.
+
+The lock symbol between w and h lets you lock up the object's ratio.
+
+.. rubric:: Colors
+
+This control enables you to choose none |icon_fillnone|, a solid |icon_fillsolid| or a gradient |icon_fillgradient| fill for the current selected element or for its stroke.
+
+|icon_fillnone| No fill
+    The fill or the stroke of the element will be completely transparent.
+
+    .. hint:: If a text has no fill color, it is still displayed in the builder but not in the visualization.
+
+|icon_fillsolid| Solid fill
+    The fill or the stroke of the element will be filled with a single color.
+
+    You can pick a color by clicking on the color palette or you can enter the RGB (red, green, blue) values or the HSV (hue, saturation, value) manually. You can change the opacity of the color by changing the alpha value.
+
+    .. hint:: If you click the pipette icon |icon_applycolor| the mouse will change to a cross hair. Move the cursor over any element on your screen and click it once - the currently-selected element will be colored.
+
+|icon_fillgradient| Gradient fill
+    You can select a linear or a radial gradient.
+
+.. rubric:: Modifying a linear gradient
+
+1. The vector of the linear gradient is displayed by a white line in the sample box. You can change this vector by dragging the two red endpoints of the line.
+
+.. figure:: images/color_gradientlinear.png
+
+    Drag the two red points to change the vector of the linear gradient
+
+.. rubric:: Modifying a radial gradient
+
+1. The center of the radial gradient is displayed by a red point in the sample box. You can change this point by dragging it.
+2. The radius of the radial gradient is displayed by a white circle in the sample box. You can change this circle by dragging it.
+
+.. figure:: images/color_gradientradial.png
+
+    Drag the center point and the surrounding white circle to change the radial gradient.
+
+.. rubric:: Changing gradient colors
+
+The gradient color bar and the gradient opacity bar are located below the sample box. The small triangles at the bottom of the gradient color bar represent the different colors of the gradient. You can change the colors of these color stops, change their arrangement and add color stops.
+
+.. figure:: images/color_gradient_changecolors.png
+
+    Gradient color bar and gradient opacity bar
+
+.. rubric:: Changing the color of a color stop
+
+Change the color of a color stop by double-clicking on the corresponding triangle and selecting the new color from the dialog which appears.
+
+.. figure:: images/color_gradient_changecolor.png
+
+    Change the color of a color stop by double-clicking on the corresponding triangle
+
+.. rubric:: Changing the arrangement of a color stop
+
+Change the arrangement of a color stop by dragging the corresponding triangle.
+
+.. figure:: images/color_gradient_movestops.png
+
+    Move a color stop by dragging the corresponding rectangle
+
+.. rubric:: Adding a color stop
+
+Add a color stop to the gradient by double-clicking somewhere in the area below the gradient color bar (where the other triangles are located) and choosing the desired color from the dialog which appears.
+
+.. figure:: images/color_gradient_addcolor.png
+
+    Add a color stop by double-clicking in the area below the gradient color bar
+
+.. rubric:: Changing the opacity of the whole gradient
+
+Change the opacity of the whole gradient by dragging the small black triangle below the opacity bar or by clicking on the opacity bar.
+
+.. figure:: images/color_gradient_opacity.png
+
+    Change the opacity by dragging the small triangle below the opacity bar
+
+.. rubric:: Changing the pen style
+
+This tab allows you to change the following graphic attributes of the currently-selected element:
+
+1. Line width (in pixels)
+2. Line style
+3. Type of line cap
+4. Type of line connection
+
+.. figure:: images/style_pen.png
+
+    Controls of the pen tab
+
+.. rubric:: Different types of line caps
+
+1. |icon_capbut| Butt Cap
+2. |icon_capround| Round Cap
+3. |icon_capsquare| Square Cap
+
+.. figure:: images/graphics_cap.png
+
+.. rubric:: Different types of line connections
+
+1. |icon_joinmiter| Line width (in pixels)
+2. |icon_joinbevel| Line style
+3. |icon_joinround| Type of line cap
+
+.. figure:: images/graphics_join.png
+
+.. rubric:: Changing the text style
+
+This tab allows you to change the following graphic attributes of the current text element:
+
+1. Text font
+2. Text style (|icon_textbold| bold, |icon_textitalic| italic)
+3. Text size
+4. Text-align (|icon_textleft| left, |icon_textcentered| centered, |icon_textright| right)
+
+.. figure:: images/style_text.png
+
+    Controls of the text tab
+
+.. |icon_applycolor| image:: /common_images/icon_applycolor.png
+.. |icon_capbut| image:: /common_images/icon_capbut.png
+.. |icon_capround| image:: /common_images/icon_capround.png
+.. |icon_capsquare| image:: /common_images/icon_capsquare.png
+.. |icon_fillgradient| image:: /common_images/icon_fillgradient.png
+.. |icon_fillnone| image:: /common_images/icon_fillnone.png
+.. |icon_fillsolid| image:: /common_images/icon_fillsolid.png
+.. |icon_joinbevel| image:: /common_images/icon_joinbevel.png
+.. |icon_joinmiter| image:: /common_images/icon_joinmiter.png
+.. |icon_joinround| image:: /common_images/icon_joinround.png
+.. |icon_textbold| image:: /common_images/icon_textbold.png
+.. |icon_textcentered| image:: /common_images/icon_textcentered.png
+.. |icon_textitalic| image:: /common_images/icon_textitalic.png
+.. |icon_textleft| image:: /common_images/icon_textleft.png
+.. |icon_textright| image:: /common_images/icon_textright.png

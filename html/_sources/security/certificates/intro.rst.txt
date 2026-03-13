@@ -1,0 +1,43 @@
+.. _cert_intro:
+
+Introduction
+############
+
+Certificates are meant for establishing secure connections to enhance security in atvise. The communication is encrypted and restricted to trusted peers. The encryption is asymmetric, i.e. each communication partner generates its own key pair consisting of a private and a public key. The public key is contained in the certificate itself, while the private key is stored as separate file. Each atvise application -- client and server -- requires a trusted certificate and the corresponding private key.
+
+Certificate management basics
+*****************************
+
+During connection establishment, the client's certificate is sent to the server and vice versa. Both verify the received certificate for authenticity and validity. Communication is only possible if the authenticity of the respective peer is confirmed.
+
+.. rubric::  X.509v3
+
+atvise uses :ref:`X.509v3 certificates<certificate_fields>` (according to the OPC UA standard), which must be stored as DER files in the respective :ref:`certificate store<cert_store>`. The corresponding private keys must be stored as PEM files. The following certificates can be used:
+
+- **Connection certificates**
+
+    - **Client certificates** -- Authenticate the client (e.g. atvise builder) to the server (e.g. atvise server) and ensure a secure connection..
+    - **Server certificates** -- Authenticate the server to the client and ensure a secure connection.
+    - **HTTPS certificates** -- Enable a secure communication with web servers. In this case, no client-side certificates are required -- the client uses the web server's certificate (which also contains the private key) to verify if it is trustworthy.
+
+- **User certificates** -- Enable the login to OPC UA servers (e.g. atvise server) without username and password. 
+
+.. rubric:: Self-signed certificates
+
+Self-signed certificates are used by default in atvise. The certificates as well as the corresponding private keys are automatically created for all atvise applications at startup -- if they do not already exist -- and stored in the appropriate certificate stores. It is also possible to manually create self-signed certificate in atvise (see chapter :ref:`Certificate management<cert_management>`).
+
+.. rubric:: Certificates from certificate authorities
+
+Certificates from trustworthy certificate authorities can be used for every atvise application as well. These certificates must also be stored in the appropriate certificate store and comply with the OPC UA standard.
+
+Usage of certificates in atvise
+*******************************
+
+For compatibility reasons, the certificate validation is disabled in atvise by default. This means that all certificates (except user certificates) are accepted without checking the authenticity or validity. Therefore, no additional configuration is required for normal operation of atvise. 
+
+To enable a secure communication, certificate validation must be explicitly activated (see :ref:`Configuration<cert_configuration>`). Once enabled, only trustworthy certificates are accepted and client and server applications must validate the certificates of their peers to establish a secure connection.
+
+.. hint:: 
+
+    - If the default certificates in an atvise project < 3.11 were overwritten, they must be renamed and moved to the correct directory of the respective application (see :ref:`Application Instance Certificate<cert_atvise>` and :ref:`Certificate store<cert_store>`).
+    - Server and endpoint settings in the ServerConfig.ini file must be transferred to the atserver.ini file (see :ref:`Configuration<cert_configuration>`). 

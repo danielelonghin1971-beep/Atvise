@@ -1,0 +1,8 @@
+Redundancy
+##########
+
+.. toctree::
+
+    redundancy/status
+    redundancy/vitality_table
+    redundancy/warning_dialog

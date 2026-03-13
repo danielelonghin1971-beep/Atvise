@@ -1,0 +1,6 @@
+Timer
+#####
+
+.. toctree::
+
+    timer/timer

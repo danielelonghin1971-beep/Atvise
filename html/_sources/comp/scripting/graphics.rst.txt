@@ -1,0 +1,358 @@
+.. _graphics_functions:
+
+Graphics functions
+##################
+
+.. !!webMI!! webMI.translate(value, minValue, maxValue, startValue, stopValue)
+.. function:: webMI.translate(value, minValue, maxValue, startValue, stopValue)
+
+    Calculates an absolute value from the passed value, minValue, maxValue, start Value and stopValue for use in various webMI.gfx functions.
+
+    Example: A data variable can have a value from 0 (minValue) to 100 (maxValue). The current value (value) is to be displayed by an arrow that rotates from 0° (startValue) to 180° (stopValue)::
+
+        webMI.translate("Server_1.OBJECTS.var1", function(e) {
+            var id = "id_1";
+            var value = e.value;
+            webMI.gfx.setRotation(id, webMI.translate(value, 0, 100, 0, 180));
+        });
+
+.. rubric:: Transformations of SVG elements
+
+.. !!webMI!! webMI.gfx.setRotation(elementID, angle)
+.. function:: webMI.gfx.setRotation(elementID, angle)
+
+    Rotates the SVG element defined by elementID by angle (see :func:`webMI.translate`). The absolute reference point (atv:refpx, atv:refpy) is used as center of the rotation by default. 
+    If the element was moved, you can set *relative = true* to use the relative reference point (atv:refmx, atv:refmy) for the rotation.
+
+    ::
+
+        var angle = webMI.translate(value, minValue, maxValue, startValue, stopValue);
+        webMI.gfx.setRotation("elementID", angle);
+
+.. !!webMI!! webMI.gfx.setMoveX(elementID, offset)
+.. function:: webMI.gfx.setMoveX(elementID, offset)
+
+    Moves the SVG element defined by elementID by offset (see :func:`webMI.translate`) on the X axis.
+
+    ::
+
+        var offset = webMI.translate(value, minValue, maxValue, startValue, stopValue);
+        webMI.gfx.setMoveX("elementID", offset);
+
+.. !!webMI!! webMI.gfx.setMoveY(elementID, offset)
+.. function:: webMI.gfx.setMoveY(elementID, offset)
+
+    Moves the SVG element defined by elementID by offset (see :func:`webMI.translate`) on the Y axis.
+
+    ::
+
+        var offset = webMI.translate(value, minValue, maxValue, startValue, stopValue);
+        webMI.gfx.setMoveY("elementID", offset);
+
+.. !!webMI!! webMI.gfx.setScaleX(elementID, factor)
+.. function:: webMI.gfx.setScaleX(elementID, factor)
+
+    Scales the SVG element defined by elementID by factor (see :func:`webMI.translate`) on the X axis.
+
+    ::
+
+        var factor = webMI.translate(value, minValue, maxValue, startValue, stopValue);
+        webMI.gfx.setScaleX("elementID", factor);
+
+.. !!webMI!! webMI.gfx.setScaleY(elementID, factor)
+.. function:: webMI.gfx.setScaleY(elementID, factor)
+
+    Scales the SVG element defined by elementID by factor (see :func:`webMI.translate`) on the Y axis.
+
+    ::
+
+        var factor = webMI.translate(value, minValue, maxValue, startValue, stopValue);
+        webMI.gfx.setScaleY("elementID", factor);
+
+.. !!webMI!! webMI.gfx.setSkewX(elementID, translationFactor)
+.. function:: webMI.gfx.setSkewX(elementID, translationFactor)
+
+    Skews the SVG element defined by elementID by translationFactor (see :func:`webMI.translate`) on the X axis.
+
+    ::
+
+        var translationFactor = webMI.translate(value, minValue, maxValue, startValue, stopValue);
+        webMI.gfx.setSkewX("elementID",translationFactor);
+
+.. !!webMI!! webMI.gfx.setSkewY(elementID, translationFactor)
+.. function:: webMI.gfx.setSkewY(elementID, translationFactor)
+
+    Skews the SVG element defined by elementID by translationFactor (see :func:`webMI.translate`) on the Y axis.
+
+    ::
+
+        var translationFactor = webMI.translate(value, minValue, maxValue, startValue, stopValue);
+        webMI.gfx.setSkewY("elementID",translationFactor);
+
+.. rubric:: Functions for adding SVG elements
+
+All functions take the form webMI.gfx.add\ *SVGElement*\ (attributes, groupElement), where *SVGElement* is one of the following elements: Circle, Ellipse, Group, Image, Line, Path, Polygon, Polyline, Rect or Text.
+
+With the functions, SVG elements can be added to the document or be added as child elements to existing elements.
+
+Two parameters can be passed on: An array of element attributes and a group element where the new element is to be added.
+
+The possible SVG attributes are: X, X1, X2, Y, Y1, Y2, Width, Height, CenterX, CenterY, RadiusX, RadiusY, Radius, FontFamily, FontSize, FillOpacity, FillRule, Stroke, StrokeOpacity, StrokeWidth and TextAnchor.
+
+Some examples::
+
+    var groupElement = document.getElementById("group");
+
+    /* addCircle */
+    var circle = webMI.gfx.addCircle({
+        CenterX: "600",
+        CenterY:"100",
+        Fill: "#c0c0c0",
+        Radius: "50"}, groupElement);
+
+    /* addEllipse */
+    var ellipse = webMI.gfx.addEllipse({
+        CenterX: "600",
+        CenterY: "200",
+        Fill: "#c0c0c0",
+        RadiusX: "150",
+        RadiusY: "45"}, groupElement);
+
+    /* addPolyline */
+    var polyline = webMI.gfx.addPolyline({
+        fill: "brown",
+        points: [{x:352.868, y:328.949}, {x:452.63, y:328.949}, {x:376.501, y:382.077}, {x: 452.619, y:382.077}, {x: 355.015, y:413.69}, {x: 355.015, y:327.713}],
+        Stroke: strokeColor,
+        StrokeWidth: strokeWidth,
+        StrokeOpacity: strokeOpacity}, groupElement);
+
+    /* addText */
+    var text = webMI.gfx.addText({
+        x: 300,
+        y: 550,
+        fill: "red",
+        text: "Hello, World!",
+        fontSize: "20",
+        fontFamily: "Arial",
+        Stroke: strokeColor,
+        StrokeWidth: strokeWidth,
+        StrokeOpacity: strokeOpacity}, groupElement);
+
+.. rubric:: Functions for getting and setting SVG element attributes
+
+All functions take the form webMI.gfx.get\ *SVGElementAttribute*\ (elementID) and webMI.gfx.set\ *SVGElementAttribute*\ (elementID, value).
+
+With the webMI.gfx.get\ *SVGElementAttribute*\ (elementID) method, the specified attribute of the object with the ID elementID can be read.
+
+With the webMI.gfx.set\ *SVGElementAttribute*\ (elementID, value) method, the specified attribute of the object with the ID elementID can be set to *value*.
+
+Depending on the element type, the place holder *SVGElementAttribute* can be one of the following parameters: CenterX, CenterY, Height, Width, Fill, FillOpacity, FillRule, FontFamily, FontSize, Image, Points, Radius, RadiusX, RadiusY, Stroke, StrokeWidth, StrokeOpacity, Text, TextAnchor, Visible, X, X1, X2, Y, Y1, Y2
+
+Some examples::
+
+    var elementID_rectangle = "myRectangle";
+    var elementID_ellipse = "myEllipse";
+    var elementID_circle = "myCircle";
+    var elementID_polygon = "myPolygon";
+    var elementID_line = "myLine";
+    var elementID_text = "myText";
+    var elementID_image = "myImage";
+
+    /* GETTERS */
+    var textFontFamily = webMI.gfx.getFontFamily(elementID_text);
+    var textFontSize = webMI.gfx.getFontSize(elementID_text);
+    var textContent = webMI.gfx.getText(elementID_text);
+    var textAnchor = webMI.gfx.getTextAnchor(elementID_text);
+    var rectangleX = webMI.gfx.getX(elementID_rectangle);
+    var rectangleY = webMI.gfx.getY(elementID_rectangle);
+    var rectangleHeight = webMI.gfx.getHeight(elementID_rectangle);
+    var rectangleWidth = webMI.gfx.getWidth(elementID_rectangle);
+    var circleRadius = webMI.gfx.getRadius(elementID_circle);
+    var polygonPoints = webMI.gfx.getPoints(elementID_polygon);
+    var startPointX = webMI.gfx.getX1(elementID_line);
+    var startPointY = webMI.gfx.getY1(elementID_line);
+    var endPointX = webMI.gfx.getX2(elementID_line);
+    var endPointY = webMI.gfx.getY2(elementID_line);
+    var ellipseCenterX = webMI.gfx.getCenterX(elementID_ellipse);
+    var ellipseCenterY = webMI.gfx.getCenterY(elementID_ellipse);
+    var ellipseRadiusX = webMI.gfx.getRadiusX(elementID_ellipse);
+    var ellipseRadiusY = webMI.gfx.getRadiusY(elementID_ellipse);
+    var rectangleFill = webMI.gfx.getFill(elementID_rectangle);
+    var rectangleFillOpacity = webMI.gfx.getFillOpacity(elementID_rectangle);
+    var rectangleFillRule = webMI.gfx.getFillRule(elementID_rectangle);
+    var rectangleStroke = webMI.gfx.getStroke(elementID_rectangle);
+    var rectangleStrokeWidth = webMI.gfx.getStrokeWidth(elementID_rectangle);
+    var rectangleStrokeOpacity = webMI.gfx.getStrokeOpacity(elementID_rectangle);
+    var imageName = webMI.gfx.getImage(elementID_image);
+
+    /* SETTERS */
+    webMI.gfx.setFontFamily(elementID_text, "Arial");
+    webMI.gfx.setFontSize(elementID_text, "13");
+    webMI.gfx.setText(elementID_text, "new text for text element");
+    webMI.gfx.setTextAnchor(elementID_text, "middle");
+    webMI.gfx.setX(elementID_rectangle, "800");
+    webMI.gfx.setY(elementID_rectangle, "600");
+    webMI.gfx.setHeight(elementID_rectangle, "300");
+    webMI.gfx.setWidth(elementID_rectangle, "200");
+    webMI.gfx.setRadius(elementID_circle, "30");
+    webMI.gfx.setPoints(elementID_polygon, "0.25");
+    webMI.gfx.setX1(elementID_line, "10");
+    webMI.gfx.setY1(elementID_line, "10");
+    webMI.gfx.setX2(elementID_line, "20");
+    webMI.gfx.setY2(elementID_line, "20");
+    webMI.gfx.setCenterX(elementID_ellipse, "800");
+    webMI.gfx.setCenterY(elementID_ellipse, "600");
+    webMI.gfx.setRadiusX(elementID_ellipse, "120");
+    webMI.gfx.setRadiusY(elementID_ellipse, "90");
+    webMI.gfx.setFill(elementID_rectangle, "#ff000a");
+    webMI.gfx.setFillOpacity(elementID_rectangle, "0.25");
+    webMI.gfx.setFillRule(elementID_rectangle, "evenodd");
+    webMI.gfx.setStroke(elementID_rectangle, "#00ff00");
+    webMI.gfx.setStrokeWidth(elementID_rectangle, "3");
+    webMI.gfx.setStrokeOpacity(elementID_rectangle, "0.80");
+    webMI.gfx.setImage(elementID_image, "/prev.png"); // use any image inside the folder "Resources" of the ATVISE or PROJECT libraries
+
+.. rubric:: Changing of element attributes in intervals
+
+.. !!webMI!! webMI.gfx.setFill(elementID, color)
+.. function:: webMI.gfx.setFill(elementID, color)
+
+    Fills the SVG element defined by *elementID* with the color defined by *color*. *color* can be:
+
+    - A string containing the color in RGB hex format. Fills the element defined by *elementID* with *color*.
+    - An array of strings used to change the fill color of the element defined by *elementID* cyclically. There are 12 possible intervals which are executed in a loop every 250 milliseconds.
+
+    Example 1: Set color to a fixed value::
+
+        var colorCode = "blue"; // or var colorCode = "#0000ff";
+        webMI.gfx.setFill("elementID",colorCode);
+
+    Example 2: Color changes every 500ms between black and red::
+
+        webMI.gfx.setFill(id, {0:'black', 2:'red', 4:'black', 6:'red', 8:'black', 10:'red'});
+
+.. !!webMI!! webMI.gfx.setVisible(elementID, visibility)
+.. function:: webMI.gfx.setVisible(elementID, visibility)
+
+    Sets the visibility of the SVG element defined by *elementID* to *visibility*. *visibility* can be:
+
+    - A single boolean value or *null*. By setting the value to *null* the state of the parent element will be inherited.
+    - An array of boolean values used to make the element defined by *elementID* flash. There are 12 possible intervals which are executed in a loop every 250 milliseconds.
+
+    Example 1: Set visibility of an element::
+
+        webMI.gfx.setVisible("elementID", true);
+
+    Example 2: Element flashes every 250 ms::
+
+        webMI.gfx.setVisible("id_0", {0:true, 1:false, 2:true, 3:false, 4:true, 5:false, 6:true, 7:false, 8:true, 9:false, 10:true, 11:false});
+
+    Example 3: Element flashes every 500 ms::
+
+        webMI.gfx.setVisible(id, {0:true, 2:false, 4:true, 6:false, 8:true, 10:false});
+
+.. rubric:: Further graphic functions
+
+.. !!webMI!! webMI.gfx.createPoint(x, y)
+.. function:: webMI.gfx.createPoint(x, y)
+
+    Creates an SVG point element at the given x and y coordinate.
+
+.. _getscreenctm:
+
+.. !!webMI!! webMI.gfx.getScreenCTM([elementID])
+.. function:: webMI.gfx.getScreenCTM([elementID])
+
+    Returns a transformation matrix that can be used to convert coordinates between different coordinate systems.
+
+    The optional parameter elementID defines, which matrix will be returned. elementID can be one of the following:
+
+    - **undefined**: If elementID isn't specified at all, the matrix is read from the display without any change.
+    - **true**: Reads the matrix of the current display and transforms it up to the "#mainContainer".
+    - ``"subDisplayID"``: Reads the matrix from the given sub-display and transforms it to be used in the current display.
+    - ``"foreignObjectID"``: The matrix is read from the foreignobject and transformed up to the HTML body. Thus the matrix can be used for calculations on events (coordinates) that were triggered on foreignobjects.
+
+    Examples for all possibilities can be found in the chapter :ref:`scaling`.
+
+.. _getabsoluteoffset:
+
+.. !!webMI!! webMI.gfx.getAbsoluteOffset(property[, untilBody[, overrideElement]])
+.. function:: webMI.gfx.getAbsoluteOffset(property[, untilBody[, overrideElement]])
+
+    This method returns the absolute offset of an HTML element in relation to the <body> or <div id="mainContainer"/> element. Any scroll-offsets are included into the calculation.
+
+    - **property**: "top" for the offset from the top (y) or "left" for the offset from left (x).
+    - **untilBody**: true, to calculate the offset to the <body>, false for <div id="mainContainer"/>. Optional, default is false.
+    - **overrideElement**: Element to calculate the offset for. Optional, default is the surrounding div element of the current display.
+
+    ::
+
+        var myForeignObject = document.getElementById("myForeignobject");
+        var foreignOffsetY = webMI.gfx.getAbsoluteOffset("top", true, myForeignObject);
+        var foreignOffsetX = webMI.gfx.getAbsoluteOffset("left", true, myForeignObject);
+
+.. _getabsolutescalefactor:
+
+.. !!webMI!! webMI.gfx.getAbsoluteScaleFactor([untilBody[, overrideElement]])
+.. function:: webMI.gfx.getAbsoluteScaleFactor([untilBody[, overrideElement]])
+
+    This method returns the total scaling factor up to the current display (excluding the factor for the current display itself).
+
+    - **untilBody**: true, to calculate the offset to the <body>, false for <div id="mainContainer"/>. Optional, default is false.
+    - **overrideElement**: Element to calculate the offset for. Optional, default is the surrounding div element of the current display.
+
+    ::
+
+        var factor = webMI.gfx.getAbsoluteScaleFactor(true);
+
+.. !!webMI!! webMI.gfx.getBoundingClientRect(elementID)
+.. function:: webMI.gfx.getBoundingClientRect(elementID)
+
+    This method is based on the native JavaScript method "element.getBoundingClientRect". By using the webMI version of it, it is guaranteed that correct values are returned, even when CSS based scaling through the property "zoom" is used.
+
+    Like the native method, all returned offsets are relative to the top left corner of the browser window (browser viewport).
+
+    The return object contains the properties "top", "left", "height", "width", "bottom" and "right".
+
+    ::
+
+        var myForeignObject = document.getElementById("myForeignobject");
+        var foreignObjectSizePosition = webMI.gfx.getBoundingClientRect(myForeignObject);
+        //e.g. {top:115.5, left: 50.8, height: 20, width: 77.4, bottom: 135.5, right: 128.2}
+
+.. _setscaledevents:
+
+.. !!webMI!! webMI.gfx.setScaledEvents(targetElement[, useUnScaledOffset[, excludeChildren[, referenceElement]]])
+.. function:: webMI.gfx.setScaledEvents(targetElement[, useUnScaledOffset[, excludeChildren[, referenceElement]]])
+
+    The setScaledEvents method provides events to the developer that contain corrected event coordinates (clientX, clientY, pageX, pageY). The use of this method is intended for external libraries.
+
+    - **targetElement**: HTML element, that will be affected by the event coordinate correction.
+    - **useUnScaledOffset**: Compensate JavaScript libraries, that sum up the element offsets until the HTML body ignoring any scaling factors. Optional, default is false.
+    - **excludeChildren**: array of children of targetElement, that should not be affected by the correction. Optional, default [].
+    - **referenceElement**: HTML element, that is used as reference to the calculation of the offset to <body>. Optional, default is targetElement.
+
+    The event types MouseEvents, TouchEvents und DragEvents will be corrected. The object provided as argument to the events is of type CustomEvent und contains the additional properties "atviseOriginalEvent" (original browser event) and "atviseCustomEvent" (true).
+
+    ::
+
+        webMI.gfx.setScaledEvents("myForeignobject");
+
+.. _scaleeventcoordinates:
+
+.. !!webMI!! webMI.gfx.scaleEventCoordinates(targetElement, x, y[, relativeToViewport])
+.. function:: webMI.gfx.scaleEventCoordinates(targetElement, x, y[, relativeToViewport])
+
+    The scaleEventsCoordinate method corrects event coordinates, to be able to respect the scaling state of the visualization. The coordinates (clientX, clientY, pageX, pageY) are passed as parameters and the method returns them converted in an object with the properties "x" and "y".
+
+    - **targetElement**: HTML element the event coordinate conversion should be related to.
+    - **x**, **y**: coordinates passed to the "e" object of the callback.
+    - **relativeToViewport**: true, if the provided coordinates are relative to the viewport (clientX/Y), false, if they are relative to the document of the visualization(pageX/Y). Optional, default is false.
+
+    ::
+
+        webMI.addEvent("myForeignobject", "mousemove", function(e){
+            var point = webMI.gfx.scaleEventCoordinates("myForeignobject", e.clientX, e.clientY, true);
+           // ---OR---
+           var point = webMI.gfx.scaleEventCoordinates("myForeignobject", e.pageX, e.pageY);
+        });

@@ -1,0 +1,147 @@
+.. _translation_function:
+
+Translation functions
+#####################
+
+These functions allow to generate translations, export translations to or merge translations from XML files. The functions are wrapper scripts for the respective OPC UA methods and can be found in the atvise library (:treeselection:`Library --> ATVISE --> Script Library --> Methods`).
+
+Refer to :ref:`Languages<languages>` for further information on translating texts and the applied rules when importing translations.
+
+.. rubric:: GenerateTranslations
+
+**call("Methods.GenerateTranslations", options)**
+
+Generates and returns project-specific and/or atvise translations. *options* is an object with following properties:
+
+    - **context** (Integer, optional, default: 0) -- Defines which translations shall be generated.
+
+        - 0 -- All translations
+        - 1 -- Only translations from the atvise library 
+        - 2 -- Only project-specific translations
+
+The result is an object with following properties:
+
+- **error** (Integer) -- The error code, supplied only if an error occurred when calling the script.
+- **errorstring** (String) -- The error text, supplied only if an error occurred when calling the script.
+- **result** (Object)
+
+    - **translations** (String) -- The translations in TS format (see also :ref:`Format of translation files<translation_files>`). 
+
+Example::
+
+    var result = call("Methods.GenerateTranslations", {
+        context: 0
+    });
+
+    if (result.error)
+        console.log(result.errorstring);
+    else
+        console.log(result.result);
+
+.. rubric:: GenerateTranslationsToFile
+
+**call("Methods.GenerateTranslationsToFile", options)**
+
+Generates a translation file that contains all project-specific translations and/or atvise translations. *options* is an object with following properties:
+
+    - **context** (Integer, optional, default: 0) -- Defines which translations shall be generated and exported to the XML file.
+
+        - 0 -- All translations
+        - 1 -- Only translations from the atvise library 
+        - 2 -- Only project-specific translations
+  
+    - **file** -- Path to and name of the translation file. 
+
+The result is an object with following properties:
+
+- **error** (Integer) -- The error code, supplied only if an error occurred when calling the script.
+- **errorstring** (String) -- The error text, supplied only if an error occurred when calling the script.
+- **result** (Object)
+
+    - **success** (Boolean) -- *true*, if the translations were successfully exported, otherwise *false*. 
+
+Example::
+
+    var result = call("Methods.GenerateTranslationsToFile", {
+	context: 0,
+	file: "C:/myfiles/mytranslations.xml"
+    });
+
+    if (result.error)
+        console.log(result.errorstring);
+    else
+        console.log(result.result);
+
+.. rubric:: MergeTranslations
+
+**call("Methods.MergeTranslations", options)**
+
+Allows to import and merge new texts and translations into existing language nodes. *options* is an object with following properties:
+
+    - **address** (String) -- The language node which shall be merged with the given texts. 
+    - **xmldata** (String) -- Texts and translations in TS format (see also :ref:`Format of translation files<translation_files>`).   
+
+The result is an object with following properties:
+
+- **error** (Integer) -- The error code, supplied only if an error occurred when calling the script.
+- **errorstring** (String) -- The error text, supplied only if an error occurred when calling the script.
+- **result** (Object)
+
+    - **new_translations** (Integer) -- The number of new translations.
+    - **updated_translations** (Integer) -- The number of updated translations. 
+    - **errors** (Object) -- Contains the list of errors that occurred during the merge. It contains the following properties:
+
+        - **error** (Integer) -- The error code.
+        - **errorstring** (String) -- The error text which provides additional information.
+
+Example::
+
+    var result = call("Methods.MergeTranslations", {
+        address: "SYSTEM.TRANSLATIONS.de",
+        xmldata: "<?xml version='1.0' encoding='UTF-8'?><TS><context>" +
+            "<message>" +
+                "<source>text which should be translated</source>" +
+                "<translation>translated text</translation>" +
+                "<comment>optional descriptive text</comment>" +
+            "</message>" +
+            "</context></TS>"
+    });
+
+    if (result.error)
+        console.log(result.errorstring);
+    else
+        console.log(result.result);
+
+.. rubric:: MergeTranslationsFromFile
+
+**call("Methods.MergeTranslationsFromFile", options)**
+
+Allows to import and merge texts and translations from an XML file into an existing language node. Already existing items stored on the language node will be updated. *options* is an object with following properties:
+
+    - **address** (String) -- The language node which shall be merged with the given XML file. 
+    - **xmldata** (String) -- Path to and name of the XML file (TS format is required).   
+
+The result is an object with following properties:
+
+- **error** (Integer) -- The error code, supplied only if an error occurred when calling the script.
+- **errorstring** (String) -- The error text, supplied only if an error occurred when calling the script.
+- **result** (Object)
+
+    - **new_translations** (Integer) -- The number of new translations.
+    - **updated_translations** (Integer) -- The number of updated translations. 
+    - **errors** (Object) -- Contains the list of errors that occurred during the merge. It contains the following properties:
+
+        - **error** (Integer) -- The error code.
+        - **errorstring** (String) -- The error text which provides additional information.
+
+Example::
+
+    var result = call("Methods.MergeTranslationsFromFile", {
+        address: "SYSTEM.TRANSLATIONS.de",
+        file: "C:/myfiles/mytranslations.xml"
+    });
+
+    if (result.error)
+        console.log(result.errorstring);
+    else
+        console.log(result.result);

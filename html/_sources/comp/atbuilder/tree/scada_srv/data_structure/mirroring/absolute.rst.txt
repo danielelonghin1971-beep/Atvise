@@ -1,0 +1,66 @@
+.. _mirror_absolute:
+
+Direct - absolute mirroring
+###########################
+
+The easiest and most efficient way to create absolute mirrored data variables in the atvise data structure is to copy and paste them directly from a :ref:`data source <datasources>` (foreign server).
+
+.. rubric:: Single data variable
+
+You can copy and paste a node from an external server. atvise builder automatically creates a node with its appropriate type and the property "Mirror".
+
+1. Browse the data source where you want to copy the node from (like described in section :ref:`datasources`).
+2. Right-click on the desired node(s) and choose :menuselection:`Copy` from the context menu.
+
+.. figure:: images/scada_mirror_abs_copy_single.png
+
+    Copy & paste a single mirrored node from a data source
+
+3. Right-click on the node in your local object structure where you want to paste the node from the external server.
+4. Choose :menuselection:`Paste & Mirror --> Input --> node` in the context menu. You can rename the node in the appearing pop-up.
+
+.. figure:: images/scada_mirror_abs_paste_single.png
+
+    Copy & paste a single mirrored node from a data source
+
+.. hint:: You can select multiple nodes in the structure of the data source by clicking on them while holding Crtl or Shift and copying & pasting them afterwards.
+
+.. rubric:: Structure without types
+
+The atvise builder also offers the possibility of copying & pasting a whole structure of variables. When choosing "node", only the selected node will be copied (without child nodes); when choosing "structure without types", all child nodes will be copied too. In the mirrored structure the objects of the data source are replaced with folders. Only folders and variables will be created in the mirrored structure.
+
+.. hint:: Other options of mirroring structures are described in :ref:`mirror_relative`.
+
+1. Browse the data source from which you want to copy variables (as described in the section :ref:`datasources`).
+2. Right-click on a desired parent node (folder) and click on :menuselection:`Copy` in the menu which appears.
+
+.. figure:: images/scada_mirror_abs_copy_structure.png
+
+    Copy & paste a whole data structure from a data source
+
+3. Right-click on the node in your local object structure where you want to paste the structure.
+4. Choose :menuselection:`Paste & mirror --> Input --> structure without types` from the menu. You can type in a new name for the top node in the dialog which appears.
+
+.. figure:: images/scada_mirror_abs_paste_structure.png
+
+    Copy & paste a whole data structure from a data source
+
+.. rubric:: Copying and pasting a mirror address from a foreign server
+
+Another possibility is to paste the mirror property to an existing data variable (only the mirroring property will be created - no new data variables as with the other two methods).
+
+1. Browse the data source from which you want to copy a variable (as described in the section :ref:`datasources`).
+2. Right-click on a desired node and click on :menuselection:`Copy` in the menu which appears.
+
+.. figure:: images/scada_mirror_abs_copy_address.png
+
+    Copying & pasting a mirror address from a data source
+
+3. Right-click on the node in your local object structure to which you want to add a mirror property.
+4. Choose :menuselection:`Paste & mirror --> Input --> address` from the menu.
+
+.. figure:: images/scada_mirror_abs_paste_address.png
+
+    Copying & pasting a mirror address from a data source
+
+.. hint:: If you use this method, be sure that the data types of the local and foreign variables match - otherwise the mirror module may produce an error and won't work if the data type cannot be converted!

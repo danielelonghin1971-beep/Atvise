@@ -1,0 +1,10 @@
+Configuration - Start
+#####################
+
+This display is shown at the start if no chart instance is selected.
+
+.. rubric:: Parameters
+
+This control has the following parameter:
+
+- :advstyle:`Advanced` **font color** -- Color which will be applied to the labels (default: global parameter atvFontColor)

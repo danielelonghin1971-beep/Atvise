@@ -1,0 +1,22 @@
+Datasource State
+################
+
+This display shows the connection state between the atvise server and the datasource as well as the configuration of the datasource. 
+In the atvise standalone mode the connection state of one server is displayed. If the atvise redundancy mode is used, the connection state of the primary and secondary atvise server is displayed.
+
+.. rubric:: Parameter
+
+- **address of datasource** -- Name of the datasource whose state shall be shown
+- **vitality table display** -- Display that shows vitality information (default: SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Advanced.redundancy.vitality_table)
+- :advstyle:`Advanced` **font color** -- Color which will be applied to labels and values (default: global parameter atvFontColor)
+- :advstyle:`Advanced` **fill color** -- Fill color of background areas (default: global parameter atvFillColor)
+- :advstyle:`Advanced` **border color** -- Color of borders around objects (default: global parameter atvBorderColor)
+
+.. rubric:: Possible Conditions and their visualization
+
+- Configured connections are represented by a gray line between the atvise server and the URL-connector of the related connection. If the connection is currently used for the communication the color of the line and the connector will be green.
+- There will be no line and a gray URL-connector if no URL is configured.
+- There will be no line and a red URL-connector if no connection can be established via that URL.
+- The text field next to the URL-connector shows the connection state. Possible values are "Connected", "LostConnection" and "NotConnected" if an URL is configured. The value "-" means that there is no URL configured.
+- The state of the entire datasource is represented by the server connector. If the server can establish a connection via at least one URL the connector will be green. If the server cannot establish a connection via one of the URLs the connector will be red. In this case the server will not receive any data.
+- In the atvise redundancy mode the atvise server is overlaid by a gray area if it can't be reached. Beneath this area the last valid values are shown.

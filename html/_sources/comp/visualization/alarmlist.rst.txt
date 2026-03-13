@@ -1,0 +1,79 @@
+.. _alarmlist:
+
+Alarm list
+##########
+
+The alarm list provides a table to manage conditions and alarms with advanced alarm functions and filter states. This component can be parametrized over :treeselection:`Attributes --> Parameters --> Default filter --> state` in the display editor to show all alarms, suppressed or shelved alarms. 
+
+.. hint:: The Default display already provides different alarm lists when opening the menu of the alarm icon. 
+
+.. rubric:: Appearance
+
+On top of the table an expandable filter part is available to handle also a huge amount of alarms in this view. With these options the visible alarms or alarm conditions in the table can be defined. Use the Button :guilabel:`Apply filter` to set the filter properties. For deleting all filters push the :guilabel:`Reset filter` button. 
+
+.. figure:: images/visu_alarm_alarmlist.png
+
+    Filter area
+
+The returned data can be further filtered by using the input fields of the respective columns. The checkbox next to an input field allows to switch the filter mode. If the checkbox is active, a specific filter for the respective column can be entered. In this case, it is also possible to filter for empty fields, e.g. in order to find the user *Anonymous*. If inactive, all entries are displayed. The filter checkbox can be configured via *filterCheck* in the :ref:`global list<global_parameters_alarmlist>`. 
+
+.. figure:: images/visu_alarm_alarmlist2.png
+
+    Returned data
+
+In the alarm list all columns can be sorted with a single click on the header and columns can be re-arranged via drag and drop. At the bottom of the component a search field for full text search is provided. Thereby all rows which don't match the search criteria will be hidden after pressing :guilabel:`Search`. The search result can be discarded with :guilabel:`Reset`. 
+
+If there are more rows than will fit on the screen a paging function will be shown at the bottom of the table with navigation buttons and a loading state of the background processes.
+
+There is also a smaller version of the alarm list, optimized for devices with small displays (e.g. tablets and mobile phones). This smaller version provides less options for filtering the query and by default shows a reduced number of columns.
+
+.. hint:: 
+    
+    - For alarms with :ref:`acknowledgement type <alarm_acktype>` *acknowledge active and inactive* where both the active and inactive state must still be acknowledged or confirmed, both alarms will be shown as two consecutive rows in the table. The active state always has to be acknowledged or confirmed before the inactive state.
+    - Configure the visible columns via the context menu on the rightmost header cell with the burger symbol |burger|.
+    - For user commands which can't be executed a notification will appear, a click on this will open a dialog with additional information about the problem. 
+
+.. rubric:: Acknowledge alarms
+
+For acknowledging single alarms press the icon |ackn| in the related row of the table (if the column with the mentioned header icon is visible). Otherwise select the alarm with the checkbox at the beginning of the row and choose :menuselection:`ACKNOWLEDGE` from the contextmenu at the icon |action| in the leftmost column. 
+
+.. hint:: The row selection and the :menuselection:`ACKNOWLEDGE` action also works well for acknowledging a huge amount of alarms at the same time! When using multiple selection, actions are only performed for rows where the respective action is possible.
+
+.. rubric:: Confirm alarms
+
+If the alarm category requires confirmation of an alarm, press the icon |confirm| after you have acknowledged an alarm. You can also select the alarm with the checkbox at the beginning of the row and choose :menuselection:`Confirm` from the context menu.
+
+.. rubric:: Shelving alarms
+
+Two types of shelving are supported, One Shot Shelving and Time Shelving. The One Shot Shelving is for requesting that an alarm should be shelved for its current active state. This shelving will automatically clear when an alarm returns to an inactive state. This type of shelving can be requested through the |oneshot| action icon in the alarm row (if visible). In the other case the user specifies that an alarm be shelved for a fixed time period, this Time Shelving is requested through the |timeshelve| action icon. The duration of the shelving is defined in the opened dialog.
+
+.. hint:: Shelving of alarms is also accessible over the context menu to provide multiselection!
+
+.. rubric:: Unsuppressing alarms
+
+Alarms which were suppressed internally by the server can be unsuppressed through the |unsuppress| action icon in the specific column in the table. There is also a state of the alarm list to show all currently suppressed alarms.
+
+.. rubric:: Enable/Disable alarms
+
+By disabling alarm conditions and their correlated active alarms no further alarms will be generated. Users can enable or disable alarm conditions through the |disable| action icon in the specific column in the table.
+
+.. rubric:: Export alarm data
+
+Access the export actions via the context menu on the rightmost header cell with the burger symbol |burger|. The data export format is CSV.
+
+.. _alarm_details:
+
+.. rubric:: Detailed alarm information
+
+Each alarm row in the list can be expanded with a click on the triangle in the first column in the table. There are detailed attributes shown and this part also allows users to add a comment to the alarm. The configuration of the visible attributes in this part is stored in the :ref:`global parameters <global_parameters_alarmlist>` under :treeselection:`Global Parameters --> atvObjectDisplays --> Alarmlist --> Columns`.
+
+.. hint:: If new alarms appear in the alarm list, the rows of the shown alarms can jump to different positions unfavorably and display the detail table on a different position. To fix the detail table or certain rows, the favored rows can be marked using the checkboxes on the left. After that you can use the filter to view only the marked rows.
+
+.. |ackn| image:: images/acknowledge.png
+.. |action| image:: images/action.png
+.. |burger| image:: images/burger.png
+.. |confirm| image:: images/confirm.png
+.. |disable| image:: images/disable_alarm.png
+.. |oneshot| image:: images/oneshotshelve.png
+.. |timeshelve| image:: images/timeshelve.png
+.. |unsuppress| image:: images/unsuppress.png

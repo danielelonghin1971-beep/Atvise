@@ -1,0 +1,58 @@
+3 Draw a display and generate visualization
+###########################################
+
+In this section, we will add a simple display to our project and generate the web visualization afterwards.
+
+.. rubric:: 3.1 Adding a new display to the project
+
+1. Right-click on the :treeselection:`Servers --> DemoServer --> DISPLAYS --> MAIN` folder.
+
+2. Choose :menuselection:`Add Display...`.
+
+3. Now you can enter the desired display name. For our example, let us choose "TestDisplay1".
+
+4. After acknowledging the display name by clicking :guilabel:`OK`, you will see an entry for the new display if you open the structure of the MAIN folder.
+
+.. figure:: images/add_display.png
+
+    Adding a new display to the project
+
+.. rubric:: 3.2 Editing the display and drawing simple elements
+
+1. Double-click the new "TestDisplay1" entry to open the included graphics editor for this display.
+
+    .. hint:: This editor offers you many powerful tools to design the optimal display for your project. For detailed information see :ref:`editor_functions`.
+
+    For our example, we will simply add a rectangle and a circle to the display.
+
+2. Click on the |rect_button| symbol to select the rectangle drawing tool.
+
+3. Click somewhere in the drawing area, press down the left mouse button, move the mouse till the rectangle has reached the desired size, and release the button.
+
+4. Click on the |circle_button| symbol to select the circle drawing tool.
+
+5. Draw the circle the same way as described in step 3.
+
+6. Click the |save_button| symbol after you have finished the drawing interactions to save the display.
+
+.. figure:: images/draw_display.png
+
+    Drawing simple elements and saving the display
+
+.. rubric:: 3.3 Generating a web visualization
+
+1. Choose :menuselection:`Guided Actions --> Distribute to Webserver --> Demoserver` from the menu bar.
+
+2. The visualization files will be generated and saved to the "Data Root Target" (configured in the server settings) after the process has finished.
+
+.. figure:: images/generate_visu.png
+
+    Generating a visualization
+
+.. hint:: Another way to generate the visualization is by right-clicking on "DemoServer" and choosing :menuselection:`Distribute`.
+
+    .. figure:: images/generate_visu2.png
+
+.. |circle_button| image:: /common_images/circle_button.png
+.. |rect_button| image:: /common_images/rect_button.png
+.. |save_button| image:: /common_images/save_button.png

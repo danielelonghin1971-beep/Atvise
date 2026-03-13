@@ -1,0 +1,84 @@
+Aggregate Manager
+#################
+
+The Aggregate Manager Quick Dynamic allows subscriptions to aggregates. It makes it easy to subscribe to any node and / or aggregate address. The evaluation of the address type takes place automatically. If the transferred address is an aggregate, the required parameters for the subscription are determined automatically using the function *BrowseNodes*. The result is optionally passed to a common or two separate function(s) for processing.
+
+.. rubric:: Usage:
+
+Loading the Aggregate Manager:
+    The aggregate manager is loaded via webMI.callExtension. The call for loading must be made in the display before the first call of the aggregate manager!
+
+    ::
+
+        var AggregateManager = webMI.callExtension("SYSTEM.LIBRARY.ATVISE.QUICKDYNAMICS.Aggregate Manager");
+        webMI.addOnunload(function unloadAggregateManager() {
+            AggregateManager.destroy();
+            AggregateManager = null;
+        });
+	
+Call the aggregate manager:
+    For a data query with the help of the aggregate manager, the function subscribeNodeOrAggregate should be used. It automatically evaluates the given address (base) and executes the corresponding subscription.
+
+    ::
+
+		var subscriptionID = AggregateManager.subscribeNodeOrAggregate(base, manageNodeResult, manageAggregateResult);
+	
+    Function parameters:
+
+        - **base** -- Node address or aggregate address
+        - **manageNodeResult** -- Function to pass the query result to for nodes
+        - **manageAggregateResult** -- Function to pass the query result to aggregates
+
+    If manageAggregateResult is not set, then both the nodes and aggregates use the manageNodeResult function.
+
+Termination of a subscription:
+    A subscription can be terminated with "webMI.data.unsubscribe", regardless of the type.
+
+    ::
+    
+        webMI.data.unsubscribe(subscriptionID);
+	
+.. rubric:: Example 1 - Only manageNodeResult defined:
+
+::
+
+	var AggregateManager = webMI.callExtension("SYSTEM.LIBRARY.ATVISE.QUICKDYNAMICS.Aggregate Manager");
+	webMI.addOnunload(function unloadAggregateManager() {
+        AggregateManager.destroy();
+        AggregateManager = null;
+	});
+
+	var base = "AGENT.OBJECTS.x";
+	var subscriptionID = AggregateManager.subscribeNodeOrAggregate(base, manageNodeResult);
+
+	/* Will be executed for node and aggregate addresses */
+	function manageNodeResult(e){
+        var data = e.value;
+        ...
+	}
+	
+.. rubric:: Example 2 - manageNodeResult and manageAggregateResult defined:
+
+::
+
+	var AggregateManager = webMI.callExtension("SYSTEM.LIBRARY.ATVISE.QUICKDYNAMICS.Aggregate Manager");
+	webMI.addOnunload(function unloadAggregateManager() {
+        AggregateManager.destroy();
+        AggregateManager = null;
+	});
+
+	var base = "AGENT.OBJECTS.x";
+	var subscriptionID = AggregateManager.subscribeNodeOrAggregate(base, manageNodeResult, manageAggregateResult);
+
+	/* Will be executed for node addresses */
+	function manageNodeResult(e){
+        var data = e.value;
+        ...
+	}
+
+	/* Will be executed for aggregate addresses */
+	function manageAggregateResult (e){
+        var data = e.value;
+        ...
+	}
+	

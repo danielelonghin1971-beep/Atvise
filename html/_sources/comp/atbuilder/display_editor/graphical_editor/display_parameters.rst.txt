@@ -1,0 +1,44 @@
+Display parameters
+##################
+
+Display parameters simplify your work with the atvise builder. Every display can have its own parameters. They can be set in the graphics editor. There are :doc:`various ways <display_para_ways>` of working with parameters.
+
+.. figure:: images/display_parameters.png
+
+    "Edit Parameters" in the graphics editor
+
+1. Click on the icon to open the "Edit Parameter" window.
+2. Here you can edit the parameters of a display:
+
+    Name:
+        Enter the name of the parameter.
+
+    Substitute:
+        A wild card for the display. For example, if a standard text is to be displayed which changes dynamically when the parameter value in the object display is edited. We recommend the spelling "$<NAME>$" (e.g. $OBJECTID$)
+
+    Description:
+        Describes a parameter.
+
+    Behavior:
+        Changes just the appearance of the input field in the attributes area of the display editor.
+
+        - *Mandatory*: The parameter's input field will be shaded in red to indicate a mandatory field.
+        - *Optional*: Default setting. The field has no special shading.
+        - *Hidden*: The parameter will not be shown.
+
+    Value Type:
+        There are different kinds of value types (address, display, string, trstring, number, bool, color, enum, global), which can be used for parameters.
+
+    Default Value:
+        When a default value is set, the substitute value will be displayed with the default value.
+
+    Config:
+        Has different meanings depending on the value type. Example: value type= enum, config=option1;option2. This results in a drop-down box where opt.1;opt. 2 are displayed in a list.
+
+    Group:
+        Multiple Parameters can be structured by entering the same group name, that will be shown in the attributes area of the display editor. A group name can be chosen freely.
+
+    Example: The parameter "fontFamily", "fontColor" and "fontSize" has the same group name "Font". Now all text specific parameters are clearly classified in one group.
+
+3. If you drag a display like this from your pool into an object display, the "Substitute" value changes to the "Default Value" if one is defined.
+4. If you type in a value as in the picture above, it will replace the "Substitute" value. If you type in nothing, the "Default Value" will replace the "Substitute" value.

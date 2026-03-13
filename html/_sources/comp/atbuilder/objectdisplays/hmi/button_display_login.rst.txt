@@ -1,0 +1,26 @@
+Button/Display Login
+####################
+
+This control displays either the currently logged in user or an individual text and it also has a button to open the login dialog.
+The "logged in" / "not logged in" states are displayed by different symbols too.
+
+.. rubric:: Parameters
+
+- **login text** - if this parameter value is blank then the currently logged in user will be displayed otherwise the login text will be displayed (default: T{Login})
+
+Font:
+
+- **family** - font family (Default: Arial (Advanced), Verdana (Standard))
+- **size** - font size (Default: 22)
+- **color** - font color (default: global parameter atvFontColor (advanced), #ffffff (standard))
+
+Appearance:
+
+- **symbol login** - symbol that will be used for the login state (Default: SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Symbols.20x20.login)
+- **symbol logout** - symbol that will be used for the logout state (Default: SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Symbols.20x20.logout)
+- **symbol color login** - fill color for the login symbol (default: global parameter atvSymbolColor (advanced), #ffffff (standard))
+- **symbol color logout** - fill color for the logout symbol (default: global parameter atvSymbolColor (advanced), #ffffff (standard))
+- **fill color** - background color of the control (default: global parameter atvFillColor (advanced), #000000 (standard))
+- **fill color when inactive** - button's fill color if not active (default: global parameter atvInactiveColor (advanced), #8c8c8c (standard))
+- :advstyle:`Advanced` **border color** - color of the button's border (default: global parameter atvBorderColor)
+- **stroke color when pressed** - color of the border when pressing the button (default: #ffff00 (standard))

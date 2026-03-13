@@ -1,0 +1,16 @@
+Recipe management
+#################
+
+.. toctree::
+
+    recipemanager/add_popup
+    recipemanager/error_popup
+    recipemanager/recipe_delete
+    recipemanager/recipe_editor
+    recipemanager/recipe_manager
+    recipemanager/recipe_navigation
+    recipemanager/recipe_picker_combobox
+    recipemanager/recipe_picker_confirm
+    recipemanager/recipe_picker_table
+    recipemanager/recipe_template_editor
+    recipemanager/recipe_template_manager

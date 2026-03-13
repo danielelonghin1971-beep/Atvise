@@ -1,0 +1,91 @@
+.. _visu_intro:
+
+Introduction
+############
+
+The entire atvise webMI visualization is based on open web standards. All individual displays are stored in the SVG (Scalable Vector Graphics) format and are delivered to the browser of your choice by the web server included in the atvise server.
+
+Basically, every web browser that supports SVG, JavaScript and xmlhttp request should be able to display this visualization. To view a detailed up-to-date compatibility list, please visit https://www.atvise.com -> Compatibility List.
+
+To view the visualization of your project, start a compatible web browser and call up the machine on which the atvise server is running. To do this, type in the IP address or the host name of this machine in the address bar of the browser.
+
+.. hint:: If the atvise server is running on your local computer, you can start the visualization by typing in ``http://localhost``.
+
+Due to the interdependence between visualization and licensing, please note:
+
+.. hint:: For information about the CCD licensing in atvise scada, see the section :ref:`ccd_licensing`.
+
+.. _visu_ui:
+
+User interface
+**************
+
+atvise provides several default layouts for the visualization that can be selected after the first project start or via server settings (open the context menu with a right click on :treeselection:`My Server` and click the *Edit Server...* option). The layout "Advanced 1920 x 1080 (16:9)" is described as an example.
+
+.. figure:: images/visu_default.png
+
+The user interface of the visualization is generally divided into the following areas:
+
+.. rubric:: 1. Language, access control event log, login/logout, zooming
+
+|visu_language| **Language switch**
+    Allows to select another :ref:`language<languages>`. The order of displayed languages can be defined via :ref:`"frame.languages"<framelanguages>` in the :file:`webmicfg.js` file.
+|visu_ac_log| **Access control event log**
+    Opens the :ref:`access control event log<ac_eventlog>` that shows notifications in case of insufficient user rights for specific actions.
+|visu_login| or |visu_logout| **Login / Logout**
+    Allows a user to log in or out. See also the chapter :ref:`Authentication<visu_login>`.
+|visu_zoom_in| **Zoom in**
+    Enlarges the zoom factor by 10%.
+|visu_zoom_out| **Zoom out**
+    Reduces the zoom factor by 10%.
+|visu_zoom_area| **Zoom to area**
+    Zooms to a selected area. To use this tool, first click on the "zoom to area" symbol, then drag a rectangle by clicking on two opposite corners of the area. Alternatively you can click and hold the mouse button on the forst corner, move the mouse to the other corner and release the mouse button.
+
+    .. hint:: You can change the visible part of a zoomed-in display by holding the :kbd:`Alt` key and moving the content with the pressed mouse button.
+
+|visu_zoom_origin| **Zoom to origin**
+    Sets the zoom factor back to 100%, the display will look the same as after opening it.
+
+.. rubric:: 2. Display area
+
+Shows the currently opened SVG display. The *Main* display is opened by default. It is possible to define custom start displays for logged in users (see :ref:`user management<user_settings>`.
+
+.. rubric:: 3. Navigation
+
+This area enables you to navigate through the visualization and open the respective display in the display area with a left mouse click. It shows the structure of folders (e.g. default folders MAIN, USER, etc.) and displays as defined in the atvise builder below :treeselection:`Server --> My Server --> DISPLAYS`. Refer to the :ref:`Navigation<navigation>` chapter for further information.
+
+.. rubric:: 4. Favorites, alarming, history list, highcharts, alarm log 
+
+|visu_favorite| **Favorites**
+    Allows to add the current display to the favorites or open an already added display.
+|visu_alarm| **Alarm list**
+    Opens the :ref:`alarm list<alarmlist>`.
+|visu_history| **History list**
+    Opens the :ref:`history list<historylist>`.
+|visu_highchart| **Highcharts**
+    Opens the :ref:`highcharts<visu_highcharts>` display.
+|visu_alarmlog| **Alarm log**
+    Displays information about alarm status changes.
+
+    .. hint:: A blinking red rectangle around the alarm log button indicates the existence of a currently unacknowledged alarm.
+
+.. |visu_alarm_acceptbutton| image:: images/visu_alarm_acceptbutton.png
+.. |visu_alarm_horn| image:: images/visu_alarm_horn.png
+.. |visu_alarm_jump| image:: images/visu_alarm_jump.png
+.. |visu_alarm_list| image:: images/visu_alarm_list.png
+.. |visu_alarm_state1| image:: images/visu_alarm_state1.png
+.. |visu_alarm_state2| image:: images/visu_alarm_state2.png
+.. |visu_alarm_state3| image:: images/visu_alarm_state3.png
+.. |visu_zoom_area| image:: /common_images/visu_zoom_area.png
+.. |visu_zoom_in| image:: /common_images/visu_zoom_in.png
+.. |visu_zoom_origin| image:: /common_images/visu_zoom_origin.png
+.. |visu_zoom_out| image:: /common_images/visu_zoom_out.png
+.. |visu_language| image:: images/visu_language.png
+.. |visu_ac_log| image:: images/visu_ac_log.png
+.. |visu_login| image:: images/visu_login.png    
+.. |visu_logout| image:: images/visu_logout.png
+.. |visu_favorite| image:: images/visu_favorite.png
+.. |visu_alarm| image:: images/visu_alarm.png
+.. |visu_history| image:: images/visu_history.png
+.. |visu_highchart| image:: images/visu_highchart.png
+.. |visu_alarmlog| image:: images/visu_alarmlog.png

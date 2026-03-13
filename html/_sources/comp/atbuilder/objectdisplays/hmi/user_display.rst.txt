@@ -1,0 +1,20 @@
+Display User
+############
+
+This control displays the currently logged in user or a default text if no user is logged in.
+
+.. rubric:: Parameters
+
+- **login text** -- Text that will be displayed if no user is logged in (default: T{Login}).
+
+Font: 
+
+- **family** -- Font family (default: Arial)
+- **size** -- Font size (default: 22)
+- **color** -- Font color (default: global parameter atvFontColor (advanced), #ffffff (standard))
+
+Appearance:
+
+- **fill color** -- Fill color of the control (default: global parameter atvFillColor (advanced), #000000 (standard))
+- :advstyle:`Advanced` **value field fill color** -- Background color of the value field (default: #ffffff)
+- :advstyle:`Advanced` **border color** -- Color of the control's border (default: global parameter atvBorderColor)

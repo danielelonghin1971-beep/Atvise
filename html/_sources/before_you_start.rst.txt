@@ -1,0 +1,79 @@
+Before you start
+################
+
+Before starting your projects, please pay attention to the following information:
+
+#. Please read the System Requirements below before proceeding with your projects!
+#. Please check compatibility to older versions of atvise under Migration Information.
+#. Information regarding external created SVG files.
+#. Please read the Software License Agreement before proceeding with your projects!
+
+System Requirements
+*******************
+
+.. hint:: The supported operating systems and atvise pure web HMI-tested web browsers can be found on www.atvise.com under `System Requirements <https://www.atvise.com/en/resources/system-requirements>`_.
+
+Typical system requirements (depending on your project size):
+
+.. csv-table:: atvise (scada, engineering)
+    :widths: 1, 3
+
+    Hard disk [MB], 128 (depends on project size/archiving)
+    Memory [MB], 128 (depends on project size)
+    Resolution [pixel], 800x600
+    CPU [type/MHz], Intel 500MHz (for small servers and projects)
+    CPU [type/MHz], Intel 1.6GHz (for standard servers and engineering)
+
+.. csv-table:: When using aggregate functions
+    :widths: 1, 3
+
+    Operating system, "like atvise scada, but only 64 bit"
+    CPU, at least 4 cores
+    RAM, "at least 8GB, additional 1.5GB for each 1GB of source data (raw or aggregated data) to be aggregated simultaneously"
+
+.. attention:: If you have a virus scanner on your system, we strongly recommend to configure it to exclude the files used by atvise! Failure to do so may lead to unexpected and hard to diagnose errors.
+
+.. _update_projects:
+
+Migration Information - short description
+*****************************************
+
+.. rubric:: atvise versions < 3.3
+
+Projects created with atvise versions < 3.3 must be converted by using the maintenance tool. 
+
+.. rubric:: Automatic conversion of atvise versions >= 3.3
+
+Projects created with atvise version 3.3 or newer can also be converted automatically. The necessary modifications are automatically done when starting the project with atvise |release| for the first time. In addition, the nodes.db is updated to match the defined :ref:`encryptionType<encryptionType>`.
+
+.. hint:: 
+    
+    - The original nodes.db is automatically backed up in order to prevent unintentionally losing old projects. The backup mechanism can be disabled with :ref:`backupBeforeConversion = false<backupBeforeConversion>`.
+    - The maintenance tool must be used to update the atvise default resources.
+
+If data of an old project is imported (by version control or XML), manual adaptations are necessary. The following table shows the required steps: 
+
+.. csv-table:: Project update
+  :header: "Automatic update (project conversion)", "Manual update (version control or XML import)"
+  :widths: auto
+  :quote: '
+ 
+    '1. **User:** Project administrator rights are automatically set for all existing users.', '1. **Users:** Project administrator rights must be manually defined to provide them with all access rights (see :ref:`user settings<user_settings>`)'
+    
+    '2. **Groups:** The groups "Anonymous" and "AuthenticatedUser" are created.
+    
+    If there are groups with the same name (and assigned users) in the old project, the suffix "_converted" is added to nodeId, browseName, displayName and description of these groups. The assigned users remain and the groups "Anonymous" and "AuthenticatedUser" can be created.', '2. **Groups:** If there are groups with the same name (and assigned users) in the old project, it is necessary to rename them either directly in the export file or before the export.'
+    
+    '3. **Anonymous access:** If it was possible to connect to the server without any login, the anonymous access is automatically enabled.', '3. **Anonymous access:** :ref:`Set anonymous and NTLM users as project administrator<menu_access_control>` must be enabled via :menuselection:`Access Control --> Settings`.'
+
+Information for SVG
+*******************
+
+SVGs which are created in external editors must not use CSS styles and also must not be saved as editor specific formats (like e.g. Inkskape SVG, ... ).
+
+The display editor supports `SVG Tiny 1.2 <https://www.w3.org/TR/SVGTiny12/>`_. CSS is not supported.
+
+Software License Agreement
+**************************
+
+Please read the Software License Agreement regarding the usage, licensing and copyright of atvise® and the third-party software used in atvise®.

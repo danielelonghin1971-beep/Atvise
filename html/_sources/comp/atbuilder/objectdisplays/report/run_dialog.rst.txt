@@ -1,0 +1,8 @@
+Generate Report Dialog
+######################
+
+.. rubric:: Parameters
+
+- **font color** -- Color applied to texts of the object display (default: global parameter atvFontColor)
+- **fill color** -- Fill color of background areas (default: global parameter atvFillColor)
+- **symbol color** -- Color of headline symbol (default: global parameter atvSymbolColor)

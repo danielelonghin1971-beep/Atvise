@@ -1,0 +1,513 @@
+.. _uanode_functions:
+
+UaNode functions (deprecated)
+#############################
+
+.. hint:: Some functions below take parameters of type **UaNodeId**. A UaNodeId is an internal identifier of a UaNode. UaNodeId does not exist as a JavaScript object. Integers are treated as a UaNodeId in namespace 0, strings as a UaNodeId in namespace 1. A UaNodeId may also be specified in "XML format", including the namespace and the identifier, e.g: "ns=1;s=AGENT.OBJECTS.MyNode".
+
+.. attention:: UaNode functions are deprecated and replaced by :ref:`Ua functions<ua_functions>` starting with atvise 3.6. A comparism of the respective functions can be found :ref:`here<ua_overview>`. UaNode functions can still be used to provide backward compatibility, however, it may result in errors and/or undefined behavior in conjunction with :ref:`access control<access_control_intro>`.
+
+.. rubric:: Node manipulation methods
+
+.. class:: UaNode(nodeId)
+
+    To use any of the functions below you first have to create a UaNode object.
+
+    Parameters:
+        - **nodeId** (UaNodeId) -- Specifies the UaNodeId of the UaNode.
+
+    Example::
+
+        var node = new UaNode("AGENT.OBJECTS.a");
+        var serverNode = new UaNode(2253);
+
+.. !!v8!! UaNode.exists()
+.. function:: UaNode.exists()
+
+    Returns:
+        true if the UaNode exists in the address space, false otherwise.
+
+    Example::
+
+        if (!node.exists())
+           node.create(...);
+
+.. !!v8!! UaNode.create(obj)
+.. function:: UaNode.create(obj)
+
+    Creates a node in the OPC UA address space.
+
+    Parameters:
+        - **obj** (Object) -- Input parameter object:
+
+            - **nodeclass** (Integer) Specifies the node class of the UaNode as one of the following constants:
+
+                - UaNode.NODECLASS_VARIABLE
+                - UaNode.NODECLASS_VARIABLETYPE
+                - UaNode.NODECLASS_OBJECT
+                - UaNode.NODECLASS_OBJECTTYPE
+                - UaNode.NODECLASS_VIEW
+
+            - **parent** (UaNodeId) -- Specifies the parent node of the UaNode.
+            - **typedefinition** (UaNodeId) -- Specifies the type definition node of the UaNode.
+            - **reference** (UaNodeId, optional, default: UaNode.HASCOMPONENT) -- Specifies the reference type for the reference from the parent to the newly created node.
+            - **modellingrule** (UaNodeId, optional, default: no modelling rule) -- Specifies the modelling rule for the UaNode:
+
+                - UaNode.MODELLINGRULE_MANDATORY
+                - UaNode.MODELLINGRULE_MANDATORYSHARED
+
+            - **browsename** (String, optional, default: string after last dot of the NodeId)
+            - **browsenamens** (Integer, optional, default: 1)
+            - **displayname** (String, optional, default: string after last dot of the NodeId)
+            - **description** (String, optional, default: string after last dot of the NodeId)
+
+        If *nodeclass* is UaNode.NODECLASS_VARIABLE or UaNode.NODECLASS_VARIABLETYPE then the following additional attributes are defined:
+
+            - **datatype** (UaNodeId) -- Specifies the data type of the UaNode variable. Common values are:
+
+                - UaNode.BOOLEAN
+                - UaNode.INT16
+                - UaNode.UINT16
+                - UaNode.INT32
+                - UaNode.UINT32
+                - UaNode.FLOAT
+                - UaNode.DOUBLE
+                - UaNode.STRING
+                - UaNode.DATETIME
+
+            - **valuerank** (Integer, optional, default: UaNode.VALUERANK_SCALAR)
+
+                - UaNode.VALUERANK_SCALARORONEDIMENSION
+                - UaNode.VALUERANK_SCALARORANYDIMENSIONS
+                - UaNode.VALUERANK_SCALAR
+                - UaNode.VALUERANK_ANYDIMENSIONS
+                - UaNode.VALUERANK_ONEDIMENSION
+                - >1 Specifies the dimension of the array
+
+            - **value** (Any) -- The value of the Variable or VariableType.
+
+        If *nodeclass* is UaNode.NODECLASS_OBJECT then the following additional attribute is defined:
+
+            - **eventnotifier** (Integer, optional, default: UaNode.EVENTNOTIFIERS_NONE) -- Specifies the event notifier setting for the UaNode:
+
+                - UaNode.EVENTNOTIFIERS_NONE
+                - UaNode.EVENTNOTIFIERS_SUBSCRIBETOEVENTS
+                - UaNode.EVENTNOTIFIERS_HISTORYREAD
+
+                Can also be ``UaNode.EVENTNOTIFIERS_SUBSCRIBETOEVENTS | UaNode.EVENTNOTIFIERS_HISTORYREAD`` if both flags should be set.
+
+    Returns:
+        The status of the operation.
+
+    Example::
+
+        var node = new UaNode("AGENT.OBJECTS.var1");
+        var status = node.create({
+            nodeclass: UaNode.NODECLASS_VARIABLE,
+            parent: "AGENT.OBJECTS",
+            typedefinition: UaNode.BASEVARIABLETYPE,
+            reference: UaNode.HASCOMPONENT,
+            datatype: UaNode.INT32,
+            valuerank: UaNode.VALUERANK_SCALAR,
+            value: 1
+        });
+
+        var folder = new UaNode("AGENT.OBJECTS.folder1");
+        var status = folder.create({
+            nodeclass: UaNode.NODECLASS_OBJECT,
+            parent: "AGENT.OBJECTS",
+            typedefinition: UaNode.FOLDERTYPE
+        });
+
+.. !!v8!! UaNode.remove()
+.. function:: UaNode.remove()
+
+    Removes the node from the OPC UA address space.
+
+    Returns:
+        The status of the operation.
+
+    Example::
+
+        var status = node.remove();
+
+.. !!v8!! UaNode.browse(obj)
+.. function:: UaNode.browse(obj)
+
+    Browses the UaNode with the settings specified by the input object.
+
+    Parameters:
+        - **obj** (Object) -- Input parameter object:
+
+            - **direction** (Integer, optional, default: UaNode.BROWSEDIRECTION_FORWARD)
+
+                - UaNode.BROWSEDIRECTION_FORWARD
+                - UaNode.BROWSEDIRECTION_INVERSE
+                - UaNode.BROWSEDIRECTION_BOTH
+
+            - **reference** (UaNodeId, optional, default: UaNode.HIERARCHICALREFERENCES)
+
+                - UaNode.NONHIERARCHICALREFERENCES
+                - UaNode.HIERARCHICALREFERENCES
+                - UaNode.HASCHILD
+                - UaNode.ORGANIZES
+                - UaNode.HASEVENTSOURCE
+                - UaNode.HASTYPEDEFINITION
+                - UaNode.HASEVENTHISTORY
+                - UaNode.AGGREGATES
+                - UaNode.HASSUBTYPE
+                - UaNode.HASPROPERTY
+                - UaNode.HASCOMPONENT
+                - UaNode.HASNOTIFIER
+                - UaNode.HASCONDITION
+                - UaNode.HASMODELLINGRULE
+                - UaNode.HASHISTORICALCONFIGURATION
+
+            - **subtype** (Boolean, optional, default: true) -- Specifies if subtypes of the reference type are included in browse.
+            - **nodeclass** (Integer, optional, default: UaNode.NODECLASS_UNSPECIFIED)
+
+                - UaNode.NODECLASS_UNSPECIFIED
+                - UaNode.NODECLASS_OBJECT
+                - UaNode.NODECLASS_VARIABLE
+                - UaNode.NODECLASS_METHOD
+                - UaNode.NODECLASS_OBJECTTYPE
+                - UaNode.NODECLASS_VARIABLETYPE
+                - UaNode.NODECLASS_REFERENCETYPE
+                - UaNode.NODECLASS_DATATYPE
+                - UaNode.NODECLASS_VIEW
+
+            - **maxresult** (Integer, optional, default: 0) -- Specifies the maximum number of the results to return.  If recursive is true then it is set to 0. 0 means no limit.
+            - **typedefinition** (UaNodeId, optional, default: no typedefinition) -- If given then return only nodes of the specified type.
+            - **recursive** (Boolean, optional, default: false) -- Used in conjunction with typedefinition and nodeclass. If true then all reachable nodes will be searched otherwise only directly referenced nodes.
+            - **exclude** (UaNodeId[], optional, default: []) -- If recursive is true then do not browse on branch of Objects and Variables with the specified types.
+
+    Returns:
+        An array of objects with following properties:
+
+            - **node** (UaNode)
+            - **reference** (UaNode)
+            - **isforward** (Boolean)
+            - **parent** (UaNode, optional) -- Only available if recursive is true.
+
+    Example::
+
+        var result = nodeobj.browse({
+            direction: UaNode.BROWSEDIRECTION_FORWARD,
+            reference: UaNode.HIERARCHICALREFERENCES,
+            subtype: true,
+            nodeclass: UaNode.NODECLASS_UNSPECIFIED,
+            maxresult: 0
+        });
+
+        for (var i = 0; i< result.length; ++i)
+            console.log(result[i]["reference"]["browsename"],
+                ",", result[i]["isforward"],
+                ":",result[i]["node"]["nodeid"]);
+
+.. !!v8!! UaNode.addreference(referenceTypeId, targetNodeId)
+.. function:: UaNode.addreference(referenceTypeId, targetNodeId)
+
+    Adds a reference to a UaNode.
+
+    Parameters:
+        - **referenceTypeId** (UaNodeId) -- Specifies the reference to add.
+        - **targetNodeId** (UaNodeId) -- Specifies the target node.
+
+    Returns:
+        The status of the operation.
+
+    Example::
+
+        var nodeobj = new UaNode("AGENT.OBJECTS");
+        var node = new UaNode("AGENT.OBJECTS.condition");
+        var status = nodeobj.addreference(UaNode.HASCONDITION, node);
+
+.. !!v8!! UaNode.deletereference(referenceTypeId, targetNodeId)
+.. function:: UaNode.deletereference(referenceTypeId, targetNodeId)
+
+    Deletes a reference to an UaNode.
+
+    Parameters:
+        - **referenceTypeId** (UaNodeId) -- Specifies the reference to delete.
+        - **targetNodeId** (UaNodeId) -- Specifies the target node.
+
+    Returns:
+        The status of the operation.
+
+.. !!v8!! UaNode.assign([obj])
+.. function:: UaNode.assign([obj])
+
+    Assigns value/status/sourcetime properties to a UaNode. The UaNode must be of the nodeclass UaNode.NODECLASS_VARIABLE.
+
+    Parameters:
+        - **obj** (Object, optional, default: {}) -- Input parameter object:
+
+            - **value** (Any, optional, default: current value) -- Specifies the value to assign to the UaNode.
+            - **status** (Integer, optional, default: current status) -- Specifies the status to assign to the UaNode.
+            - **sourcetime** (Date, optional, default: now)-- Specifies the sourcetime to assign to the UaNode.
+
+    Returns:
+        The status of the operation.
+
+    If the return value is Good (0) then the properties of the UaNode (defined by the input parameters) are set and the servertime property of the UaNode is set to the current time. If the input parameter object is empty or undefined then the sourcetime will remain unchanged, only the servertime will be set.
+
+    Example::
+
+        var status = node.assign({value: node.value + 1, status: UaNode.BADINTERNALERROR}); // sourcetime set automatically
+        node.assign({value: node.value + 1, status: 0, sourcetime: new Date(2013, 08, 20, 13)});
+        node.assign();
+
+.. rubric:: History access
+
+.. !!v8!! UaNode.datahistory(obj_or_array)
+.. function:: UaNode.datahistory(obj_or_array)
+
+    This function reads the data history at certain timestamps (ReadAt) or for a certain interval. The data in the interval can be raw data (ReadRaw) or aggregated values (ReadProcessed).
+
+    Parameters for ReadAt:
+        - **array** (Date[]) -- Specifies the timestamps to query
+
+    .. hint:: For calculating values at the given timestamps, the setting :ref:`Interpolation <interpolation>` of the data archive group is used.
+
+    Parameters for ReadRaw:
+        - **obj** (Object) -- Input parameter object:
+
+            - **starttime** (Date, optional, default: undefined) -- Specifies the start time of the range to read.
+            - **endtime** (Date, optional, default: undefined) -- Specifies the end time of the range to read.
+            - **numvalues** (Integer, optional, default: 0) -- Specifies the maximum number of values that shall be returned for the call. 0 means no limit.
+            - **returnbounds** (Boolean, optional, default: false) -- If true, the first value before and after the time range are included in the result. If only either *starttime* or *endtime* is specified, only the bound of the given timestamp will be included.
+            - **continuationpoint** (Integer, optional, default: 0) -- The continuation point to use.
+            - **timeout** (Integer, optional, default: 0) -- The timeout (in seconds) specifies how long the script waits for the requested data. If 0, the internal default of 3600 seconds (1 hour) is used.
+
+    .. hint:: At least two of the three properties *starttime*, *endtime* and *numvalues* (greater than 0) must be supplied. The different combinations have following meaning:
+
+        - *starttime*, *endtime*, optional *numvalues* -- Return all values in the range from *starttime* to *endtime*. If *numvalues* greater than 0 is supplied, return at most *numvalues* values and a continuation point.
+        - *starttime*, *numvalues* -- Return at most *numvalues* values beginning at *starttime* with ascending timestamps.
+        - *endtime*, *numvalues* -- Return at most *numvalues* values beginning at *endtime* with descending timestamps.
+
+        For more details regarding the use of the properties see OPC UA specification Part 11.
+
+    Parameters for ReadProcessed:
+        - **obj** (Object) -- Input parameter object:
+
+            - **starttime** (Date) -- Specifies the start time of the range to read.
+            - **endtime** (Date) -- Specifies the end time of the range to read.
+            - **aggregate** (UaNodeId) or **aggregates** (UaNodeId[]) -- Either "aggregate" or "aggregates" must be defined, but not both. Specifies the aggregate function(s). For a list of supported aggregate functions, see :ref:`here <aggregate_functions>`. An aggregate function can be specified in the format UaNode.AGGREGATEFUNCTION_NAME, where NAME must be replaced with the respective aggregate function in uppercase letters. e.g: UaNode.AGGREGATEFUNCTION_AVERAGE.
+            - **samplinginterval** (Integer) -- Specifies the interval of the aggregate function(s) in milliseconds.
+            - **continuationpoint** (Integer or Integer[], optional, default: 0 or []) -- The continuation point to use.
+            - **timeout** (Integer, optional, default: 0) -- The timeout (in seconds) specifies how long the script waits for the requested data. If 0, the internal default of 3600 seconds (1 hour) is used.
+
+        .. hint:: Please note that these queries only return pre-aggregated data (see :ref:`aggregating_data`).
+
+    Returns:
+        An object with following properties:
+
+        - **status** (Integer) -- OPC UA status of the call. Will be set to UaNode.BADTIMEOUT, if the timeout expires.
+        - **continuationpoint** (Integer) -- The continuation point of the request.
+        - **values** (Object[]) -- An array of objects containing the requested data:
+
+            - **status** (Integer)
+            - **servertime** (Date)
+            - **sourcetime** (Date)
+            - **value** (Any)
+
+        If multiple aggregate functions are requested, the return value is an array of objects above.
+
+        .. hint:: *ReadRaw* and *ReadProcessed* may return a continuation point to allow the user to call the function repeatedly to retrieve huge results sets. If the returned data contains a continuation point (a value greater than 0), the same function can be called again with the returned continuation point as additional parameter to retrieve additional data. The query is finished, when the returned continuation point is 0. If the query should be canceled before all data is retrieved, use :func:`UaNode.datahistoryRelease` to free the resources used by the continuation point.
+
+    Example::
+
+        var t1 = new Date(2011, 05, 12, 13, 0, 0);
+        var t2 = new Date(2011, 05, 12, 13, 30, 0);  
+        var resultAt = node.datahistory([t1, t2]);
+        console.log(resultAt);
+
+        var resultRaw = node.datahistory({starttime: t1, endtime: t2});
+        console.log(resultRaw);
+
+        var resultMinuteAvg = node.datahistory({
+            starttime: t1,
+            endtime: t2,
+            aggregate: UaNode.AGGREGATEFUNCTION_AVERAGE,
+            samplinginterval: 60000
+        });
+        console.log(resultMinuteAvg);
+
+        var resultMinMax = node.datahistory({
+            starttime: t1,
+            endtime: t2,
+            aggregates: [UaNode.AGGREGATEFUNCTION_MINIMUM, UaNode.AGGREGATEFUNCTION_MAXIMUM],
+            samplinginterval: 60000
+        });
+        console.log(resultMinMax);
+
+.. !!v8!! UaNode.datahistoryRelease(continuationpoint)
+.. function:: UaNode.datahistoryRelease(continuationpoint)
+
+    This function releases the given continuation point(s).
+
+    Parameters:
+        - **continuationpoint** (Integer or Integer[]) -- The continuation point(s) to release. Can be a single value or an array.
+
+.. rubric:: Calling OPC UA methods
+
+.. !!v8!! UaNode.call(object, input)
+.. function:: UaNode.call(object, input)
+
+    This functions allows to call any OPC UA method of the atvise server. The UaNode itself must be the method, the object to act upon and the input arguments are passed to UaNode.call.
+
+    Parameters:
+        - **object** (UaNodeId) -- The UaNodeId of the object to pass to the OPC UA method.
+        - **input** (Object[]) -- The array of input parameters to pass to the OPC UA method. Each element is an object with following properties:
+
+            - **type** (Integer) -- The data type of the value (UaNode.BOOLEAN, UaNode.INT32, UaNode.STRING, ...).
+            - **value** (Any) -- The value of the variable in the given data type.
+
+    Returns:
+        An object with following properties:
+
+        - **error** (Integer) -- The error code, supplied only if the OPC UA method call returned an error.
+        - **argumentError** (Integer[]) -- The status codes for each input argument, supplied only if the OPC UA method call returned an error.
+        - **result** (Object[]) -- The array of output arguments of the OPC UA method.
+
+    Example, set the log level of the alarm module to "debug"::
+
+        var method = new UaNode("AGENT.OPCUA.METHODS.serverCommand");
+        var res = method.call({
+            object: "AGENT.OPCUA.METHODS",
+            input: [{type: UaNode.STRING, value: "log d alarm"}]
+        });
+
+        if (res.error)
+            console.log("call error: " + method.statusToString(res.error));
+        else
+            console.log(res.result[0]);
+
+.. rubric:: Test/Compare methods
+
+.. !!v8!! UaNode.good([statusCode])
+.. function:: UaNode.good([statusCode])
+.. !!v8!! UaNode.bad([statusCode])
+.. function:: UaNode.bad([statusCode])
+.. !!v8!! UaNode.uncertain([statusCode])
+.. function:: UaNode.uncertain([statusCode])
+
+    Checks the OPC UA status code.
+
+    Parameters:
+        - **statusCode** (Integer, optional, default: this.status) -- Specifies the status code to test.
+
+    Returns:
+        true, if the status code to test is good, bad resp. uncertain.
+
+    Example::
+
+        if (node.good()) console.log("good");
+        if (node.bad(status)) console.log("bad");
+
+.. !!v8!! UaNode.equal(node1[, node2])
+.. function:: UaNode.equal(node1[, node2])
+
+    Test equivalence of nodes.
+
+    Parameters:
+        - **node1** (UaNodeId) -- Specifies the node to compare as a UaNodeId.
+        - **node2** (UaNodeId, optional, default: this.nodeid) -- Specifies the second node to compare as a UaNodeId.
+
+    Returns:
+        true if node1 and node2 evaluate to the same UaNodeId, false otherwise.
+
+    Example::
+
+        if (node.equal("AGENT.OBJECTS.a"))
+            console.log("OK");
+        if (node.equal(node2))
+            console.log("OK");
+
+.. rubric:: String conversion methods
+
+.. !!v8!! UaNode.toString()
+.. function:: UaNode.toString()
+
+    Returns:
+        A representation of the node as JSON formatted string.
+
+.. !!v8!! UaNode.statusToString([statusCode])
+.. function:: UaNode.statusToString([statusCode])
+
+    Parameters:
+        - **statusCode** (Integer, optional, default: this.status) -- Specifies the status code to convert.
+
+    Returns:
+        A string representation of the status code.
+
+    Example::
+
+        console.log(node.statusToString());
+        console.log(node.statusToString(status));
+
+.. !!v8!! UaNode.nodeclassToString([nodeClass])
+.. function:: UaNode.nodeclassToString([nodeClass])
+
+    Parameters:
+        - **nodeClass** (Integer, optional, default: this.nodeclass) -- Specifies the node class to convert.
+
+    Returns:
+        A string representation of the node class.
+
+    Example::
+
+        console.log(node.nodeclassToString());
+        console.log(node.nodeclassToString(UaNode.NODECLASS_VARIABLE));
+
+.. rubric:: UaNode object properties
+
+value
+    Actual value of variable node
+
+status
+    Actual status of variable node
+
+servertime
+    Server time of variable node. It reflects the timestamp when the server stored the last known value or status change.
+
+    .. hint:: This time may be different from the server time displayed in atvise builder or in other UA clients: they may show the current time as the server time if the value was interrogated at the first time e.g. in a subscription.
+
+sourcetime
+    Source time of variable node. It reflects the timestamp of the last change of the value or status that was applied to the variable by the data source.
+
+browsename
+    Name part of the browse name
+
+browsenamens
+    Namespace index of the browse name
+
+displayname
+    Text part of the display name
+
+displaynamelocale
+    Locale part of the display name
+
+description
+    Text part of the description
+
+descriptionlocale
+    Locale part of the description
+
+nodeclass
+    Node class enum. See UaNode.NODECLASS_### constants
+
+typedefinition
+    NodeID of the type definition
+
+nodeid
+    The node ID of the node in XML-string form. E.g. 'ns=1;s=AGENT.OBJECTS.a'
+
+nodeaddr
+    The string part of the nodeID. E.g.: 'AGENT.OBJECTS.a'
+
+datatype
+    The data type of the variable node. E.g.: UaNode.INT32, UaNode.BOOLEAN, UaNode.STRING, UaNode.DOUBLE, UaNode.XMLELEMENT, etc.
+
+valuerank
+    The value rank of the variable node. -1=SCALAR, 0=ARRAY, 1--n=ARRAY_DIMENSION. You can use UaNode.VALUERANKSCALAR, UaNode.VALUERANKONEDIMENSION, etc.

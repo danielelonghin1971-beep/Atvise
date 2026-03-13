@@ -1,0 +1,41 @@
+Toolbar
+#######
+
+This display provides controls for the highcharts. It enables or disables live mode, shows or hide measurement markers and opens the configuration dialog.
+
+.. rubric:: Parameters
+
+The following parameters exists:
+
+- **chart name** -- This is a unique name to identify the chart instance (default: trend1)
+
+Appearance:
+
+- **enable live button** -- Shows a button to enable the live mode of the chart (default: true)
+- **enable marker 1** -- Shows a button to enable the measurement marker 1 in the chart (default: true)
+- **enable marker 2** -- Shows a button to enable the measurement marker 2 in the chart (default: true)
+- **enable options button** -- Shows a button to open the configuration dialog (default: true)
+- :advstyle:`Advanced` **line color** -- Color of the lines between button groups (default: global parameter atvBorderColor)
+
+Options:
+
+- **mode for options button** -- Available options: pop-up, trigger or frame.  (Default: popup)
+- **path to data source implementation for tree view** -- Defines the path to the selected data source for the tree view (default: treeView/datasources/opcua.js)
+- **set caching behavior for tree view** -- Defines the caching behavior for the tree view. If true, node information will be preloaded and cached (default: true)
+- **change compression** -- Defines if the user is allowed to change the compression settings (default: false)
+- **trigger name** -- The name of the trigger, which is fired if the options button is in trigger mode (default: com.atvise.highchart_options)
+- **target frame** -- Defines the name of the target frame. The configuration dialog will be opened in this frame (default: chartframe)
+- **node entry path** -- Defines the entry path for the tree view in the configuration dialog (Default: AGENT.OBJECTS)
+
+Security:
+
+In addition there are parameters to define the rights for showing the configuration dialog, to load or save a configuration and to enable the export menu.
+
+- **necessary right** -- The user must have this right for the function to work
+- **activation address** -- If the value of this address equals to "activation value", then the function will be active
+- **activation value** -- Value which activates the function
+
+Subdisplay:
+
+- **dialog for options** -- Dialog that is opened when clicking the options button (Default: "Configuration - Top" object display)
+- **dialog for options (small)** -- Dialog (small) that is opened when clicking the options button (Default: "Configuration - Top (small)" object display)

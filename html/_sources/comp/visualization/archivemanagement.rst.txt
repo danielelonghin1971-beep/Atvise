@@ -1,0 +1,232 @@
+.. _archivemanagement:
+
+Archive Management
+##################
+
+The archive management is meant for managing historical archive data. The object display offers an overview of all archive files and provides the possibility of creating backups as well as moving or copying archive files to specified directories.
+
+.. figure:: images/archive_management.png
+
+Display
+*******
+
+.. rubric:: Filters
+
+Click the buttons on top of the table for filtering the archives by archive type, location or existing conflicts. 
+
+- Archive type:
+
+    - **D** -- Data archive
+    - **E** -- Event archive
+    - **A** -- Aggregated archive
+    - **DB** -- System database
+
+- Location:
+
+    - **H** -- History directory which is used by atvise to store its archive files.
+    - **B** -- Backup directory which can be used for a backup of archive files. atvise scada does not use or know this directory.
+    - **S** -- Swapin directory; atvise scada does not store archive files in this directory and has only read access to swapped in files.
+    - **R** -- Restore directory which can be used like the backup directory for storing and restoring archive files. atvise scada does not use or know this directory.
+
+    .. hint:: 
+        - Network drives are not supported by the archive management.
+        - To swap archive files in and out correctly, you have to ensure that you use only archives from the currently active project and the archive configuration is still available in the project.
+
+- **C** -- Conflict only
+
+- **Keep archive(s) together** -- If you sort by a column (e.g. file size), this option groups the corresponding archives. For example, if the biggest file is displayed on top, all files of the corresponding archive are sorted by size below it. The next file (size-wise) of another archive follows after that.
+
+- **View log** -- Opens the :ref:`log view <logger>` that shows information or error message regarding actions like copying or moving archive files.
+
+.. rubric:: Table
+
+The table shows all existing archives that are matching the filter criteria. Furthermore, additional information like file name and size is provided. The respective text fields allow to filter by archive name, file name, :ref:`manually swapped files<to_swapin>` (|hand|) and creation or alteration time. Archives can be selected for further actions with the respective checkboxes.
+
+.. rubric:: Control
+
+- **Refresh** -- Table entries are updated 
+- **Auto-scheduler** -- Allows to configure or edit schedules (see :ref:`auto_scheduler`)
+- **To swapin** -- Moves the selected archives to the swapin directory (see :ref:`moving_archives`) 
+- **To backup** -- Stores the selected archives in the backup directory (see :ref:`moving_archives`) 
+- **Delete** -- Allows to delete selected archives located in the history or swapin directory
+
+.. hint:: 
+
+    - The tables shows the state at the time of the refresh. Archive files that are used at the time of the refresh, are greyed out in the table and cannot be moved, copied or deleted. If files are used after the refresh (e.g. by queries), they are still displayed as available, however, actions like remove will result in an error message.
+    - The atvise server needs up to 60 seconds to process new files after file operations. New file operations shall be avoided during this time.
+
+.. rubric:: Storage overview
+
+Shows the memory space available for the drive the respective directory is located on. 
+
+.. rubric:: Details
+
+Shows the number and size of the currently selected archives. 
+
+Configuration
+*************
+
+.. rubric:: Defining directories 
+
+It is necessary to specify the :ref:`backup and restore directory<historize_archive_management>` for a proper use of the archive management. 
+
+.. hint:: You have to specify absolute paths on the computer the atserver is running on.
+
+The history directory as well as the swapin directory are automatically defined by atvise. You can change them via the respective entry in the atserver.ini file. See :ref:`dataDir<atserver_ini_database>` resp. :ref:`swapInDir<atserver_ini_swapindir>`.
+
+.. rubric:: Parameter
+
+The object display's behavior and look (e.g. thresholds for disk space, user rights necessary for controls, etc.) can be altered with the respective parameters. Go to :ref:`atvise builder > Object Displays > Archive Management > Archive Management <od_archivemanagement>` for a detailed parameter list and description.
+
+Using the display
+*****************
+
+.. _moving_archives:
+
+.. rubric:: Moving/storing data
+
+Tick the respective checkboxes to select the archives that shall be moved or stored. The appropriate buttons for further actions are enabled in the *Control* section. 
+Depending on the source or target directory of the respective archive file, the following actions are available:
+
+.. only:: latex
+
+    +------+---------+---------+-------------+-------------+---------+
+    |      |         |                  to                           |
+    +======+=========+=========+=============+=============+=========+
+    |      |         | HISTORY | SWAPIN      | BACKUP      | RESTORE |
+    +------+---------+---------+-------------+-------------+---------+
+    |      | HISTORY | --      | move        | copy / move | --      |
+    |      +---------+---------+-------------+-------------+---------+
+    |      | SWAPIN  | --      | --          | copy / move | --      |
+    | from +---------+---------+-------------+-------------+---------+
+    |      | BACKUP  | --      | copy        | --          | --      |
+    |      +---------+---------+-------------+-------------+---------+
+    |      | RESTORE | --      | copy / move | --          | --      |
+    +------+---------+---------+-------------+-------------+---------+
+
+.. raw:: html
+
+    <style type="text/css">
+    .tg  {border-collapse:collapse;border-spacing:0;}
+    .tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:10px 5px;word-break:normal;}
+    .tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+    .tg .tg-c3ow{border-color:inherit;text-align:center;vertical-align:top}
+    .tg .empty{background-color:#656565;border-color:inherit;text-align:center;vertical-align:top}
+    .tg .fromto{background-color:#edf0f2;color:#000000;vertical-align: middle;text-align:center;}
+    .tg .inv{background-color:transparent;border-top-color:transparent;border-left-color:transparent;vertical-align:top}
+    .tg .heading{background-color:#edf0f2;border-color:black;color:#000000;font-weight:bold;text-align:center;vertical-align:top}
+    </style>
+    <table class="tg">
+        <thead>
+            <tr>
+                <th class="inv" colspan="2" rowspan="2"></th>
+                <th class="fromto" colspan="4">to</th>
+            </tr>
+            <tr>
+                <td class="heading">HISTORY</td>
+                <td class="heading">SWAPIN</td>
+                <td class="heading">BACKUP</td>
+                <td class="heading">RESTORE</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="fromto" rowspan="4">from<br></td>
+                <td class="heading">HISTORY</td>
+                <td class="empty"></td>
+                <td class="tg-c3ow">move</td>
+                <td class="tg-c3ow">copy / move</td>
+                <td class="tg-c3ow">-</td>
+            </tr>
+            <tr>
+                <td class="heading">SWAPIN</td>
+                <td class="tg-c3ow">-</td>
+                <td class="empty"></td>
+                <td class="tg-c3ow">copy / move</td>
+                <td class="tg-c3ow">-</td>
+            </tr>
+            <tr>
+                <td class="heading">BACKUP</td>
+                <td class="tg-c3ow">-</td>
+                <td class="tg-c3ow">copy</td>
+                <td class="empty"></td>
+                <td class="tg-c3ow">-</td>
+            </tr>
+            <tr>
+                <td class="heading">RESTORE</td>
+                <td class="tg-c3ow">-</td>
+                <td class="tg-c3ow">copy / move</td>
+                <td class="tg-c3ow">- </td>
+                <td class="empty"></td>
+            </tr>
+        </tbody>
+    </table>
+    </br>
+
+.. _to_swapin:
+
+**Swapin data**
+
+Click the :guilabel:`To swapin` button to move or copy archive files to the swapin directory. You still have (read-only) access to these archives from atvise scada, e.g. via historical queries. 
+
+The Auto-Scheduler ignores files that are swapped in from the backup or restore directory using this button. The respective files are indicated by the |hand| symbol and can be only manually moved or deleted.
+
+.. |hand| image:: images/archive_management_hand.png
+
+A popup window allows to select whether files shall be copied or moved when swapped in from the restore directory.
+
+**Storing data**
+
+Click the :guilabel:`To backup` button to create a backup of the selected archives. These archives are moved or copied to the backup directory and cannot be accessed from atvise scada anymore. 
+
+.. hint::
+    If you set parameter :ref:`mode for backup operation<od_archivemanagement>` to *Copy*, the archive data is copied and not moved to the backup directory.
+
+    It is not possible to delete created backups via the archive management. Therefore, backups can only be copied but not moved to the swapin directory. 
+
+.. _auto_scheduler:
+
+.. rubric:: Auto-scheduler
+
+Allows to automatically backup or move archives at scheduled intervals. 
+
+.. figure:: images/archive_management_scheduler.png
+
+**General**
+
+- Auto-scheduler active -- Activates the scheduler
+- Report errors -- Enables error reporting via server log file or e-mail
+- E-mail from -- The address that sends the report 
+- E-mail to -- The address the report is sent to
+- SMTP -- Allows to select a configured :ref:`SMTP server<smtp_settings>`
+
+**Schedules**
+
+Shows all schedules which are defined for archives. Use the :guilabel:`Add` button to define a new schedule. Existing schedules can be edited with a double-click or the :guilabel:`Edit` button in the last column.
+
+.. figure:: images/archive_management_add_schedule.png
+
+- Archive -- Specifies the archive that shall be moved or stored
+- Active -- Enables the schedule
+- First run -- Defines when the schedule shall run the first time
+- Interval -- Defines at which intervals the schedule shall be executed
+- File(s) older than -- Defines which archive files shall be moved or deleted
+- Action -- Action that is performed
+
+    - Copy (if parameter *mode for backup operation* is set to *Copy*)
+    - Move
+    - Delete 
+
+- Source directory -- Defines the source directory for the action
+- Destination directory -- Defines the directory to which the archive shall be moved
+
+.. _solving_conflicts:
+
+.. rubric:: Solving conflicts
+
+Conflicts only occur if you copy or move archive files on the file system manually and 
+
+- there are two archive files with the same name in the history data and swapin directory or
+- there are two archive files with the same name but different sizes (in any directories).
+
+Select and delete one of the involved archive files on the file system in order to solve the conflict.

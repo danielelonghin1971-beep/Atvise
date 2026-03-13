@@ -1,0 +1,30 @@
+Open PopUp
+##########
+
+This Quick Dynamic opens a display as a popup depending on one of the events defined by "onEvent".
+
+.. rubric:: Parameters:
+
+- **PopUp** (*PopUp to be displayed*) -- Display which will be opened as a popup
+- **onEvent** (*event triggering the PopUp*) -- The event triggering this Quick Dynamic, which is one of the following:
+
+    - **click** -- Mouse click
+    - **dblclick** -- Double-click of mouse button
+    - **mousedown** -- Press down the mouse button
+    - **mouseup** -- Release the mouse button
+    - **mouseover** -- Move the mouse cursor over the applied graphic element
+    - **mousemove** -- Move the mouse anywhere over the applied graphic element
+    - **mouseout** -- Move the mouse cursor out of the applied graphic element
+
+- **width** (*width of the PopUp*) -- Width of the popup (in pixels)
+- **height** (*height of the PopUp*) -- Height of the popup (in pixels)
+- **extern** (*opens PopUp in external window or not*) -- If true, the popup will be opened in external browser window
+- **menubar** (*enables/disables menubar*) -- If true, a menu bar will be displayed
+- **moveable** (*PopUp will be moveable or not*) -- If true, the popup will be moveable
+- **resizeable** (*PopUp will be resizeable or not*) -- If true, the popup will be resizeable
+- **scrollbars** (*enables/disable scrollbars*) -- If true, the popup will have scrollbars
+- **status** (*enables/disable statusbar*) -- If true, a status bar will be displayed
+- **title** (*title of the PopUp*) -- Specifies the title of the popup
+- **toolbar** (*enables/disables Toolbar*) -- If true, a toolbar will be displayed
+- **modal** (*opens PopUp modal or not*) -- If true, a popup of the modal type will be opened, i.e. always in the foreground
+- **pass through all parameters** (*pass through all parameters*) -- If true, all parameters will be passed through

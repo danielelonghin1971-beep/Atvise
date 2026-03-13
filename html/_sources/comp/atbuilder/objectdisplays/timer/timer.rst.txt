@@ -1,0 +1,53 @@
+Timer
+#####
+
+Comprehensive information about the usage of the timer can be found in the chapter :ref:`atvise visualization > timer <timer>`.
+
+.. rubric:: Parameters
+
+- :advstyle:`Advanced` **fill color** -- Fill color of background areas (default: global parameter atvFillColor)
+
+Configuration:
+
+- **timer configuration node** -- Includes the timer configuration (added events), see also :ref:`access control - visualization rights<ac_config_nodes>` (default: AGENT.OBJECTS.TimerConfig)
+- **timer id** -- The unique id for each "timer" object display. Moreover it is necessary if you use more than one "timer" object display. Otherwise you will see all added events at the second "timer" object display too.
+- **Variable start address** -- Location from where the existing nodes can be chosen in the timer (default: AGENT.OBJECTS)
+
+- **Timer step interval** -- Interval to choose start time of events (default: 5 min)
+
+Security:
+
+- **necessary right** -- The right which is necessary to use the "timer" object display in the visualization.
+- **activation address** -- If the value of this address equals to "activiation value", then the timer will be active and can be used.
+- **activation value** -- Value which activates the control.
+
+Columns:
+
+Allows to define which of the following columns shall be displayed:
+
+- **Show Recurring**
+- **Column width** (default: 200)
+- **Show First occ.**
+- **Column width** (default: 85)
+- **Show Last occ.**
+- **Column width** (default: 85)
+- **Show Start time**
+- **Column width** (default: 70)
+- **Show Duration (min)**
+- **Column width** (default: 140)
+- **Show Description**
+- **Column width** (default: 140)
+- **Show Node**
+- **Column width** (default: 160)
+- **Show Value on**
+- **Column width** (default: 90)
+- **Show Value off**
+- **Column width** (default: 90)
+- **Show Status**
+- **Column width** (default: 70)
+- **Show Action**
+- **Column width** (default: 70)
+
+Font:
+
+- :advstyle:`Advanced` **font color** -- Color which will be applied to labels (default: global parameter atvFontColor)

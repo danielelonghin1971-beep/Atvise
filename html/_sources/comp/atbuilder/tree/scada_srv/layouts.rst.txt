@@ -1,0 +1,71 @@
+.. _srv_layouts:
+
+Layouts
+#######
+
+Layouts define the basic structure of the visualization in atvise. The appearance of the "Default" display depends on the default layout that was selected when opening the project for the first time. There is a list of predefined layouts available.
+
+When starting a new and empty project, the layout dialog pops up:
+
+.. figure:: ../images/layouts_dialog.png
+
+    Layout dialog when opening a new and empty project
+
+.. start_include
+
+Additionally, the table at the bottom allows to define standard displays for data types that are used, e.g., when adding a node to a display via drag & drop. The object displays "SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.<Style>.button_switch" (for Boolean) and "SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.<Style>.in_out_value" (for Number and String) are used by default. A double-click on one of the rows opens the selector to assign another object display or user-defined display to the respective data type.
+Depending on the data type, the following parameters are passed to the displays:
+
+- atv:argument name="base" value="<node address>" //node address
+- atv:argument name="validation" value="Number|Bool|String" //data type
+- atv:argument name="postDecimal" value="2" //number of decimal places, only for data type Float
+
+.. rubric:: Layout definitions
+
+These layouts are defined in the atvise library:
+
+.. figure:: ../images/layouts_atvise.png
+
+    atvise layouts
+
+Custom layouts should be created in the project library:
+
+.. figure:: ../images/layouts_project.png
+
+    Project specific layouts
+
+You can copy existing layouts from the atvise library to get a basic template. The display dimensions and descriptions can be modified in the display menu :menuselection:`File --> Settings`:
+
+.. figure:: ../images/layouts_settings.png
+
+    Display settings
+
+Make sure to set the parameter "Display to open" of the referenced object display "IFRAME (Display Container)" to "%CONTENT%".
+
+.. figure:: ../images/layouts_iframe_parameter.png
+
+    IFRAME parameter
+
+Please note that the following parameters have to be modified in the SVG tag:
+
+- atv:contentheight="value"
+- atv:contentwidth="value"
+
+To edit these parameters, open the source editor of the display.
+
+Example for 1920x1080:
+
+.. code-block:: xml
+
+    <svg version="1.2"
+        width="1920"
+        height="1080"
+        atv:contentwidth="1920"
+        atv:contentheight="1080"
+        xmlns:xlink="http://www.w3.org/1999/xlink"
+        xmlns:atv="http://webmi.atvise.com/2007/svgext"
+        xmlns="http://www.w3.org/2000/svg">
+
+.. hint:: Newly created layouts are only selectable after restarting the atvise builder.
+
+.. stop_include

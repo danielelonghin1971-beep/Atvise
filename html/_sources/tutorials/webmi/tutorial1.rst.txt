@@ -1,0 +1,62 @@
+1 Start atvise
+##############
+
+.. rubric:: 1.1 Starting atvise server
+
+If atvise has been activated successfully, the server will start automatically (green icon in the taskbar), otherwise follow these steps to start the server manually:
+
+1. Right-click on the atvise icon in the right corner of the task bar.
+
+2. Choose "Project Console" from the menu which appears.
+
+3. Start the server by clicking the button shown in the picture below.
+
+The icon in the task bar will change its background color to yellow when the server is booting. When the server has started, it will turn to green.
+
+.. figure:: /common_images/start_server.png
+
+    Starting atvise server
+
+.. attention:: The atvise server is up if the icon in the task bar is green |server_up| ("atserver" service is running). Otherwise, you won't be able to connect to the server. If the server doesn't come up after starting it, check out the "atserver_std.log" file in your atvise installation directory for potential error messages.
+
+.. hint:: The atvise server uses the standard OPC UA port 4840 to communicate with atvise builder. If you encounter any problems with starting the atvise server, please make sure that no other application uses this port.
+
+.. rubric:: 1.2 Starting atvise builder
+
+1. Right-click on the atvise icon in the right corner of the task bar. Open the "Project Console" and click on "Builder" to open the atvise builder.
+
+    .. hint:: You can also choose :menuselection:`Programs --> atvise --> atvise builder` from your Windows start menu.
+
+.. figure:: /common_images/start_builder.png
+
+    Starting atvise builder
+
+.. rubric:: 1.3 Connecting to a server
+
+After starting the atvise builder from the task bar, you will automatically be connected to the OPC UA module of the atvise server on your local machine.
+
+If you start the atvise builder via the Windows start menu or if you want to connect to another server, you can do so by following these steps:
+
+1. Choose :menuselection:`builder --> Connect to server` from the menu bar.
+
+2. A dialog will appear in which you must enter the address of the server to which you want to connect (opc.tcp://[host]:[port]). The default is your local host and the default OPC UA port ("opc.tcp://localhost").
+
+    .. hint:: You could also enter the address of another server instance, for example, the IP address of a machine in your local network.
+
+3. Apply the dialog by pressing the :guilabel:`OK` button to connect your atvise builder to the server.
+
+.. figure:: /common_images/connect_server.png
+
+    Connect to server on localhost
+
+.. hint:: If you want to connect to another server, you first have to disconnect the current session by choosing :menuselection:`builder --> Disconnect from server` from the menu bar.
+
+    .. figure:: /common_images/disconnect_server.png
+
+    After that, choose :menuselection:`builder --> Connect to server` again and connect to the new server the same way as described before.
+
+.. hint:: You can see the currently selected server address at the top left of the atvise builder interface.
+
+    .. figure:: /common_images/server_address.png
+
+.. |server_up| image:: /common_images/server_up.png

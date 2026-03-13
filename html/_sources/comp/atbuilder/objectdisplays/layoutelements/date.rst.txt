@@ -1,0 +1,22 @@
+Date Element
+############
+
+This display displays the current date.
+
+.. rubric:: Parameters
+
+This control has the following generic parameters:
+
+- **date format** -- Formating the date can by achieved by using placeholders (default: %d.%m.%Y) 
+
+    - **%d** -- Placeholder for the day in 2-digit format
+    - **%m** -- Placeholder for the month in 2-digit format
+    - **%y** -- Placeholder for the year in 2-digit format
+    - **%Y** -- Placeholder for the year in 4-digit format
+
+
+Font:
+
+- **font family** -- Font family which will be applied to the text (default: Arial)
+- **font size** -- Font size which will be applied the text (default: 18)
+- **font color** -- Color which will be applied to the text (default: global parameter atvFontColor)

@@ -1,0 +1,20 @@
+5 Parameterization option 1 - direct addressing
+###############################################
+
+In the following sections, we will add the first dynamics to our project using direct addressing.
+
+.. hint:: Use this type of parameterization to display and set individual data variables in your structure that do not belong to any kind of object type.
+
+There are 3 ways to create dynamics using direct addressing:
+
+- using predefined controls
+- using "Quick Dynamics"
+- using "Simple Dynamics"
+
+In the following sections, you will learn how each of these methods work and how you can use them to create dynamic elements.
+
+.. toctree::
+
+    tutorial5/tutorial5_1
+    tutorial5/tutorial5_2
+    tutorial5/tutorial5_3

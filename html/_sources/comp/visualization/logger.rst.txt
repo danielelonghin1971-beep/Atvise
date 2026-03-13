@@ -1,0 +1,47 @@
+.. _logger:
+
+Logger
+######
+
+The logger is meant for logging (error) messages. Messages (=log entries) are stored on historized nodes and can be displayed via the :ref:`log view <od_logger_dialog>` object display. The name of the nodes is defined by the group and subgroup of the respective log entry. 
+
+.. hint:: A group must not exist without a subgroup.
+
+.. rubric:: Configuration
+
+The following path must be defined for the logger:
+
+:treeselection:`OBJECTS --> ATVISE --> Logger`
+
+The following structure must be used for writing log entries (see also :ref:`access control - visualization rights<ac_visualization>`):
+
+:treeselection:`OBJECTS --> ATVISE --> Logger --> Group --> Subgroup (historized)`
+
+atvise (e.g. the :ref:`archive management <archivemanagement>`) uses the following default settings for writing log entries:
+
+- Group: atvise 
+- Subgroup: error, warning, info
+
+.. rubric:: Writing log entries
+
+The quick dynamic :ref:`write log entry<qd_writelog>` can be used for writing log entries. 
+
+.. rubric:: Display
+
+All occurred messages can be displayed via the *Log View* object display. The filters on top of the table allow to define which messages shall be displayed.
+
+.. figure:: images/error_logger.png
+
+The table provides the following information:
+
+- **Timestamp** -- Shows when the message occurred
+- **Modified** -- Shows the time of the last change by the user
+- **Group**
+- **Subgroup**
+- **Status** -- The current status of the message (new, read)
+- **Label** -- Allows a further classification of the message (atvise uses the module name by default, e.g. archive management)
+- **Message** -- Provides further information regarding type or cause of log entry
+- **User** -- Name of the logged in user. *Anonymous* if no user is logged in
+- **Read** -- Clicking the button of the respective log entry changes the status to *read*
+
+The displayed data can be filtered by using the input fields of the respective columns. The checkbox next to an input field allows to switch the filter mode. If the checkbox is active, a specific filter for the respective column can be entered. In this case, it is also possible to filter for empty fields, e.g. in order to find the user *Anonymous*. If inactive, all entries are displayed. The filter checkbox can be configured via :ref:`filterCheck<slickgrid_columns>` parameter. 

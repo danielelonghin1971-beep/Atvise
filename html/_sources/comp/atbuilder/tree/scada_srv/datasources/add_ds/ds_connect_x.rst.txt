@@ -1,0 +1,6 @@
+Add atvise connect X data source
+################################
+
+*atvise connect X* is an upcoming multiprotocol server that enables data exchange between atvise and peripheral devices from various manufacturers via native protocols.
+
+.. attention:: The option to add this data source prepares atvise for future communication with the multiprotocol server. *atvise connect X* is part of the atvise portfolio and is scheduled for release in mid-2026. It will be provided with a separate installation package and dedicated documentation for installation and configuration.

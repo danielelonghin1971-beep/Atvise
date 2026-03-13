@@ -1,0 +1,32 @@
+Archive(s) Operations
+#####################
+
+.. attention:: 
+    - It is recommended to back up your project database and archive(s) before starting any operation!
+    - Please ensure that you have write access to the directories and the project database and that the files are not in use.
+
+The result of the conversion is shown in a log file, which opens automatically in the web browser after the operation has finished.
+
+.. rubric:: Convert archive(s)
+
+Select this menu item to convert archives created with a version 2.5.0 up to 3.0.x of atvise scada so that it becomes compatible with atvise version |release|.
+
+Archives can be converted only if the corresponding project database is already converted. For the conversion you need the original project database, the converted project database, the archive(s) you want to convert and an empty folder for the converted archive(s).
+
+Select *Convert archive(s)...* from the Archive(s) menu. In the following dialog you have to select the original project database, converted project database, original archive directory and the target archive directory before starting the conversion. 
+
+When ticking the *Remove source archive file immediately after conversion* checkbox, an old archive from the source archive(s) directory will be deleted as soon as it was converted. This will keep the required hard disc capacity low for huge archives.
+
+Depending on the number of archives and their size, it might take minutes (or even hours) to complete the conversion.
+
+.. _optionalindex:
+
+.. rubric:: Add optional index
+
+Select this menu item to add the optional index on the columns *nodeid* and *servertime* to raw value archives. 
+
+.. hint:: The index was present in older versions of atvise but is no longer used and therefore omitted since atvise 3.3. You may add it if you e.g. access the swapped out database files with external tools and use the columns *nodeid* and *servertime* in the where-clause of your queries.
+
+Select *Add optional index...* from the Archive(s) menu. In the following dialog you need to select your archives directory before starting the creation of the index.
+
+Depending on the number of archives and their size, it might take minutes (or even hours) to complete creation of the index.

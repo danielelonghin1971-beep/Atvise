@@ -1,0 +1,77 @@
+Manual adding/editing of mirror properties
+##########################################
+
+New mirror properties may be added to an existing node by using its context menu.
+
+.. figure:: images/mirroring_add.png
+
+To edit existing mirror properties simply double-click the affected property.
+
+.. rubric:: Editing absolute mirror properties
+
+.. figure:: images/mirror_config.png
+
+The dialog is split into two sections which allow direct editing of the value (=value of the mirror property including the address) or its components. Whenever a specific component is changed in the section "Configuration" the preview of the value in the section "Value" is updated as well. In case the value is changed, the other fields in the section "Configuration" will not be changed automatically.
+
+The following input fields will be available depending on the type of the selected data source.
+
+OpcUa:
+    - Namespace
+    - Type
+    - Address
+
+atvise OpcUa to S7:
+    - Namespace
+    - PLC
+    - Address
+
+OpcCom:
+    - Address
+
+webMI:
+    - Address
+
+SNMP:
+    - Type: OID data type
+
+        - String: Text
+        - Gauge: Numeric type with range between minimum and maximum of the related data type
+        - Counter: Numeric permanently increasing counter with overflow
+
+    - OID: SNMP object identifier or a fixed number
+    - Operand OID / Operator: Optional OID or a fixed number. The value of the parameter "OID" will be combined with the value of the "Operand OID" according to the selected arithmetic operator. (Not relevant for type: String)
+    - Filter OID / Filter value: Additional OID and related filter value for determining the table index to be used with parameters "OID" and "Operand OID"Note: Filter OID / Filter value do not have to be entered, if the table index are specified in the OIDs
+    - Aggregate / Sample count: Optional aggregation to be applied to the resulting value.Depending on type:
+
+        - The Aggregate will be applied on the calculated value
+        - The Aggregate will be applied on the difference of the calculated and the previous value
+        - String: not relevant
+
+    Example:
+
+    .. figure:: images/mirror_snmp.png
+
+        Editing the SNMP Mirroring
+
+    **Assumption**: the following OIDs are available (the table index is shown in bold):
+
+    - HOST-RESOURCES-MIB::hrStorageDescr.1 **(.1.3.6.1.2.1.25.2.3.1.3.1)** = STRING: "C:\\ Label:Root"
+    - HOST-RESOURCES-MIB::hrStorageDescr.2 **(.1.3.6.1.2.1.25.2.3.1.3.2)** = STRING: "Q:\\ Label:Data"
+    - HOST-RESOURCES-MIB::hrStorageSize.1 **(.1.3.6.1.2.1.25.2.3.1.5.1)** = INTEGER: 55834879
+    - HOST-RESOURCES-MIB::hrStorageSize.2 **(.1.3.6.1.2.1.25.2.3.1.5.2)** = INTEGER: 4460287
+    - HOST-RESOURCES-MIB::hrStorageUsed.1 **(.1.3.6.1.2.1.25.2.3.1.6.1)** = INTEGER: 44492671
+    - HOST-RESOURCES-MIB::hrStorageUsed.2 **(.1.3.6.1.2.1.25.2.3.1.6.2)** = INTEGER: 3239229
+
+    1. OID/Number: .1.3.6.1.2.1.25.2.3.1.6 (corresponds to "hrStorageUsed")
+    2. Filter OID/Filter value: .1.3.6.1.2.1.25.2.3.1.3 (corresponds to "hrStorageDescr") with related filter "C:" to determine the table index for drive "C:" (would result in value 1)
+    3. Operand OID/Number Operator: The value from table index 1 (=44492671) of the "OID/Number" .1.3.6.1.2.1.25.2.3.1.6 (corresponds to "hrStorageUsed") will be divided by the value from table index 1 (=55834879) of the "Operand OID/Number" .1.3.6.1.2.1.25.2.3.1.5 (corresponds to "hrStorageSize"). This will result in the actual used storage (percent).
+
+    .. hint:: The selection of the namespaces requires a previous established connection to the data source. When no connection has been established yet namespaces have to be entered manually.
+
+    .. hint:: Whenever parsing of a mirror property fails (after double-clicking a mirror property), the section "value" will be preselected and the component fields in the section "Configuration" will be prefilled as far as possible.
+
+.. rubric:: Editing relative mirror properties
+
+.. figure:: images/mirror_config_rel.png
+
+The dialog allows to define a browsepath by entering an arbitrary amount of path fragments which consist of a namespace and a browsename.

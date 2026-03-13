@@ -1,0 +1,133 @@
+.. _xml_export_and_import:
+
+XML export and import
+#####################
+
+.. rubric:: Menu items
+
+In the project tree, every node has following 3 menu items inside the :menuselection:`Node Action` menu:
+
+- Export hierarchy as XML...
+- Export single node as XML...
+- Import (relative) from XML...
+
+.. figure:: images/xml_export_import.png
+
+In the :menuselection:`builder` menu you will find the menu item :menuselection:`Import (absolute) from XML...`.
+
+These 4 items offer following functionality:
+
+#. **Export hierarchy as XML...**
+
+    The selected node (multiple selection is supported) and nodes below will be exported (e.g. alarm configurations).
+
+#. **Export single node as XML...**
+
+    Only the selected node (multiple selection is supported) without any nodes below will be exported.
+
+#. **Import (relative) from XML**
+
+    previously exported node (single or hierarchical) can be imported relative to the node where the XML import is started. This means the nodes in the XML file will be imported below the current node, regardless of the original position of the exported nodes.Example:Export the node "OBJECTS.Folder1.mynode" (single or hierarchical).Import the node relative to "OBJECTS.Folder2.Folder3". This results in creation of the node "OBJECTS.Folder2.Folder3.mynode". If it was a hierarchical export, the nodes below are also created.
+
+#. **Import (absolute) from XML...**
+
+    A previously exported node (single or hierarchical) can be imported at an absolute position. This means the nodes in the XML file will be imported at the exact same location in the project tree from where it was exported (single or hierarchical) before.Example:Export the node "OBJECTS.Folder1.mynode" (single or hierarchical).Import the node in a different project. This results in the creation of the node "OBJECTS.Folder1.mynode". If it was a hierarchical export, the nodes below are also created.
+
+.. attention:: The export does not resolve dependencies between the exported nodes! If you export an instance of an ObjectType, then only the instance will be exported, but not the ObjectType. The import in a different project will only succeed, if the ObjectType does already exist in the project.
+
+The exported XML files conform to the XML Schema definition published by the OPC Foundation: http://opcfoundation.org/UA/2011/03/UANodeSet.xsd.
+
+.. hint:: 
+    
+    - The format of the XML files has been changed in atvise 2.2. Thus, atvise 2.1.x is not able to import XML files created with atvise 2.2 or younger! However, atvise 2.2 and younger are able to import XML files in the new and the previous format.
+    - Please note that the user must have sufficient :ref:`access control<access_control_intro>` rights (= the *Engineer* right) for every node that shall be imported. Otherwise the complete data cannot be imported which may result in inconsistencies or errors within the project.
+
+.. _xml_version_check:
+
+.. rubric:: Version check
+
+Starting with atvise 3.3, exporting nodes as XML adds version information in the format MAJOR.MINOR to the XML file directly after the XML tag ``<UANodeSet>`` (see :ref:`example <xml_format_example>` below).
+
+When importing an XML file, the version in the file is checked against the atvise version. If the versions don't match (a missing or empty version in the XML file will never match), the import shows a warning message. The warning is only a hint that the file was exported with a different version of atvise. This does not automatically mean that the import was unsuccessful. In most cases the import will be completed successfully and the warning can be ignored.
+
+If you want to get rid of the warning:
+
+- Check the release notes for breaking changes.
+- If necessary run the atvise maintenance tool after the import and re-export the nodes if it did any changes.
+- Check if everything is working as expected after the import.
+- If you know that your XML file is imported correctly, you can adjust the version number in the XML file. You can specify a specific version or a range of versions:
+
+    - ``Version="x.y"`` -- The XML file is usable for the specific version.
+    - ``Version="a.b-c.d"`` -- The XML file is usable for all versions starting with *"a.b"* up to and including *"c.d"*. *"a.b"* or *"c.d"* can be omitted to specify an open range. E.g. ``Version="3.3-"`` means the XML file is usable for atvise 3.3 and above, ``Version="-"`` is usable for any version.
+
+.. rubric:: Relative import
+
+To support relative imports, atvise specific, XML Schema conforming extensions are written to the XML file. The extensions are attributes of the XML tag ``<atvise>`` inside the ``<Extensions>`` tag. If the attributes are missing, only absolute import is possible. Following extensions are supported:
+
+- *ExportedNodeId*: NodeId of the exported node. Can occur multiple times if multiple nodes where selected for export.
+- *ExportedBrowseName*: BrowseName of the exported node. Can also occur multiple times like ExportedNodeId.
+- *Upstream*: All nodes hierarchically above the exported node get this attribute with the value "true". Such nodes are created on import, if they do not already exist. If they exist, the import will not touch the node at all.
+
+.. rubric:: Requirements and recommendations for the XML import format
+
+If an XML file conforms to the XML schema, this doesn't automatically mean that it can be imported into atvise. To be able to be imported into atvise, the nodes and references in the XML file have to conform to the atvise address space. Following are the requirements the XML file must fulfill:
+
+- It must contain a namespace table with the atvise namesapce as the only entry. This implies that all nodes in atvise have the namespace index 1 (with the exception of nodes defined by OPC UA which have the namespace index 0).
+- The attributes NodeId and BrowseName must be present at every node.
+- The references HasTypeDefinition and HasModellingRule can only be specified as forward references, i.e. the attribute IsForward="false" is not allowed for those references.
+- UAObject and UAVariable must contain a HasTypeDefinition reference to the respective TypeDefinition.
+- A node referenced with ``<Reference>`` must already exist in the address space when it is encountered. From this and the previous two items follows, that types (ObjectType, VariableType) used as a TypeDefinition must always be created before they are referenced.
+- UAVariable must - in case the node doesn't already exist in the address space - contain the initial value in the XML tag ``<Value>``.
+- UAVariableType must - in case the node doesn't already exist in the address space and a DataType is given - contain the initial value in the XML tag ``<Value>``.
+
+To increase readability of the XML file we recommend to define commonly used NodeIds (DataType, ReferenceType, ...) in the Alias table and use them throughout the XML file.
+
+.. _xml_format_example:
+
+An example with embedded comments as clarification of the items above:
+
+.. code-block:: xml
+
+    <?xml version="1.0" encoding="UTF-8" ?>
+    <UANodeSet xmlns="http://opcfoundation.org/UA/2011/03/UANodeSet.xsd" xmlns:uax="http://opcfoundation.org/UA/2008/02/Types.xsd">
+        <Extensions>
+            <atvise Version="3.3"/>
+        </Extensions>
+        <NamespaceUris>
+            <Uri>http://www.atvise.com/atServer/UA/</Uri>
+        </NamespaceUris>
+        <Aliases>
+            <!-- data types -->
+            <Alias Alias="Double">i=11</Alias>
+            <!-- references -->
+            <Alias Alias="HasTypeDefinition">i=40</Alias>
+            <Alias Alias="HasSubtype">i=45</Alias>
+            <Alias Alias="HasComponent">i=47</Alias>
+        </Aliases>
+        <!-- create the VariableType first -->
+        <UAVariableType NodeId="ns=1;s=VariableTypes.PROJECT.MyVariableType" BrowseName="1:MyVariableType">
+            <DisplayName Locale="en">MyVariableType</DisplayName>
+            <Description Locale="en">MyVariableType</Description>
+            <References>
+                <!-- HasSubtype is normally always a "backward" reference, because the supertype has to exist before the subtype -->
+                <Reference ReferenceType="HasSubtype" IsForward="false">ns=1;s=VariableTypes.PROJECT</Reference>
+            </References>
+            <!-- The initial value can be omitted if the VariableType has no DataType (or the DataType "i=0") defined -->
+            <!-- An empty Value tag should still be present in this case or you will see a warning message in the log file -->
+            <Value/>
+        </UAVariableType>
+        <!-- create the Variable after the VariableType used as TypeDefinition -->
+        <UAVariable NodeId="ns=1;s=AGENT.OBJECTS.MyVariable" BrowseName="1:MyVariable" DataType="Double">
+            <DisplayName Locale="en">MyVariable</DisplayName>
+            <Description Locale="en">MyVariable</Description>
+            <References>
+                <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=AGENT.OBJECTS</Reference>
+                <!-- HasTypeDefinition is always a "forward" reference to an already existing type -->
+                <Reference ReferenceType="HasTypeDefinition">ns=1;s=VariableTypes.PROJECT.MyVariableType</Reference>
+            </References>
+            <!-- The initial value of the variable must be present -->
+            <Value>
+                <uax:Double>1.5</uax:Double>
+            </Value>
+        </UAVariable>
+    </UANodeSet>

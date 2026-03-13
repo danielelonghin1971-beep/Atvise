@@ -1,0 +1,32 @@
+atvise live
+###########
+
+.. hint:: You need an internet connection to use atvise live.
+
+.. rubric:: Start
+
+The integrated atvise live browser starts from the menu :menuselection:`builder --> atvise live` and opens in a new tab.
+
+.. figure:: images/atvise_live_start.png
+
+.. rubric:: Content
+
+Navigation:
+
+- The navigation on atvise live takes place in the same tab.
+- The default browser will be used for external navigation.
+
+.. hint:: atvise live has no context menu. You can navigate one page back by using the :kbd:`BACKSPACE` key.
+
+Range:
+
+- FAQ
+- various info sites (eg. compatibility list, important news)
+- atvise add-ons (without any warranty)
+
+Download:
+
+By clicking "Download" the affiliated dialog pops up. Choose
+
+- Import - for direct import to your project (ATTENTION: existing data will be overwritten!)
+- Save - You can save the file on your hard drive and import it later.

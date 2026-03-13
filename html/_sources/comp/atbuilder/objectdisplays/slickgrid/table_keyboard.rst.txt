@@ -1,0 +1,27 @@
+SVG Keyboard (table extension)
+##############################
+
+This display complements the table with an SVG keyboard. A special configuration, such as for the table, is not required for this display. All you need to do is set the table name and input type in the parameters.
+
+.. rubric:: Conditions
+
+This display can only be used together with a table!
+
+.. rubric:: Parameter
+
+- **table ID** -- Unique table name (default: atvise_table_1)
+
+Appearance:
+
+- **font family** -- Font family (default: Arial)
+- **font size** -- Font sizes (default: 12)
+- **font color** -- Font color and icon color (default: SYSTEM.GLOBALS.atvSymbolColor)
+
+Options:
+
+- **allow direct input** -- Allows to directly enter characters in the control without opening the SVG Keyboard. (default: true)
+- **keyboard style** -- The style of the keyboard. Available options are:
+
+    - Advanced
+    - Standard
+    - Steelblue

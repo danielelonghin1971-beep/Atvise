@@ -1,0 +1,17 @@
+Password Editor
+###############
+
+This dialog can be opened via "User Editor" and allows to change the user password. It shows the requirements defined by the password policy.
+
+.. rubric:: Parameters
+
+This control has the following appearance parameters:
+
+- **user name** -- Name of the user whose password shall be changed
+- **full name** -- Full user name 
+- **headline** -- The text of the object display's headline (default: T{Change password})
+- **symbol** -- Symbol displayed in the headline (default: SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Symbols.20x20.login)
+- **keyboard display** -- On-screen keyboard for input (default: alphanumerical keyboard)
+- **font color** -- Color applied to texts of the object display (default: global parameter atvFontColor (advanced)), #ffffff (standard))
+- **fill color** -- Fill color of background areas (default: global parameter atvFillColor (advanced), #1e1e1e (standard))
+- **symbol color** -- Symbol color (default: global parameter atvSymbolColor (advanced), #ffffff (standard))

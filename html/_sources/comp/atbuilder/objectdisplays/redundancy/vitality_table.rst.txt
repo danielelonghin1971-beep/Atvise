@@ -1,0 +1,4 @@
+Vitality Table
+##############
+
+Shows vitality information of server redundancy. Refer to :ref:`redundancy state <od_redundancy_status>` for further information regarding vitality state and redundancy switching.

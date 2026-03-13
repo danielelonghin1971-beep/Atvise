@@ -1,0 +1,61 @@
+5.2 Using quick dynamics
+########################
+
+In this section, we will take a look at how to use quick dynamics to add dynamization to your own graphic elements.
+
+.. rubric:: 5.2.1 Textual display of a data variable
+
+1. Add a new text element to your display. To do so, choose the "Add Text" symbol in the symbol bar and click somewhere in the drawing area. Type in some random characters to get a preview of how the text will look in the visualization.
+
+2. Mark the text element and choose "Quick Dynamics -> Set Text" from the symbol bar.
+
+3. Select the "VariableNumber" data variable for the "Node from which value will be taken" property by using the |pointpointpoint| selector.
+
+4. Apply the dialog by clicking on :guilabel:`OK`.
+
+.. figure:: /common_images/quick_dynamics_set_text.png
+
+    Create a dynamic text using quick dynamics
+
+.. hint:: Afterwards, you will see an entry for this quick dynamization in the dynamics list of this text element located on the lower right side of the atvise builder interface. To edit or view an existing quick dynamic, simply double-click on the entry.
+
+    .. figure:: /common_images/quick_dynamics_entry.png
+
+.. rubric:: 5.2.2 Drawing a simple button to set the VariableNumber variable to 100
+
+1. Click on the "Add polygon" symbol to select the polygon drawing tool. We want to use this tool to draw a triangle.
+
+2. Click somewhere in the drawing area, then move the mouse to draw the first side of the triangle. Click again and move the mouse to draw the two remaining sides. Finish the drawing by double-clicking.
+
+3. Give the triangle a button-like look by choosing one of the design templates. Make sure the triangle is marked, then click on "Templates" and choose one of the templates in the menu which appears.
+
+.. figure:: /common_images/draw_polygon_template.png
+
+    Drawing a triangular button
+
+.. rubric:: 5.2.3 Dynamizing the button to set the VariableNumber variable to 100
+
+1. Make sure the triangular button is marked, then chose :menuselection:`Quick Dynamics --> Set Node` from the symbol bar.
+
+2. Select the "VariableNumber" data variable for the "Node to be set" property using the |pointpointpoint| selector.
+
+3. Type in "100" as value. Now the "VariableNumber" variable will be set to 100 if you click on this element in the visualization.
+
+.. figure:: /common_images/quick_dynamics_button100.png
+
+    Dynamize your own element to set the value of VariableNumber to 100
+
+.. rubric:: 5.2.4 A simple button to set the VariableNumber variable to 0
+
+1. Create and dynamize a second triangle the same way as described in the last two sections, but now enter "0" as the value instead of 100.
+
+.. figure:: /common_images/quick_dynamics_button0.png
+
+    Create a second element that sets the value of VariableNumber to 0
+
+.. rubric:: 5.2.5 Opening the browser and testing the controls
+
+Save the display by clicking |save_button| and generate the visualization by choosing :menuselection:`Guided Actions --> Distribute to Webserver --> DemoServer`. Then start the web browser and open "TestDisplay2" to view the quick dynamics you have created. Try setting the value of "VariableNumber" using your triangular buttons. You will see the results by looking at the dynamized text element and the bar.
+
+.. |pointpointpoint| image:: /common_images/pointpointpoint.png
+.. |save_button| image:: /common_images/save_button.png

@@ -1,0 +1,16 @@
+.. _report_generate:
+
+Introduction
+############
+
+The previously created :ref:`template<report_template>` must be processed by atvise to generate a report. Depending on the defined type, the values of all queries must be retrieved and written to an output file. It is also possible to convert the report into a PDF file. 
+
+Reports can be generated either by script (see :ref:`Report functions<report_functions>`) or via :ref:`report configurations<report_configurations>`. Using report configurations allows to create reports automatically at specific intervals.
+
+.. hint:: The :ref:`Access control<access_control_intro>` must be considered when using scripts or report configurations.
+
+    - The respective user needs the *Read* and *Execute* rights for "AGENT.OBJECTS.ATVISE.Report" in order to display configurations with the Report Management.
+    - In addition, the *Engineer* and *Configure scripts* rights are necessary to edit configurations via visualization. 
+
+.. figure:: ../images/report.png
+    :scale: 65%

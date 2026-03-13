@@ -1,0 +1,12 @@
+Dashboard
+#########
+
+.. toctree::
+
+    dashboard/charts
+    dashboard/base_custom_tile
+    dashboard/base_value_tile
+    dashboard/chart_bar_tile
+    dashboard/chart_gauge_tile
+    dashboard/chart_line_tile
+    dashboard/chart_progress_tile

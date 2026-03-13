@@ -1,0 +1,141 @@
+.. _cert_atvise:
+
+Application Instance Certificate
+################################
+
+Every atvise application requires an appropriate certificate when the certificate verification is :ref:`enabled<cert_configuration>`. These certificates must be accepted or validated by the respective peer.
+
+Self-signed certificates
+  At startup, atvise automatically generates the necessary self-signed certificates and corresponding private keys for all atvise applications. These files are stored in the "own" directory of the respective :ref:`certificate store<cert_store>`. Self-signed certificates are automatically rejected during the first connection attempt and moved to the \\rejected\\certs directory of the peer's certificate store. To trust these certificates, they must be moved to the \\trusted\\certs directory.
+
+Certificates from certificate authorities (CA)
+  Certificates issued by a certificate authority consist of a certificate chain -- the actual end certificate for the application, intermediate certificates and a root certificate of the certificate authority. Each certificate in the chain is signed by the certificate above. The end certificate is trustworthy if it has a valid signature and the entire certificate chain is trusted. The certificates of the chain must be manually moved to the appropriate directories of the certificate store.
+
+.. hint:: 
+  
+  - Certificates from a certificate authority must comply with the OPC UA standard and include the required information. Therefore, it may be necessary to issue existing certificates again.
+  - If an existing certificate is invalid or no self-signed certificate can be created during application startup, the application will fail to start. There are the following differences depending on the application or certificate type:
+
+    - atvise server -- An error message is logged and the atvise server cannot be started.
+    - atvise builder -- The connection to the atvise server cannot be established and an error message is displayed. The :ref:`Message<builder_messages>` window shows the specific OPC UA error code.
+    - Data sources -- The connection cannot be established and the :ref:`connection status<ds_opcua>` displays an error.
+    - HTTPS -- The corresponding web server shows an error and cannot be started.
+
+.. rubric:: Naming convention
+
+The file name of the private key must match the name of the corresponding certificate file. The recommended naming convention is <application_name>@<hostname>. Example of a default certificate with private key in atvise:
+
+    atserver\@myatviseworkstation.der
+    
+    atserver\@myatviseworkstation.pem
+
+.. _certificate_fields:
+
+X.509v3 format
+**************
+
+A separate X.509v3 certificate must be stored in the respective certificate store for each client and server application in atvise. These certificates comply with the OPC UA standard and contain the following information:
+
+- **version** -- Version number of the X.509 certificate (=V3).
+- **serialNumber** -- Serial number of the certificate (assigned by the issuer).
+- **signatureAlgorithm** -- The algorithm used by the issuer to sign the certificate. 
+- **signature** -- The signature created by the issuer.
+- **issuer** -- The certificate issuer.
+- **validity** -- The certificate's validity period.
+- **subject** -- Information about the application instance. Must be specified depending on the respective application or certificate type.
+
+    - CN -- CommonName, should correspond to the product name or the like. **Note**: In case of a user certificate, a username must be entered here. This can be mapped to an existing atvise user.
+    - O -- Organization, i.e. the name of the organization running the application.
+    - OU -- Organizational Unit
+    - DC -- Domain Component
+    - L -- Locality
+    - S -- State
+    - C -- Country
+    - dnQualifier -- Distinguished Name Qualifier
+    - serialNum -- Serial Number
+
+- **subjectAltName** -- Alternative information about the application instance.
+
+    - applicationUri -- Must be a valid URL or URN.
+    - hostnames -- The name or the IP address of the computer running the application instance. May include multiple names or IP addresses if accessible via various networks.
+
+- **publicKey**
+- **keyUsage**
+- **extendedKeyUsage**
+- **authorityKeyIdentifier**
+- **basicConstraints** -- **CAUTION:** For compatibility reasons, the check of the cA flag is currently ignored by all atvise applications.
+
+.. rubric:: Mandatory fields
+
+In addition to *validity* (valid from/to), the fields listed below are mandatory for all certificates in atvise and must be defined as follows:
+
+.. list-table:: 
+   :header-rows: 1
+   :widths: auto
+
+   * - Field
+     - Description
+   * - subject:
+        
+       - CommonName (CN) = <application>\@<hostname>
+
+     - <application> must be replaced by the respective application (atbuilder, atserver, opcuatestserver).
+   * - subjectAltName: 
+        
+       - applicationUri = urn\:<hostname>\:BachmannVisutec\:<application>
+       - DNS = <hostname>
+       - IP = <ip-address>
+
+     - <application> must be replaced with the respective application (atbuilder, atserver, opcuatestserver). Multiple entries can be specified for <hostname> and <ip-address>.
+   * - keyUsage = digitalSignature, nonRepudiation, keyEncipherment, dataEncipherment
+     - 
+   * - basicConstraints
+
+       - cA = FALSE    
+
+     -
+   * - extendedKeyUsage = <clientAuth, serverAuth>
+     - - For server applications: serverAuth
+       - For client applications: clientAuth
+       - For the atvise server: clientAuth, serverAuth
+
+Depending on the certificate type, some fields must be adjusted and the following information must be considered when creating the certificate:
+
+.. list-table::
+   :header-rows: 1
+   :widths: auto
+   :stub-columns: 1
+
+   * - 
+     - Field
+     - Description 
+   * - | Data sources
+       | (\\atserver\\mirror) 
+     - 
+     - The current atserver certificate is copied to the "mirror" subdirectory and used as client certificate for data sources by default. 
+     
+       **Note:** If possible, existing certificates are automatically converted and copied to the certificate store.
+
+   * - | HTTPS certificates
+       | (\\atserver\\https)
+     - subject:
+
+       - CommonName (CN) = <FQDN> 
+
+     - Requires the FQDN to access the webserver externally. E.g., if the FQDN of the atvise server is "my.atvise.com", define the same for CommonName. If no DNS server is available, the server's IP address can be also specified.
+     
+       **Note:** 
+      
+       - HTTPS certificates are an exception, since both the certificate (or the entire certificate chain) and the private key must be included in a single PEM file. 
+     
+       - If possible, existing HTTPS certificates are automatically converted and copied to the certificate store. Security level 1 of OpenSSL is no longer supported, which means that certificates with a key length of 1024 bits cannot be used anymore and must be created again.
+
+   * - | User certificates
+       | (\\users)
+     - subject: 
+     
+       - CommonName (CN) = <username>
+
+     - User certificates can be used to log in to an OPC UA server (e.g. atvise server) without username and password. The certificate must be stored in the "own" directory of the respective client's user certificate store (e.g., atbuilder: %LOCALAPPDATA%\\atvise\\PKI\\users). The CommonName field must contain a username. The certificate can be assigned to an existing atvise user via :ref:`user management<user_settings>`. User certificates can also be used for :ref:`Data source<ds_auth>` connections (certificate store atserver\\mirror\\users).
+
+.. hint:: The script *CertificateEmailNotificationSample* (:treeselection:`Library --> ATVISE --> Script Library --> Admin`) can be used to enable email notifications, which send an alert before a certificate expires.

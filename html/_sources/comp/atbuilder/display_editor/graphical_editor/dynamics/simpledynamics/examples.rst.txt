@@ -1,0 +1,177 @@
+Examples
+########
+
++--------------+------------------------------------------------------------+
+| |ex_dp|      | **Single Node / Alarm Change Event --> Rotate element**    |
+| |ex_arr|     |                                                            |
+| |ex_rot|     | Clicking on one of these buttons will change the value of  |
+|              | the applied node.                                          |
+|              |                                                            |
+|              | The green block rotates inside the blue border as          |
+|              | parameterized.                                             |
+|              |                                                            |
+|              | .. figure:: images/example_buttons_degrees.png             |
+|              | .. figure:: images/example_sd_rotate.png                   |
++--------------+------------------------------------------------------------+
+| |ex_dp|      | **Single Node / Alarm Change Event --> Skew element**      |
+| |ex_arr|     |                                                            |
+| |ex_skew|    | Clicking on one of these buttons will change the value of  |
+|              | the applied node.                                          |
+|              |                                                            |
+|              | The image file skews as parameterized - in this case 100 % |
+|              | is equivalent to an angle of 20°.                          |
+|              |                                                            |
+|              | .. figure:: /common_images/example_buttons_percent.png     |
+|              | .. figure:: images/example_sd_skew.png                     |
++--------------+------------------------------------------------------------+
+| |ex_dp|      | **Single Node / Alarm Change Event --> Change Opacity**    |
+| |ex_arr|     |                                                            |
+| |ex_opac|    | Clicking on one of these buttons will change the value of  |
+|              | the applied node.                                          |
+|              |                                                            |
+|              | The circle will change its fill opacity from 0 % to 100 %  |
+|              | green.                                                     |
+|              |                                                            |
+|              | .. figure:: /common_images/example_buttons_percent.png     |
+|              | .. figure:: images/example_sd_opacity.png                  |
++--------------+------------------------------------------------------------+
+| |ex_mouse|   | **Mouse Event --> Set address(es)**                        |
+| |ex_arr|     |                                                            |
+| |ex_setdp|   | **Single Node / Alarm Change Event --> Change Color**      |
+|              |                                                            |
+| |ex_dp|      | Moving the mouse in or out of the element will change the  |
+| |ex_arr|     | value of the node as well as clicking inside of the        |
+| |ex_color|   | element. The current value of the chosen node is shown in  |
+|              | the text field. In addition, it is possible to set another |
+|              | dynamization to the element, such as changing the color of |
+|              | the element depending on the node value.                   |
+|              |                                                            |
+|              | .. figure:: images/example_sd_mouse.png                    |
+|              | .. figure:: images/example_sd_mouse_color.png              |
++--------------+------------------------------------------------------------+
+| |ex_mouse|   | **Mouse Event --> Open / Close Window**                    |
+| |ex_arr|     |                                                            |
+| |ex_window|  | Parameterizing a mouse click event on a button can open    |
+|              | windows, as well as close them. One possibility is to open |
+|              | an information dialog - with a desired text for it.        |
+|              |                                                            |
+|              | |example_sd_window| |example_sd_window_msgbox|             |
++--------------+------------------------------------------------------------+
+| |ex_mouse|   | **Mouse Event --> Set address(es)**                        |
+| |ex_arr|     |                                                            |
+| |ex_setdp|   | **Mouse Event --> Acknowledge Alarm**                      |
+|              |                                                            |
+| |ex_mouse|   | When the fire alarm button is clicked, the value of the    |
+| |ex_arr|     | node is set to 90 (in this case). To see if the alarm was  |
+| |ex_ack|     | really fired, it is recommended, for example, that the     |
+|              | color of the circle and/or the visibility be changed, such |
+|              | as flashing every 500 ms, as well as showing an alarm      |
+|              | status text - ON, UNACKNOWLEDGED.                          |
+|              |                                                            |
+|              | When the alarm is stopped (value is now set to below 80),  |
+|              | the flashing becomes slower and the alarm text is set to   |
+|              | OFF, UNACKNOWLEDGED.                                       |
+|              |                                                            |
+|              | For acknowledging the alarm, the Ack Alarm action has to   |
+|              | be called when clicking the appropriate button - alarm     |
+|              | status OFF, ACKNOWLEDGED.                                  |
+|              |                                                            |
+|              | .. figure:: images/example_sd_ackalarm.png                 |
++--------------+------------------------------------------------------------+
+| |ex_mouse|   | **Mouse Event --> Set address(es)**                        |
+| |ex_arr|     |                                                            |
+| |ex_setdp|   | **Single Node / Alarm Change Event --> Change Text**       |
+|              |                                                            |
+| |ex_dp|      | For this example, it is usually recommended that a boolean |
+| |ex_arr|     | data variable be used. Clicking one of the two buttons     |
+| |ex_text|    | will set the boolean to true or false. Depending on the    |
+|              | value of the node, the test text will be shown in the      |
+|              | Times New Roman or Arial font.                             |
+|              |                                                            |
+|              | .. figure:: images/example_sd_textvalue.png                |
++--------------+------------------------------------------------------------+
+| |ex_key|     | **Keystroke Event --> Timed Actions --> Open /             |
+| |ex_arr|     | Close Window**                                             |
+| |ex_timer|   |                                                            |
+| |ex_arr|     | The keystroke event offers many different key combinations |
+| |ex_window|  | for executing an action. In this example a timed action is |
+|              | set for opening a message box - the timer runs 3 times     |
+|              | with an interval of 5 seconds.                             |
+|              |                                                            |
+|              | .. figure:: images/example_sd_keystroke.png                |
+|              | .. figure:: images/example_sd_keystroke_msgbox.png         |
++--------------+------------------------------------------------------------+
+| |ex_mouse|   | **Trigger Event --> Rotate element**                       |
+| |ex_arr|     |                                                            |
+| |ex_widget|  | Clicking the buttons (+/- 10°) will increase or reduce the |
+| |ex_arr|     | angle depending on the value in the text field (widget) -  |
+| |ex_actrig|  | the pointer starts to rotate. It is also possible to enter |
+|              | a value manually.                                          |
+| |ex_evtrig|  |                                                            |
+| |ex_arr|     | The trigger is responsible for moving the pointer using    |
+| |ex_rot|     | the rotate action.                                         |
+|              |                                                            |
+|              | .. figure:: images/example_sd_trigger.png                  |
++--------------+------------------------------------------------------------+
+| |ex_right|   | **User Access Right --> User Input Event --> Recalculate   |
+| |ex_arr|     | Original Result Value --> Set address(es)**                |
+| |ex_input|   |                                                            |
+| |ex_arr|     | **Single Node / Alarm Change Event --> Change Text**       |
+| |ex_calc|    |                                                            |
+| |ex_arr|     | In this example, the text field (marked red) is the most   |
+| |ex_setdp|   | important element. First, a user access right has been     |
+|              | set. When the user wants to enter a value in the text      |
+| |ex_dp|      | field, he has to be logged in. If he is not, an            |
+| |ex_arr|     | information dialog will appear.                            |
+| |ex_text|    |                                                            |
+|              | .. figure:: images/example_sd_right_msgbox.png             |
+|              |                                                            |
+|              | The user is now able to enter a value which will be        |
+|              | automatically recalculated to a new value of the node. In  |
+|              | this case, the user's entry of 96 will be recalculated     |
+|              | with + 4 and the new value of the node is set to 100.      |
+|              |                                                            |
+|              | .. figure:: images/example_sd_right_calc.png               |
+|              |                                                            |
+|              | In the second part, the node value is shown in the text    |
+|              | element (marked green) but not in the user input text      |
+|              | field (marked red). It is similar to read/write where the  |
+|              | user input is write and the value shown is read.           |
++--------------+------------------------------------------------------------+
+| |ex_mouse|   | **Mouse Event --> Set address(es)**                        |
+| |ex_arr|     |                                                            |
+| |ex_setdp|   | **Single Node / Alarm Change Event --> Set Active /        |
+|              | Inactive**      |                                          |
+| |ex_dp|      |                                                            |
+| |ex_arr|     | To set elements to active or inactive, the enable/disable  |
+| |ex_endis|   | action has to be used. Using a boolean data variable will  |
+|              | simplify this example a lot. Clicking one of the two       |
+|              | buttons will set the boolean to true or false. Depending   |
+|              | on this value, the elements are active, which means they   |
+|              | can be changed in the browser, or inactive.                |
+|              |                                                            |
+|              | .. figure:: images/example_sd_endisable.png                |
++--------------+------------------------------------------------------------+
+
+.. |ex_ack| image:: images/button_dyn_ac_ackalarm.png
+.. |ex_actrig| image:: images/button_dyn_ac_trigger.png
+.. |ex_arr| image:: /common_images/example_arrow.png
+.. |ex_calc| image:: /common_images/button_dyn_rs_calculation.png
+.. |ex_color| image:: images/button_dyn_ac_color.png
+.. |ex_dp| image:: /common_images/button_dyn_ev_singlenode.png
+.. |ex_endis| image:: images/button_dyn_ac_endisable.png
+.. |ex_evtrig| image:: /common_images/button_dyn_ev_trigger.png
+.. |ex_input| image:: /common_images/button_dyn_ev_userinput.png
+.. |ex_key| image:: /common_images/button_dyn_ev_key.png
+.. |ex_mouse| image:: /common_images/button_dyn_ev_mouse.png
+.. |ex_opac| image:: images/button_dyn_ac_opacity.png
+.. |ex_right| image:: /common_images/button_dyn_ri_needright.png
+.. |ex_rot| image:: /common_images/button_dyn_ac_rotate.png
+.. |ex_setdp| image:: /common_images/button_dyn_ac_setnode.png
+.. |ex_skew| image:: images/button_dyn_ac_skew.png
+.. |ex_text| image:: /common_images/button_dyn_ac_textvalue.png
+.. |ex_timer| image:: /common_images/button_dyn_rs_timer.png
+.. |ex_widget| image:: /common_images/button_dyn_rs_widget.png
+.. |ex_window| image:: /common_images/button_dyn_ac_window.png
+.. |example_sd_window_msgbox| image:: images/example_sd_window_msgbox.png
+.. |example_sd_window| image:: images/example_sd_window.png

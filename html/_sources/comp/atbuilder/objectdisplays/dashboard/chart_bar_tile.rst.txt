@@ -1,0 +1,69 @@
+Chart Bar Tile
+##############
+
+The display shows up to 25 process values in a bar chart
+
+An additional border indicates the current value's negative state or an additionally defined alarm. The colors and blinking intervals are defined in global lists.
+
+.. rubric:: Parameters
+
+- **alarm address** -- Optional address used for alarm monitoring.
+
+View settings:
+
+- **title** -- Title of the tile displayed (default: T{Title})
+- **unit** -- This unit is displayed in addition to the value.
+- **decimal places** -- Number of decimal places for the value to be displayed (default: 0).
+- **font family title** -- Font family which will be applied to the title (Default: Arial)
+- **font size title** -- Font size which will be applied to the title (default: 12).
+- **displayed series (0 = all)** -- Number of maximum displayed series (default: 5).
+- **minimum** -- Lower limits of the displayed values (default: 0).
+- **maximum** -- Upper limit of the displayed values (default: 100; if no value is specified for minimum and maximum, the displayed series are automatically scaled).
+- **sorting** -- Selection of the sort order (default: no sorting).
+- **orientation** -- Alignment of the chart (default: horizontal)
+
+Behavior on click:
+
+- **enable click event** -- Activation of processing a click on the tile (default: true)
+- **enable click on content** -- Additional recognization of a click on the tiles content (default: false)
+- **targetdisplay** -- Display to be opened when recognizing a click.
+- **linked element** -- Element to be monitored for external click events (ID of the element).
+
+Status:
+
+- **enable status monitoring** -- Switch monitoring of current value status on or off (default: Yes)
+- **fire status trigger** -- Instead of the status display a here defined trigger can be fired globally.
+
+Appearance:
+
+- **background color** -- Background color (default: global parameter atvFillColor)
+- **text color** -- Text color (default: global parameter atvFontColor)
+- **border color** -- Border color (default: global parameter atvBorderColor)
+- **deactivation color** -- Deactivation color (default: global parameter atvInactiveColor)
+- **status indication** -- Specify the status' display through a defined global list (default: global parameter atvStatusIndication)
+- **alarm indication** -- Specify the alarm's display through a defined global list (default: global parameter atvAlarmIndication)
+
+Options:
+
+- **tooltip** -- Displays a tooltip box with the entered text (standard HTML-Elements can be entered)
+
+Security:
+
+- **necessary right** -- The user must have this right to activate this element.
+- **activation address** -- If the value of this address equals to "activation value", then the element will be active.
+- **activation value** -- Value which activates the element.
+- **show access control notification** -- Defines if the icon for showing access control notifications shall be displayed (default: true)
+
+Series <Number>:
+
+- **name** -- Configures the name of displayed series (Default: T{series <number>})
+- **address** -- Configures adress for the datapoints
+- **color** -- Configures the color of barchart (Default: #7cb5ec)
+
+Menu:
+
+- **menu positioning** -- The position the menu symbol is shown at (top-left, top-right, bottom-left, bottom-right).
+- **menu mouseover active** -- Symbol is only shown on *mouseover*.
+- **menu symbol offset x** -- Relative offset of the menu symbol to the anchor point on the x axis in pixel.
+- **menu symbol offset y** -- Relative offset of the menu symbol to the anchor point on the y axis in pixel.
+- **context menu click frame** -- Defines the size of the click frame for opening the context menu.

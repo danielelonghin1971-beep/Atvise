@@ -1,0 +1,178 @@
+Recipe management
+##################
+
+The recipe management is meant for an easy management of parameter sets. It is possible to combine several values into parameter sets and activate them in a single step. The recipe management consists of templates and recipes. 
+
+- Templates define the structure of parameters and provide extensive configuration options.
+- Recipes are based on a template and contain the concrete parameter sets (set values).
+
+.. hint:: There can be several recipes for one template. A recipe is always assigned to one template. 
+    
+To get started, add the "Recipe Template Editor" object display to a display. The header bar allows the navigation between templates and recipes as well as the import and export options.
+
+.. figure:: images/recipe_header.png
+
+.. rubric:: Import / Export of recipes
+
+Recipe templates and recipes can be imported or exported by using the respective buttons in the 
+"Recipe Manager" or "Recipe Template Manager" object displays.
+
+In this context, it is important to note the following:
+
+- An import/export file can consist of several templates with several associated recipes.
+- The configuration data of the template must always be included.
+
+The import/export file has the following structure:
+
+- Configuration data of all used templates
+  
+    - 1 row per parameter 
+  
+- Recipes
+
+    - 1 row per recipe
+
+.. figure:: images/recipe_impexp.png
+
+The following criteria apply to the import:
+
+- The configuration data of the template must match those configuration data in the system.
+
+    - If this is not the case, the import for this template and all recipes of this template will be aborted.
+
+- Each recipe must match the template.
+
+    - If this is not the case, the import for this recipe is aborted and continued with the next recipe.
+
+:guilabel:`Show log` allows to display additional information about the import process.
+
+.. rubric:: Global parameters
+
+Extensive configurations, such as visibility and order of the respective table columns, can be applied via :ref:`global parameters<global_parameters_recipe>`.
+
+.. _recipe_template_manager:
+
+Manage recipe templates
+***********************
+
+The "Recipe Template Manager" object display is used for managing recipe templates which are the basis for recipes created in a further step.
+
+.. figure:: images/recipe_template_manager.png
+
+The left table contains already created templates. The buttons above this list allow to add new templates or delete selected templates. Templates can be edited by clicking the respective |edit_button| button. 
+The right table lists the configured parameters of the selected template.
+
+.. rubric:: Object display parameters
+
+See :ref:`atvise builder > Object Displays > Recipe Management > Recipe Template Manager<od_recipe_template_manager>` for a detailed list of all object display parameters.
+
+.. _recipe_template_edit:
+
+Edit recipe templates
+*********************
+
+The "Recipe Template Editor" object display is used to edit existing and create new templates. 
+
+.. figure:: images/recipe_template_edit.png
+
+The description of the template can be defined above the table. The buttons on the right allow to save a copy of the template under a different name (:guilabel:`Save as`) or apply the changes (:guilabel:`Save`). :guilabel:`Add` allows to add new parameters to the table, :guilabel:`Delete` removes selected parameters. 
+
+A parameter consists of the following properties:
+
+- **Parameter** -- Name of the parameter
+- **Description** -- Description of the parameter
+- **Node** -- Selected node that shall be used
+- **Data type** -- Data type of the selected node
+- **Default value** (optional) -- Default value for recipes derived from this template
+- **Unit** (optional) -- Unit to display for the parameter
+- **Decimals** (optional) -- Number of decimal places
+- **Min** (optional) -- Lower limit of the possible value range 
+- **Max** (optional) -- Upper limit of the possible value range 
+- **Stepsize** (optional) -- Step size, starting from *Min*
+- **Options** -- Offers the possibility to limit the selection of the value to predefined values during the recipe creation. Values can be entered separated by semicolons, e.g.: 1;5;10
+
+.. rubric:: Object display parameters
+
+See :ref:`atvise builder > Object Displays > Recipe Management > Recipe Template Editor<od_recipe_template_editor>` for a detailed list of all object display parameters.
+
+.. _recipe_manager:
+
+Manage recipes
+**************
+
+The "Recipe Manager" object display allows to manage recipes based on a template.
+
+.. figure:: images/recipe_manager.png
+
+Select a template with the combobox to show the corresponding recipes in the left table. A template must be selected before creating a new recipe. As described for the :ref:`Recipe Template Manager<recipe_template_manager>`, the :guilabel:`Add` and :guilabel:`Delete` buttons can be used to create new recipes based on the selected template or to delete the selected recipes. The navigation options to other object displays can also be found in the upper left corner. 
+
+Existing recipes are listed in the left table. When a recipe is selected, the configured parameters are shown in the right table.
+
+.. rubric:: Object display parameters
+
+See :ref:`atvise builder > Object Displays > Recipe Management > Recipe Manager<od_recipe_manager>` for a detailed list of all object display parameters.
+
+.. _recipe_edit:
+
+Edit recipes
+************
+
+The "Recipe Editor" object display is used to edit existing recipes and define the required setpoints for each recipe. 
+
+.. figure:: images/recipe_edit.png
+
+The header shows the source template and allows to change the recipe description. For an easy navigation, the combo box can be used to switch between all recipes of this template. 
+
+The current values of the variables can be set as setpoints with :guilabel:`Values from process`. The properties of the parameters are automatically filled by the template. **Only the value can be set individually here**. If settings have been configured for the template, a combo box is displayed in the "Value" field and only predefined values can be set. 
+
+Parameter properties:
+
+- **Name** -- Name of the parameter
+- **Description** -- Description of the parameter
+- **Value** -- Setpoint for this recipe 
+- **Unit** -- Unit of the parameter to be displayed
+- **Min** -- Lower limit of the possible value range
+- **Max** -- Upper limit of the possible value range
+- **Step size** -- Step size, starting from *Min*
+- **Default value** -- Default value configured for template
+
+.. rubric:: Object display parameters
+
+See :ref:`atvise builder > Object Displays > Recipe Management > Recipe Editor<od_recipe_editor>` for a detailed list of all object display parameters.
+
+.. _recipe_activate:
+
+Activate recipes
+****************
+
+The recipe management allows to activate recipes, i.e. the configured values of the selected recipe are written to the configured nodes. The following object displays are provided for this purpose:
+
+Recipe picker
++++++++++++++
+
+This object display shows details of the recipes and allows to activate them:
+
+.. figure:: images/recipe_active.png
+
+First of all, it is necessary to select a template in order to show all derived recipes in the left table. When selecting one of the recipes, the corresponding parameters with their stored values are shown in the right table. The first column of the right table indicates if the recipe's stored value matches the value in the process image (green) or not (red).
+
+The :guilabel:`Set as active recipe` the recipe's set values are written to the nodes.
+
+.. rubric:: Object display parameters
+
+See :ref:`atvise builder > Object Displays > Recipe Management > Recipe Picker<od_recipe_picker>` for a detailed list of all object display parameters.
+
+Recipe picker (small)
++++++++++++++++++++++
+
+This object display allows a quick selection of recipes: 
+
+.. figure:: images/recipe_active_small.png
+    
+A template and a derived recipe must be selected. Then the recipe can be activated and the corresponding values are written to the nodes.
+
+.. rubric:: Object display parameters
+
+See :ref:`atvise builder > Object Displays > Recipe Management > Recipe Picker (small)<od_recipe_picker_small>` for a detailed list of all object display parameters.
+
+.. |edit_button| image:: images/edit_button.png

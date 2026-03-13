@@ -1,0 +1,16 @@
+Open Picker
+###########
+
+This Quick Dynamic opens a date or color picker display as a popup.
+
+.. rubric:: Parameters:
+
+- **address** (*picker dialog address*) -- The node address of the picker dialog.
+- **width** (*picker dialog width*) -- The width of the picker dialog.
+- **height** (*picker dialog height*) -- The height of the picker dialog.
+- **title** (*window title*) -- The title shown in the header bar of the pop up window.
+- **parameters** (*parameters*) -- Additional parameters given to the picker dialog (e.g. webMI.query parameters of the parent object display).
+- **style** (*style*) -- Style parameters as defined in webMI.openWindow.
+- **openCentered** (*open centered*) -- Open the picker dialog centered on the working screen or attached to the calling object display.
+- **callingElementWidth** (*calling element width*) -- Width of the calling object display.
+- **callingElementHeight** (*calling element height*) -- Height of the calling object display.

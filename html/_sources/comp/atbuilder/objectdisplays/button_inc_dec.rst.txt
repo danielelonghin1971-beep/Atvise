@@ -1,0 +1,76 @@
+Button Increment/Decrement
+##########################
+
+This button increments or decrements the value of an address.
+
+In addition the trigger "valuechanged" with the new value (=incremented or decremented value) will be fired.
+
+.. rubric:: Triggers
+
+Following triggers can be used for this object display: 
+
+- **com.atvise.setActive** -- Can be used to enable or disable the object display.
+- **valuechanged** -- Fired on value changes, e.g. by user input.
+
+::
+
+    //Disable the object display
+    webMI.trigger.fire("com.atvise.setActive", false, "myDisplayID");
+
+    //Respond to value changes
+    webMI.trigger.connect("valuechanged", function(e) { console.log(e.value); }, "myDisplayID");
+
+.. hint:: Additional undocumented triggers are internally used by atvise. Their functionality may be changed in future atvise releases.
+
+.. rubric:: Parameters
+
+This control has the following generic parameters:
+
+- **base** -- The value of this address will either be incremented or decremented; this depends whether "step" is positive or negative
+- **step (can be negative)** -- Value by which the value of "base" will be modified; if positive the value of "base" will incremented, otherwise decremented (default: 1)
+- **interval [ms] (0 = off)** -- Specifies how long (time span) the control must be pressed to automatically change the base's value (default: 150ms, which means that in case the button keeps pressed, every 150ms the value will be changed)
+
+Font:
+
+- **family** -- Font family which will be applied to label (default: Arial)
+- **size** -- Font size which will be applied to the label (default: 12)
+- **color** -- Color which will be applied to the label (default: global parameter atvFontColor (advanced), #d0d0d0 (standard))
+
+Appearance:
+
+- **visibility label** -- If set to visible, the text "+/-" will be displayed as label; if this is set to visible, "visibility symbol'" should be set to hidden. (default: visible)
+- **visibility symbol** -- If set to visible, the symbol as specified by "symbol increment" or "symbol decrement" will be displayed; if this is set to visible, "visibility label'" should be set to hidden. (default: hidden)
+- **symbol increment** -- Symbol to be used if "visibility symbol" is set to visible and "step" is positive; further scales can be selected from "Object Displays (ATVISE)/Symbols/20x20 (default: arrow_up)
+- **symbol decrement** -- Symbol to be used if "visibility symbol" is set to visible and "step" is negative; further scales can be selected from "Object Displays (ATVISE)/Symbols/20x20 (default: arrow_down)
+- **symbol color** -- Color of the symbol to be used (default: global parameter atvSymbolColor (advanced), #d0d0d0 (standard))
+- **fill color** -- Button's fill color (default: global parameter atvFillColor (advanced), #000000 (standard))
+- **fill color when inactive** -- Button's fill color if not active (default: global parameter atvInactiveColor (advanced), #8c8c8c (standard))
+- **stroke color when pressed** -- The color of the stroke which will be set when the button is pressed (default: #ffffff)
+- **focus stroke color** -- The color of the stroke which will be set when the button is focused (default: #ffffff)
+- :advstyle:`Advanced` **border color** -- The button's border color (default: global parameter atvBorderColor)
+- :advstyle:`Advanced` **extra border color** -- Entering a color value here results in an extra border around the button. (default: none)
+
+Options:
+
+- **minimum** -- Specifies the lower limit for the value to be changed, i.e. if the current value equals to this minimum, the current value will not be further decremented  (default: no minimum specified)
+- **maximum** -- Specifies the upper limit for the value to be changed, i.e. if the current value equals to this maximum, the current value will not be further incremented (default: no maximum specified)
+- **tab index** -- Defines the order for changing between the object displays by using the tab key
+- **tooltip** -- Displays a tooltip box with the entered text (standard HTML-Elements can be entered)
+
+Security:
+
+- **necessary right** -- The must have this right to activate this button, i.e. to press the button
+- **activation address** -- If the value of this address equals to "activation value", then the button will be active, i.e. can be pressed
+- **activation value** -- Value which activates the button
+
+    .. hint:: The activation of a button can be configured only by the necessary right, or only by the activation address and value or by both. In case both settings are made, the user must have the necessary right and the value of the "activation address" must equal the "activation value"; otherwise the button will not be activated.
+
+- **show access control notification** -- Defines if the icon for showing access control notifications shall be displayed (default: true)
+
+Menu:
+
+- **menu positioning** -- The position the menu symbol is shown at (top-left, top-right, bottom-left, bottom-right).
+- **menu mouseover active** -- Symbol is only shown on *mouseover*.
+- **menu symbol offset x** -- Relative offset of the menu symbol to the anchor point on the x axis in pixel.
+- **menu symbol offset y** -- Relative offset of the menu symbol to the anchor point on the y axis in pixel.
+- **context menu click frame** -- Defines the size of the click frame for opening the context menu.

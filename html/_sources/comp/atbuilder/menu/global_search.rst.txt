@@ -1,0 +1,143 @@
+.. _global_search:
+
+Global Search
+#############
+
+.. rubric:: General
+
+The global search allows to search the address space for node names and node content containing a given string. You can select which areas of the address space are to be searched. The result is presented in a table and allows to select a found node in the project tree and to open the node in its editor (e.g. display editor), if applicable.
+
+The global search window can be opened via the :menuselection:`View` menu or via the keyboard shortcut :kbd:`Ctrl-Alt-F`. By default, the search window opens as docked window at the bottom edge of the atvise builder window. You can dock the window at any edge or move it out of the atvise builder window to make it a separate, resizable window.
+
+.. figure:: images/global_search.png
+
+On the top of the window is the area where the search criteria and options can be input. The table in the center shows the result of the search. The status bar on the bottom shows status information for the search like the number of matches.
+
+.. rubric:: Search criteria
+
+The area with the search criteria consists of:
+
+- An input field for the string to search for. The string is a regular expression to allow the definition of complex search strings (see note below).
+- A toggle to indicate if the search string is case sensitive or not.
+- A toggle to indicate if the search string has to match as a whole word.
+- A combined settings button and menu for more search options.
+
+.. _regular_expression:
+
+.. hint:: Following characters have a special meaning in a regular expression: ``.[{}()\\*+?|^$``
+
+    If you want to use these characters in the search string, you must escape them with a backslash (``\``).
+
+    E.g. to search for "history.query" you must enter ``history\.query`` as search string.
+
+    Examples of commonly used regular expressions:
+
+    - match a single, arbitrary character: ``int.`` matches "inta", "int1", "int\_", "int." but not "int"
+    - match any number of arbitrary characters: ``int.*`` matches "int", "int1", "int_a1"
+    - match a single digit: ``int[0-9]`` matches "int0", "int1", "int2" (but not "int12" if match whole word is enabled)
+    - match one or more digits: ``int[0-9]+`` matches "int0", "int100" but not "int"
+    - escape special characters: ``\.\./data`` matches "../data" but not "xy/data"
+
+    For a comprehensive description of the regular expression syntax, search online for "perl compatible regular expression" or "pcre". You may also visit https://regex101.com/ to test regular expressions online.
+
+To start a search, enter the search string in the input field and press the :kbd:`ENTER` key.
+
+Clicking on the settings button will open the settings dialog where you can select which areas of the address space are to be searched. Clicking on the triangle to the right of the button will open following menu:
+
+.. figure:: images/global_search_menu.png
+
+The menu offers following functions:
+
+Settings
+    Open the settings dialog
+
+Search Options
+    The following two menu items specify if the search should consider node names or node content. A checkmark is shown, if an option is enabled.
+
+Content
+    Search in node content
+
+Name
+    Search in the BrowseName of a node (not the NodeId)
+
+Doubleclick Action
+    The following two menu items specify the default action(s) to trigger when you double-click or press ENTER in the result table. A checkmark is shown, if an option is enabled.
+
+Open
+    Open editor, if applicable. If multiple nodes are selected, the editors of all nodes are opened.
+
+Select in Project Tree
+    Select node in the project tree. If multiple nodes are selected, only the first node is selected in the project tree.
+
+.. rubric:: Settings dialog
+
+.. figure:: images/global_search_settings.png
+
+The search settings dialog allows to specify the areas to be searched. The upper part contains areas where node name and content will be used for the search. The lower part contains areas where only the node name will be searched for. By default, the search will not include results from the library supplied with atvise.
+
+Displays
+    Search in the name and content of displays, wherever they are located
+
+Serverside Scripts
+    Search in the name and content of server side scripts, wherever they are located
+
+Quick Dynamics
+    Search in the name and content of Quick Dynamics
+
+Resources
+    Search in the name and content of resources
+
+Languages
+    Search in the name of a language and content of translations
+
+Alarm Texts
+    Search in alarm texts
+
+Alarms
+    Search in the name of alarm configurations and conditions
+
+Archives
+    Search in the name of archive groups as well as aggregate templates and functions
+
+Global Parameters
+    Search in the name of global lists and parameters
+
+Security
+    Search in the name of groups, users and user defined rights
+
+Other
+    Search in the name of anything not included in the areas above
+
+Search atvise Library
+    If enabled, the search will include nodes in "Library->ATVISE"
+
+.. rubric:: Table of search results
+
+The search results are shown in a table with following columns:
+
+Node
+    The node id of the matching node
+
+Type
+    The type of the matching node, icon and name resemble the project tree to a large extent
+
+Line
+    If the search string is found in the content, a snippet of the line with the first match
+
+The table can be sorted by clicking on any of the column headers. You can select multiple entries with the mouse or keyboard and trigger the default action(s) (see above) with a double-click or by pressing the ENTER key. A right-click will open a context menu which allows to select an action regardless of what you did set as default action(s).
+
+.. rubric:: Status bar
+
+The status bar shows the number of matches and the hint "truncated", if the server truncated the results. See the setting "searchLimit" in the "[opcua]" section in atserver.ini on how to change the search result limit.
+
+.. rubric:: Use of the global search in the object selectors
+
+The global search can also be used in the various object selectors (variables, displays etc.) to search for nodes with a matching name. To use the search in a suitable selector, click on the search icon in the bottom left or press Ctrl-Alt-F:
+
+.. figure:: images/global_search_selector.png
+
+As the selectors are mostly designed for specific node types, the search is automatically limited to those node types. The toggles for case sensitive search and matching as a whole word are also available here.
+
+You can select one of the found nodes with a double-click or by pressing the :kbd:`ENTER` key.
+
+To return to the tree, click on the search icon or press :kbd:`Ctrl-Alt-F` again.

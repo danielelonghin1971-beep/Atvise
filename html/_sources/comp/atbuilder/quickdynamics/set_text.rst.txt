@@ -1,0 +1,9 @@
+Set Text
+########
+
+This Quick Dynamic sets the text of the applied text element according to the value of the defined node with the defined number of decimal places (max. 9).
+
+.. rubric:: Parameters:
+
+- **nodeID** (*node from which value will be taken*) -- Node from which the value will be taken (the variable should be of the type "number" or "boolean" or "strings"; strings may only contain numbers)
+- **decimalPlaces** (*decimal places*) -- Number of decimal places which are to be used to display numbers (not more than 9)

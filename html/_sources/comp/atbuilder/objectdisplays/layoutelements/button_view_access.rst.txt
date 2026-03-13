@@ -1,0 +1,38 @@
+Button Access Control Log
+#########################
+
+This display contains a button which opens the access control table.
+
+.. rubric:: Parameters
+
+This control has the following generic parameters:
+
+- **display for access log** -- Display which is opened as alarm log (default: SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Advanced.hmi.accesscontrol_log)
+- **color for alarms** -- Warning color for alarms (default: #ff0000)
+
+Button:
+
+- **size** -- Button size (default: small)
+- **font size** -- Font size which will be applied to the button label (default: 18)
+- **font color** -- Color which will be applied to the label (default: global parameter atvFontColor)
+- **font color active** -- Color which will be applied to the label (default: global parameter atvFontColor2)
+- **fill color** -- Background color of the button (default: global parameter atvFillColor)
+- **fill color active** -- Background color of the button if active (default: global parameter atvFillColor2)
+- **symbol color** -- Color which will be applied to the symbol (default: global parameter atvSymbolColor)
+- **symbol color active** -- Color which will be applied to the symbol (default: global parameter atvFontColor2)
+- **necessary right** -- The user must have this right to activate this button, i.e. to press the button
+- **activation address** -- If the value of this address equals to "activation value", then the button will be active, i.e. can be pressed
+- **activation value** -- Value which activates the button
+
+Appearance:
+
+- **focus stroke color** -- The color of the stroke which will be set when the button is focused (default: white)
+
+Popup:
+
+- **popup width** -- Width of the alarmlog popup (default: 772)
+- **popup height** -- Height of the alarmlog popup (default: 430)
+- **popup position x** -- X position of the alarmlog popup (default: 1672)
+- **popup position y** -- Y position of the alarmlog popup (default: 984)
+- **popup anchor x** -- X position of the popup's anchor (default: 1)
+- **popup anchor y** -- Y position of the popup's anchor (default: 1)

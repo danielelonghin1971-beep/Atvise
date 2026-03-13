@@ -1,0 +1,81 @@
+.. _project_intro:
+
+Introduction
+############
+
+The project view allows to browse and manage the structure of your project. You can edit this view in the builder preferences under *Profiles* to show or hide elements.
+
+.. figure:: images/basics_overview_tree.png
+
+Servers
+    Allows to add **data sources, displays, objects** and **historical configurations** to your local scada server (atvise SCADA) and to add and edit webMI servers (atvise webMI).
+
+:doc:`global_parameters`
+    Is meant for adding and managing **global parameters** and **global lists**.
+
+Display Pool
+    Displays added to the display pool can be referenced from multiple servers (e.g. a general start page which is used on every server).
+
+Library
+    The project library consists of two main folders - ATVISE and PROJECT. The ATVISE folder contains predefined standard elements, the PROJECT folder is meant for project-specific modifications. See section *Library* below for further details.
+
+Object Types
+    Allows to add and configure your own object types (atvise SCADA).
+
+Variable Types
+    Allows to add and configure your own variable types (atvise SCADA) or to view and configure imported types (atvise webMI).
+
+:doc:`languages`
+    Manage your translations.
+
+:doc:`users_groups`
+    Allows to manage the users, groups and rights of your project.
+
+Views
+    Enables you to create views on your address space.
+
+.. rubric:: Library
+
+.. figure:: images/basics_overview_tree_library.png
+
+The library contains all necessary object displays, scripts and resources. There are two different library folders:
+
+ATVISE
+    This folder contains the atvise standard catalog (e.g. object displays, quick dynamics) and must not be modified.
+
+    .. attention:: Any modifications will be overwritten if a new atvise standard catalog from a new atvise version is installed.
+
+PROJECT
+    Use this folder for project-specific modifications and extensions (e.g. own object displays or resources). Elements in this folder supersede elements in the ATVISE library with the same name.
+
+The library folders contain the following items:
+
+Object Displays
+    A set of predesigned :ref:`object displays<objectdisplays>` (such as buttons, text fields, etc.) which can be used to create great visualizations in a few steps.
+
+Display Scripts
+    These scripts are used by the respective object displays.
+
+Quick Dynamics
+    A set of predefined :ref:`quick dynamics<quickdynamics>` which can be used to create dynamic elements.
+
+Resources
+    Standard web resources are stored and managed here, similar to the wwwroot directory in other web servers. ATVISE resources are used internally and must not be modified or deleted. Project-specific resources such as graphics (e.g., JPEG, SVG), scripts, HTML or CSS files can be stored in the PROJECT resources. 
+    
+    The URL structure to access these resources depends on the file type and storage location. Most files (like HTML, JPEG, CSS, etc.) are accessible directly via the base URL, including the path to any subfolders. However, for XML, XHTML, SVG and TXT files, a language-specific prefix is required (see also :func:`webMI.data.customRequest`). Examples for accessing different resources in the browser:
+
+    - HTML: `http://localhost/test.html` (file is located directly under *Resources*)
+    - PNG: `http://localhost/graphics/image.png` (file is located in the "graphics" subfolder)
+    - SVG: `http://localhost/de/icon.svg` (file is located directly under *Resources*)
+    - XML: `http://localhost/de/de/translation.xml` (file is located in the "de" subfolder)
+
+    Access to resources can be configured using the :ref:`access control<access_control_intro>`. Some ATVISE resources are :ref:`whitelisted<ac_visualization>` to ensure that all required files are accessible for the visualization. 
+
+Script Library
+    Contains predefined scripts which can be called from other scripts
+
+Menu Scripts
+    Allows to extend the Node Actions which are available in the context menu when right-clicking a node. 
+
+webMI Method Scripts
+    Scripts which can be called via :func:`webMI.data.call`.

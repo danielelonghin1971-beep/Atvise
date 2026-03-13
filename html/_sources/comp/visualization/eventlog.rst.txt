@@ -1,0 +1,22 @@
+.. _ac_eventlog:
+
+Access control event log
+########################
+
+In case of insufficient user rights for a specific action, the server responds with a notification. Each notification is recorded in this log, which is a ring buffer limited to 100 entries.
+
+.. hint:: The entries remain until the next browser refresh. The size of the ring buffer can be changed via :ref:`data.permissionlogsize<visu_configuration>`.
+
+.. figure:: images/eventlog.png
+
+Timestamp
+    Occurrence time of the event.
+
+User
+    The user that tried to execute the command.
+
+Command
+    The command that should be executed.
+
+Address
+    The node for which the user has no rights.

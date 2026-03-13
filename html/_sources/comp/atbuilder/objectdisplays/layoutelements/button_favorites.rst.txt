@@ -1,0 +1,41 @@
+Button Favorites
+################
+
+This display contains a button for saving, browsing and deleting bookmarks.
+
+.. rubric:: Parameters
+
+This control has the following generic parameters:
+
+- **configuration node** -- Node address for saving favorites data, see also :ref:`access control - visualization rights<ac_config_nodes>` (default: ButtonCfg)
+- **size limit** -- Saved char limit for the configuration node (default: 30000)
+
+Context menu:
+
+- **font family** -- Font family which will be applied to label (default: Arial)
+- **font size** -- Font size which will be applied to the label (default: 18)
+- **font color** -- Color which will be applied to the label (default: global parameter atvFontColor2)
+- **hover font color** -- Color which will be applied to the label (default: global parameter atvFontColor)
+- **background color** -- Background color of context menu's option elements (default: global parameter atvFillColor2)
+- **hover color** -- Background color of context menu's option elements at mouseover (default: global parameter atvFillColor)
+- **text alignment** -- Alignment of the context menu's texts (default: center)
+
+Popups:
+
+- **font family** -- Font family which will be applied to text in popups (default: Arial)
+- **font size** -- Font size which will be applied to text in popups (default: 14)
+- **font color** -- Color which will be applied to text in popups (default: global parameter atvFontColor)
+- **fill color** -- Color which will be applied to background in popups (default: global parameter atvFillColor)
+
+Button:
+
+- **symbol color** -- Color of the symbol to be used (default: global parameter atvSymbolColor)
+- **symbol color active** -- Color of the symbol to be used (default: global parameter atvFontColor2)
+- **symbol scaling (%)** -- Factor for resizing the symbol (default: 150)
+- **necessary right** -- The user must have this right to activate this button, i.e. to press the button
+- **activation address** -- If the value of this address equals to "activation value", then the button will be active, i.e. can be pressed
+- **activation value** -- Value which activates the button
+
+Appearance:
+
+- **focus stroke color** -- The color of the stroke which will be set when the button is focused (default: #ffffff)

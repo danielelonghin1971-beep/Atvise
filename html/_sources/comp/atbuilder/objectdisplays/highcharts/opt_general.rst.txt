@@ -1,0 +1,11 @@
+Configuration - General
+#######################
+
+This display shows some general options which can be configured for the chart.
+
+.. rubric:: Parameters
+
+This control has the following appearance parameters:
+
+- :advstyle:`Advanced` **font color** -- Color which will be applied to the labels (default: global parameter atvFontColor)
+- :advstyle:`Advanced` **fill color** -- Left sidebar fill color (default: global parameter atvFillColor)

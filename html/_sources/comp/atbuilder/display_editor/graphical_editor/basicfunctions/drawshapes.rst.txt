@@ -1,0 +1,79 @@
+.. _drawshapes:
+
+Drawing shapes
+##############
+
+Select a shape to draw on the display.
+
+.. figure:: images/tools_create.png
+
+|icon_selectitem| Select items
+    Is used to select an object on the display.
+
+|icon_addline| Add line
+    Draws a line of the desired size on the display.
+
+|icon_addrectangle| Add rectangle
+    Draws a rectangle of the desired size on the display.
+
+|icon_addcircle| Add circle
+    Draws a circle of the desired size on the display.
+
+|icon_addellipse| Add ellipse
+    Draws an ellipse of the desired size on the display.
+
+|icon_addtext| Add text
+    Adds text in the desired text size to the display.
+
+|icon_addpolyline| Add polyline
+    Draw a polyline of the desired size on the display. When choosing the polyline icon, move to the drawing area and click once. Now move further and click again. Repeat this action as often as desired. To close the polyline, double-click at the desired endpoint.
+
+    |graphics_polyline_one| |graphics_polyline_two|
+
+|icon_addpolygon| Add polygon
+    Draw a polygon of the desired form and size on the display. When choosing the polygon icon, proceed in the same way as when drawing a polyline. Compared to the polyline, the polygon is always a closed element. To confirm form and size, use a double-click.
+
+    |graphics_polygon_one| |graphics_polygon_two|
+
+|icon_addbeziercurve| Add Bezier curve
+    Draw a bezier curve of the desired form and size on the display. Click and hold the left mouse button to draw a curve (Figure 1). When the Bezier curve has the desired form and size, move the mouse to the starting point and click left or just double-click without moving the mouse (Figure 2). Now the Bezier curve element is finished (Figure 3).
+
+    It is possible to change the form and the size of the Bezier curve afterwards: Double-click the element to edit it. Clicking a rectangle lets the user move it using mouse drag, thereby changing the curve at this point (Figure 4).
+
+    |graphics_beziercurve_one| |graphics_beziercurve_two|
+
+    |graphics_beziercurve_three| |graphics_beziercurve_four|
+
+|icon_addimage| Add image
+    Adds a desired image file from a disk to the display
+
+.. _draw_foreign_object:
+
+|icon_addiframe| Add foreign object
+    This tool adds HTML code to your display.
+
+    Example:
+
+    .. figure:: images/foreign_object.png
+
+.. figure:: images/shapes_small.png
+
+.. |graphics_beziercurve_four| image:: images/graphics_beziercurve_four.png
+.. |graphics_beziercurve_one| image:: images/graphics_beziercurve_one.png
+.. |graphics_beziercurve_three| image:: images/graphics_beziercurve_three.png
+.. |graphics_beziercurve_two| image:: images/graphics_beziercurve_two.png
+.. |graphics_polygon_one| image:: images/graphics_polygon_one.png
+.. |graphics_polygon_two| image:: images/graphics_polygon_two.png
+.. |graphics_polyline_one| image:: images/graphics_polyline_one.png
+.. |graphics_polyline_two| image:: images/graphics_polyline_two.png
+.. |icon_addbeziercurve| image:: /common_images/icon_addbeziercurve.png
+.. |icon_addcircle| image:: /common_images/icon_addcircle.png
+.. |icon_addellipse| image:: /common_images/icon_addellipse.png
+.. |icon_addiframe| image:: /common_images/icon_addiframe.png
+.. |icon_addimage| image:: /common_images/icon_addimage.png
+.. |icon_addline| image:: /common_images/icon_addline.png
+.. |icon_addpolygon| image:: /common_images/icon_addpolygon.png
+.. |icon_addpolyline| image:: /common_images/icon_addpolyline.png
+.. |icon_addrectangle| image:: /common_images/icon_addrectangle.png
+.. |icon_addtext| image:: /common_images/icon_addtext.png
+.. |icon_selectitem| image:: /common_images/icon_selectitem.png

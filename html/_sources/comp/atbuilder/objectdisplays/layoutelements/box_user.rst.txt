@@ -1,0 +1,43 @@
+User Box (358x65)
+#################
+
+This display shows the current language and contains a button for changing the language.
+
+.. rubric:: Parameters
+
+This control has the following generic parameters:
+
+- **color for alarms** -- Warning color for alarms (default: #ff0000)
+- **display for access log** -- Access log display which is opened when clicking on the button (default: SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Advanced.hmi.accesscontrol_log)
+
+Appearance:
+
+- **color** -- Background color of language box (default: global parameter atvFillColor)
+- **button inactive color** -- Background color when inactive (default: global parameter atvInactiveColor)
+- **symbol login** - symbol that will be used for the login state (Default: SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAY.Symbols.20x20.login)
+- **symbol logout** - symbol that will be used for the logout state (Default: SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAY.Symbols.20x20.logout)
+- **symbol color login** - fill color for the login symbol (default: global parameter atvSymbolColor)
+- **symbol color logout** - fill color for the logout symbol (default: global parameter atvSymbolColor)
+- **symbol scaling** -- Scaling of symbol in percent (default: 100)
+
+Button 1:
+
+- **fill color active** --background color of the button when active (default: global parameter atvFillColor2)
+
+Font:
+
+- **font family** -- Font family which will be applied to text and the button's label (default: Arial)
+- **font size** -- Font size which will be applied to text and the button's label (default: 18)
+- **font color** -- Color which will be applied to text and the button's label (default: global parameter atvFontColor)
+
+Login dialog:
+
+- **width** -- Width of the login dialog (default: 430)
+- **height** -- Height of the login dialog (default: 300)
+
+PopUp:
+
+- **popup width** -- Width of the access log popup (default: 770)
+- **popup height** -- Height of the access log popup (default: 430)
+- **popup position x** -- X position of the access log popup (default: 0)
+- **popup position y** -- Y position of the access log popup (default: 90)

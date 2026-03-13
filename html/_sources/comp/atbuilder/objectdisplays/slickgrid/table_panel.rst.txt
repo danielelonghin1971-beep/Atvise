@@ -1,0 +1,343 @@
+.. _od_table_element:
+
+Table Panel
+###########
+
+This display is suitable for displaying data in tabular form. In addition to the setting of the Table parameters also require the configuration in the higher-level display. The higher-level display will be in the following also referred to as parent display.
+
+.. rubric:: Conditions
+
+The table library requires jQuery > 1.7 and is currently shipped with jQuery 3.7.x.
+
+To avoid compatibility issues, the included jQuery version is only used if no already existing version is detected. Therefore jQuery should already be used in an existing project the spreadsheet library to them. Therefore, make sure that in this case a jQuery version > 1.7.x is used!
+
+.. rubric:: Parameters
+
+The table has the following general parameters:
+
+- **base** -- Currently not in use
+- **table ID** -- Unique table name (default: atvise_table_1)
+- **table header height** -- Height of table header in pixels. It is recommended to have a height that is approximately twice the drawing height. (default: 30)
+- **table header font size** -- Font size in the table header (default: 14)
+- **table header cell align horizontal** -- Horizontal align of content in header (default: inherit)
+- **table header cell align vertical** -- Vertical align of content in header (default: center)
+- **table row height** -- Height of table rows in pixels. If the line break is active, the line of characters 1.5 times the size of the font is recommended as the highest value. (default: 20)
+- **table row font size** -- Font sizes in a table row (default: 12)
+- **table detail font size** -- Font size for table details (default: 12)
+- **table footer font size** -- Font size in table footer (default: 12)
+
+Appearance:
+
+- **font family** -- Font family (default: Arial)
+- **global border colors** -- Source for frame color (default: SYSTEM.GLOBALS.atvBorderColor)
+- **global fill colors** -- Source for color (default: SYSTEM.GLOBALS.atvFillColor)
+- **global font colors** -- Source for font color (default: SYSTEM.GLOBALS.atvFontColor)
+- **global symbol colors** -- Source for Icon Color (Default: SYSTEM.GLOBALS.atvSymbolColor)
+- **global inactive colors** -- Source for inactive Color (Default: SYSTEM.GLOBALS.atvInactiveColor)
+- **global table colors** -- Source for table colors (default: SYSTEM.GLOBALS.atvObjectDisplays.BaseTable.ColorConfig)
+- **custom theme** -- Name of the custom theme (default: atviseTheme). Refer to :ref:`customizing table appearance <html_table_customizing>` for further information.
+
+Options:
+
+- **columns reorderable** -- Allow moving columns (default: true)
+- **device responsive** -- Scale elements depending on the screen size of the device (default: true)
+- **paging** -- Display of page navigation (default: true)
+- **filter bar enabled** -- Show table filter (default: true)
+- **filter regular expressions** -- Filter function uses Regular Expressions (default: false)
+
+        .. attention:: Filtering with the help of Regular Expressions can lead to a large drop in performance for large amounts of data!
+
+- **filter use placeholder** -- Activation of the "*" placeholder in the search function (default: false)
+- **filter case sensitive** -- Case-sensitive (default: false)
+- **filter minimum length** -- Minimum number of characters before the filter becomes active (default: 1)
+- **filter delay [ms]** -- Delay of the automatic filtering in milliseconds (default: 1000, switching off the automatic with 0)
+- **show runtime mode** -- Display of the runtime mode in the status bar (default: true)
+- **cell linebreak** -- Allow line break in columns. If the line break is active, the line of characters 1.5 times the size of the font is recommended as the highest value. (default: false)
+- **multiselect** -- Activation of the multiple selection (default: true)
+- **multiselect on cell click** -- Multiple selection, marking by clicking on cell (default: false)
+- **allow direct input** -- Allows to directly enter characters in the control without opening the SVG Keyboard. (default: true)
+- **keyboard display** -- On-screen keyboard for input (default: alphanumerical keyboard)
+- **message board** --  shows a dialog for messages, information or warnings (default: message board OD)
+
+Menu options:
+
+- **show menu** -- Display of the menu button (default: true)
+- **menu height** -- Height of the menu when opened in pixels (default: 300)
+- **menu width** -- Width of the menu when opened in pixels (default: 250)
+- **show picker menu** -- Display of the column selection in the menu (default: true)
+- **show filter menu** -- Display of the filter selection in the menu (default: true)
+- **show export menu** -- Display of the export selection in the menu (default: true)
+
+.. rubric:: Quick reference
+
+**Table configuration for a simple data structure**:
+
+Drag the spreadsheet display into the parent display and open the Script Editor for the parent display.
+
+::
+
+    /* Loading the table resources */
+    webMI.table.loadResources(function () {
+
+        /* Create the configuration */
+        var config = [];
+
+        /* Configuration of the columns to be displayed */
+        config["columns"] =
+            [
+                {   id: "id", name: "ID", field: "id", sortable: true, filter: true },
+                {   id: "address", name: "Address", field: "address", sortable: true, filter: true },
+                {   id: "value", name: "Wert", field: "value", sortable: true, filter: true }
+            ];
+
+        /* Configuration of the runtime behavior */
+        config["mode"] = "once";
+
+        /* Example set of data */
+        var data = {};
+        data.result = [
+            { id:0, address: "node 1", value: 123 },
+            { id:1, address: "node 2", value: 456 },
+            { id:2, address: "node 3", value: 789 },
+            ...
+        ];
+
+        /* Configuration of the data query */
+        config["dataRequestFunction"] =
+            function customDataRequest(continuation) {
+                var that = this;
+                var ids = that.addData(data);
+            };
+
+        /* Registration of the configuration */
+        webMI.table.register("myTableNname", "config",  config);
+        webMI.table.setReady("myTableNname", "config");
+    });
+
+
+Save the code of the parent display and parameterize the table as usual. Enter "myTableName" at the table name.
+
+**Table configuration for data queries (e.g. webMI.data.read)**:
+
+Drag the spreadsheet display into the parent display and open the Script Editor for the Parent display.
+
+::
+
+    /* Loading the table resources */
+    webMI.table.loadResources(function () {
+
+        /* Create the configuration */
+        var config = [];
+
+        /* Configuration of the columns to be displayed */
+        config["columns"] =
+            [
+                {   id: "id", name: "ID", field: "id", sortable: true, filter: true },
+                {   id: "address", name: "Address", field: "address", sortable: true, filter: true },
+                {   id: "value", name: "Wert", field: "value", sortable: true, filter: true }
+            ];
+
+        /* Configuration of the runtime behavior */
+        config["mode"] = "once";
+
+        /* Configuration of the data query */
+        config["dataRequestFunction"] =
+            function customDataRequest(continuation) {
+                var that = this;
+                webMI.data.read(
+                    "YOUR_NODE_ADDRESS",
+                    function (requestResult) {
+                        var data = {};
+                        data.result = requestResult;
+                        var ids = that.addData(data);
+                    });
+            };
+
+        /* Registration of the configuration */
+        webMI.table.register("myTableNname", "config",  config);
+        webMI.table.setReady("myTableNname", "config");
+    });
+
+
+Save the code of the parent display and parameterize the table as usual. Enter "myTableName" at the table name.
+
+**Table configuration for live data**:
+
+Drag the spreadsheet display into the parent display and open the Script Editor for the Parent display. Enter the configuration for simple data queries. After that, they change the mode and modify their data query as follows.
+
+::
+
+    /* Configuration of the runtime behavior */
+    config["mode"] = "live";
+
+    /* Configuration of the data query */
+    config["dataRequestFunction"] =
+        function customDataRequest(continuation) {
+            var that = this;
+            self.subscribeID = webMI.data.subscribe(
+                "YOUR_NODE_ADDRESS",
+                function (requestResult) {
+                    var data = {};
+                    data.result = requestResult;
+                    var ids = that.addData(data);
+                }
+            );
+            webMI.addOnunload(
+                function () {
+                    webMI.data.unsubscribe(self.subscribeID);
+                }
+            );
+        };
+
+
+**Table configuration for "Continuation Points" (continue / trigger**:
+
+Drag the spreadsheet display into the parent display and open the Script Editor for the Parent display. Enter the configuration for simple data queries. After that, they change the mode and modify their data query as follows.
+
+::
+
+    /* Configuration of the runtime behavior */
+    config["mode"] = "continue"; // <<< for the trigger mode replace "continue" with "triggered"
+
+    /* Configuration of the data query */
+	config["dataRequestFunction"] =
+		function customDataRequest(continuation) {
+			var that = this;
+			if (typeof continuation != "undefined" && continuation.CP != null) {
+				filter = continuation.CP.value;
+				webMI.data.queryNext(
+					filter,
+					addDataToController
+				);
+			} else {
+				filter = {
+					address: ["g:*YOUR_NODE_ADDRESS*"],
+					select: ["v:priority", "v:value", "v:username", "v:address", "v:timestamp", "v:type", "v:status", "v:ReplacementNames", "v:ReplacementValues"],
+					type: ["v:1"],
+					numrows:["v:1000"]
+				};
+				webMI.data.queryFilter(
+					filter,
+					addDataToController
+				);
+			}
+			function addDataToController(requestResult) {
+                var data = requestResult;
+
+                /* Adding "Continuation" informations */
+    			if (typeof data.More != "undefined" && data.More != false && data.continuationpoint > 0) {
+					data.CP = {};
+					data.CP.value = requestResult.continuationpoint;
+				} else {
+					data.More = false;
+				}
+
+				var ids = that.addData(data);
+			}
+		};
+
+    /* Configuration of the release */
+    config["dataReleaseFunction"] =
+        function dataReleaseFunction(continuation) {
+            if (typeof continuation != "undefined" && continuation.CP != null) {
+	            webMI.data.queryRelease(continuation.CP.value);
+        }
+    }
+
+**Access to table contents**:
+
+The easiest way to access table contents is to use the onClickCallback configuration. Via this callback, the event and the information about the selected item can be entered in a user-defined one Function are processed (e.g., calling your own dialogs)
+
+::
+
+    /* Loading the table resources */
+    webMI.table.loadResources(function () {
+
+        /* Create the configuration */
+        ...
+
+        config["onClickCallback"] = function(e, info){
+            var item = info.item;
+            var row = info.rowIndex;
+            var column = info.column;
+
+            var id = item.id;
+            item.value = "changed value";
+
+            /* update/delete/window */
+            if(column.id == "timestamp"){
+                tableController.updateData(id, item);
+            } else if(column.id == "value"){
+                tableController.removeData(id);
+            } else {
+                openMyWindowFunktionToEdit(item);
+            }
+        }
+
+		/* Registration of the configuration */
+        ...
+    });
+
+
+**Search for values in the table**:
+
+The search (attribute, value, exactSearch) function can be used to search for values in the table. In the case of a hit, the found items are returned in an array.
+
+::
+
+    webMI.table.waitReady("myTableName", "controller", function () {
+
+        tableController = webMI.table.request("myTableName", "controller");
+        var itemArray = tableController.search("timestamp", 1553785110500, true);
+
+        var id = itemArray[0].id;
+        itemArray[0].value = "changed value";
+
+        /* update */
+        tableController.updateData(id, itemArray[0]);
+
+        /* delete */
+        tableController.removeData(id);
+    });
+
+
+**Query the line number in the table**:
+
+The current line number of a data record is given when using the method that.getData (id) in the attribute "atvise_row". Since the row number can change after table manipulations (filtering / searching), the row number can be queried directly with the method that.getRowById (id).
+
+::
+
+    var id = "id_x";
+    webMI.table.waitReady("myTableName", "controller", function () {
+
+        tableController = webMI.table.request("myTableName", "controller");
+        var currentRow = tableController.getRowById(id);
+
+    });
+
+
+**Timestamp conversation**:
+
+With atvise 3.3.2 the timestamp of "datetime" columns is no longer delivered as string. It is now necessary to format the timestamp to a string inside the table with the given formatter.
+
+::
+
+	function _makeConversions(format, value) {
+	    if (format[0] == "datetime") {
+	    	if (value) {
+		    	if (typeof value == "string" && value.indexOf("-") > -1)		//ignore already formatted values
+			    	return value;
+
+			    var date = new Date(parseInt(value, 10));
+			    value = webMI.sprintf("%d-%02d-%02d %02d:%02d:%02d.%03d", date.getFullYear(), date.getMonth() + 1, date.getDate(), date.getHours(), date.getMinutes(), date.getSeconds(), date.getMilliseconds());
+    		} else {
+	    		value = "";
+	    	}
+	    }
+        return ''+value+'';
+	}
+
+
+.. rubric:: Table configurations
+
+Further configuration help can be found :ref:`here <HTML_table>` and at atvise Live!

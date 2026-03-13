@@ -1,0 +1,4 @@
+Date Picker Dialog
+##################
+
+This control is only be used by the control "Picker Date" and shall not be used as standalone control.

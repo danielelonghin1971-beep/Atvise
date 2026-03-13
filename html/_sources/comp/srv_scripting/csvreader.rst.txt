@@ -1,0 +1,105 @@
+CSVReader functions
+###################
+
+.. class:: CSVReader([obj])
+
+    To use any of the functions below you first have to create a CSVReader object.
+
+    Parameters:
+        - **obj** (Object, optional, default: {}) -- Input parameter object:
+
+            - **delimiter** (String, optional, default: ";") -- Specifies the delimiter character of the source data.
+            - **trim** (Boolean, optional, default: false) -- Specifies if data read from source should be trimmed.
+            - **encoding** (String, optional, default: "UTF-8") -- Specifies the encoding of the source data:
+
+              - "UTF-8"
+              - "ASCII"
+              - "UTF-16"
+              - "ISO-8859-1"
+              - "ISO-8859-15"
+
+    Properties with the same name as the parameters are available in the created object.
+
+    Example::
+
+        var reader = new CSVReader({
+            delimiter: ",",
+            encoding: "ISO-8859-1",
+            trim: true
+        });
+        console.log(reader.encoding);
+
+.. !!v8!! CSVReader.load(filename[, callback])
+.. function:: CSVReader.load(filename[, callback])
+
+    Loads the specified CSV file (relative to the project directory) and converts it into a table.
+
+    Parameters:
+        - **filename** (String) -- Specifies the file name of the source data.
+        - **callback** (Object, optional, default: {}) -- Specifies the optional event handler properties:
+
+          - **onError** (Function, optional, default: undefined) -- If defined, it will be called when an error occurred with following parameters:
+
+              - **msg** (String) -- The error message.
+
+          - **onReady** (Function, optional, default: undefined) -- If defined, it will be called if all source data is read with following parameters:
+
+              - **numRows** (Number) -- The total number of rows read.
+
+          - **onData** (Function, optional, default: undefined) -- If defined, it will be called on each row read with following parameters and the return table will remain empty.
+
+              - **rowIndex** (Number) The current zero based row index.
+              - **row** (String[]) The current row as an array of columns.
+
+              Returning *CSVReader.STOP* will stop processing of source data. Returning *CSVReader.CONTINUE* or no return value means continue processing.
+
+    Returns:
+        An array of rows where each row is an array of columns.
+
+        If onData is defined in the callback object, the return value is empty.
+
+        There is no distinction between header and data rows. If a head row is given, it will be the first row in the table.
+
+    Example::
+
+        var table = new CSVReader({encoding: "ISO-8859-1"}).load("test.csv");
+        console.log(table);
+
+        new CSVReader({encoding: "ISO-8859-1"}).load("test.csv", {
+            onError: function(msg) {
+                console.log(msg);
+            },
+            onReady: function(num) {
+                console.log("Total rows read: ", num);
+            },
+            onData: function(rowIdx, row) {
+                console.log("Header (first) row: ", row);
+                return CSVReader.STOP;
+            }
+        });
+
+.. !!v8!! CSVReader.parse(source[, callback])
+.. function:: CSVReader.parse(source[, callback])
+
+    Converts the specified CSV string and converts into a table.
+
+    The function works exactly the same as :func:`CSVReader.load` with the exception that the first parameter is the source itself and not the name of file.
+
+    Example::
+
+        var source = '"h1,h1", h2, h3, "\xe4\xf6\xfch4\nh4"\n\n1,2,3,4\n1,,3,\n1,,,4\n,,,4\n1,,,\n,,,\n"",",","",""';
+        var table = new CSVReader({encoding: "ISO-8859-1"}).parse(source);
+        console.log(table);
+
+        new CSVReader({encoding: "ISO-8859-1"}).parse(source, {
+            onError:function(msg) {
+                console.log(msg);
+            },
+            onReady:function(num) {
+                console.log("Total rows read: ", num);
+            },
+            onData:function(rowIdx, row) {
+                console.log(rowIdx, ": ", row);
+                return CSVReader.CONTINUE;
+            }
+        });

@@ -1,0 +1,25 @@
+.. _history_pass_through:
+
+Pass-through queries
+********************
+
+Pass-through queries allow you to forward historical requests to **OPC UA data sources**. For this to work, every variable to be used in a passed-through query must be configured as described in the previous chapter. The functionality can be used for all kinds of historical requests. You can even combine local and passed-through historical data in a single call to e.g. :func:`webMI.data.queryFilter` or :func:`history.query`. The history list will also show local and passed-through historical data together in the table.
+
+To be able to use pass-through queries, different requirements have to be met for the different kinds of requests:
+
+Raw values
+    - the variable must be configured for pass-through of raw values (see above)
+    - a correctly configured *MirrorInput* or *MirrorInputOutput* must exist
+
+Aggregated values
+    -  the variable must be configured for pass-through of aggregated values (see above)
+    -  an aggregate template must be assigned (see above)
+    -  a correctly configured *MirrorInput* or *MirrorInputOutput* must exist
+
+Alarms
+    Pass-through of historical alarms is closely tied to :ref:`alarm mirroring <alarm_mirroring>`. If you have configured alarm mirroring, queries are automatically forwarded to the data source for all alarm conditions known to atvise. Queries will *not* be forwarded for data sources where you have activated *historize mirrored alarms*.
+
+Other events
+    Other historical OPC UA events will be read from data sources, if you activate *pass through event history* in the :ref:`data source configuration <add_datasource>`.
+
+.. hint:: You can use the :ref:`data source functions <wrapper_history_read>` to directly read historical data from an OPC UA data source without the need to configure historization.

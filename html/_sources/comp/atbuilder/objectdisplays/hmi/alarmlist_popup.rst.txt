@@ -1,0 +1,12 @@
+Alarmlist Popup
+###############
+
+This control is a container display for the alarm list, if it is opened as popup, e.g. for viewing members of a sum alarm.
+
+.. rubric:: Parameters
+
+The parameters match those of the :ref:`alarmlist<od_alarmlist>` display, and their values are copied automatically from there. The only exception is the table ID, which must be defined individually.
+
+Table:
+
+- **table ID** -- Unique table identifier (default: "alarm_table_pop_up")

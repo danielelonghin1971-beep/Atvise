@@ -1,0 +1,23 @@
+Show Redundancy Information
+###########################
+
+In a redundancy environment, this Quick Dynamic shows warning and information dialogs corresponding to the actual redundancy status. It is also responsible for automated redirections and site reloads on changes of the redundancy status.
+
+All top displays of the atvise library include this Quick Dynamic in a redundancy environment. If these top displays are not used, add this Quick Dynamic to the display as needed and set the parameter respectively.
+
+In addition, the following trigger is provided. It is fired on connection changes (refer to the code of the Quick Dynamic).
+
+- **com.atvise.RedundancyConnectionChange** -- Can be used to respond to connection changes. The history list as well as highcharts object displays use this trigger by default to fire the "com.atvise.RedundancyDataWarning" trigger. This opens the connection change dialog that indicates a possible data loss in the visualization. This function can also be used in custom object displays.
+
+These are the potential messages: 
+
+- Redundancy status has changed. Reload page to apply potential changes.
+- Redundancy status has changed. You are now connected to SNOP.
+- Redundancy status has changed. You are now connected to the active server.
+
+Parameters:
+
+- **display** (*redundancy warning dialog*) -- Dialog that is shown in case of a SOP/SNOP switchover in split mode. (default: SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Advanced.redundancy.warning_dialog) 
+- **display_message** (*redundancy connection dialog*) -- Dialog that is shown in case of connection switchovers and indicates a possible data loss in the visualization. (default: SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Advanced.dialogs.message_dialog)
+- **show_sop_change** (*show SOP notification*) -- Enables or disables the SOP/SNOP warning dialog. *false* means that the dialog is not shown if reloading the visualization was not necessary. (default: true) 
+- **show_con_change** (*show connection notification*) -- Enables or disables the connection dialog. *false* means that the dialog is not shown if reloading the visualization was not necessary. The visualization is not reloaded when FQDNs are used. (default: true)

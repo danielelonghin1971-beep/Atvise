@@ -1,0 +1,42 @@
+Label
+#####
+
+This element shows a defined text within a HTML container (foreignObject).
+
+.. rubric:: Triggers
+
+Following triggers can be used for this object display: 
+
+- **com.atvise.setActive** -- Can be used to enable or disable the object display.
+- **setValue** -- The object display connects to this trigger. Therefore, it is possible to set the value from the outside.
+- **valuechanged** -- Fired on value changes, e.g. by user input.
+
+::
+
+    //Disable the object display
+    webMI.trigger.fire("com.atvise.setActive", false, "myDisplayID");
+
+    //Set value of object display
+    webMI.trigger.fire("setValue", "New label text", "myDisplayID");
+
+    //Respond to value changes
+    webMI.trigger.connect("valuechanged", function(e) { console.log(e.value); }, "myDisplayID");
+
+.. hint:: Additional undocumented triggers are internally used by atvise. Their functionality may be changed in future atvise releases.
+
+.. rubric:: Parameters
+
+- **base** -- Base address for the display.
+- **text** -- Text for the element. (default: Label)
+
+Font:
+
+- **family** -- Font family which will be applied to the text (default: Arial).
+- **size** -- Font size which will be applied to the text (default: 12).
+- **font weight** -- Font weight which will be applied to the text (default: normal).
+- **color** -- Color which will be applied to the text (default: global parameter atvFontColor).
+
+Alignment:
+
+- **horizontal** -- Horizontal text alignment (default: left)
+- **vertical** -- Vertical text alignment (default: top)

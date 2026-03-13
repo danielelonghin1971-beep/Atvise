@@ -1,0 +1,28 @@
+Overview of the atvise components
+#################################
+
+In the following sections, you will be guided through atvise features and functionality. Below, you can see an overview of the major components of atvise:
+
+.. rubric:: Visualization
+
+Use your web HMI with web-enabled devices including PC, laptop, touch panel, Windows mobile, iPhone, and many more. No matter where you are, open your HMI with a standard web browser and enter the target address of your web server in its address field. The browser does the rest for you without the need for any further installation or configuration. Further Information can be found in the :ref:`visualization` section.
+
+.. figure:: images/visu_image.png
+
+.. rubric:: atvise server
+
+The basis for atvise technology is a slim web server. Implement a compliant web server in your device (PLC, PC, embedded PC) / software or use the built-in webserver that comes with atvise scada. All necessary functions - strictly web-compliant - are specified in the atvise webMI guidelines. We offer the complete specification and an SDK (ANSI-C based: slim and highly portable) for fast and easy implementation. Further Information can be found in the :ref:`ref_atserver` section.
+
+.. figure:: images/server-01.png
+
+.. rubric:: atvise monitor
+
+After the successful download and installation of atvise, the application is started by executing atvise monitor in the Windows start menu. The atvise monitor icon is then located in the sys-tray. With a right mouse click, various selections are offered, including starting the "License" panel in order to activate your atvise software as well as the "Project Console", which allows you to add, select or start a project. Further information can be found in the :ref:`ref_atmonitor` section.
+
+.. figure:: /common_images/monitor.png
+
+.. rubric:: atvise builder
+
+The atvise builder gives you professional HMI design capabilities, lets you add event-based, sophisticated dynamics, supports object-oriented programming at its best and all other features needed to create a professional HMI and SCADA environment - in dependance on which atvise option has been chosen. Every atvise webMI-compliant server can be engineered with the atvise builder. The project is stored in a nodes.db on the PC where the atvise builder is running. After the engineering process is finished, the project is distributed to the specific device (PLC, PC, embedded PC) where the atvise server was first implemented. Further Information can be found in the :ref:`ref_atbuilder` section.
+
+.. figure:: images/atvisebuilder.png

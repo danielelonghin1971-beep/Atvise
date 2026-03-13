@@ -1,0 +1,36 @@
+.. _od_recipe_template_editor:
+
+Recipe Template Editor
+######################
+
+Editor for recipe templates. See also chapter :ref:`atvise visualization > Recipe management - Edit recipe templates<recipe_template_edit>`.
+
+.. rubric:: Parameters
+
+General:
+
+- **config node** -- Node for configuration of templates and recipes (Default: AGENT.OBJECTS.recipes)
+
+Columns:
+
+- **configuration** -- Global parameter for column configuration (default: atvObjectDisplays.RecipeManager.recipe_template_editor.Columns)
+
+Table:
+
+- **table ID** -- ID of the table used for templates (Default: atvise_parameter)
+- **table header height** -- Height of the table header (Default: 35)
+- **table row height** -- Height of the table row (Default: 40)
+
+Font:
+
+- **font family** -- Font family (Default: Arial)
+- **font color** -- Font color (Default: SYSTEM.GLOBALS.atvFontColor)
+- **table header font size** -- Font size of table header (Default: 12)
+- **table row font size** -- Font size of table row (Default: 14)
+- **table detail font size** -- Font size (Default: 12)
+- **table footer font size** -- Font size table footer (Default: 12)
+
+Appearance:
+
+- **border color** -- Border color (Default: SYSTEM.GLOBALS.atvBorderColor)
+- **fill color** -- Fill color (Default: SYSTEM.GLOBALS.atvFillColor)

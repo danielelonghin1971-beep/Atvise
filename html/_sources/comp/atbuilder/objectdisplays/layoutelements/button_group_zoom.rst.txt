@@ -1,0 +1,26 @@
+Group Zoom
+##########
+
+This control is a group of buttons that provides zooming functionality for the visualization:
+
+- **zoom in** -- Button that increases the zoom level.
+- **zoom out** -- Button that decreases the zoom level.
+- **zoom area** -- Button that activates the area zoom. You can select the desired area with the mouse after you have activated the button.
+- **zoom reset** -- Resets the zoom level to initial state.
+
+
+.. rubric:: Parameters
+
+This control has the following generic parameters:
+
+- **target frame** -- Frame to which the zooming functionality will be applied (default: content)
+
+Appearance: 
+
+- **fill color** -- Color which will be applied to the background (default: global parameter atvFillColor)
+- **border color** -- The button's border color (default: global parameter atvBorderColor)
+- **symbol color** -- Color which will be applied to the symbol (default: global parameter atvSymbolColor)
+- **fill color when inactive** -- Color which will be applied to the button background when button is inactive (default: global parameter atvInactiveColor)
+- **fill color on mousedown** -- Color which will be applied to the background on mousedown (default: global parameter atvFillColor2)
+- **symbol color on mousedown** -- Color which will be applied to the symbol on mousedown (default: global parameter atvFontColor2)
+

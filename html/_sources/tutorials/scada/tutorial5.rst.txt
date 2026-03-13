@@ -1,0 +1,68 @@
+5 Connecting to a foreign server
+################################
+
+This section shows how to add a foreign server, browse a foreign server and how to create local data variables that are mirrored against a foreign server.
+
+.. rubric:: 5.1 Starting the OPC UA test server
+
+First, we have to start the OPC UA test server, which is necessary to import a data structure. This test server will be added as a foreign server in the next section.
+
+Therefore, go to the atvise entry in the Windows start menu and choose "OPC UA testserver".
+
+.. figure:: images/start_opcua_server.png
+
+    Starting the OPC UA test server
+
+.. rubric:: 5.2 Adding a foreign server
+
+1. Open "Servers -> My Server -> Data Sources"
+
+2. Right-click on "Data Sources".
+
+3. Choose "Add Data Source" and then "OpcUa" to open the dialog for adding a data source to the list.
+
+4. The test server runs on port 4841, so we type in "TestServer" as the server name and "opc.tcp://localhost:4841" as the server URL in the dialog which appears.
+
+5. Apply the dialog by clicking on the "OK" button to add the data source.
+
+.. rubric:: 5.3 Browsing a foreign server
+
+1. Right-click on the new entry in the server list.
+
+2. Choose "Browse" from the menu which appears to open a browsing window for this server.
+
+.. figure:: images/browse_server.png
+
+    Browsing a foreign server
+
+.. hint:: Browsing in the structure of a foreign server is very useful for copying browse paths and node IDs for creating mirrored variables.
+
+.. rubric:: 5.4 Creating mirrored data variables
+
+Now we want to display the value of a foreign variable in our visualization. It is not possible to access variables on a foreign server directly from the visualization, so we have to create a mirrored local counterpart for them. The atvise builder includes some functions for creating mirrored variables easily.
+
+1. Open the structure of the "TestServer" and browse into the folder "Objects".
+
+2. Right-click on "VariableString".
+
+3. Choose "Copy" from the menu which appears.
+
+.. figure:: images/copy_data_var.png
+
+    Copying a variable from a foreign server
+
+4. Right-click on "Server -> My Server -> OBJECTS".
+
+5. Choose "Paste & Mirror -> Input -> node" from the menu which appears. Name the variable "VariableString_input".
+
+6. Right-click again on "Server -> My Server -> OBJECTS" and choose "Paste & Mirror -> Output -> node" from the menu which appears. Name the variable "VariableString_output".
+
+    .. hint:: Now the value of VariableString on the "TestServer" is mirrored to the local "VariableString_input". If you change the value of "VariableString_output", this value is written to "VariableString" on the "TestServer".
+
+7. Display the value of "VariableString_input" directly in the visualization as described in section 4.3.
+
+8. Change the value of "VariableString_output". This value is written to "VariableString" on the "TestServer". After the change of "VariableString" on the other server, our local "VariableString_input" is set to this value which will be displayed in the visualization.
+
+.. figure:: images/copy_data_input.png
+
+    Pasting a variable from a foreign server

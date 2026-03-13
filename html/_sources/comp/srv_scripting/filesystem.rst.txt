@@ -1,0 +1,308 @@
+.. _filesystem_functions:
+
+FileSystem functions
+####################
+
+.. rubric:: Introduction
+
+The FileSystem functions allow a server-side script to access files and directories.
+
+Some functions allow the usage of **GLOB patterns** (support the wildcards ``*`` and ``?``). Multiple files and directories that match the pattern can thus be passed to a function at once. If a function supports wildcards is noted at each function below.
+
+All functions support **relative** and **absolute paths**. A relative path always refers to the **current project directory**.
+
+If a function returns a **size**, it is always a floating point value with the **unit KiloByte** (KB).
+
+listDirectory and directorySize can notify errors only as **JavaScript exceptions**, all other functions return false or -1 in case of an error. What a function returns exactly is noted at each function below.
+
+However, every function may throw a JavaScript exception. This exception must be caught in the script code with try-catch (see examples), or the execution of the script will be terminated. A possible cause for such an exception may be a missing access permission for a file or directory.
+
+.. danger:: Check all parameters passed to the FileSystem functions carefully to prevent unintentional removal or movement of files you still need or are part of the operating system!
+
+.. rubric:: General functions
+
+.. class:: FileSystem()
+
+    To use any of the functions below you first have to create a FileSystem object::
+
+        var fs = new FileSystem();
+
+.. !!v8!! FileSystem.capacity(path)
+.. function:: FileSystem.capacity(path)
+.. !!v8!! FileSystem.freeSpace(path)
+.. function:: FileSystem.freeSpace(path)
+
+    Parameters:
+        - **path** (String) -- The path to return the space for.
+
+    Returns:
+        The total (capacity) resp. free (freeSpace) space of a drive in KB.
+
+    An arbitrary path can be passed to the function.
+
+    Example 1, total space of drive "C:" (trailing colon is necessary!)::
+
+        var capacity = fs.capacity("C:");
+
+    Example 2, used space in percent of the drive where the archives are stored::
+
+        var percentUsed = (1 - (fs.freeSpace(history.directory) / fs.capacity(history.directory))) * 100;
+
+.. !!v8!! FileSystem.copy(source, destination[, options])
+.. function:: FileSystem.copy(source, destination[, options])
+
+    Copies files and/or directories from one place to another.
+
+    Parameters:
+        - **source** (String) -- Files/directories to copy. Wildcards are allowed.
+        - **destination** (String) -- Destination of the copy action. If a single file is copied, destination can also be a file. In all other cases, destination must be a directory. Intermediate directories will be created automatically.
+        - **options** (Object, optional, default: {}) -- Object with options:
+
+            - **overwrite** (Boolean, optional, default: false) -- If true, files already existing at the destination will be overwritten.
+
+    Returns:
+        true, if all files/directories were copied or false, if an error occurred (e.g. overwrite is false and a file was already existing at the destination).
+
+    Example, copy all log files from the project directory to "C:/temp", overwriting existing files::
+
+        fs.copy("*.log", "C:/temp", {overwrite: true});
+
+.. !!v8!! FileSystem.move(source, destination[, options])
+.. function:: FileSystem.move(source, destination[, options])
+
+    Moves files and/or directories from one place to another.
+
+    Parameters:
+        - **source** (String) -- Files/directories to move. Wildcards are allowed.
+        - **destination** (String) -- Destination of the movement. If a single file is moved, destination can also be a file. In all other cases, destination must be a directory. Intermediate directories will be created automatically.
+        - **options** (Object, optional, default: {}) -- Object with options:
+
+            - **overwrite** (Boolean, optional, default: false) -- If true, files already existing at the destination will be overwritten.
+
+    Returns:
+        true, if all files/directories were moved or false, if an error occurred (e.g. overwrite is false and a file was already existing at the destination).
+
+    The function can also be used to rename files/directories.
+
+    Example, move a file into a directory (both in the project directory). The directory "mydata" and its sub-directory "backup" will be created automatically, if they do not already exist::
+
+        fs.move("file.txt", "mydata/backup/");
+
+.. !!v8!! FileSystem.listRootDirectories()
+.. function:: FileSystem.listRootDirectories()
+
+    Lists all drives including volume names (on Linux only "/" is returned).
+
+    Returns:
+         An array of objects, where each object contains following properties:
+
+        - **directory** (String) -- Root directory of the drive
+        - **name** (String) -- Volume name
+    
+    Example::
+
+        var ret = fs.listRootDirectories();
+
+        // Windows: [{"directory":"C:/","name":"Root"}, {"directory": "D:/", "name": "DATA"}]
+        // Linux: [{"directory": "/"}]
+
+.. rubric:: Functions for files only
+
+.. !!v8!! FileSystem.createFile(file[, options])
+.. function:: FileSystem.createFile(file[, options])
+
+    Creates a new, empty file.
+
+    Parameters:
+        - **file** (String) -- The name of the file to create. Intermediate directories will be created automatically
+        - **options** (Object, optional, default: {}) -- Object with options:
+
+            - **overwrite** (Boolean, optional, default: false) -- If true, the file will be overwritten if it already exists.
+
+    Returns:
+        true, if the file could be created or false, if an error occurred (e.g. overwrite is false and the file was already existing).
+
+    Example::
+
+        fs.createFile("mydata/file.txt");
+
+.. !!v8!! FileSystem.deleteFile(file)
+.. function:: FileSystem.deleteFile(file)
+
+    Deletes a file.
+
+    Parameters:
+        - **file** (String) -- The file to delete. Wildcards are allowed.
+
+    Returns:
+        true, if the file could be deleted or false, if an error occurred (e.g. the file didn't exist).
+
+    Example, catch JavaScript Exception with "catch" and write the exception text into the log file::
+
+        try {
+           fs.deleteFile(fileWithoutAccess);
+        }
+        catch (errMsg) {
+           console.log("Error deleting a file: " + errMsg);
+        }
+
+.. !!v8!! FileSystem.isFile(file)
+.. function:: FileSystem.isFile(file)
+
+    Checks if the given name is a regular file.
+
+    Parameters:
+        - **file** (String) -- The name to check.
+
+    Returns:
+        true, if it is an existing regular file, otherwise false.
+
+    Example::
+
+        fs.isFile("nodes.db"); // returns true
+        fs.isFile("database"); // returns false
+
+.. !!v8!! FileSystem.fileSize(file)
+.. function:: FileSystem.fileSize(file)
+
+    Returns the size of a file in KB.
+
+    Parameters:
+        - **file** (String) -- The name of the file.
+
+    Returns:
+        The size of the file or -1, if the size could not be determined (e.g. file doesn't exist or is not a regular file).
+
+    Example::
+
+        var size = fs.fileSize("nodes.db");
+
+.. !!v8!! FileSystem.creationDate(file)
+.. function:: FileSystem.creationDate(file)
+
+    Returns the creation date of a file.
+
+    Parameters:
+        - **file** (String) -- The name of the file.
+
+    Returns:
+        Creation date of the file (Date) or 0 if the file doesn't exist.
+
+    Example::
+
+        var date = fs.creationDate("nodes.db");
+
+.. !!v8!! FileSystem.modificationDate(file)
+.. function:: FileSystem.modificationDate(file)
+
+    Returns the modification date of a file.
+
+    Parameters:
+        - **file** (String) -- The name of the file.
+
+    Returns:
+        Modification date of the file (Date) or 0 if the file doesn't exist.
+
+    Example::
+
+        var date = fs.modificationDate("nodes.db");
+
+.. rubric:: Functions for directories only
+
+.. !!v8!! FileSystem.createDirectory(directory)
+.. function:: FileSystem.createDirectory(directory)
+
+    Creates a new directory.
+
+    Parameters:
+        - **directory** (String) -- The name of the directory to create. Intermediate directories will be created automatically.
+
+    Returns:
+        true, if the directory could be created or false, if an error occurred (e.g. the directory was already existing).
+
+.. !!v8!! FileSystem.deleteDirectory(directory)
+.. function:: FileSystem.deleteDirectory(directory)
+
+    Deletes a directory recursively.
+
+    Parameters:
+        - **directory** (String) -- The name of the directory to delete. Wildcards are allowed.
+
+    Returns:
+        true, if the directory could be deleted or false, if an error occurred (e.g. the directory didn't exist).
+
+.. !!v8!! FileSystem.isDirectory(directory)
+.. function:: FileSystem.isDirectory(directory)
+
+    Checks if the given name is a directory.
+
+    Parameters:
+        - **directory** (String) -- The name to check.
+
+    Returns:
+        true, if it is an existing directory, otherwise false.
+
+    Beispiel::
+
+        fs.isDirectory("nodes.db"); // returns false
+        fs.isDirectory("database"); // returns true
+
+.. !!v8!! FileSystem.listDirectory(directory[, options])
+.. function:: FileSystem.listDirectory(directory[, options])
+
+    Lists the content of a directory.
+
+    Parameters:
+        - **directory** (String) -- The directory, whose content should be listed.
+        - **options** (Object, optional, default: {}) -- Object with options:
+
+            - **recursive** (Boolean, optional, default: false) -- If true, sub-directories will be search and listed recursively, otherwise only the given directory will be listed.
+
+    Returns:
+        An array of objects, where each object contains following properties:
+
+        - **accessible** (Boolean) -- True, if the user has access to the respective directory or file, otherwise false.
+        - **isFile** (Boolean) -- True, if the entry is a file, false, if it is a directory.
+        - **name** (String) -- Name of the file or directory.
+        - **path** (String) -- Absolute file-/directory name of the entry, directories include the trailing directory separator.
+
+    Example::
+
+        // project directory is C:/proj
+        var options = {recursive: true};
+        var ret = fs.listDirectory("mydata", options);
+        /*
+        [
+           {
+                accessible: true,
+                isFile: false,
+                name: "backup",
+                path: "C:/proj/mydata/backup/"
+           },
+           {
+                accessible: true,
+                isFile: true,
+                name: "file.txt",
+                path: "C:/proj/mydata/backup/file.txt"
+           }
+        ]
+        */
+
+.. !!v8!! FileSystem.directorySize(directory[, options])
+.. function:: FileSystem.directorySize(directory[, options])
+
+    Provides the size of a directory, whereupon sub-directories are always included.
+
+    Parameters:
+        - **directory** (String) -- The directory, whose size should be calculated.
+        - **options** (Object, optional, default: {}) -- Object with options:
+
+            - **recursive** (Boolean, optional, default: false) -- If true, the size of all sub-directories will be provided individually, otherwise only the total size of the given directory is provided.
+
+    Returns:
+        An array of objects, where each object contains following properties:
+
+        - **accessible** (Boolean) -- True, if the user has access to the respective directory, otherwise false.
+        - **size** (Integer) -- Size of the directory including all sub-directories in KB.
+        - **name** (String) -- Name of the directory.
+        - **path** (String) -- Absolute directory name of the entry including the trailing directory separator.

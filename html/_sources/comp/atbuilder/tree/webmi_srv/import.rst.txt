@@ -1,0 +1,20 @@
+.. _webmi_import:
+
+Objects - Importing
+###################
+
+To import the data structure from the specified data-variables XML file, you can right-click on your webMI Server and choose :menuselection:`Acquire Data Points` or click on :menuselection:`Guided Actions` and choose your server at :menuselection:`Import all variables from`:
+
+.. figure:: images/import_webmi_datastructure.png
+
+    Import data structure via "Acquire Data Points'"
+
+.. figure:: images/import_webmi_guidedactions_datasource.png
+
+    Importing a data structure via "Guided Actions"
+
+Example of the XML file and the server structure after importing the file:
+
+.. figure:: images/xml_ex_str.png
+
+    Example of how a data structure is built in XML

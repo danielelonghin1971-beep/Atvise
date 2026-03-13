@@ -1,0 +1,91 @@
+Alarm groups and sum alarms
+###########################
+
+Alarm groups are used to group related alarm conditions. The main purpose of alarm groups is to define the alarm conditions belonging to a sum alarm. Each group is also an event notifier that can be used when :doc:`mirroring alarms <mirror>` from an atvise data source.
+
+The alarm groups can be found in the project tree below :treeselection:`Servers --> My Server --> Alarming --> Groups`:
+
+.. figure:: images/alarmgroups_tree.png
+
+    Alarm groups
+
+As you can see in the screenshot, the alarm groups can form an arbitrary hierarchy. Groups can have sub-groups and it is also possible to cross-reference groups from anywhere in the hierarchy.
+
+.. attention:: When cross-referencing groups be careful not to create cyclic references!
+
+To add a new group, right-click :treeselection:`Servers --> My Server --> Alarming --> Groups` or an existing group and select :menuselection:`Add Alarm Group...`.
+
+To copy or reference an existing alarm group, first right-click the group and select :menuselection:`Copy Alarm Group`. Then right-click where you want the group to be copied/referenced and select :menuselection:`Paste Alarm Group` to create a copy or :menuselection:`Paste References into Alarm Group` to create a cross-reference.
+
+Cross-references can also be created be right-clicking the group, where the references should be added and selecting :menuselection:`Add References to Alarm Group...`.
+
+To edit a group, double-click it or right-click it and select :menuselection:`Edit...`.
+
+.. figure:: images/alarmgroup_edit.png
+
+The buttons at the top have following meaning:
+
+.. csv-table::
+    :widths: auto
+
+    |icon_select_projtree|, Select the alarm group in the project tree
+    |save_button|, Save changes
+    |icon_refresh|, Reload
+    |icon_edit_add|, Add condition
+    |icon_edit_delete|, Delete condition
+
+The table of conditions contains the conditions that are direct members of the group (empty group name) and also all conditions added to any of the sub-groups (non-empty group name).
+
+.. rubric:: Sum alarm
+
+To configure a sum alarm for an alarm group click on the *Sum alarm* tab on the left and activate the *Sum alarm* checkbox.
+
+A sum alarm will become active as soon as one of the direct or indirect condition members of the group becomes active. It will become inactive when the last direct or indirect condition member of the group becomes inactive. You can define how the sum alarms behaves with the following settings:
+
+.. figure:: images/alarmgroup_sum.png
+
+    Sum alarm settings
+
+Configuration name
+    The name of the alarm configuration. Can only be changed when the sum alarm is initially configured.
+
+Condition name
+    The name of the alarm condition. Can only be changed when the sum alarm is initially configured.
+
+    .. hint:: As the sum alarm is itself a condition it can be used like any other condition, e.g. added to an other alarm group.
+
+Category
+    Specifies the category of the condition: warning, error, etc.
+
+Display
+    Select the corresponding display for your alarm (necessary for the jump-to-display function of the visualization).
+
+Prevention script
+    Specifies the script to be run before an alarm becomes active. See :ref:`prevention_modification_scripts` for details.
+
+Modification script
+    Specifies the script to be run before the alarm is distributed in the system. See :ref:`prevention_modification_scripts` for details.
+
+To active text
+    Specifies the text to be displayed if the condition state changes to active (this text will automatically be considered for the translation; no "T{}" required).
+
+To inactive text
+    Specifies the text to be displayed if the condition state changes to inactive (this text will automatically be considered for the translation; no "T{}" required).
+
+Max. timeshelve
+    The maximum time period an alarm can be shelved. If not set, the global default defined in :ref:`atserver.ini <atserver_ini_max_shelve>` will be used. The time period will always override the settings of the sub-alarms. 
+
+Suppress sub-alarms
+    If activated all direct and indirect sub-alarms will automatically be suppressed as soon as the sum alarm becomes active and unsuppressed when it becomes inactive.
+
+Apply actions to members
+    If activated all actions like acknowledge, shelve and others will automatically be called for all direct and indirect sub-alarms. If *explicit acknowledge* is activated for a sub-alarm, it will not automatically be acknowledged, though.
+
+Explicit acknowledge
+    If activated, the sum alarm must always be acknowledged explicitely and will not be acknowledged if it as part of another sum alarm that is just being acknowledged.
+
+.. |icon_edit_add| image:: /common_images/icon_edit_add.png
+.. |icon_edit_delete| image:: /common_images/icon_edit_delete.png
+.. |icon_refresh| image:: /common_images/icon_refresh.png
+.. |icon_select_projtree| image:: /common_images/icon_select_projtree.png
+.. |save_button| image:: /common_images/save_button.png

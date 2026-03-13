@@ -1,0 +1,20 @@
+Display Time Advanced
+#####################
+
+This control displays the current client time (hours, minutes, seconds and milliseconds).
+
+.. rubric:: Parameters
+
+- **base** -- If there is no base specified then the current client time will be displayed.
+- **update time interval** -- If there is no base specified then it is possible to enter an update time interval (in ms) which specifies the interval in which the current client time will be updated (default: 30000)
+- :advstyle:`Advanced` **font color** -- Font color which will be applied to the values (default: global parameter atvFontColor)
+- :advstyle:`Advanced` **fill color** -- Background color of the control (default: global parameter atvFillColor)
+- :advstyle:`Advanced` **border color** -- Color of the control's border (default: global parameter atvBorderColor)
+
+Menu:
+
+- **menu positioning** -- The position the menu symbol is shown at (top-left, top-right, bottom-left, bottom-right).
+- **menu mouseover active** -- Symbol is only shown on *mouseover*.
+- **menu symbol offset x** -- Relative offset of the menu symbol to the anchor point on the x axis in pixel.
+- **menu symbol offset y** -- Relative offset of the menu symbol to the anchor point on the y axis in pixel.
+- **context menu click frame** -- Defines the size of the click frame for opening the context menu.

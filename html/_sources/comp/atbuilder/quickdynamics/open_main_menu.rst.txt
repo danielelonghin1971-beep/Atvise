@@ -1,0 +1,26 @@
+Open Main Menu
+##############
+
+This Quick Dynamic opens the main menu at the specified position.
+
+.. rubric:: Parameters:
+
+- **x** (*x coordinate*) -- The x coordinate for the menu (absolute to the display).
+- **y** (*y coordinate*) -- The y coordinate for the menu (absolute to the display).
+- **onEvent** (*trigger event*) -- The event triggering this Quick Dynamic, which is one of the following:
+
+    - **click** -- Mouse click
+    - **dblclick** -- Double-click of mouse button
+    - **mousedown** -- Press down the mouse button
+    - **mouseup** -- Release the mouse button
+    - **mouseover** -- Move the mouse cursor over the applied graphic element
+    - **mousemove** -- Move the mouse anywhere over the applied graphic element
+    - **mouseout** -- Move the mouse cursor out of the applied graphic element
+
+- **name** (*menu name*) -- Name of the menu that is to be displayed (either MAIN, USER, SYSTEM or REPORT).
+- **frameName** (*target display frame*) -- Name of the target frame where a selected display will be opened.
+- **itemsCount** (*maximum displayed items (0 = all)*) -- With this parameter you can set the amount of items shown in the dropdown field.
+- **fontSize** (*font size*) -- Sets the font size of the items in the dropdown field.
+- **minWidth** (*minimum width of the PopUp*) -- Sets the minimum width of the menu.
+- **style** (*style*) -- Style settings for the pop up
+- **closeOnMouseout** (*close on mouseout*) -- Menu closes on mouse out.

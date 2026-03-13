@@ -1,0 +1,82 @@
+Control and diagnostic functions
+################################
+
+.. !!v8!! call(script, parameters)
+.. function:: call(script, parameters)
+
+    Calls synchronously another script.
+
+    Parameters:
+        - **script** (UaNodeId) -- Specifies the UaNodeID of the script to call. If several script instances belong to the given script than all instances will be called. In this case the result will be an array that is composed from the results of each instances called.
+        - **parameters** (Object) -- Specifies the input parameters of the script. The name/value of the object attribute corresponds to the name/value of the input parameter of the called script.
+
+    Returns:
+        The return value of the called script.
+
+    Example::
+
+        var result = call("AGENT.OBJECTS.add.Script", {x: 1, y: 2});
+
+.. !!v8!! execute(script[, parameters[, settings]])
+.. function:: execute(script[, parameters[, settings]])
+
+    Executes asynchronously another script.
+
+    Parameters:
+        - **script** (UaNodeId) -- Specifies the UaNodeID of the script to execute. If several script instances belong to the given scripts than all instances will be executed.
+        - **parameters** (Object, optional, default: {}) -- Specifies the input parameters of the script. The name/value of the object attribute corresponds to the name/value of the input parameter of the called script.
+        - **settings** (Object, optional, default: {}) -- Specifies the execution control. The following attributes may be defined:
+
+            - **delay** (Double, optional, default: 0.0) -- Specifies the delay of execution in seconds.
+            - **priority** (Integer, optional, default: 5) -- Specifies the priority of execution: 1 (lowest priority) ... 10 (highest priority).
+
+    Returns:
+        The result is the number of script instances scheduled for execution.
+
+    Example::
+
+        var result = execute("AGENT.OBJECTS.add.Script", {x: 1, y: 2}, {delay: 1.5, priority: 8});
+
+.. !!v8!! lock(mutexName, lockedFunction)
+.. function:: lock(mutexName, lockedFunction)
+
+    Enables a locking mechanism to prevent race conditions.
+
+    Parameters:
+        - **mutexName** (String) - Specifies the name of the mutex
+        - **lockedFunction** (Function) - The function locked by the mutex. The function has no parameters. If an exception is thrown, the function is exited and the mutex is unlocked. 
+
+    Example::
+
+        var node = Ua.findNode("AGENT.OBJECTS.i");
+        lock("mutex1", function() { node.result.value++; });
+
+ .. attention:: 
+  
+    Deadlocks will be automatically detected and the respective function is terminated by an exception. However, lock() shall be used with caution in order to avoid unintended locks. 
+
+    Locks shall be held as short as possible.
+
+.. !!v8!! console.log(object[, ...])
+.. function:: console.log(object[, ...])
+.. !!v8!! console.info(object[, ...])
+.. function:: console.info(object[, ...])
+.. !!v8!! console.debug(object[, ...])
+.. function:: console.debug(object[, ...])
+.. !!v8!! console.warn(object[, ...])
+.. function:: console.warn(object[, ...])
+.. !!v8!! console.error(object[, ...])
+.. function:: console.error(object[, ...])
+
+    Prints the given objects into the atvise log file with the appropriate log level. The functions will convert the given object(s) into a concatenated string. No extra white space is added. The atvise log levels for these functions are defined as follows:
+
+    - log() - INFORMATION
+    - info()- INFORMATION
+    - debug() - DEBUG
+    - warn() - WARNING
+    - error() - ERROR
+
+    Example::
+
+        console.debug("Debug message: ", x);
+        console.log("Log message: ", y);

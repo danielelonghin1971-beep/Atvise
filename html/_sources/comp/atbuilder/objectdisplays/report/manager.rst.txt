@@ -1,0 +1,60 @@
+Report Management
+#################
+
+This object display allows to manage report configurations.
+
+.. rubric:: Parameters
+
+Table:
+
+- **table ID** -- Unique table identifier (default: "report_table")
+- **table header height** -- Height of the table header in px (default: 30)
+- **table row height** -- Height of the table row in px (default: 20)
+
+Font:
+
+- **font family** -- Font family applied to the table (default: Arial)
+- **font color** -- Color which will be applied to labels and values (default: global parameter atvFontColor)
+- **table header font size** -- Font size applied to the table header. (default: 12)
+- **table row font size** -- Font size applied to the table rows. (default: 12)
+- **table detail font size** -- Font size applied to the detail area. (default: 12)
+- **table footer font size** -- Font size applied to the table footer. (default: 12)
+
+Appearance:
+
+- **border color** -- Color of borders (default: global parameter atvBorderColor).
+- **fill color** -- Fill color of the top background area (default: global parameter atvFillColor).
+- **symbol color** -- Color of symbols (default: global parameter atvSymbolColor).
+- **global color config** -- Global color configuration (default: global list atvObjectDisplays.Tables.ColorConfig)
+- **custom theme** -- Name of the custom theme (default: atviseTheme). Refer to :ref:`customizing table appearance <html_table_customizing>` for further information.
+
+Options:
+
+- **report configurator** -- Display to add or edit report configurations (default: *Report Editor* objekt display)
+- **report generator** -- Display to create a report (default: *Generate Report Dialog* object display)
+- **email configurator** -- Display for mail configuration (default: *E-mail configurator* object display)
+- **report viewer** -- Display to view PDF reports in browser (default: *Report Viewer* object display)
+- **maximum displayed items in viewer (0 = all)** -- Number of generated reports that shall be displayed in the list (default: 0)
+- **paging** -- Activated paging buttons (default: false)
+- **filter bar enabled** -- Show filter bar (default: true)
+- **filter regular expressions** -- Regular expressions can be used for the filter (default: false)
+- **filter use placeholder** -- Activation of the "*" placeholder in the search function (default: false)
+- **filter case sensitive** -- Filter works case sensitive (default: false)
+- **filter min. input length** -- Minimal number of signs for the filter to work (default: 1)
+- **stick parent and child together** -- Children are always listed together with their parent (default: true)
+- **cell linebreak** -- Too long text will be broken to new lines. If there is no more space the text will be cut ending with "..." (default: false)
+- **columns reorderable** -- Columns can be reordered (default: true)
+- **multiselect on cell click** -- Lines can be selected by clicking them (default: true)
+
+Menu options:
+
+- **show menu** -- Display the menu (default: true)
+- **custom menu title** -- Title of the custom menu (default: "T{Export CSV}")
+- **picker menu title** -- Title of the picker menu (default: "Show/Hide")
+- **show picker menu** -- Display the picker menu (default: true)
+- **menu width** -- Width of the menu (default: 300)
+- **menu height** -- Height of the menu (default: 300)
+
+Security:
+
+- **right for CSV export** -- If the right for CSV export is being set, a user can only use the CSV export an alarm if he has the right for CSV export. In the case that a user does not have the right for CSV export, the according links will be inactive. If no right for CSV export is specified, CSV export can be carried out by any user.

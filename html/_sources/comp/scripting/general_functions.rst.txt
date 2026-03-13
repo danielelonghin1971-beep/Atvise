@@ -1,0 +1,228 @@
+.. _webmi_general:
+
+General functions
+#################
+
+.. !!webMI!! webMI.addEvent(id, name, function(e){...})
+.. function:: webMI.addEvent(id, name, function(e){...})
+
+    Registers a callback function for one or more events of an object.
+
+    The "id" parameter specifies the object, the "name" parameter the desired events. "name" can be a single event or an array of events. The possible events are "click", "dblclick", "mousedown", "mouseup", "mouseover", "mousemove" and  "mouseout".
+
+    When one of the specified events occurs, the callback function will be called.
+
+    ::
+
+        webMI.addEvent("myRectangle", "click", function(e) {
+            alert("Rectangle was clicked.");
+        });
+
+.. !!webMI!! webMI.addOnload(function(e){...})
+.. function:: webMI.addOnload(function(e){...})
+
+    The function callback will be executed after all contents of the display were completely loaded (when all graphics and scripts are ready).
+
+    ::
+
+        webMI.addOnload(function() {
+            alert("Display loaded!");
+        });
+
+.. !!webMI!! webMI.addOnunload(function(e){...})
+.. function:: webMI.addOnunload(function(e){...})
+
+    The function callback will be executed just before the display is unloaded.
+
+    ::
+
+        webMI.addOnunload(function() {
+            alert("Display will be unloaded!");
+        });
+
+.. !!webMI!! webMI.callExtension(id, parameterObject)
+.. function:: webMI.callExtension(id, parameterObject)
+
+    Function to call "Quick Dynamics" from the Library. The "id" is the full nodeID of the Quick Dynamic, "parameterObject" is a JavaScript object with all the necessary parameters.
+
+    ::
+
+        webMI.callExtension("SYSTEM.LIBRARY.ATVISE.QUICKDYNAMICS.Change Color by Node", {
+            "fillInRange":"#00ff00",
+            "fillOutOfRange":"#ff0000",
+            "id":"id_1",
+            "maxRange":"",
+            "minRange":"0",
+            "nodeId":"AGENT.OBJECTS.TEST1.test1",
+            "strokeInRange":"#000000",
+            "strokeOutOfRange":"#000000"
+        });
+
+.. !!webMI!! webMI.hasRight(name)
+.. function:: webMI.hasRight(name)
+
+    Used to check if the currently logged in user has the right specified by the parameter "name". Returns true or false.
+
+    ::
+
+        var hasRight = webMI.hasRight("VISU.Operate");
+        if (!hasRight) {
+            alert("You don't have the necessary right!");
+        }
+
+.. !!webMI!! webMI.inList(element, array)
+.. function:: webMI.inList(element, array)
+
+    Checks if the specified "element" is an item of the given "array" - returns true or false.
+
+    ::
+
+        var animals = ["cat", "dog", "elefant"];
+        var iHaveACat = webMI.inList("cat", animals); // iHaveACat is "true"
+
+.. !!webMI!! webMI.sprintf(format, value)
+.. function:: webMI.sprintf(format, value)
+
+    Formats a value with the given format String (use "printf()" syntax of programming language C).
+
+    ::
+
+        var value = webMI.sprintf("%04.1f", 23);
+        // Result: value = 23.0
+
+.. !!webMI!! webMI.query[key]
+.. attribute:: webMI.query[key]
+
+    Returns the specific display parameter when opening the display. If the parameter is not specified, the default value is returned and if that value is not available "undefined" will be returned.
+
+    ::
+
+        var myBase = webMI.query["base"];
+
+.. !!webMI!! webMI.escapeHTML(string)
+.. function:: webMI.escapeHTML(string)
+
+    This function allows to convert special characters in a string to HTML entities. It is designed to protect the user against malicious code in dynamically set content using innerHTML, outerHTML or document.write(). In these cases it is recommended to use either webMI.escapeHTML or webMI.secureString (see below).
+
+    ::
+
+        li.innerHTML = webMI.escapeHTML(e.value);
+
+.. !!webMI!! webMI.unescapeHTML(string)
+.. function:: webMI.unescapeHTML(string)
+
+    This function is the counterpart of webMI.escapeHTML and allows to convert HTML entities back to the corresponding special characters.
+
+.. !!webMI!! webMI.secureString(string)
+.. function:: webMI.secureString(string)
+
+    Similar to webMI.escapeHTML, but here some HTML tags and attributes are allowed:
+
+    .. csv-table::
+        :widths: auto
+
+        <b>, "bold"
+        <blockquote>, specifies a section that is quoted from another source
+        <code>, defines a piece of computer code
+        <del>, "delete, used to indicate modifications"
+        <dd>, describes an item in a <dl> description list
+        <dl>, description list
+        <dt>, title of an item in a <dl> description list
+        <em>, emphasized text
+        "<h1>, <h2>, <h3>", "headings"
+        <i>, italic
+        <img>, "specifies an image tag (attributes alt, src, title, width and height are allowed)"
+        <kbd>, represents user input (usually keyboard input)
+        <li>, list item in an ordered <ol> or unordered list <ul>
+        <ol>, ordered list
+        <p>, paragraph
+        <pre>, pre-formatted text displayed in a fixed width font and with unchanged line breaks
+        <s>, strikethrough
+        <sup>, superscript text
+        <sub>, subscript text
+        <strong>, defines important text
+        <ul>, unordered list
+        <br>, line break
+        <hr>, horizontal line
+
+    All other elements are masked for security reasons.
+
+    ::
+
+        li.innerHTML = webMI.secureString(e.value);
+
+.. !!webMI!! webMI.getMethodSupport()
+.. function:: webMI.getMethodSupport()
+
+    Returns an array of functions, that can be called with :func:`webMI.data.call`. Can be used to find out which functions the server supports and to adjust the visualization accordingly. The array is only set if the server sends the functions to the visualization in the info request. The atvise server sends all functions that are available in :treeselection:`Library --> ATVISE --> webMI Method Scripts` and :treeselection:`Library --> PROJECT --> webMI Method Scripts`.
+
+.. !!webMI!! webMI.getFeatureSupport()
+.. function:: webMI.getFeatureSupport()
+
+    Returns the features that are supported by the server. Can be used to adjust the visualization accordingly. The return value may contain features like *queryfilter*, *subscribefilter*, *read*, *write* or *aggregates*.
+
+.. !!webMI!! webMI.getClientInfo()
+.. function:: webMI.getClientInfo()
+
+    Informs about the type and states of the used device. The return value is an object with following properties:
+
+    - **browserType** (Object) -- Indicates the used browser or the underlying engine the browser is based on. E.g., Microsoft Edge is based on the Chromium engine and is included in the *isChrome* property. 
+
+        - **isChrome** (Boolean)
+        - **isSafari** (Boolean)
+        - **isIE11** (Boolean)
+        - **isFirefox** (Boolean)
+
+    - **deviceScaling** (Object) -- The current scaling configuration as configured in webMI or overwritten by the settings in :ref:`webMIcfg.js <visu_configuration_device_scaling>`
+    - **deviceType** (String) -- "desktop", "tablet" or "mobile"
+    - **isDesktop** (Boolean)
+    - **isLandscape** (Boolean)
+    - **isMobile** (Boolean)
+    - **isMultiTouchDevice** (Boolean)
+    - **isTable** (Boolean)
+    - **isTouchDevice** (Boolean)
+
+.. !!webMI!! webMI.getPasswordPolicy()
+.. function:: webMI.getMailPolicy()
+
+    Returns the currently defined :ref:`mail policy<ac_mail>`. The return value is an object with following properties:
+
+    - **allowCustomEmail** (Boolean) -- Shows if users are allowed to define their own e-mail address.
+    - **whitelist** (Array) -- Shows all allowed e-mail domains.
+
+.. !!webMI!! webMI.getPasswordPolicy()
+.. function:: webMI.getPasswordPolicy()
+
+    Returns the currently defined :ref:`password policy<ac_password>`. The return value is an object with following properties:
+
+    - **active** (Boolean)
+    - **hasSurroundingWhiteSpace** (Boolean)
+    - **inDelay** (Boolean)
+    - **invalidOldPassword** (Boolean)
+    - **invalidUser** (Boolean)
+    - **minLength** (Boolean)
+    - **none** (Boolean)
+    - **requireDigit** (Boolean)
+    - **requireFullnameExclusion** (Boolean)
+    - **requireLowerCase** (Boolean)
+    - **requireNameExclusion** (Boolean)
+    - **requireNewPw** (Boolean)
+    - **requireSpecialChar** (Boolean)
+    - **requireUpperCase** (Boolean)
+    - **userLocked** (Boolean)
+
+.. !!webMI!! webMI.getSessionID()
+.. function:: webMI.getSessionID()
+
+    Returns the current session ID.
+
+.. !!webMI!! webMI.localizeNumber(value)
+.. function:: webMI.localizeNumber(value)
+
+    This function formats numeric strings or numbers. Commas and dots in the given string or number are replaced by the respective decimal separator of the user language. 
+
+    Parameters:
+        - **value** (String|Number, optional) -- The numeric string or number that shall be formatted.
+
+    Returns:
+        - The value formatted with the local decimal separator. If no value was passed, only the local decimal separator is returned. 

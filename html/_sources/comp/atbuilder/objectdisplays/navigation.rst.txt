@@ -1,0 +1,29 @@
+.. _od_navigation:
+
+Navigation
+##########
+
+This display generates a navigation bar. The navigation can be defined from the existing display structure, a user-defined JSON string or via the available display parameters for title and display.
+
+.. rubric:: Conditions
+
+The navigation bar uses parts of the license-free Font Awesome library with version 5.11.2 (https://fontawesome.com/) to display symbols. In order to display "hover" effects, the "hover" detection must be natively supported by the browser (device) on which the navigation is carried out. This support is known to be limited for "multitouch" devices such as iPad, iPhone.
+
+The use of the Quick Dynamics of the same name is not recommended. Instead, the corresponding object display "navigation" should be used.
+
+.. rubric:: Triggers
+
+Following triggers can be used for this object display: 
+
+- **com.atvise.setActive** -- Can be used to enable or disable the object display.
+
+::
+
+    //Disable the object display
+    webMI.trigger.fire("com.atvise.setActive", false, "myDisplayID");
+
+.. hint:: Additional undocumented triggers are internally used by atvise. Their functionality may be changed in future atvise releases.
+
+.. rubric:: Parameters
+
+A description of the parameters and examples of their definition can be found in the chapter :ref:`atvise visualization > Navigation <navigation>`.

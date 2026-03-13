@@ -1,0 +1,33 @@
+Numerical Keyboard
+##################
+
+The number keyboard display offers an on-screen keyboard for numerical input.
+
+Simple numerical input by clicking once on the desired key and complete the input by clicking the "OK" key (This will write the current input to the given address node "target"). The "delete" key can be used to delete single numbers or to remove the whole input by holding it at least for 1 second. To abort and escape the input it is necessary to click the "X" button on the middle of the right side.
+
+There are a few different ways to limit the numerical input. A simple way to allow an input only between a given range, is to set the "minimum" and / or "maximum" parameters. To limit the number of the digits before and / or after the decimal point, it is necessary to set these parameters. The "query confirm" parameter can be used to display a confirm message before the input value will be written. 
+
+.. rubric:: Parameters
+
+The following common Parameters exists:
+
+- **unit** -- Used to display a unit after the input
+- **value** -- Initially displayed input value
+- **minimum** -- Minimum value input
+- **maximum** -- Maximum value input
+- **digits before point** -- Number of digits that are allowed before decimal point
+- **digits after point** -- Number of digits that are allowed after decimal point
+- **Target** -- Address target node to write input to
+- **query confirm** -- If set to true, a message dialog will be required to answer for completing the input
+- **query confirm text** -- Text that will be used for the confirm query message dialog (default: T{Do you really want to set the value?})
+- **password mode** -- Hides characters and shows stars instead (default: No)
+- **trigger to be fired** -- Name of the global trigger which will be fired when the input is complete
+
+Appearance:
+
+- :advstyle:`Advanced` **font color** -- Font color of the keyboard (default: atvFontColor)
+- :advstyle:`Advanced` **fill color** -- Background color of the text display (default: atvFillColor)
+
+.. rubric:: Examples
+
+Create a display with a button that opens a window with the keyboard by clicking on to it and add the desired target node to the query.

@@ -1,0 +1,103 @@
+.. _ua_overview:
+
+Introduction
+##############
+
+:ref:`UaNode functions<uanode_functions>` are deprecated and replaced by :ref:`Ua functions<ua_functions>` starting with atvise 3.6. The functions can still be used to provide backward compatibility, however, it may result in errors and/or undefined behavior in conjunction with :ref:`access control<access_control_intro>`.
+
+.. rubric:: Ua functions
+
+The following table shows how the respective function (and parameters if necessary) must be replaced.
+
+.. csv-table:: Functions and parameters
+    :widths: auto
+    :header: UaNode (deprecated), Ua.Node (new)
+    :stub-columns: 0
+    
+    UaNode.exists, :ref:`Ua.findNode<ua_functions>`
+    "UaNode.create
+
+    - nodeclass
+    - typedefinition
+    - modellingrule
+    - browsename
+    - displayname
+    - datatype
+    - valuerank
+    - eventnotifier", ":ref:`Ua.createNode<ua_createnode>`
+    
+    - nodeClass
+    - typeDefinition
+    - modellingRule
+    - browseName
+    - displayName
+    - dataType
+    - valueRank
+    - eventNotifier"
+    UaNode.remove, :ref:`Ua.\<Class>.remove<ua_remove>`
+    "UaNode.browse
+
+    - subtype
+    - nodeclass
+    - maxresult
+    - typedefinition", ":ref:`Ua.\<Class>.browse<ua_browse>`
+
+    - subType
+    - nodeClass
+    - maxResult
+    - typeDefinition"
+    UaNode.addreference, :ref:`Ua.\<Class>.addReference<ua_addreference>`
+    UaNode.deletereference, :ref:`Ua.\<Class>.deleteReference<ua_deletereference>`
+    "UaNode.assign
+
+    - sourcetime", ":ref:`Ua.Variable.assign<ua_assign>`
+
+    - sourceTime"
+    "UaNode.datahistory
+
+    - starttime
+    - endtime
+    - numvalues
+    - returnbounds
+    - continuationpoint
+    - samplinginterval", ":ref:`Ua.Variable.dataHistory<ua_datahistory>`
+
+    - startTime
+    - endTime
+    - numValues
+    - returnBounds
+    - continuationPoint
+    - samplingInterval"
+    "UaNode.datahistoryRelease
+
+    - continuationpoint", ":ref:`Ua.Variable.dataHistoryRelease<ua_datahistrelease>`
+
+    - continuationPoint"
+    UaNode.equal, :ref:`Ua.\<Class>.equal<ua_equal>`
+    UaNode.call, :ref:`Ua.Method.call<ua_call>`
+    UaNode.good/bad/uncertain, :ref:`Ua.Status.good/bad/uncertain<ua_status>`
+    "
+    UaNode.toString
+
+    UaNode.statusToString
+    
+    Ua.Node.nodeclassToString", :ref:`Ua.\<Class>.toString<ua_tostring>`
+
+.. rubric:: Constants
+
+The following table shows how to replace the respective constants:
+
+.. csv-table:: Constants
+    :widths: auto
+    :header: Constants (old), Constants (new)
+
+    UaNode.<datatype_constant>, Ua.DataType.<constant>
+    UaNode.<nodeclass_constant>, Ua.NodeClass.<constant>
+    UaNode.<valuerank_constant>, Ua.ValueRank.<constant>
+    UaNode.<modellingrule_constant>, Ua.ModellingRule.<constant>
+    UaNode.<typedefinition_constant>, "Ua.VariableType.<constant> resp. 
+    
+    Ua.ObjectType.<constant>"
+    UaNode.<eventnotifier_constant>, Ua.EventNotifier.<constant>
+    UaNode.<browsedirection_constant>, Ua.Node.<constant>
+    UaNode.<reference_constant>, Ua.Reference.<constant>      

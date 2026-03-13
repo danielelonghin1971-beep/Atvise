@@ -1,0 +1,9 @@
+webMI server
+############
+
+.. toctree::
+
+    webmi_srv/intro
+    webmi_srv/add_webmi_server
+    webmi_srv/import
+    webmi_srv/generate

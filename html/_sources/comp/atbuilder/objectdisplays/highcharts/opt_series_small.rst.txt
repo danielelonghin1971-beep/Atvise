@@ -1,0 +1,24 @@
+Configuration - Series (Small)
+##############################
+
+This display provides the management of the data sets for the chart.
+
+.. rubric:: Parameters
+
+This control has the following parameters:
+
+- **font color** -- Color which will be applied to the labels (default: global parameter atvFontColor)
+- **fill color** -- Left sidebar fill color (default: global parameter atvFillColor)
+- **node entry path** -- Defines the entry path in the configuration dialog (default: AGENT.OBJECTS).
+
+Subdisplay:
+
+- **display for series bar** -- Display for showing a bar series (Default: "Configuration - Bar/Column (small)" object display)
+- **display for series pie** -- Display for showing a pie series (Default: "Configuration - Pie" object display)
+- **display for series line** -- Display for showing a line series (Default: "Configuration - line/area (small)" object display)
+- **display for message** -- Display for showing messages (default: "Message Dialog" object display)
+
+Appearance: 
+
+- **button color 1** -- Color for *lower* and *upper value address* button when clicked (default: #c9d9b8)
+- **button color 2** -- Color for *lower* and *upper value address* button (default: #d7d7d7)

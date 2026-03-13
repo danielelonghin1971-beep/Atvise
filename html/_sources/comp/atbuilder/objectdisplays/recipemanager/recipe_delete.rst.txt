@@ -1,0 +1,13 @@
+Delete Dialog
+#############
+
+Displays a delete confirmation dialog. 
+
+.. rubric:: Parameters
+
+General:
+
+- **title** -- Title (default: T{Title})
+- **message line 1** -- Text row 1 (default: T{Message})
+- **message line 2** -- Text row 2 (default: T{Message}
+- **trigger name** -- Trigger for interaction

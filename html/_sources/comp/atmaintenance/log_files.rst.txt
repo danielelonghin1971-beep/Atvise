@@ -1,0 +1,498 @@
+.. role:: red
+.. role:: blue
+.. role:: purple
+
+Log files
+#########
+
+.. rubric:: General information
+
+For any modification which is done by the tool, a log entry is written to the log file. There are different types of log entries in different colors:
+
+[I] Information: these entries are for information only.
+
+:blue:`[W] Warning: this indicates that a change done by the tool requires at least verification and might also require a manual modification.`
+
+:red:`[E] Error: this indicates an error occurred during the conversion.`
+
+:purple:`[O] Obsolete: this is only used in the 'Check resource versions...' result dialog and indicates an obsolete resource.`
+
+**[S] Summary: this is only used in archive conversion logs and indicates summary of archive file conversion.**
+
+[D] Detail: this is only used in archive conversion logs and indicates detailed information of archive file conversion.
+
+At the very end of the log file in the section 'Summary of Conversion' all nodes are listed which need at least verification or might require a manual modification - for further details please refer to the section :ref:`Log entry details<logentry_details>`.
+
+The log file will be named after the selected project database (nodes.log.htm or nodes.history.log.htm). If you run the operation more than once, the additional log files will have the current date and time as part of the log file name to prevent overwriting the original log file (e.g. nodes.log_20120705120003.htm). This original log file has a special meaning since some warnings will only be generated during the first run. Therefore such warnings have to be looked up in the original log file.
+
+.. _logentry_details:
+
+.. rubric:: Log entry details
+
+This section provides details for warning and error entries created by the atvise maintenance tool.
+
+.. _warnings:
+
+**Warnings**
+
+- :blue:`Alarm field names are changed. The code using 'func' may need to be adapted.`
+
+    - Meaning: In :ref:`client-side scripting<client_scripting_reference>` the name of some alarm fields is not compatible to atvise 2.5.x up to 3.0.x. The script code may need adaption to the new names, which are described in the atvise documentation of 'func'.
+    - To do: Adapt your script code according to the atvise documentation of 'func'.
+    - Example:
+
+     Old script code::
+
+        console.log(e.ToActiveTime);
+
+     New script code::
+
+        console.log(e.activetime);
+
+- :blue:`Alarm parameter is converted. Alarm field names in the script code shall be adapted.`
+
+    - Meaning: For :ref:`server-side scripting<server_scripting_reference>` the value of the alarm parameter is interpreted as a glob pattern on condition id. Due to compatibility reason with atvise 2.5.0 up to 3.0.x, a '*' is appended to the value of the alarm parameters. However the names of the alarm fields are not compatible to atvise 2.5.0 up to 3.0.x. The code has to be adapted to the new names which are described in the atvise documentation.
+    - To do: Adapt your script code according to the chapter :ref:`Script Parameters<srv_script_parameters>` in the atvise documentation.
+    - Example of using alarm parameter named 'alarm' in server-side scripting:
+
+     Old script code::
+        
+        console.log(alarm.conditionId, alarm.message.text);
+
+     New script code:: 
+        
+        console.log(alarm.address, alarm.eventtext["en"])
+
+- :blue:`Alarm severity 'n' is not in the range [1-1000].`
+
+    - Meaning: The severity of the alarm category is not in the range defined by OPC UA standard.
+    - To do: Adapt the severity to be in the range of the OPC UA standard.
+
+- :blue:`atvise resource must be updated due to changes in Autofit-methods.`
+
+    - Meaning: Some atvise default resources have been changed to fit the newly implemented scaling-technique, which is realized by using specific CSS properties. The current version of the resource must be imported.
+    - To do: Import the corresponding resource and reload the visualization.
+
+- :blue:`atvise default resource is modified and will not be updated. Please merge your changes into the current version of the atvise default resource.`
+
+    - Meaning: The specified atvise default resource, which should normally not be changed, was already modified prior to the conversion and it was not updated during the conversion of the project database.
+    - To do: Either replace the existing modified atvise default resource by the new one or merge them.
+
+- :blue:`Conversion of 'Node' is not supported. Contact support.`
+
+    - Meaning: The 'Node' cannot be converted.
+    - To do: Contact the atvise support.
+
+- :blue:`Datatype of Display/Script is not XmlElement.`
+
+    - Meaning: the datatype of the display/script is not 'XmlElement'.
+    - To do: In principle this message should not occur. If so, the display/script has never worked anyway and should be deleted.
+
+- :blue:`Default raw archive used for aggregate.`
+
+    - Meaning: Converting sampled archives into aggregate archives was performed using a default raw archive group: 'datavalues_added'.
+    - To do: Depending on the nodes which are configured for the default raw archive group 'datavalues_added' (see log file) update 'Partition interval' and 'File limit' of that new default raw archive group, if necessary (see :ref:`archive group - properties<interpolation>`). 
+
+- :blue:`Display/Script content is not a scalar value.`
+
+    - Meaning: The datatype of the display/script is not a scalar (e.g. an array).
+    - To do: In principle this message should not occur. If so, the display/script has never worked anyway and should be deleted.
+          
+- :blue:`Semantic of function 'webMI.data.queryFilter' has changed. Display parameter 'data archive' is obsolete. Resource must be updated.`
+
+    - Meaning: The obsolete parameter 'data archive' is found in the resource code. In that case the parameter was used in an atvise project resource or in an atvise standard resource which was not converted due to user interaction (dialog during conversion process).
+    - To do: If the resource was not updated during the conversion, it must be adapted.
+      
+- :blue:`Empty value.`
+
+    - Meaning: the display or script is empty.
+    - To do: nothing (the display or script can be deleted).
+    
+- :blue:`Event coordinates may be incorrect.`
+
+    - Meaning: Due to the newly implemented scaling-technique, event coordinates may not be correct, when they were triggered on foreignobjects. To correct the event coordinates, use one of the following webmi functions:
+
+        - :ref:`webMI.gfx.scaleEventCoordinates<scaleeventcoordinates>`
+        - :ref:`webMI.gfx.setScaledEvents<setscaledevents>` (für externe Libraries vorgesehen)
+
+     Note: events (e.g. mouse events) on SVG elements are not affected, except they are projected as foreignobjects!
+
+    - To do: Adapt your code or use 'native' scaling mode which scales the visualization by changing the size of every single DOM Element.
+    - Example of native vs. CSS-based scaling:
+
+     Old script code (native):: 
+        
+        webMI.addEvent("id_6", "mousemove", function(e) {console.log(e.clientX, e.clientY);});
+
+     New script code (CSS-based):: 
+        
+        webMI.addEvent("id_6", "mousemove", function(e) {var point = webMI.gfx.scaleEventCoordinates("id_6", e.clientX, e.clientY); console.log(point);});
+        
+- :blue:`Event type in query result has changed from 99 to 3. The code may need adaption.` 
+
+    - Meaning: The event type in the object returned by 'webMI.data.queryFilter' in client-side scripting and by 'history.query' in server-side scripting has changed. atvise 2.5.x used type:99 for events and atvise 3.x uses type:3 for events. Check the atvise documentation of :ref:`webMI.data.queryFilter<webmi_data_queryfilter>` and :ref:`history.query<history_query>`.
+    - To do: Check and adapt your client/server-side script code according to the atvise documentation of 'webMI.data.queryFilter' and 'history.query'.
+    - Example - client-side script:
+
+     Old script code:: 
+        
+        webMI.data.queryFilter(filter, function(e) { if (e[0]["type"] == 99) ...});
+
+     New script code:: 
+        
+        webMI.data.queryFilter(filter, function(e) { if (e[0]["type"] == 3) ...});
+
+    - Example - server-side script:
+
+     Old script code:: 
+        
+        var e = history.query(filter); if (e.result[0]["type"] == 99) ...
+
+     New script code:: 
+        
+        var e = history.query(filter); if (e.result[0]["type"] == 3) ...
+        
+- :blue:`External library detected that may be adapted.`
+
+    - The newly implemented scaling-technique may influence the functionality of external libraries. Position and size calculations as well as event coordinates may not be correct. To get correct results for these calculations you should use following helper methods:
+
+        - :ref:`webMI.gfx.getAbsoluteScaleFactor<getabsolutescalefactor>`
+        - :ref:`webMI.gfx.getAbsoluteOffset<getabsoluteoffset>`
+        - :ref:`webMI.gfx.getScreenCTM<getscreenctm>`
+        - :ref:`webMI.gfx.setScaledEvents<setscaledevents>`
+        - :ref:`webMI.gfx.scaleEventCoordinates<scaleeventcoordinates>`
+
+    - To do: Adapt your code or use 'native' scaling mode which scales the visualization by changing the size of every single DOM Element.
+
+- :blue:`Function/Object 'funcobj1' is no longer supported. Use function/object 'funcobj2' instead.`
+
+    - Meaning: The function / object 'funcobj1' was removed from atvise. It must be replaced by the function / object 'funcobj2'.
+    - To do: You must adapt your code otherwise it may not work.
+    - Examples:
+
+        - Logging:
+     
+         Old script code::
+
+            system.log("sample log");
+
+         New script code:: 
+            
+            console.log("sample log");
+
+        - CSVDoc:
+         
+         Old script code:: 
+            
+            var doc = new CSVDoc(filename);
+            var elem = doc.fetch(1,1);
+         
+         New script code::
+            
+            var table = new CSVReader({encoding:"UTF-8"}).load("test.csv");
+            var elem = table[1][1];
+
+- :blue:`Functionality has changed for multiple smoothing definitions.`
+
+    - The mirror property of a node has several :ref:`smoothing definitions<smoothing>`. In this version all of the listed smoothing definitions will be active in contrast to previous ones.
+    - To do: Check the related node if all configured smoothing definitions shall be applied or keep only the first one to have the same behaviour as in previous versions.
+
+- :blue:`['Node'] Can't map node from 'ArchiveName' archive group to a new archive group.`
+
+    - Meaning: If converting history archives, the original archive configuration 'ArchiveName' of 'Node' has no corresponding configuration in the converted database. E.g., the configuration was removed.
+    - To do: nothing.
+
+- :blue:`['Node'] Can't map node from 'ArchiveName' sampled archive to a new aggregate template.`
+
+    - Bedeutung: Bei der Konvertierung von historischen Archiven hat die originale abgetastete Archivkonfiguration 'ArchiveName' von 'Node' keine entsprechende Konfiguration in der konvertierten Datenbank. Z.B., weil die Konfiguration gelöscht wurde.
+    - Zu erledigen: Nichts
+
+- :blue:`['Node'] Can't find mapping for node from 'ArchiveName' sampled archive to a new aggregate template.`
+
+    - Meaning: The archive configuration of 'Node' has changed or is inconsistent with the unconverted one. Corresponding data in the original archives are inaccessible and will be not converted.
+    - To do: nothing.
+
+- :blue:`['Node'] Configuration not found to archive 'ArchiveName'.`
+
+    - Meaning: The configured archive at 'Node' does not match to 'ArchiveName'. The data of 'Node' in 'ArchiveName' are inaccessible and will be not converted.
+    - To do: nothing.
+
+- :blue:`'Node' is deprecated. Remove it from your code.`
+
+    - Meaning: The module statistic 'Node' is not available in this version.
+    - To do: Remove the module statistic 'Node' from your script code since there is no one-to-one replacement.
+    - Example:
+
+     Old script code:: 
+        
+        if (new UaNode("ModuleStatistics.HISTORY.Alive").value) console.log("OK");
+
+     New script code:: *- Old script code must be removed -*
+
+- :blue:`'Node1' is no longer supported. Replace it with 'Node2'.`
+
+    - Meaning: The module statistic 'Node1' is no longer supported in this version but 'Node2' may be used instead. Furthermore, the possible values of such a node might have been changed.
+    - To do: Replace the module statistic 'Node1' with 'Node2' in your script code and adapt your script code according to the changed values.
+    - Beispiel:
+
+     Old script code:: 
+        
+        if (new UaNode("ModuleStatistics.HISTORY.Status").value ==  8) console.log("Up");
+
+     New script code:: 
+        
+        if (new UaNode("ModuleStatistics.HISTORY.State").value ==  "Up") console.log("Up");
+
+- :blue:`'NodeFragment' fragment was found in script code. Check your code for changed semantics and adapt it if necessary.`
+
+    - Meaning: The fragment 'NodeFragment' of a possible module statistic node was found in the script code.
+    - To do: Check your script code if 'NodeFragment' is used to access module statistic nodes. If so adapt your code if necessary.
+    - Beispiel:
+     
+     Old script code:: 
+        
+        var s = "ModuleStatistics.HISTORY."; if (new UaNode(s+"Status").value ==  8) console.log("Up");
+        
+     New script code::
+        
+        var s = "ModuleStatistics.HISTORY."; if (new UaNode(s+"State").value ==  "Up") console.log("Up");
+
+    - Note: Only fragments with ending '.' or containing only one '.' can be detected.
+
+- :blue:`'[Node]' Obsolete.`
+
+    - Meaning: The default resource 'Node' is obsolete and can be deleted if not used anymore.
+    - To do: Check all client/server-side scripts for using the resource 'Node'. If not used, then the resource can be removed.
+
+- :blue:`NULL value.`
+
+    - Meaning: The value of the node can't be read from the database.
+    - To do: nothing.
+    
+- :blue:`Obsolete smoothing definition(s) will be ignored.`
+
+    - The smoothing definitions were created by a version of atvise that is no more supported.
+    - To do: Delete the obsolete smoothing definitions and create the corresponding new ones.
+
+- :blue:`Project resource must be adapted due to changes in Autofit-methods.`
+
+    - Meaning: Some atvise project resources have been changed to fit the newly implemented scaling-technique, which is realized by using specific CSS properties. The project specific implementation of the resources must be adapted according to these changes. To disable CSS-based scaling you can set :ref:`'frame.scaletype':'native'<framescaletype>` in the webmicfg.js file so the visualization will scale itself by changing the size of every single DOM element (former scaling-technique).
+    - To do: The project specific code must be adapted to work in combination with the CSS-based scaling-method.
+    - Note: The visualization is put into a 'DIV'-container called 'maincontainer', to be able to realize the newly implemented scaling-functionality. Because of this adaption of project specific code accessing the DOM structure could be necessary as well.
+
+- :blue:`Semantic of method 'acknowledgealarm' has changed.`
+
+    - Meaning: The unsupported method 'acknowledgealarm' is used in at least one server script. The input parameter 'BranchId' is not supported any more. Alarms can be acknowledged by 'AlarmId'. Contact the atvise support how to adapt 'UaNode.acknowledgealarm' in your code.
+    - To do: Check and adapt your server-side script code.
+    - Example:
+
+     Old script code:: 
+        
+        conditionNode.acknowledgealarm(branchId);
+
+
+     New script code:: 
+        
+        conditionNode.acknowledgealarm(alarmId);
+
+- :blue:`Semantic of 'AutoReconnect' quick dynamic has changed.`
+
+    - Meaning: The semantic of the quick dynamic :ref:`AutoReconnect<autoreconnect>` has changed. The parameter 'keepalive' was removed. The keepalive interval can only be set in the webmicfg.js (see :ref:`data.keepaliveinterval<keepaliveinterval>`).
+    - To do: Check and adapt your script code where 'AutoReconnect' is called.
+    - Example of AutoReconnect:
+
+     Old script code:: 
+        
+        webMI.callExtension("SYSTEM.LIBRARY.ATVISE.QUICKDYNAMICS.AutoReconnect", {"activated":"true", "interval":"5", "defaultconfiguration": true, "keepalive":"30"});
+
+     New script code::
+        
+        webMI.callExtension("SYSTEM.LIBRARY.ATVISE.QUICKDYNAMICS.AutoReconnect", {"activated":"true", "interval":"5", "defaultconfiguration": true});
+
+- :blue:`Semantic of function 'history.query' has changed.`
+
+    - Meaning: In server-side scripting the semantic of 'history.query' - input parameters and therefore also the result - has changed. Filter parameters are extended by 'select' and 'language'. The event type id has changed from 99 to 3 and must be defined in the filter if needed. The archive parameter is obsolete as with atvise 3.x a node can be only in one archive. Queries for alarm and event history must be adapted as result fields are different between atvise 2.5.x and 3.x . Queries for raw value history can be optimized by using the new filter elements 'select'. If no 'language' filter is defined, multilingual texts are returned in all languages. Check the atvise documentation of :ref:`history.query<history_query>` for further information.
+    - To do: Check and adapt your server-side script code according to the atvise documentation of 'history.query'.
+    - Example:
+    
+     Old script code:: 
+        
+        history.query({type:["v:2"], ...});
+
+     New script code:: 
+        
+        //history.query({type:["v:2","v:3"], select:["v:address","v:timestamp","v:eventtext", ...], language:["v:en"]..."});
+    
+    
+- :blue:`Semantic of function 'history.write' has changed.`
+
+    - Meaning: In server-side scripting the semantic of 'history.write' has changed. The archive parameter is obsolete as in atvise 3.x a node can be only in one archive. Check the atvise documentation of :ref:`history.write<history_write>` for further information.
+    - To do: Check and adapt your server-side script code according to the atvise documentation of 'history.write'.
+    - Example:
+
+     Old script code::
+        
+        history.write(archive, data, callback);
+        history.write(archive, data);
+
+     New script code:: 
+        
+        history.write(data, callback);
+        history.write(archive, data);
+        
+- :blue:`Semantic of 'statechange' event has changed.`
+
+    - Meaning: The semantic of the event :ref:`statechange<webmi_events>` of :ref:`webMI.addEvent<webmi_general>` has changed. The return value 'statechange' event is extended by -2. The following values are now defined:
+
+        - Status  0: Server connected.
+        - Status -1: Server not reachable.
+        - Status -2: Session or digest is invalid.
+              
+    - To do: Check and adapt your code according to the new return value.
+    - Example:
+
+     Old script code::
+        
+        webMI.addEvent(webMI.data, "statechange", function(state) { if (state == -1) console.log("Server is not responding or session is invalid");});
+
+
+     New script code::
+        
+        webMI.addEvent(webMI.data, "statechange", function(state) { if (state == -1) console.log("Server is not responding"); if (state == -2) console.log("Session or digest is invalid"); });
+
+
+- :blue:`Semantic of function 'webMI.data.queryFilter' has changed.`
+
+    - Meaning: The semantic of 'webMI.data.queryFilter' - input parameters, return value - has changed. Filter parameters are extended by 'select' and 'language'. The event type id has changed from 99 to 3 and must be defined in the filter if needed. Filtering is no more needed in client-side scripts, as it is accomplished at server-side. The usage of archive parameter must be checked as in atvise 3.x a node can be only in one archive. Client-side script codes using 'webMI.data.queryFilter' for alarm and event history must be adapted as result fields are different between atvise 2.5.x and 3.x . Client-side script code using 'webMI.data.queryFilter' for raw value history can be optimized by using the new filter elements 'select' and 'language'. Check the atvise documentation of webMI.data.queryFilter for further information. The history list implemented in atvise 2.5.x must be replaced with the new resource or manually updated according to the atvise documentation of :ref:`webMI.data.queryFilter<webmi_data_queryfilter>`.
+    - To do: Check and adapt your code according to the atvise documentation of 'webMI.data.queryFilter'.
+    - Example of alarm/event query:
+
+     Old script code::
+        
+        webMI.data.queryFilter({type:["v:2"], ...});
+
+     New script code::
+        
+        webMI.data.queryFilter({type:["v:2","v:3"], select:["v:address","v:timestamp","v:eventtext", ...], language:["v:en"]...});
+
+    - Example of value query:
+      
+     Old script code::
+        
+        webMI.data.queryFilter({type:["v:1"], ...});
+
+     New script code:: 
+        
+        webMI.data.queryFilter({type:["v:1"], select:["v:address","v:timestamp","v:value","v:status"], language:["v:en"],...});
+        
+- :blue:`Semantic of 'HTTPClient' has changed.`
+
+    - Meaning: In server-side scripting the semantic of 'HTTPClient' - methods, input parameters and therefore also the result - has changed. Check the atvise documentation of :ref:`HTTPClient<httpclient>` for further information.
+    - To do: Check and adapt your server-side script code according to the atvise documentation of 'HTTPClient'.
+    - Example:
+    
+     Old script code::
+        
+        var h = new HTTPClient();
+        if (h.get("www.example.com/picture.jpg")) { var data = h.data; }
+
+
+     New script code::
+        
+        var data = new HTTPClient().get("www.example.com/picture.jpg").data;
+
+- :blue:`Sample interval or sample offset is less than one second. Sampled archive can't be converted.`
+
+    - Meaning: Conversion of sampled archive with configuration less than one second interval / offset are not supported.
+    - To do: nothing.
+
+- :blue:`Semantic of webMI.gfx.getScreenCTM has changed.`
+
+    - Meaning: The semantic of 'webMI.gfx.getScreenCTM' input parameter has changed. The method 'webMI.gfx.getScreenCTM' was extended by the callparameter 'true', to be able to return valid matrices, within the newly integrated CSS-based scaling-technique. If the returned matrix is used for displaying a popup - using 'webMI.display.showPopup' - then the method has to be called in the following way: 'webMI.display.getScreenCTM(true)'
+    - To do: Check and adapt your code according to the atvise documentation of :ref:`webMI.gfx.getScreenCTM<getscreenctm>`.
+    - Example:
+    
+     Old script code::
+        
+        var svgPoint = webMI.gfx.createPoint(10,10).matrixTransform(webMI.gfx.getScreenCTM()); 
+        webMI.display.showPopup(svgPoint.x, svgPoint.y, null);
+
+     New script code:: 
+        
+        var svgPoint = webMI.gfx.createPoint(10,10).matrixTransform(webMI.gfx.getScreenCTM(true));
+        webMI.display.showPopup(svgPoint.x, svgPoint.y, null);
+
+- :blue:`Syntax of aggregation property of filter has changed. The code may need adaption.`
+
+    - Meaning: The aggregation property in 'webMI.data.subscribeFilter'/'queryFilter' in client-side scripting has changed. Check the atvise documentation of :ref:`webMI.data.subscribeFilter<webmi_data_subscribefilter>` or :ref:`queryFilter<webmi_data_queryfilter>` for further information.
+    - To do: Check and adapt your client-side script code according to the atvise documentation of 'webMI.data.subscribeFilter'/'queryFilter'.
+    - Example:
+
+     Old script code:: 
+        
+        filter.aggregation="start";filter.interval=300000; ... webMI.data.queryFilter(filter, ...
+
+     New script code::
+        
+        filter.aggregate=["v:Start"]; filter.interval=["v:5"]; filter.unit=["v:m"];... webMI.data.queryFilter(filter, ...
+
+- :blue:`The corresponding atvise default resource may be updated. The project resource must be checked and adapted if necessary.`
+
+    - Meaning: The atvise default resource in the folder ATVISE is duplicated in the folder PROJECT.
+    - To do: The resource in the folder PROJECT must be checked and updated if necessary.
+
+.. _errors:
+
+**Errors**
+
+- :red:`Parameter type 'post' is not supported.`
+
+    - Meaning: This version of atvise does not support 'post' parameters in server scripting. Parameters of type 'post' must be replaced by the type 'http.request'.
+    - To do: Check and adapt your server-side script code.
+    - Beispiel:
+
+     Old script code::
+        
+        var value = postParam; // postParam is a script parameter of type 'post'
+
+     New script code::
+        
+        var value = request.postvalues.postParam; // request is a script parameter of type 'http.request'
+        
+- :red:`Can't create index: ErrorMessage.`
+
+    - Meaning: The database error ErrorMessage occurred while creating the :ref:`optional index<optionalindex>`.
+
+- :red:`Unable to determine archive type.`
+
+    - Meaning: When trying to create the :ref:`optional index<optionalindex>`, the type of the archive could not be determined.
+
+In principle the following errors occur because of corrupt project databases or archives. If one of the following errors occur, please check your writing permissions of the regarding files and folders and retry the last executed steps. If the error(s) still occur please contact the atvise support with the corresponding error message.
+    
+    - :red:`Aggregate mismatch in 'ArchiveGroup'. Selected random one.`
+    - :red:`Archive: 'ArchiveName' write event returned 'ErrorCode': 'Event'`
+    - :red:`Archive: 'ArchiveName' write aggregate: 'Node' = 'Value' returned: 'ErrorMessage'`
+    - :red:`Archive: 'ArchiveName' write data: 'Node' = 'Value' returned: 'ErrorMessage'`
+    - :red:`Archive prepare error: 'ArchiveName'`
+    - :red:`Archive read error: 'ArchiveName'`
+    - :red:`Archive step error: 'ArchiveName'`
+    - :red:`Can't delete reference of type 'ReferenceId' from source 'SourceNode' to target 'TargetNode'. Contact support.`
+    - :red:`Can't be updated. Contact support.`
+    - :red:`Can't be updated with ModellingRuleShared. Contact support.`
+    - :red:`Can't change typedefinition: 'ErrorMessage' - Contact support.`
+    - :red:`Can't decode value.`
+    - :red:`Can't convert matrix to type 'datatype'`
+    - :red:`Can't convert to type 'datatype'`
+    - :red:`Can't convert type 'datatype'`
+    - :red:`Can't load XML: 'XML file'`
+    - :red:`Can't open file: 'ErrorMessage'`
+    - :red:`Can't save node: 'ErrorMessage'`
+    - :red:`Conversion error - contact support`
+    - :red:`Could not change type: 'ErrorMessage'`
+    - :red:`Database error: 'ErrorMessage'`
+    - :red:`Error adding attribute(s): 'ErrorMessage'`
+    - :red:`Event time is null`
+    - :red:`Exception while converting to UaValue`
+    - :red:`Internal Error while referencing default raw archive used for aggregate. Contact support.`
+    - :red:`Invalid aggregate`
+    - :red:`Unknown ArrayType`

@@ -1,0 +1,28 @@
+Tooltips
+########
+
+The following object displays contain a parameter "tooltip":
+
+- Button
+- Button Image Display
+- Button Increment/Decrement
+- Button Open Display
+- Button Set Address
+- Button Switch
+- Checkbox
+- Clickarea
+- Combobox
+- In/Out Value
+- Picker Address
+- Picker Color
+- Picker Date
+- Picker Value
+- Radiobutton
+- Rocker Switch (small & large)
+- In/Out Date
+- In/Out Date-Time
+- In/Out Time
+
+If this parameter is specified, the related tooltip is shown in the visualization. The tooltip will be shown in the language according to language selected in the visualization.
+
+The tooltip supports multiline and may contain HTML tags (e.g. line break, bullet list).

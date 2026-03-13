@@ -1,0 +1,260 @@
+History functions
+#################
+
+.. _history_write:
+
+.. !!v8!! history.write(values[, callback[, options]])
+.. function:: history.write(values[, callback[, options]])
+
+    Writes the data values to the history archive. Raw and aggregated values can be written. The result of the write operation will be passed to the function defined in the callback object.
+
+    If no callback object is defined, the function executes asynchronously. It returns immediately and does not wait for the result of the write operation.
+
+    If a callback object is defined, the function executes synchronously. Errors and completion of the write operation are reported to the appropriate function of the callback object if they are defined.
+
+    Parameters:
+        - **values** (Object[]) -- Specifies the values to write to the history archive. Each element in the array is an object with the following properties:
+
+            - **node** (NodeId) -- Specifies the node id of the value to write.
+            - **value** (Any) -- Specifies the value to write.
+            - **status** (Integer, optional, default: 0) -- Specifies the status to write.
+            - **servertime** (Date, optional, default: now) -- Specifies the server time to write.
+            - **sourcetime** (Date, optional, default: servertime) -- Specifies the source time to write.
+
+            To write aggregated values, specify following additional properties:
+
+            - **aggregate** (String) -- Specifies the aggregate function. For a list of supported aggregate functions, see :ref:`here <aggregate_functions>`.
+            - **interval** (Integer) -- Specifies the aggregate interval.
+            - **unit** (String) -- Specifies the aggregate unit. Possibe values are "m" (minutes), "h" (hours), "d" (days) and "M" (month). For the aggregate function "Sampled" you can also use "s" (seconds).
+
+        - **callback** (Object, optional, default: {}) -- Specifies the optional event handler properties:
+
+            - **onError** (Function, optional, default: undefined) -- If defined, it will be called if an error occurred with following parameters:
+
+                - **dataIdx** (Integer) -- The zero based index of the data of the write operation.
+                - **status** (Integer) -- The database specific error code of the write operation.
+                - **msg** (String) -- The error message of the write operation.
+
+            - **onReady** (Function, optional, default: undefined) -- If defined, it will be called when write is finished with following parameters:
+
+                - **dataIdx** (Integer) -- The total number of the data processed in the write operations.
+                - **status** (Integer) -- The last database specific error code of the write operations. If all data was written successful then the status is 0.
+                - **msg** (String) -- The last error message of the write operations.
+
+        - **options** (Object, optional, default: {}) -- An object with following properties:
+
+            - **timeout** (Integer, optional, default: 0) -- The timeout (in seconds) specifies how long the script waits for the operation to complete. If 0, the internal default of 3600 seconds (1 hour) is used.
+            - **ignoreDuplicate** (Boolean, optional, default: false) -- Specifies behavior when trying to write a value with already existing source time:
+
+                - true -- The new value will be ignored.
+                - false -- 100 nanoseconds are repeatedly added to the source time until it is unique. This can be expensive when history.write() is called with the same values again and again.
+
+    Returns:
+        The status code of the function call (not of the write operation). If the timeout expires, Ua.Node.BADTIMEOUT will be returned.
+
+    .. hint:: 
+        
+        - Calling history.write() is expensive. It is worth to collect values into an array and call history.write() with the populated array.
+        - Writing a lot of values with history.write() in a redundant system may have an impact on performance and stability. 
+
+    Example of a bad solution::
+
+        var values = [];
+        // populate values
+        // *** Don't do that!
+        for (var i in values)
+            history.write([values[i]]);
+
+    Example of a good solution::
+
+        var values = [];
+        // populate values
+        history.write(values);
+
+    Example of synchronous call::
+
+        var n = Ua.findNode("AGENT.OBJECTS.WriteArchiveTest.x");
+        history.write([{
+            node: n.result,
+            value: 15,
+            status: 0,
+            sourcetime: new Date(2012, 11, 12, 12),
+            servertime: new Date(2012, 11, 12, 14)
+        }],
+        {
+            onError: function(dataIdx, status, msg) {
+                console.log("Error at ", dataIdx, " error: ", status, " ", msg);
+            },
+            onReady: function(dataIdx, status, msg) {
+                console.log("Ready written ", dataIdx, " data. error: ", status, " ", msg);
+            }
+        });
+
+    Example of asynchronous call::
+
+        var n = Ua.findNode("AGENT.OBJECTS.WriteArchiveTest.x");
+        history.write([{
+            node: n.result,
+            value: 15,
+            status: 0,
+            sourcetime: new Date(2012, 11, 12, 12),
+            aggregate: "Average",
+            interval: 5,
+            unit: "m"
+        }]);
+
+.. _history_query:
+
+.. !!v8!! history.query(filter[, options])
+.. function:: history.query(filter[, options])
+
+    This function reads historical values (incl. aggregates) and alarms respectively event entries.
+
+    Parameters:
+        - **filter** (Object) -- Is used to constrain the requested data. The function uses the same filter as :func:`webMI.data.queryFilter`. For details see :ref:`filter object <query_filter_format>`.
+        - **options** (Object, optional, default: {}) -- An object with following properties:
+
+            - **timeout** (Integer, optional, default: 0) -- The timeout (in seconds) specifies how long the script waits for the requested data. If 0, the internal default of 3600 seconds (1 hour) is used.
+
+    Returns:
+        - The requested data. For details see :ref:`query result <query_result>`. If the timeout expires, the *error* property in the result object will be set to Ua.Node.BADTIMEOUT.
+        
+         In case of insufficient user access rights, an *errors* object is returned, that contains an array of objects with the following attributes:
+
+            - node -- ID of the node for which the user has insufficient rights 
+            - error -- OPC UA error code
+            - errorstring -- Error text, e.g. "Read access to history denied for node: <node ID>" 
+
+        .. hint:: 
+            
+            - The *errors* object is only returned when you define type "v" for the *address* property of the filter object. If a GLOB pattern is used, only the data of accessible nodes is returned. In this case, nodes for which the user has insufficient access rights are not included in the result and no error is returned.
+            - Locked archives cannot be queried.
+            - Continuation points included in the query result that are no longer needed must be explicitly released using history.queryRelease(). Otherwise, they will be automatically released after an hour. As long as continuation points remain active, neither archive record switching nor redundancy synchronization is possible. Thus, if continuation points are created continuously and not explicitly released, these functions may be blocked permanently. The number of currently active continuation points is mapped to the statistical node :treeselection:`Information --> ModuleStatistics --> HISTORY --> CountActiveContinuationPoints`.
+
+    The function history.query differs from webMI.data.queryFilter as follows:
+
+    - If an error occurs (e.g. an invalid parameter), history.query throws an exception. webMI.data.queryFilter returns an error object in the callback.
+    - history.query returns the requested data as return value of the function, webMI.data.queryFilter passes the data to the given callback.
+
+    Example 1:
+
+    Query of all value changes between Nov. 20 2013 11:00 PM and 11:05 PM for variables starting with "AGENT.OBJECTS.MyData." (0 = January, 1 = February etc.)::
+
+        var from = new Date(2013, 10, 20, 23, 0, 0).getTime();
+        var to = from + 5*60*1000; // 5min in milliseconds
+        var result = history.query({
+            type: ["v:1"], // data values
+            timestamp: ["n:>=" + from + "<" + to],
+            address: ["g:AGENT.OBJECTS.MyData.*"]
+        });
+        console.log(result);
+
+    Example 2:
+
+    Query of all alarm status changes of the last hour, alarm texts in german::
+
+        var from = new Date().getTime() - 60*60*1000; // 1h in milliseconds
+        var result = history.query({
+            type: ["v:2"], // alarms
+            timestamp: ["n:>=" + from],
+            language: ["v:de"]
+        });
+        console.log(result);
+
+    Example 3:
+
+    Query of all alarm status changes of the last hour, where the alarm active/inactive text is "my text". The alarm text filter is applied to the text in the english language::
+
+        var from = new Date().getTime() - 60*60*1000; // 1h in milliseconds
+        var result = history.query({
+            type: ["v:2"], // alarms
+            timestamp: ["n:>=" + from],
+            eventtext: ["v:my text"],
+            language: ["v:en"]
+        });
+        console.log(result);
+
+.. !!v8!! history.queryNext(continuationpoint[, options])
+.. function:: history.queryNext(continuationpoint[, options])
+
+    Continues a query started with history.query using the given continuation point. Can be called repeatedly as long as a continuation point is returned. See "continuationpoint" in :ref:`query result <query_result>` for how to handle continuation points.
+
+    Parameters:
+        - **continuationpoint** (Integer) -- The continuation point of the query.
+        - **options** (Object, optional, default: {}) -- An object with following properties:
+
+            - **timeout** (Integer, optional, default: 0) -- The timeout (in seconds) specifies how long the script waits for the requested data. If 0, the internal default of 3600 seconds (1 hour) is used.
+
+    Returns:
+        - The requested data. For details see :ref:`query result <query_result>`. If the timeout expires, the *error* property in the result object will be set to Ua.Node.BADTIMEOUT.
+
+.. !!v8!! history.queryRelease(continuationpoint)
+.. function:: history.queryRelease(continuationpoint)
+
+    Releases a no longer used continuation point returned by a previous call to history.query or history.queryNext. See "continuationpoint" in :ref:`query result <query_result>` for how to handle continuation points.
+
+    Parameters:
+        - **continuationpoint** (Integer) -- The continuation point to release.
+
+.. !!v8!! history.aggregate(nodes, startTime, endTime[, callback[, options]])
+.. function:: history.aggregate(nodes, startTime, endTime[, callback[, options]])
+
+    Starts post-aggregation for the given nodes and the given time period. The result of the post-aggregate operation will be passed to the function defined in the callback object.
+
+    If no callback object is defined, the function executes asynchronously. It returns immediately and does not wait for the result of the post-aggregate operation.
+
+    If a callback object is defined, the function executes synchronously. Errors and completion of the post-aggregation operation are reported to the appropriate function of the callback object if they are defined.
+
+    Parameters:
+        - **nodes** (Ua.Node[]) -- Specifies the nodes for the post-aggregation.
+        - **startTime** (Date) -- Specifies the start time of the time period for the post-aggregation.
+        - **endTime** (Date) -- Specifies the end time of the time period for the post-aggregation.
+        - **callback** (Object, optional, default: {}) -- Specifies the optional event handler properties:
+
+            - **onError** (Function, optional, default: undefined) -- If defined, it will be called if an error occurred with following parameters:
+
+                - **dataIdx** (Integer) -- The zero based index of the data of the post-aggregate operation.
+                - **status** (Integer) -- The error code of the post-aggregate operation.
+                - **msg** (String) -- The error message of the post-aggregate operation.
+
+            - **onReady** (Function, optional, default: undefined) -- If defined, it will be called when post-aggregate is finished.
+
+                - **dataIdx** (Integer) -- The total number of the data processed in the post-aggregate operations.
+                - **status** (Integer) -- The last error code of the post-aggregate operations. If no error occurred then the status is 0.
+                - **msg** (String) -- The last error message of the post-aggregate operations.
+
+        - **options** (Object, optional, default: {}) -- An object with following properties:
+
+            - **timeout** (Integer, optional, default: 0) -- The timeout (in seconds) specifies how long the script waits for the operation to complete. If 0, the internal default of 3600 seconds (1 hour) is used.
+
+    Returns:
+        The status code of the function call (not of the post-aggregate operation). If the timeout expires, Ua.Node.BADTIMEOUT will be returned.
+
+    For the usage of the callbacks see :func:`history.write`.
+
+    Example::
+
+        var node = Ua.findNode("AGENT.OBJECTS.floatNode");
+        var startTime = new Date(2017, 2, 3, 14, 0, 0);
+        var endTime = new Date(2017, 2, 3, 15, 0, 0);
+        history.aggregate([node.result], startTime, endTime, {}, { timeout: 5*60 });
+
+.. !!v8!! history.directory
+.. attribute:: history.directory
+
+    history.directory contains the absolute directory (including the trailing directory separator) with historical data of the current project. Normally this is the directory "database" inside the project directory, but it can be set to an arbitrary directory in :ref:`atserver.ini <atserver_ini_database>`.
+
+    Example::
+
+        console.log(history.directory);
+        // => "C:/projects/myproject/database/"
+
+.. !!v8!! history.swapin
+.. attribute:: history.swapin
+
+    history.swapin contains the absolute directory (including the trailing directory separator) with swapped in historical data of the current project. Normally this is the directory "database/swapin" inside the project directory, but it can be set to an arbitrary directory in :ref:`atserver.ini <atserver_ini_swapindir>`.
+
+    Example::
+
+        console.log(history.swapin);
+        // => "C:/projects/myproject/database/swapin/"

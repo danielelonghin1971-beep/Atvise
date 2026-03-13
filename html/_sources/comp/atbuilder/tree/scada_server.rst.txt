@@ -1,0 +1,16 @@
+My Server
+#########
+
+.. toctree::
+
+    scada_srv/intro
+    scada_srv/layouts
+    scada_srv/datasources
+    scada_srv/displays
+    scada_srv/data_structure
+    scada_srv/alarming
+    scada_srv/historize
+    scada_srv/aggregate
+    scada_srv/diagnostics
+    scada_srv/smtp_settings
+    scada_srv/http_settings

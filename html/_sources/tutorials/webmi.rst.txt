@@ -1,0 +1,19 @@
+First steps: atvise webMI
+#########################
+
+The main goal of this tutorial is to familiarize you with the engineering process of a web visualization using atvise with a webMI license. In small steps and using specific examples, you will learn how essential tools and interfaces work.
+
+In the first step you will learn how to import data variables, how to draw a simple display and how to generate and view the visualization.
+
+After this we will take a look at the dynamization of elements, including the four ways of addressing a data variable.
+
+.. toctree::
+
+    webmi/tutorial1
+    webmi/tutorial2
+    webmi/tutorial3
+    webmi/tutorial4
+    webmi/tutorial5
+    webmi/tutorial6
+    webmi/tutorial7
+    webmi/tutorial8

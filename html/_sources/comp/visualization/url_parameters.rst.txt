@@ -1,0 +1,112 @@
+.. _url_parameters:
+
+URL parameters
+##############
+
+.. rubric:: admin
+
+This URL parameter opens the :ref:`server certificate management<cert_management_server>`. Users with administrator rights can create self-signed certificates and trust or reject received certificates after logging in.
+
+Beispiele::
+
+    http://127.0.0.1/?admin=true
+    http://127.0.0.1/?admin=1
+
+
+.. rubric:: forceDevice, forceTouch, ignoreTouch
+
+With the following parameters the responsive handling of the visualization can be configured.
+
+On desktop devices with touch capability it can be useful to use the visualization in tablet mode with scaled up elements. To force a specific device scaling the *forceDevice* parameter can be set to "desktop", "tablet" or "mobile".
+
+If the touch capability is not recognized the *forceTouch* parameter can be used to handle the device as a touch device. With this parameter enabled some input elements are easier to use as e.g. the click area of the elements is bigger.
+
+If the device has touch capability but uses keyboard and mouse as input the touch features can be deactivated with the *ignoreTouch* parameter.
+
+- *forceDevice* forces the deviceType property of :func:`webMI.getClientInfo` to "desktop", "tablet" or "mobile".
+- *forceTouch* forces the *isTouchDevice* property of :func:`webMI.getClientInfo` to true.
+- *ignoreTouch* forces the *isTouchDevice* property of :func:`webMI.getClientInfo` to false.
+
+Examples::
+
+    http://127.0.0.1/?forceDevice=tablet&forceTouch=true
+    http://127.0.0.1/?forceDevice=desktop&ignoreTouch=true
+
+.. rubric:: useSVGKeyboard
+
+With the help of the URL parameter "useSVGKeyboard" the following input elements can be globally set to the svg-input mode:
+
+- picker_address
+- picker_value
+- rocker_switch
+- rocker_switch_small
+- in_out_value
+
+This will also work with all displays in which the above mentioned input elements are being used referenced.
+
+Example::
+
+    http://127.0.0.1/?useSVGKeyboard=true
+
+With this example all mentioned input elements would open the SVG keyboard on the click event.
+
+.. rubric:: preload, excludePreload, includePreload
+
+Preloads displays before showing the visualization to switch displays faster on slower devices.
+
+This parameter has it's :ref:`own topic <preloading>`.
+
+.. rubric:: autofit
+
+Fits a display automatically to the browser window. Parameters can be "true" or "false".
+
+Example::
+
+    http://127.0.0.1/?autofit=true
+
+.. rubric:: defaulturl
+
+The defaulturl parameter is used to target any URL in popups. The functionality is included in the webMI.display.openWindow function.
+
+Because of security reasons defaulturl can not be used in the main display anymore.
+
+Example:
+
+    webMI.display.openWindow({extern:true,height:500,title:"",toolbar:false,url:"http://atvise.com"});
+
+.. rubric:: defaultdisplay
+
+You can define a display which should be loaded as default display.
+
+Only displays within the folder AGENT.DISPLAYS can be set as default display. You don't have to declare the whole path to the display. Simply use the display name.
+
+Example::
+
+    http://127.0.0.1/?defaultdisplay=Default2
+
+.. rubric:: scrolling
+
+With this parameter you can define the scrolling parameter for the main iframe. Values can be "auto", "yes", "no".
+
+Example::
+
+    http://127.0.0.1/?scrolling=no
+
+.. rubric:: language
+
+Defines the default language for the visualization. The language you want to set must exist in your project.
+
+Example::
+
+    http://127.0.0.1/?language=en
+
+.. rubric:: viewportwidth - deprecated
+
+.. deprecated:: 3.0
+    Starting with atvise v3.0 the viewportwidth parameter is obsolete and will be ignored, the value will be set automatically to the device width.
+
+Defines the width in pixel of viewport (width of the visualiaztion resp. width of the default display) and is only applicable for Apple iOS6 devices (iPad, iPhone).
+
+Example::
+
+    http://127.0.0.1/?viewportwidth=1280

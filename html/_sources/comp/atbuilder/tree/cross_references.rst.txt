@@ -1,0 +1,59 @@
+Cross references
+################
+
+Cross reference calculation gives the opportunity to display and export the internal structure of your project. There are different categories of cross references.
+
+.. rubric:: Display cross references
+
+Display cross references may be calculated for every single display. One the one hand you are able to check which displays are referenced by a specific display and on the other hand it is possible to list all displays which are referencing a specific display.
+
+This feature can be applied to a single display or a folder containing displays.
+
+.. figure:: images/crossreferences_displays.png
+
+Find child displays
+    For each display, all displays which are used within the selected displays will be reported. Only direct children are searched, i.e. if a child display contains other displays, these displays will not part of the result.
+
+Find parent displays
+    For each display, all displays will be calculated which are using the selected one.
+
+    I.e., for each selected display will be calculated whether it is used in another display in one of the following locations:
+
+    - <Server>.DISPLAYS
+    - Object Types
+
+These functions can be called via the context menu of the project tree from the following locations and subordinated displays and folders:
+
+- <Server>.DISPLAYS
+- Display Pool
+- Library.\*.Object Displays
+- Object Types
+
+.. rubric:: Node cross references
+
+Node cross references may be calculated for every single server. This process delivers information about which nodes are used in which displays and which nodes aren't used at all.
+
+.. figure:: images/crossreferences_nodes.png
+
+Find nodes used in displays
+    For each display (including referenced displays) of the selected server (<Server>.DISPLAYS and Display Pool) the parameterized nodes will be calculated. Additionally, for each node found it will be calculated whether it exists in the address space (<Server>.OBJECTS). This will be indicated in the column "Exists" of the result.
+
+Find unused nodes
+    For each node in the <Server>.OBJECTS folder of the selected server it will be calculated whether the node was parameterized in a display (including referenced displays) of the selected server (<Server>.DISPLAYS and Display Pool). If not, it will be part of the result. System variables will be not shown in the result.
+
+These functions are available only in the context menu of an arbitrary server.
+
+All cross reference results will be shown in a table. It is possible to sort the table by a specific column and to filter the whole table to restrict the output to fundamental results. The currently visible table data may be exported as CSV file.
+
+.. rubric:: Notes
+
+Due to the architecture of atvise, the calculations for the cross references are restricted to:
+
+- For **relative** addressing: Only relative addresses which are used as display parameter (display parameter of type "address") are considered for the cross references. Relative addresses in Quick Dynamics, Simple Dynamics or user generated scripts are not considered.
+- For **absolute** addressing: For each existing node will be checked whether it is used in Quick Dynamics, Simple Dynamics or user generated scripts. Since for each node every script will be parsed, delays may occur.
+
+.. rubric:: Hook for further checks
+
+To enable user specific checks on the result provided by atvise, a hook may be implemented by the user. If the script :treeselection:`Library --> PROJECT --> Script Library --> CrossRef --> Lib --> DisplayVariablesHook` exists, it will be executed. For further information on how to implement a hook consult the code in :treeselection:`Library --> ATVISE --> Script Library --> CrossRef --> Lib --> DisplayVariables`.
+
+Details about serverside scripting can be found in section :ref:`SCADA serverside scripting <server_scripting_reference>`.

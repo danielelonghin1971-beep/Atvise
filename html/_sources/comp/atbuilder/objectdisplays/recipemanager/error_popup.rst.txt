@@ -1,0 +1,12 @@
+Error Popup
+###########
+
+Display is used to indicate input errors.
+
+.. rubric:: Parameters
+
+General:
+
+- **message line 1** -- Error text row 1
+- **message line 2** -- Error text row 2
+- **message line 3** -- Error text row 3

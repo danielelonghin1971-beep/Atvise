@@ -1,0 +1,248 @@
+Data source functions
+#####################
+
+These functions allow various operations on data sources. Depending on the type of the data source, not all functions may be available (e.g. you cannot browse a webMI data source). The functions are wrapper scripts for the respective OPC UA methods and can be found in the atvise library (:treeselection:`Library --> ATVISE --> Script Library --> Methods --> DataSource`).
+
+In case of a redundant data source, the function will be called on the active connection.
+
+The format of addresses is specific to the data source. For OPC UA data sources, it is the so called "XML format" of a NodeId (e.g. "ns=1;s=AGENT.OBJECTS.var1").
+
+.. rubric:: Browse
+
+**call("Methods.DataSource.Browse", options)**
+
+Browses the address space of a data source. *options* is an object with following properties:
+
+- **datasource** (String) -- Specifies the data source to browse.
+- **address** (String[]) -- Specifies the addresses to browse.
+- **continuationpoint** (String[], optional, default: []) -- Specifies the continuation points to use. A data source can use continuation points to allow the user to call the Browse function repeatedly to retrieve huge result sets.
+
+The result is an object with following properties:
+
+- **error** (Integer) -- The error code, supplied only if an error occurred.
+- **errorstring** (String) -- The error text, supplied only if an error occurred.
+- **continuationpoint** (String[]) -- On success the continuation points for each browsed address which can be passed to subsequent calls of the Browse function. A null element in the array means that browsing of the corresponding address is finished.
+
+    .. attention:: To prevent an endless loop using continuation points, don't call Browse again when *continuationpoint* only contains null elements.
+
+- **result** (Object[][]) -- On success a two-dimensional array of objects with the result (see example for details):
+
+    - **displayname** (String) -- The display name.
+    - **browsename** (String) -- The browse name.
+    - **address** (String) -- The address.
+    - **datatype** (Integer) -- The data type, if applicable. E.g. Ua.DataType.BOOLEAN, Ua.DataType.DOUBLE, ...
+    - **valuerank** (Integer) -- The OPC UA value rank, if applicable. E.g. Ua.ValueRank.SCALAR, Ua.ValueRank.ONEDIMENSION, ...
+    - **class** (Integer) -- The OPC UA node class, if applicable. E.g. Ua.NodeClass.VARIABLE, Ua.NodeClass.OBJECT, ...
+    - **type** (String) -- The type definition. E.g. "i=61" for an OPC UA folder.
+
+Example::
+
+    var res = call("Methods.DataSource.Browse", {
+       datasource: "ds1",
+       address: ["AGENT.OBJECTS.Folder1", "AGENT.OBJECTS.Folder2"]
+    });
+    if (res.error)
+       console.log("Browse error: " + res.errorstring);
+    else
+    {
+       // output the address of the first browsed element of "AGENT.OBJECTS.Folder1"
+       console.log(res.result[0][0].address);
+       // output the array of addresses browsing "AGENT.OBJECTS.Folder2"
+       console.log(res.result[1]);
+    }
+    if (res.continuation[0] || res.continuation[1])
+    {
+       // call Browse again to get more results
+       // recurse until all returned continuation points are null
+    }
+
+.. rubric:: Read
+
+**call("Methods.DataSource.Read", options)**
+
+Reads values of variables from a data source. *options* is an object with following properties:
+
+- **datasource** (String) -- Specifies the data source to read.
+- **address** (String[]) -- Specifies the variables to read.
+
+The result is an object with following properties:
+
+- **error** (Integer) -- The error code, supplied only if an error occurred.
+- **errorstring** (String) -- The error text, supplied only if an error occurred.
+- **result** (Object[]) -- On success an array of objects with the values of the variables.
+
+    - **status** (Integer) -- The status code of the variable.
+    - **value** (Object) -- The value of the variable as an object with the properties:
+
+        - **type** (Integer) -- The data type of the value (Ua.DataType.BOOLEAN, Ua.DataType.INT32, Ua.DataType.STRING, ...).
+        - **value** (Any) -- The value of the variable in the given data type.
+
+    - **timestamp** (Integer) -- The source timestamp of the variable.
+    - **servertimestamp** (Integer) -- The server timestamp of the variable.
+
+Example::
+
+    var res = call("Methods.DataSource.Read", {
+       datasource: "ds1",
+       address: ["Data.var1"]
+    });
+    if (res.error)
+       console.log("Read error: " + res.errorstring);
+    else
+       console.log(res.result[0].value.value);
+
+.. rubric:: Write
+
+**call("Methods.DataSource.Write", options)**
+
+Writes values of variables to a data source. *options* is an object with following properties:
+
+    - **datasource** (String) -- Specifies the data source to write.
+    - **address** (String[]) -- Specifies the variables to write.
+    - **value** (Object[]) -- Specifies the values to write, where each value is an object with the properties:
+
+        - **type** (Integer) -- The data type of the value (Ua.DataType.BOOLEAN, Ua.DataType.INT32, Ua.DataType.STRING, ...).
+        - **value** (Any) -- The value of the variable in the given data type.
+
+The result is an object with following properties:
+
+- **error** (Integer) .. The error code, supplied only if an error occurred.
+- **errorstring** (String) -- The error text, supplied only if an error occurred.
+- **result** (Integer[]) -- On success an array of status codes.
+
+Example::
+
+    var res = call("Methods.DataSource.Write", {
+       datasource: "ds1",
+       address: ["Data.var1"],
+       value: [{type: Ua.DataType.INT32, value: 42}]
+    });
+    if (res.error)
+       console.log("Write error: " + res.errorstring);
+    else
+       console.log(res.result[0]);
+
+.. _wrapper_history_read:
+
+.. rubric:: HistoryReadRaw
+
+**call("Methods.DataSource.HistoryReadRaw", options)**
+
+Reads historical raw values from an OPC UA data source. *options* is an object with following properties:
+
+    - **datasource** (String) -- Specifies the data source to read.
+    - **address** (String[]) -- Specifies the variables to read.
+    - **continuationpoint** (String[], optional, default: []) -- Specifies the continuation points to use. A data source can use continuation points to allow the user to call the HistoryReadRaw function repeatedly to retrieve huge result sets.
+    - **releasecontinuationpoints** (Boolean, optional, default: false) -- If true, all specified continuation points will be released and no more data will be read.
+    - **starttime** (Date, optional, default: undefined) -- Specifies the start time of the range to read.
+    - **endtime** (Date, optional, default: undefined) -- Specifies the end time of the range to read.
+    - **numvalues** (Integer, optional, default: 0) -- Specifies the maximum number of values per variable that shall be returned for the call. 0 means no limit.
+    - **returnbounds** (Boolean, optional, default: false) -- If true, the first value before and after the time range are included in the result. If only either *starttime* or *endtime* is specified, only the bound of the given timestamp will be included.
+
+.. hint:: At least two of the three properties *starttime*, *endtime* and *numvalues* (greater than 0) must be supplied. The different combinations have following meaning:
+
+    - *starttime*, *endtime*, optional *numvalues* -- Return all values in the range from *starttime* to *endtime*. If *numvalues* greater than 0 is supplied, return at most *numvalues* values and a continuation point.
+    - *starttime*, *numvalues* -- Return at most *numvalues* values beginning at *starttime* with ascending timestamps.
+    - *endtime*, *numvalues* -- Return at most *numvalues* values beginning at *endtime* with descending timestamps.
+
+    For more details regarding the use of the properties see OPC UA specification Part 11.
+
+.. attention:: The data source may always return less values than requested (even an empty result) and a continuation point which can be used to request the next set of values.
+
+The result is an object with following properties:
+
+- **error** (Integer) -- The error code, supplied only if an error occurred.
+- **errorstring** (String) -- The error text, supplied only if an error occurred.
+- **result** (Object) -- On success an object with following properties:
+
+    - **status** (Integer[]) -- The status of the call for each variable.
+    - **continuationpoint** (String[]) -- The continuation point for each variable. A null element in the array means that reading of the corresponding address is finished.
+
+        .. attention:: To prevent an endless loop using continuation points, don't call HistoryReadRaw again when *continuationpoint* only contains null elements.
+
+    - **value** (Object[]) -- The requested raw data for each variable as an array of objects with following properties:
+
+        - **status** (Integer) -- The status code of the variable.
+        - **type** (Integer) -- The data type of the value (Ua.DataType.BOOLEAN, Ua.DataType.INT32, Ua.DataType.STRING, ...).
+        - **value** (Any) -- The value of the variable in the given data type.
+        - **timestamp** (Integer) -- The source timestamp of the variable.
+        - **servertimestamp** (Integer) -- The server timestamp of the variable.
+
+Example 1, read values for the last 5 minutes in ascending order::
+
+    var endtime = Date.now();
+    var starttime = endtime - 5*60*1000; // 5 minutes in milliseconds
+    var res = call("Methods.DataSource.HistoryReadRaw", {
+        datasource: "ds1",
+        address: ["ns=1;s=AGENT.OBJECTS.var1"],
+        starttime: starttime,
+        endtime: endtime
+    });
+
+Example 2, read the last 10 values in descending order::
+
+    var res = call("Methods.DataSource.HistoryReadRaw", {
+        datasource: "ds1",
+        address: ["ns=1;s=AGENT.OBJECTS.var1"],
+        endtime: Date.now(),
+        numvalues: 10
+    });
+
+.. rubric:: HistoryReadProcessed
+
+**call("Methods.DataSource.HistoryReadProcessed", options)**
+
+Reads historical aggregated values from an OPC UA data source. *options* is an object with following properties:
+
+    - **datasource** (String) -- Specifies the data source to read.
+    - **address** (String[]) -- Specifies the variables to read.
+    - **aggregate** (UaNodeId[]) -- Specifies the aggregates to read. Each entry in the *address* array must have a corresponding entry in the *aggregate* array. For a list of possible aggregate functions, see :ref:`here <aggregate_functions>`. You can only use aggregate functions that are supported by the data source. An aggregate function can be specified in the format Ua.NodeId.AGGREGATEFUNCTION_NAME, where NAME must be replaced with the respective aggregate function in uppercase letters. e.g: Ua.NodeId.AGGREGATEFUNCTION_AVERAGE.
+    - **samplinginterval** (Integer, optional, default: endtime-starttime) -- The interval of the aggregates in milliseconds. 0 means the range specified by *starttime* and *endtime* is the interval to be used.
+    - **continuationpoint** (String[], optional, default: []) -- Specifies the continuation points to use. A data source can use continuation points to allow the user to call the HistoryReadProcessed function repeatedly to retrieve huge result sets.
+    - **releasecontinuationpoints** (Boolean, optional, default: false) -- If true, all specified continuation points will be released and no more data will be read.
+    - **starttime** (Date) -- Specifies the start time of the range to read.
+    - **endtime** (Date) -- Specifies the end time of the range to read.
+
+.. attention:: The server may always return less values than requested (even an empty result) and a continuation point which can be used to request the next set of values.
+
+The result is an object with following properties:
+
+- **error** (Integer) -- The error code, supplied only if an error occurred.
+- **errorstring** (String) -- The error text, supplied only if an error occurred.
+- **result** (Object) -- On success an object with following properties:
+
+    - **status** (Integer[]) -- The status of the call for each variable.
+    - **continuationpoint** (String[]) -- The continuation point for each variable. A null element in the array means that reading of the corresponding address/aggregate is finished.
+
+        .. attention:: To prevent an endless loop using continuation points, don't call HistoryReadProcessed again when *continuationpoint* only contains null elements.
+
+    - **value** (Object[]) -- The requested raw data for each variable as an array of objects with following properties:
+
+        - **status** (Integer) -- The status code of the variable.
+        - **type** (Integer) -- The data type of the value (Ua.DataType.BOOLEAN, Ua.DataType.INT32, Ua.DataType.STRING, ...).
+        - **value** (Any) -- The value of the variable in the given data type.
+        - **timestamp** (Integer) -- The source timestamp of the variable.
+        - **servertimestamp** (Integer) -- The server timestamp of the variable.
+
+Example 1, read the 5 minute average for the last hour in ascending order::
+
+    var endtime = Date.now();
+    var starttime = endtime - 60*60*1000; // 1 hour in milliseconds
+    var res = call("Methods.DataSource.HistoryReadProcessed", {
+        datasource: "ds1",
+        address: ["ns=1;s=AGENT.OBJECTS.var1"],
+        aggregate: [Ua.NodeId.AGGREGATEFUNCTION_AVERAGE],
+        samplinginterval: 5*60*1000, // 5 minutes in milliseconds
+        starttime: starttime,
+        endtime: endtime
+    });
+
+Example 2, read the 5 minute minimum and maximum for a variable, the interval is implicitely defined through *starttime* and *endtime*::
+
+    var res = call("Methods.DataSource.HistoryReadProcessed", {
+        datasource: "ds1",
+        address: ["ns=1;s=AGENT.OBJECTS.var1", "ns=1;s=AGENT.OBJECTS.var1"],
+        aggregate: [Ua.NodeId.AGGREGATEFUNCTION_MINIMUM, Ua.NodeId.AGGREGATEFUNCTION_MAXIMUM],
+        starttime: new Date(2018, 10, 1, 10, 30),
+        endtime: new Date(2018, 10, 1, 10, 35)
+    });

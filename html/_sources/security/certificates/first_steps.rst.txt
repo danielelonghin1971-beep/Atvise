@@ -1,0 +1,105 @@
+First connection using self-signed certificates
+###############################################
+
+This chapter describes how to configure atvise and establish the connection with self-signed certificates for the first time.
+
+Connecting atvise builder and server
+************************************
+
+.. rubric:: Configuration
+
+atserver.ini::
+
+    [certificates]
+    autotrust=false
+    validate=true
+
+atbuilder:
+
+.. figure:: images/builder_connection.png
+
+.. rubric:: Connection establishment
+
+The atvise server sends its certificate to the atvise builder when connecting for the first time. Because of the configuration above, the certificate is automatically rejected and moved to the "rejected" folder in the builder's certificate store. Click the :guilabel:`Connection certificate` button in the connection dialog to open the builder certificate management:
+
+.. figure:: images/builder_conn_store.png
+
+Use the dropdown list to switch to *Peers* to trust the atvise server certificate:
+
+.. figure:: images/builder_cert_rejected.png
+
+You can trust the certificate by clicking the |trust| button. The certificate will be moved to "trusted" directory in the builder certificate store. If you try to connect again, the atvise builder sends its certificate to the atvise server, which will also reject it. Open the server certificate management in your browser via *<server IP address>/?admin=true*: 
+
+.. figure:: images/server_admin.png
+
+Log in with admin credentials to manage the certificates: 
+
+.. figure:: images/server_admin2.png
+
+Use the dropdown list *Type* to switch to *Peers* to trust the atvise builder certificate: 
+
+.. figure:: images/server_admin3.png
+
+Select the certificate and click the :guilabel:`Trust` button. The certificate will be moved to the "trusted" directory in the server certificate store. After that, the connection between atvise builder and atvise server can be established.
+
+Login with user certificates
+****************************
+
+.. rubric:: Connection establishment
+
+Select the connection method *Certificate* in the connection dialog:
+
+.. figure:: images/builder_user.png
+
+Click :guilabel:`User certificates` to open the certificate management for user certificates. Create a new user certificate by clicking |add|:
+
+.. figure:: images/builder_user2.png
+
+Enter the file name of the certificate and the *CommonName*. *CommonName* must be a username. The user certificate will be stored in the appropriate certificate store (*%LOCALAPPDATA%\\atvise\\PKI\\users\\own*).
+
+.. rubric:: User management
+    
+The newly created certificate must be assigned to the user by an administrator in atvise. Open the user management for the atvise user, click |add| to create a new entry under *Login Certificate* and enter the *CommonName* of the user certificate:
+
+.. figure:: images/builder_user3.png
+
+.. rubric:: Accept certificate
+
+If *autotrust = false* is configured for the server, the user certificate must be trusted to enable a successful login. Open the server certificate management in the browser and use the dropdown list *Type* to switch to *User*. Trust the user certificate as described before:
+
+.. figure:: images/server_user.png
+
+The user can now successfully log in with the user certificate. The window title shows that the user is logged in with a user certificate: 
+
+.. figure:: images/builder_user4.png
+
+Connecting to data sources
+**************************
+
+.. rubric:: Configuration
+
+Open the configuration dialog of the respective data source and switch to the *Security* tab:
+
+.. figure:: images/ds_config.png
+
+Using this settings, the certificate of the peer, i.e. the connected data source, must be explicitly accepted when establishing a connection. Click :guilabel:`...` to select the local certificate that will be used for communication with the data source. The atvise server certificate is copied to the certificate store (<atvise_directory>\\PKI\\atserver\\mirror) and used as client certificate by default.
+
+.. figure:: images/ds_config2.png
+
+.. rubric:: Accept certificate in atvise
+
+Open the server certificate management, set the *Store* dropdown list to *OPC UA data sources* and the *Type* dropdown list to *Peers* to display the rejected certificate of the data source:
+
+.. figure:: images/ds_visu.png
+
+Select the certificate and click :guilabel:`Trust` to accept it. 
+
+.. rubric:: Accept certificate at data source 
+    
+Depending on the connected data source and its configuration, the data source needs to trust the atvise server certificate to establish the connection. For example, if the data source is the opcuatestserver started with parameter ``--cert_autotrust=off``, the atvise server certificate must be moved from "rejected" to "trusted" in the certificate store (<atvise_directory>\\PKI\\opcuatestserver).
+
+.. |add| image:: /common_images/icon_edit_add.png
+.. |delete| image:: /common_images/icon_edit_delete.png
+.. |import| image:: /common_images/icon_import.png
+.. |reject| image:: /common_images/no.png
+.. |trust| image:: /common_images/yes.png

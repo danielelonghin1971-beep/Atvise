@@ -1,0 +1,45 @@
+4.1 The first dynamics
+######################
+
+In this section we will change the properties of some graphic elements in dependence on the value of data variables.
+
+.. rubric:: 4.1.1 Adding data variables to the project
+
+First, we need some data variables which we want to display in the visualization. For this purpose, click on the "Objects" tab on the left of the atvise builder interface. You will see some objects (|object_symbol|) and data variables (|dv_symbol|) from the demo in the list.
+
+For our example, we will add the following data variables:
+
+- "testString" of the data type "String"
+- "testBool" of the data type "Boolean"
+- "testInt" of the data type "Int16"
+
+1. Right-click on the "Servers -> My Server -> Objects" folder.
+
+2. Choose "Add Node -> Data Variable" from the menu which appears.
+
+3. Choose "String" from the data types list.
+
+4. Type in "testString" in the dialog which appears and apply the variable name by clicking "OK".
+
+5. Add a data variable "testBool" of the data type "Boolean" in the same way.
+
+6. Add a data variable "testInt" of the data type "Int16" in the same way.
+
+.. figure:: images/adding_data_variable.png
+
+    Add data variables
+
+.. rubric:: 4.1.2 Reading and changing values of data variables
+
+After working through the last section, you will see an entry in the object list for each of the three newly added data variables. Now we want to change the value of one of them.
+
+1. Double-click on the entry of "testString" to open a detail tab for the variable.
+
+2. Double-click on the "AttributeValue" column in the "Value" row to edit the value of the data variable. For our example let's type in "my test text" as the value for the testString data variable.
+
+.. figure:: images/change_value_data_variable.png
+
+    Changing the value of a data variable
+
+.. |object_symbol| image:: images/object_symbol.png
+.. |dv_symbol| image:: images/dv_symbol.png

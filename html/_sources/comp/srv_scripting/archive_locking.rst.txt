@@ -1,0 +1,124 @@
+.. _archive_locking_functions:
+
+Archive locking functions
+#########################
+
+These functions allow to lock as well as unlock archive files and to generate the name of an archive file by specifying the name of an archive group and a timestamp. Locks ensure that corresponding files are not used by atvise (e.g. by historical queries) and can therefore be copied or moved without shutting down the atvise server before. The functions are wrapper scripts for the respective OPC UA methods and can be found in the atvise library (:treeselection:`Library --> ATVISE --> Script Library --> Methods --> ArchiveLocking`).
+
+.. rubric:: ArchiveName
+
+**call("Methods.ArchiveLocking.ArchiveName", options)**
+
+Returns the name (path) of the archive file for the given archive group, where values for the given timestamp can be found (whether or not values for the exact timestamp actually exist). The function considers the partition interval of the archive group (see :ref:`historize`). The function returns a file name only, if the archive file actually exists on the file system. *options* is an object with following properties:
+
+- **archive** (String) -- The name of the archive group.
+- **timestamp** (Date) -- The desired timestamp.
+
+The result is an object with following properties:
+
+- **error** (Integer) -- The error code, supplied only if an error occurred.
+- **errorstring** (String) -- The error text, supplied only if an error occurred.
+- **result** (Object) -- On success an object with the result of the call:
+
+    - **archivename** (String) -- The generated name (path) of the archive file.
+
+Example::
+
+    var res = call("Methods.ArchiveLocking.ArchiveName", {
+       archive: "datavalues",
+       timestamp: new Date(2017, 9, 20, 14, 0, 0)
+    });
+    if (res.error)
+       console.log("ArchiveName error: " + res.errorstring);
+    else
+       console.log(res.result);
+
+.. rubric:: Lock
+
+**call("Methods.ArchiveLocking.Lock", options)**
+
+Locks the given archive file for the given period of time. An archive file can only be locked, if it is not the currently active archive file of an archive group or is not currently used. *options* is an object with following properties:
+
+- **archivename** (String) -- Name of the archive file (e.g. determined with the function ArchiveName; the path is ignored by the function).
+- **timeout** (Integer, optional, default: 10) -- Period of time in seconds the file should be locked. The file will be unlocked automatically when the timeout expires.
+
+The result is an object with following properties:
+
+- **error** (Integer) -- The error code, supplied only if an error occurred.
+- **errorstring** (String) -- The error text, supplied only if an error occurred.
+
+    - *BadInvalidState* -- The archive file is currently active or it only exists in the filesystem but is not configured in the project.
+    - *BadNotFound* -- Archive file is configured in the project but the file does not exist.
+    - *BadResourceUnavailable* -- Archive file is blocked by a historical query.
+
+- **result** (Object) -- On success an empty object.
+
+Example::
+
+    var res = call("Methods.ArchiveLocking.Lock", {
+       archivename: "random_values_raw_20200923_0900.db",
+       timeout: 10
+    });
+    if (res.error)
+       console.log("Lock error: " + res.errorstring);
+    else
+       console.log("Lock successful");
+
+.. rubric:: Unlock
+
+**call("Methods.ArchiveLocking.Unlock", options)**
+
+Unlocks the given archive file. *options* is an object with following properties:
+
+- **archivename** (String) -- Name of the archive file (e.g. determined with the function ArchiveName; the path is ignored by the function).
+
+The result is an object with following properties:
+
+- **error** (Integer) -- The error code, supplied only if an error ocurred.
+- **errorstring** (String) -- The error text, supplied only if an error occurred.
+
+    - *BadInvalidState* -- The archive file is currently active or it only exists in the filesystem but is not configured in the project.
+    - *BadNotFound* -- Archive file is configured in the project but the file does not exist.
+    - *BadResourceUnavailable* -- Archive file is blocked by a historical query.
+
+- **result** (Object) -- On success an empty object.
+
+Example::
+
+    var res = call("Methods.ArchiveLocking.Unlock", {
+       archivename: "random_values_raw_20200923_0900.db"
+    });
+    if (res.error)
+       console.log("Unlock error: " + res.errorstring);
+    else
+       console.log("Unlock successful");
+
+.. rubric:: IsLocked
+
+**call("Methods.ArchiveLocking.IsLocked", options)**
+
+Checks if the given archive file is locked. *options* is an object with following properties:
+
+- **archivename** (String) -- Name of the archive file (e.g. determined with the function ArchiveName; the path is ignored by the function).
+
+The result is an object with following properties:
+
+- **error** (Integer) -- The error code, supplied only if an error ocurred.
+- **errorstring** (String) -- The error text, supplied only if an error occurred.
+
+    - *Bad* -- The archive file is not locked
+    - *BadInvalidState* -- The archive file is currently active or it only exists in the filesystem but is not configured in the project.
+    - *BadNotFound* -- Archive file is configured in the project but the file does not exist.
+    - *BadResourceUnavailable* -- Archive file is blocked by a historical query.
+
+- **result** (Object) -- On success an empty object.
+
+Example::
+
+    var res = call("Methods.ArchiveLocking.IsLocked", {
+       archivename: "random_values_raw_20200923_0900.db"
+    });
+    if (res.error)
+       console.log("IsLocked: " + res.errorstring);
+    else
+       console.log(res.result);

@@ -1,0 +1,10 @@
+E-mail configuration
+####################
+
+Allows to set the global e-mail configuration for reports. 
+
+.. rubric:: Parameters
+
+- **headline** -- Headline for the dialog (default: T{Global settings for e-mail notifications})
+- **font color** -- Font color for the display (default: global parameter atvFontColor)
+- **fill color** -- Fill color of background areas (default: global parameter atvFillColor)

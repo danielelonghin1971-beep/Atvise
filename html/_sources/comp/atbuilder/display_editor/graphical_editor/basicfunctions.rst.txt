@@ -1,0 +1,16 @@
+.. _editor_functions:
+
+Editor functions
+################
+
+The graphics editor offers a number of basic functions to the user, most of them are similar to other common graphics editors. They are split up into the following categories:
+
+.. toctree::
+
+    basicfunctions/standardfunctions
+    basicfunctions/gridsnap
+    basicfunctions/edit
+    basicfunctions/drawshapes
+    basicfunctions/attributesstyles
+    basicfunctions/context_menu
+    basicfunctions/shortcuts

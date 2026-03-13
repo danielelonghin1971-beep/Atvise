@@ -1,0 +1,135 @@
+Installing & licensing
+######################
+
+Installing atvise
+*****************
+
+If you have not already installed atvise, start the setup program and follow the instructions in the setup to install atvise. The setup will automatically register the atvise server as service ``atserver``.
+
+After the installation, setup will create an atvise monitor icon in the right corner of your task bar.
+
+Licensing
+*********
+
+Getting an atvise webMI or scada license
+++++++++++++++++++++++++++++++++++++++++
+
+.. hint:: If you have any questions regarding licensing or need more licenses, please contact your local distributor or visutec@bachmann.info.
+
+1. Right-click on the atvise icon in the right corner of the task bar.
+2. Choose "Local License" from the menu which appears.
+3. Click :guilabel:`Online Activation` in the "License" window.
+4. Enter your atvise.com username and password in the "Online Activation" dialog which appears in order to continue. Please note that internet access is required. You can also go to https://www.atvise.com to view or download your recent licenses and statements.
+
+    Enter manually: Click on the bottom left button :guilabel:`Enter manually`. Copy your hardware code from the dialog which appears, paste it on https://www.atvise.com and generate a license. Copy the complete license code into the text field below.
+5. Choose your atvise webMI or scada license from the "Online Activation" dialog and generate it by clicking "OK".
+
+.. figure:: /common_images/license_server.png
+
+    Enter atvise.com username and password
+
+.. figure:: /common_images/license_webmi.png
+
+    Getting an atvise webMI license
+
+.. figure:: images/license_scada.png
+
+    Getting an atvise scada license
+
+.. _ccd_licensing:
+
+atvise scada CCD licensing
+++++++++++++++++++++++++++
+
+.. hint:: This section only has relevance when using atvise scada.
+
+Depending on your license type, you have a certain number of CCDs (concurrent connected data variables) available for visualization. Trial licenses usually have unlimited CCDs.
+
+Every different data variable that gets displayed in the visualization will use one CCD.
+
+CCDs are counted for every active browser session (if you connect to the visu from two browsers on the same machine, both will count CCDs).
+
+If a client wants to subscribe to new data variables while no more CCDs are available, a message ``CCD exceeded!`` will appear and there will be no communication with these data variables.
+
+.. hint:: If a client disconnects from the visu (e.g. browser gets closed), it will take some time until the browser session expires and the CCDs from this client become available once again (session timeout of the scada server: 2 minutes).
+
+To check the number of currently-used CCDs, you can use the following internal data variables:
+
+Open the node browser and go to Objects.AGENT.WEBACCESS. There you'll find 2 variables:
+
+.. csv-table::
+    :widths: auto
+
+    ccds_available, Number of currently available CCDs (if 0 -> no more clients can connect to data variables in the visualization)
+    ccds_used, Number of currently used CCDs
+
+.. hint:: If you want to display this information in your visualization, simple drag & drop these data variables into one of your displays. Attention: These variable will also use CCDs!
+
+Fixed client licensing
+++++++++++++++++++++++
+
+Fixed clients are excluded from the CCD counting, so a fixed client can always connect to an unlimited number of data variables without using any CCDs.
+
+The number of available fixed clients is usually defined in the last line of your license code (right-click on atvise monitor -> license), e.g.: webaccess.fixedclients = 1. If there is no line containing "webaccess.fixedclients", you have no fixed client available.
+
+Some licenses include fixed clients per default. You can also purchase additional fixed clients for your current license.
+
+.. rubric:: Definition of the fixed clients
+
+You can define the IP adresses of the fixed clients in the atserver.ini file:
+
+.. code-block:: ini
+
+    [webaccess]
+    fixedClients = [IP1],[IP2],...
+
+Example:
+
+.. code-block:: ini
+
+    [webaccess]
+    fixedClients = 192.168.0.10,192.168.0.20
+
+.. hint:: The atserver.ini file is located directly in the atvise install directory. This file won't be created automatically. If you haven't used it before, simply create a new text file named "atserver.ini".
+
+.. hint:: When defining your local host as a fixed client, please note:
+
+    - If defining "127.0.0.1" in the ini file, client sessions via ``http://localhost`` and ``http://127.0.0.1`` will run in fixed client mode, while sessions via ``http://[network IP]`` or ``http://[network hostname]`` will use CCDs!
+    - If defining your network IP in the ini file, client sessions via ``http://[network IP]`` or ``http://[network hostname]`` will run in fixed client mode, while sessions via ``http://localhost`` and ``http://127.0.0.1`` will use CCDs!
+
+Web client licensing
+++++++++++++++++++++
+
+"webaccess.sessions" defines the maximum number of web sessions that can be used simultaneously. *Fixed clients* are excluded from the counting. Following options are available: 
+
+- No entry -- The web server allows no web sessions, even if CCDs are configured.
+- 0 -- There is no license limit (the technical limitation is around 160 web sessions)
+- > 0 -- The web server allows the defined number of sessions. Every additional session is rejected.
+
+The maximum number of web sessions and the currently used web sessions are mapped to the statistical nodes :treeselection:`Information --> ModuleStatistics --> WEBACCESS --> LicensedWebMISessions` and :treeselection:`Information --> ModuleStatistics --> WEBACCESS --> UsedWebMISessions`. 
+
+Data source licensing
++++++++++++++++++++++
+
+"mirror.datasources" defines the maximum number of active data sources. Following options are available:
+
+- No entry -- Data sources cannot be used
+- 0 -- There is no license limit (the technical limitation is 250 data sources (or connections, refer to :ref:`data source - user mapping<user_mapping>` for further information))
+- > 0 -- The atvise server allows the defined number of active data sources. It is not possible to configure which - or in which order - data sources shall be licensed. Changes to the connection status or the state of an already licensed data source have no effect on the available licenses. A license will only be available after deleting an already licensed data source.
+
+The maximum number of data sources and the currently used data sources are mapped to the statistical nodes :treeselection:`Information --> ModuleStatistics --> MIRROR --> LicensedDatasources` and :treeselection:`Information --> ModuleStatistics --> MIRROR --> UsedDatasources`.
+
+.. hint:: In case of :ref:`redundant data sources<redundant_ds>`, the main connection and every alternative are counted as 1 license each.
+
+Mirrored variable licensing
++++++++++++++++++++++++++++
+
+"mirror.variables" defines the maximum number of mirrored data variables. Following options are available:
+
+- No entry -- Mirrored variables cannot be used
+- 0 -- No limit
+- Wert > 0 -- The atvise server allows the defined number of mirrored variables. It is not possible to configure which - or in which order - variables shall be licensed. Licensing variables is independent from data source licensing. Changes to the connection status or state of data sources as well as deleting data sources have no effect on already licensed variables. Licenses will only be available after deleting the mirroring of licensed variables.
+
+The maximum number of variables and the currently used variables are mapped to the statistical nodes :treeselection:`Information --> ModuleStatistics --> MIRROR --> LicensedVariables` and :treeselection:`Information --> ModuleStatistics --> MIRROR --> UsedVariables`.
+
+.. hint:: Non-licensed variables are indicated by the *BadLicenseLimitsExceeded* status.

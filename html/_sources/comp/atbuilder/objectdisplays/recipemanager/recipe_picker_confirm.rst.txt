@@ -1,0 +1,8 @@
+Confirmation Dialog
+###################
+
+Confirmation dialog for Recipe Picker.
+
+.. rubric:: Parameters
+
+- **recipe name** -- Name of the recipe

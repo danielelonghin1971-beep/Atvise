@@ -1,0 +1,17 @@
+Client/Browserside scripting
+############################
+
+.. toctree::
+
+    scripting/intro
+    scripting/configuration
+    scripting/general_functions
+    scripting/data
+    scripting/alarm
+    scripting/graphics
+    scripting/widget
+    scripting/display
+    scripting/sound
+    scripting/trigger_functions
+    scripting/key_functions
+    scripting/performance

@@ -1,0 +1,49 @@
+Message Board
+#############
+
+This display shows a definable dialog for messages, information or warnings, which can be called up via the openWindow function, for example. Freely selectable texts can be used in the header and for the buttons.
+Messages can be transmitted to the display via triggers. The two buttons can also be used to pass trigger functions. If no trigger names are passed, the default function for the two buttons is to close the window.
+
+.. rubric:: Conditions
+
+This display requires jQuery, which is included as part of the library table.
+
+To avoid compatibility problems, the supplied jQuery version is only used if no existing version is detected. If jQuery is already used in an existing project, the table library will access it. Make sure that in this case a jQuery version > 1.7.x is used!!
+
+.. rubric:: Parameters
+
+There are a total of 9 parameters:
+
+- **font family** -- Font family which will be applied. (default: Arial)
+- **font size** -- Font size in pixels. (default: 35)
+- **text of button 1** -- Text of button 1 (default: T{OK})
+- **text of button 2** -- Text of button 2 (default: T{Close})
+- **action of button 1** -- Trigger function of button 1
+- **action of button 2** -- Trigger function of button 2
+- **action when closing** -- Trigger function closing with [x]
+
+Appearance:
+
+- **font color** -- Font color which will be applied (default: global parameter atvFontColor (advanced), #d0d0d0 (standard))
+- **font color button** -- Color of the symbol to be used (default: global parameter atvFontColor (advanced), #d0d0d0 (standard))
+
+Trigger:
+
+- **com.atvise.message_board_update** -- Add a message to the board
+- **com.atvise.message_board_reset** -- Clears the contents of the board
+
+.. rubric:: Example 1
+
+Calling the dialog using the openWindow function:
+
+:: 
+
+    webMI.display.openWindow({display:"SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Advanced.dialogs.message_board", x:0, y:0, height:600, width:800, modal:true, resizable:false, movable:true, scrollbars:false, menubar:false, status:false, toolbar:false, query: {headline:"Meine Überschrift"}}); 
+
+.. rubric:: Example 2
+
+Add a message:
+
+::
+
+    webMI.trigger.fire("com.atvise.message_board_update", ["Nachricht Zeile 1", "Nachricht Zeile 2", ..., "Nachricht Zeile n"]);

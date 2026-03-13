@@ -1,0 +1,15 @@
+.. _qd_writelog:
+
+Write Log Entry
+###############
+
+This quick dynamic allows to write log entries on definable historized nodes. The nodes specified via *group* and *subgroup* are automatically created when writing the log entry (see also :ref:`access control - visualization rights<ac_visualization>`). The following structure is created:
+
+:treeselection:`OBJECTS --> ATVISE --> Logger --> Group --> Subgroup (historized)`
+
+.. rubric:: Parameters:
+
+- **group** -- Defines the group for the log entry. A node with this name is automatically created. 
+- **subgroup** -- Defines the subgroup for the log entry. A node with this name is automatically created. 
+- **label** -- Allows a further classification of the entry.
+- **message** -- Message with further information regarding type or cause of log entry.

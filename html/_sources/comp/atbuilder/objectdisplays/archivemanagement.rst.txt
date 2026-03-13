@@ -1,0 +1,9 @@
+Archive management
+##################
+
+.. toctree::
+
+    archivemanagement/add_schedule
+    archivemanagement/archive_management
+    archivemanagement/auto_scheduler
+    archivemanagement/confirmation_dialog

@@ -1,0 +1,22 @@
+opcua object
+############
+
+.. !!v8!! opcua.readFilter(filter)
+.. function:: opcua.readFilter(filter)
+
+    Reads current raw and aggregated values analog to the client-side function :func:`webMI.data.readFilter`.
+
+    Parameters:
+        - **filter** (Object) -- Is used to constrain the requested data. From the :ref:`filter object <query_filter_format>` only the filter properties *address*, *aggregate*, *interval* and *unit* are used, all other properties are ignored.
+
+    Returns:
+        - The requested data. For details see :ref:`query result <query_result>`.
+
+    Example, read all current aggregated values which use the interval "5 minutes", regardless of the aggregate function::
+
+        var filter = {};
+        filter.address = ["g:AGENT.OBJECTS.MyData.*"];
+        filter.interval = ["v:5"];
+        filter.unit = ["v:m"];
+        var res = opcua.readFilter(filter);
+        console.log(res);

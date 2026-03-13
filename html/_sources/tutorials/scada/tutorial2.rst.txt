@@ -1,0 +1,54 @@
+2 Start and connect atvise builder
+##################################
+
+The atvise builder is the engineering tool for atvise projects. It allows you to manage data variables, objects, users & groups, displays and many other essential things for your project. One of the main features is the powerful atvise graphics editor included.
+
+.. rubric:: 2.1 Starting atvise builder
+
+1. Right-click on the atvise icon in the right corner of the task bar. Open the "Project Console" and click on "Builder" to open the atvise builder.
+
+    .. hint:: You can also choose :menuselection:`Programs --> atvise --> atvise builder` from your Windows start menu.
+
+.. figure:: /common_images/start_builder.png
+
+    Starting atvise builder
+
+.. rubric:: 2.2 Connecting to a server
+
+After starting the atvise builder from the task bar, the following dialog is opened to connect to the OPC UA module of the atvise server on your local machine. The default address is your local host and the default OPC UA port ("opc.tcp://localhost"). In order to connect to the atvise server for the first time, you have to log in with user *root* and no password.
+
+.. hint:: *root* is the default user for every new project. Use the :ref:`user management<users_groups>` to specify a password or create new users with sufficient rights.
+
+.. figure:: /common_images/connect_server_root.png
+
+    Connecting to atvise server
+
+If you start the atvise builder via the Windows start menu or if you want to connect to another server, you can do so by following these steps:
+
+1. Choose :menuselection:`builder --> Connect to server` from the menu bar.
+
+2. The connection dialog is opened. Enter the respective user data and the address of the server to which you want to connect (opc.tcp://[host]:[port]). 
+
+    .. hint:: You could also enter the address of another server instance, for example, the IP address of a machine in your local network.
+
+3. Apply the dialog by pressing the :guilabel:`OK` button to connect your atvise builder to the server.
+
+.. figure:: /common_images/connect_server.png
+
+    Connect to server on localhost
+
+After connecting to / adding a server, you get asked to choose a default layout.
+
+.. figure:: images/choose_layout.png
+
+    Choose a default layout
+
+.. hint:: If you want to connect to another server, you first have to disconnect the current session by choosing :menuselection:`builder --> Disconnect from server` from the menu bar.
+
+    .. figure:: /common_images/disconnect_server.png
+
+    After that, choose :menuselection:`builder --> Connect to server` again and connect to the new server the same way as described before.
+
+.. hint:: You can see the currently logged in user as well as the selected server address at the bottom of the atvise builder interface.
+
+    .. figure:: /common_images/server_address.png

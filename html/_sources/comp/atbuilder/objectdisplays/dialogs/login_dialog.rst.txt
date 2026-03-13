@@ -1,0 +1,13 @@
+Login Dialog
+############
+
+This control is only used by the controls "Button/Display Login" and "Button Login" and shall not be used as standalone control.
+
+.. rubric:: Parameters
+
+This control has the following appearance parameters:
+
+- :advstyle:`Advanced` **font color** -- Color which will be applied to the labels (default: global parameter atvFontColor)
+- :advstyle:`Advanced` **fill color** -- Background fill color (default: global parameter atvFillColor)
+- :advstyle:`Advanced` **symbol color** -- Color of the symbol to be used (default: global parameter atvSymbolColor)
+- **keyboard display** -- On-screen keyboard for input (default: alphanumerical keyboard)

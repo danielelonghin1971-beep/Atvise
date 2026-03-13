@@ -1,0 +1,12 @@
+.. _access_control:
+
+atvise access control
+#####################
+
+The access control allows to define which user shall have access to which component (atvise builder, atvise visualization), function (e.g. XML import, version control, etc.) or node.
+
+.. toctree::
+
+    access_control/access_control_intro
+    access_control/use_cases
+    access_control/notes_and_information

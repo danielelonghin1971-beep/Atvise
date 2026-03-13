@@ -1,0 +1,847 @@
+Data functions
+##############
+
+.. !!webMI!! webMI.data.call(functionName, arguments[, function(e){...}])
+.. function:: webMI.data.call(functionName, arguments[, function(e){...}])
+
+    Allows you to call a function functionName that was implemented on the server side with a set of arguments. Optionally, the function callback can be provided and will be executed when the call is finished.
+
+    ::
+
+        webMI.data.call("serverCalculateSum", {"key1": "value1", "key2": "value2"}, function(e) {
+            alert("callback function reached");
+        });
+
+.. hint:: When calling a webMI method script, passed values are converted to strings because of the HTTP transmission. If such a string shall be mapped to a node of a specific type (e.g. int or bool), the JavaScript default conversion is used and the string is parsed. The strings "false" and "0" are an exception, since they are automatically converted to *false* on server-side when written to nodes of type *bool*. 
+
+    Example 1::
+
+        webMI.data.call("ChangeNodeValue", { address: "AGENT.OBJECTS.bool", value: false}, (response) => {});
+
+    The value *false* is passed as string "false". The "ChangeNodeValue" script tries to write this string to a node of type *bool*. The server converts the string to *false* (the JavaScript default conversion applies to other string types, see also https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Global_Objects/Boolean). 
+
+    Example 2::
+
+        webMI.data.call("ChangeNodeValue", { address: "AGENT.OBJECTS.int", value: 1}, (response) => {});
+
+    The value 1 is passed as string "1". The "ChangeNodeValue" script parses the string and writes the number to a node of type *int*. 
+
+.. !!webMI!! webMI.data.read(nodeID, function(e){...})
+.. function:: webMI.data.read(nodeID, function(e){...})
+
+    Passes a current :ref:`property object <data_variable_object_properties>` for every data variable specified by its nodeID to the callback function. You can pass a single nodeID or an array of nodeIDs.
+
+    Example::
+
+        webMI.data.read("AGENT.OBJECTS.var1", function(e) {
+           alert(e.value);
+        });
+
+    Example - Working with arrays::
+
+        var nodeAddressArray = ["AGENT.OBJECTS.var1", "AGENT.OBJECTS.var2"];
+        webMI.data.read(nodeAddressArray, function(e) {
+            console.log(e[0].value);
+            console.log(e[1].value);
+        });
+
+.. !!webMI!! webMI.data.subscribe(nodeID, function(e){...})
+.. function:: webMI.data.subscribe(nodeID, function(e){...})
+
+    Subscribes to the data variable specified by nodeID. Every time the process value of this data variable changes, the callback function is executed.
+
+    The current :ref:`property object <data_variable_object_properties>` of this data variable is passed on to the function in e.
+
+    Returns a subscriptionId, which can be used to unsubscribe the data variable.
+
+    Example::
+
+        webMI.data.subscribe("AGENT.OBJECTS.var1", function(e) {
+            alert("var1 changed to " + e.value)
+        });
+
+    Example - Working with a datavariable that is an array::
+
+        webMI.data.subscribe("AGENT.OBJECTS.testArray", function(e) {
+            alert(e.value[0]);
+        });
+
+.. !!webMI!! webMI.data.unsubscribe(subscriptionId)
+.. function:: webMI.data.unsubscribe(subscriptionId)
+
+    Unsubscribes the data variable with the given subscriptionId (return value from :func:`webMI.data.subscribe` or :func:`webMI.data.subscribeBlock`). The previously created subscription will not receive a notification of the callback function anymore.
+
+.. !!webMI!! webMI.data.subscribeBlock(nodeIDs, alarmIDs, function(e){...})
+.. function:: webMI.data.subscribeBlock(nodeIDs, alarmIDs, function(e){...})
+
+    Allows you to subscribe to multiple data variables with one function.
+
+    The current :ref:`property objects <data_variable_object_properties>` of the specified data variables are passed on to the function in e[idx].
+
+    Returns a subscriptionId, which can be used to unsubscribe the data variables.
+
+    Example::
+
+        webMI.data.subscribeBlock(["AGENT.OBJECTS.var1", "AGENT.OBJECTS.var2"], [], function(e) {
+            alert("var1 or var2 has been changed.");
+            alert("Current value of var1: " + e[0].value + " Current value of var2: " + e[1].value)
+        });
+
+.. hint:: If you have insufficient rights (see :ref:`Access Control<access_control_intro>`) for one of the subscribed data variables, no values are returned at all.
+
+.. !!webMI!! webMI.data.write(nodeIDs, values)
+.. function:: webMI.data.write(nodeIDs, values)
+
+    Writes the values in the values array to the data variables specified in the nodeIDs array.
+
+    Example::
+
+        var value1 = "myStringValue";
+        var value2 = 42;
+        webMI.data.write(["AGENT.OBJECTS.var1", "AGENT.OBJECTS.var2"], [value1, value2]);
+
+    Example with "AGENT.OBJECTS.var1" from type Array::
+
+        var value1 = ["firstArrayValue", "secondArrayValue"];
+        var value2 = 42;
+        webMI.data.write(["AGENT.OBJECTS.var1", "AGENT.OBJECTS.var2"], [value1, value2]);
+
+.. hint:: Users can read their own user properties (e.g. the password) with :func:`webMI.data.read`, however, modifying the properties via webMI.data.write is not possible. Instead, serverside scripts must be used. 
+
+.. !!webMI!! webMI.data.addEventListener(name, function(e){...})
+.. function:: webMI.data.addEventListener(name, function(e){...})
+
+    This is a special function to connect a callback function to changes of client variables (e.g. language switched, user logged in, number of CCD exceeded). The parameter name has to be "clientvariableschange".
+
+    ::
+
+        webMI.data.addEventListener("clientvariableschange", function(e) {
+            if ("preferredlanguage" in e) {
+                // language changed
+            }
+            if ("username" in e) {
+                // user logged in
+            }
+            if ("CCDexceeded" in e) {
+                // maximum number of CCD exceeded
+            }
+        });
+
+.. _webmi_data_login:
+
+.. !!webMI!! webMI.data.login(username, password, [data,] function(e){...})
+.. function:: webMI.data.login(username, password, [data,] function(e){...})
+
+    .. hint:: This function is only supported for :ref:`authentication methods<authentication>` *form* and *script*.
+
+    Function to authenticate a user in the atvise system.
+
+    If the function is called without parameters a browser authentication window will open and ask for credentials.
+
+    If the two parameters username and password are specified the function tries to login the user to the system. The optional *data* parameter allows to pass an object with additional information (e.g. token). In order to pass the parameters to the server, they are escaped by JavaScript function *encodeURIComponent*. The callback function will be executed after the user was logged in or an error occurred and returns the result.
+
+    ::
+
+        webMI.data.login("testuser", "password", {"tokenID":"<tokenID>","token":"<token>"}, function(e) {
+            if ((e[""].hasOwnProperty("username") && !e[""].username) || e[""].hasOwnProperty("error")) {
+                // login NOT OK
+            } else {
+                // login OK
+        }});
+
+    The return value contains the username or an error object. The next publish response shows that a user has logged in or out and contains user-specific information like "username", "preferredlanguage", "defaultdisplay" or "additionalInfo" (refer to :ref:`HTTP settings > Login script<login_script>` for further information).
+
+    The additional information can be processed with the *clientvariableschange* event.
+
+    ::
+
+        webMI.addEvent(webMI.data, "clientvariableschange", function(e) {
+            var username = e["username"];
+            var infos = e["additionalInfo"];
+
+            //Do something
+        });
+
+.. !!webMI!! webMI.data.logout()
+.. function:: webMI.data.logout()
+
+    .. hint:: This function is only supported for :ref:`authentication methods<authentication>` *form* and *script*.
+
+    The currently logged in user will be logged out. The next publish response contains user-specific information, see webMI.data.login.
+
+    ::
+
+        webMI.data.logout(function(e) {
+            if (!e[""].error) {
+                // logout OK
+            } else {
+                // logout NOT ok
+            }
+        });
+
+.. !!webMI!! webMI.data.changeemail(e-mail[, function(e){...}])
+.. function:: webMI.data.changeemail(e-mail[, function(e){...}])
+
+    Allows to change the user's e-mail address.
+
+    ::
+
+        webMI.data.changeemail("myMail@test.com");
+
+.. _webmi_changepassword:
+
+.. !!webMI!! webMI.data.changepassword(username, oldpw, newpw[, data][, function(e){...}])
+.. function:: webMI.data.changepassword(username, oldpw, newpw[, data][, function(e){...}])
+
+    Allows to change the password for the given user. The optional *data* parameter allows to pass an object with additional information.
+
+    ::
+
+        webMI.data.changepassword("u1", "MyOldPassword", "MyNewPassword", function(e){
+            console.log(e);
+        });
+
+.. !!webMI!! webMI.data.twofactorLogin(authCode[, function(e){...}])
+.. function:: webMI.data.twofactorLogin(authCode[, function(e){...}])
+
+    Sends the authentication code for the :ref:`two-factor authentication<ac_2fa>`. 
+
+    ::
+        
+        webMI.data.twofactorLogin("123456", function(e){
+            console.log(e);
+        });
+
+.. !!webMI!! webMI.data.twofactorSendMail([function(e){...}])
+.. function:: webMI.data.twofactorSendMail([function(e){...}])
+
+    Allows to send (another) e-mail containing the authentication code. 
+
+    ::
+
+        webMI.data.twofactorSendMail();
+
+.. !!webMI!! webMI.data.twofactorGetOTPAuth(type[, function(e){...}])
+.. function:: webMI.data.twofactorGetOTPAuth(type[, function(e){...}])
+
+    Requests the QR code for app authentication. **type** defines if a base64 image (type = "0") or the seed as string (type = "1") shall be returned.
+    
+    ::
+
+        webMI.data.twofactorGetOTPAuth("1", function(e){
+        console.log(e);
+        });
+
+.. !!webMI!! webMI.data.pause()
+.. function:: webMI.data.pause()
+
+    Pauses the data communication for all subscriptions in the current display (counterpart to :func:`webMI.data.resume`).
+
+.. !!webMI!! webMI.data.resume()
+.. function:: webMI.data.resume()
+
+    Resumes the data communication for all subscriptions in the current display (counterpart to :func:`webMI.data.pause`).
+
+.. !!webMI!! webMI.data.isPaused()
+.. function:: webMI.data.isPaused()
+
+    Returns the state of the data communication in the current display. If "true" is returned, the data communication is paused by the :func:`webMI.data.pause` function.
+
+.. _webmi_data_queryfilter:
+
+.. !!webMI!! webMI.data.queryFilter(filter, function(e){...})
+.. function:: webMI.data.queryFilter(filter, function(e){...})
+
+    This function makes a query to the server and requests historical data. The parameter "filter" is used to constrain the requested data. The result will be received in the callback function.
+
+    .. hint:: 
+        
+        - The following filter properties are not supported in atvise portal:
+
+            - "archive" for type 2 (alarms)
+            - "priority" for type 3 (events)
+
+        - Locked archives cannot be queried.
+        - Continuation points included in the query result that are no longer needed must be explicitly released using webMI.data.queryRelease(). Otherwise, they will be automatically released after an hour. As long as continuation points remain active, neither archive record switching nor redundancy synchronization is possible. Thus, if continuation points are created continuously and not explicitly released, these functions may be blocked permanently. The number of currently active continuation points is mapped to the statistical node :treeselection:`Information --> ModuleStatistics --> HISTORY --> CountActiveContinuationPoints`.
+
+    For a detailed description of the filter see :ref:`filter object <query_filter_format>` below.
+
+    The result is described in :ref:`query result <query_result>`.
+
+    Example::
+
+        var filter = {};
+        filter.type = ["v:1"];
+        filter.address = ["g:AGENT.OBJECTS.MyData.*"];
+        // set other filter properties as desired
+        webMI.data.queryFilter(filter, function(e) {
+            console.log(e.result);
+        });
+
+.. !!webMI!! webMI.data.queryNext(continuationpoint, function(e){...})
+.. function:: webMI.data.queryNext(continuationpoint, function(e){...})
+
+    Continues a query started with webMI.data.queryFilter using the given continuation point. Can be called repeatedly as long as a continuation point is returned. See "continuationpoint" in :ref:`query result <query_result>` for how to handle continuation points.
+
+    The result will be received in the callback function and is described in :ref:`query result <query_result>`.
+
+    Parameters:
+        - **continuationpoint** (Integer) -- The continuation point of the query.
+
+.. !!webMI!! webMI.data.queryRelease(continuationpoint)
+.. function:: webMI.data.queryRelease(continuationpoint)
+
+    Releases a no longer used continuation point returned by a previous call to webMI.data.queryFilter or webMI.data.queryNext. See "continuationpoint" in :ref:`query result <query_result>` for how to handle continuation points.
+
+    Parameters:
+        - **continuationpoint** (Integer) -- The continuation point to release.
+
+.. _webmi_data_subscribefilter:
+
+.. !!webMI!! webMI.data.subscribeFilter(filter, function(e){...})
+.. function:: webMI.data.subscribeFilter(filter, function(e){...})
+
+    This function subscribes to changes of variables, alarms and events on the server depending on the given :ref:`filter object <query_filter_format>` "filter". Every time one of the subscribed items changes, the callback function will be called with an object described in :ref:`query result <query_result>`.
+
+    .. hint:: If the server supports it, this function can also be used to subscribe to aggregated values. atvise returns aggregated values only if they are actually calculated in the server. See :ref:`Parametrization of aggregates <aggregate_parametrization>` for how to parameterize atvise to calculate aggregated values.
+
+    .. hint:: It is not possible to subscribe to changes of aggregated values or events when using atvise portal.
+
+    **Initial raw and aggregated values** can additionally be requested by specifying the filter property **init** with a value of **["v:true"]**. Note, that for the initial values only the filter properties *address*, *aggregate*, *interval* and *unit* are used, all other properties are ignored. This ensures that you always get the current values and then all changes according to the full filter specification.
+
+    Returns a subscriptionId, which can be used to unsubscribe.
+
+    ::
+
+        var filter = {};
+        filter.address = ["g:AGENT.OBJECTS.MyData.*"];
+        filter.type = [];
+        filter.type.push("v:1"); // node
+        filter.type.push("v:2"); // alarm
+        filter.init = ["v:true"]; // initial raw values for AGENT.OBJECTS.MyData.* 
+        webMI.data.subscribeFilter(filter, function(e) {
+            var item = e;
+            // ...
+        });
+
+.. !!webMI!! webMI.data.unsubscribeFilter(subscriptionId)
+.. function:: webMI.data.unsubscribeFilter(subscriptionId)
+
+    Unsubscribes the previously subscribed filter with id "subscriptionId". No more notifications will be published to the callback function. Returns true if successfully unsubscribed, else false.
+
+.. !!webMI!! webMI.data.readFilter(filter, function(e){...})
+.. function:: webMI.data.readFilter(filter, function(e){...})
+
+    This functions reads current raw and aggregated values according to the given "filter". From the :ref:`filter object <query_filter_format>` described below only the filter properties *address*, *aggregate*, *interval* and *unit* are used, all other properties are ignored.
+
+    The result will be received in the callback function and is described in :ref:`query result <query_result>`.
+
+    On the server-side you can use the analog function :func:`opcua.readFilter`.
+
+    Example, read all current aggregated values which use the function "Average"::
+
+        var filter = {};
+        filter.address = ["g:AGENT.OBJECTS.MyData.*"];
+        filter.aggregate = ["v:Average"];
+        webMI.data.readFilter(filter, function(e) { /* use returned values */ });
+
+.. !!webMI!! webMI.data.customRequest(method, subUrl[, additionalHttpHeader[, data]], function(e[, unfinishedRequest]){...})
+.. function:: webMI.data.customRequest(method, subUrl[, additionalHttpHeader[, data]], function(e[, unfinishedRequest]){...})
+
+    This function allows to send an arbitrary HTTP request to the server. Because of security reasons, "customRequest" only works with an active and valid webMI connection and session.
+    
+    Parameters:
+        - **method** -- Can be POST, GET, PUT, DELETE, PATCH or HEAD, whereby the atvise server only supports POST and GET. The other methods can only be used if they are supported by the respective webMI server.
+        - **subUrl** -- Is the path of the resource on the server. If TXT, SVG, XHTML or XML files are requested per GET method, a "/<lang>/" prefix is necessary for a correct request (see example 5).
+        - **additionalHttpHeader** (optional) -- Allows to pass own HTTP header lines to the request. If multiple header lines are passed, they must be separated by ", " (e.g. "Pragma: no-cache, Cache-Control: no-cache"). It can also be used to define the type of the server response ("responseType=arraybuffer|blob|document|json", see also example 4).
+        - **data** (optional) -- Allows to pass the body of the request.
+
+    The result of the request will be passed to the callback function. You can pass an optional second parameter ("unfinishedRequest") to the callback function. The request object will then be returned immediately and not only when the request is finished. This e.g. allows to monitor the "progress" status in case of a PUT upload.
+
+    Example 1, info request clone::
+
+        webMI.data.customRequest("POST", "/webMI/?info", function(e) {
+            console.log(e);
+        });
+
+    Example 2, read request clone::
+
+        webMI.data.customRequest("POST", "/webMI/?read", "", "address[]=AGENT.OBJECTS.var", function(e) {
+            console.log(e);
+        });
+
+    Example 3, using "unfinishedRequest"::
+
+        webMI.data.customRequest("PUT", "", "", file, function(e, unfinishedRequest) {
+            if (unfinishedRequest) {
+                // Do something with the unfinished request object
+            } else {
+                // Do something when request is finished
+            }
+        });
+    
+    Example 4, read PDF from the file system (server-sided) and display it via atvise webMI visualization:
+
+        Display:
+            Add an iframe with id "id_0" to the display and add the following script::
+
+                webMI.data.customRequest("GET", "getPDF?file=MyDocument.pdf&format=binary", "responseType=arraybuffer", function(e){
+                    var frame = document.getElementById("id_0_myframe");
+                    var blob = new Blob([e], { type: 'application/pdf' });
+                    frame.src = URL.createObjectURL(blob);
+                })
+        
+        Server script:
+            Create a server script with name "getPDF". Define parameter "h" with type "http" and add the following code::
+
+                var ifs = new InputFileStream(h.request.getvalues["file"], h.request.getvalues["format"]);
+                ifs.open();
+                var content = ifs.read();
+                ifs.close();
+                h.response.setHeader("Content-Type", "application/pdf");
+                h.response.write(content, h.request.getvalues["format"]);
+
+    Example 5, requesting resources of type TXT, SVG, XHTML or XML::
+
+        // Text file "test.txt" is located directly under "Resources"
+        webMI.data.customRequest("GET", "/de/test.txt", function(e) { 
+            console.log(e); 
+        })
+
+        // XML file "translation.xml" is located in the "Resources" subdirectory "de"
+        webMI.data.customRequest("GET", "/de/de/translation.xml", function(e) { 
+            console.log(e); 
+        })
+
+.. !!webMI!! webMI.data.loadScript(url, callback)
+.. function:: webMI.data.loadScript(url, callback)
+
+    Loads a JavaScript library and includes it in the HTML head of the main document.
+
+    "url" is the URL of the library to load, "callback" a JavaScript function that is called either when the library was loaded successfully or immediately if the library was already loaded. The callback function is called with two parameters:  the url and a bool that specifies, if the library was already loaded.
+
+.. !!webMI!! webMI.data.getRights(nodeIds, [rights] function e{...})
+.. function:: webMI.data.getRights(nodeIds, [rights] function e{...})
+
+    Allows to retrieve rights for one or more nodes.
+
+    Parameters:
+        - **nodeIds** -- The ID(s) of one or several nodes.
+        - **rights** (optional) -- One (string) or several (array) rights that can be queried specifically. In this case the return value will be true or false. Possible rights:
+
+            - browse
+            - read
+            - write
+            - engineer
+            - execute
+            - alarmAdmin
+            - alarmAcknowledge
+            - alarmConfirm
+            - alarmRead
+
+    The result of the request is returned in the callback function. If the parameter *rights* is specified, true or false is returned for the given rights. If *rights* is not defined, the rights of all nodes are returned. 
+
+    Example 1::
+
+        webMI.data.getRights("AGENT.OBJECTS.var1", function(e) {
+            console.log(e);
+        });
+
+    	webMI.data.getRights(["AGENT.DISPLAYS.display1","SYSTEM.LIBRARY.ATVISE.QUICKDYNAMICS.Move"], function(e) {
+            console.log(e[0].value);
+            console.log(e[1].value);
+        });
+
+    Example 2::
+
+        webMI.data.getRights("AGENT.OBJECTS.var1", "write", function(e) {
+            console.log(e.value);
+        });
+
+.. _data_variable_object_properties:
+
+.. rubric:: Data variable object properties
+
+Various functions return an object which contains the current properties of the data variable:
+
+address
+    Address of the data variable
+
+description
+    Multilingual description of the data variable
+
+status
+    OPC UA status of the data variable:
+
+    - 0: Good
+    - >0: OPC UA error code
+
+timestamp
+    Source timestamp of the data variable
+
+type
+    For values always 1
+
+value
+    Current value of the data variable
+
+    .. hint:: If the variable is an array, the *value* in the script is also an array. The i\ :sup:`th` item from the array can be accessed by value[i].
+
+Additional properties of the data variable object for aggregated values:
+
+aggregate
+    The aggregate function (e.g. "Average")
+
+interval
+    The aggregate interval
+
+unit
+    The unit of the aggregate interval
+
+.. _alarm_object_properties:
+
+.. rubric:: Alarm object properties
+
+Alarm objects can be returned from e.g. :func:`webMI.data.queryFilter` or passed as parameter to an alarm triggered script. Properties will not be contained in the alarm object if the corresponding alarm field in the atvise server is not set.
+
+Standard webMI properties of the alarm object (a webMI server may support only a subset of the properties):
+
+acknowledged
+    true, if the alarm is acknowledged, else false
+
+acktime
+    Timestamp of acknowledgment of the alarm, 0 if unacknowledged
+
+activetime
+    Timestamp the alarm state changed to active
+
+address
+    Address of the alarm condition
+
+base
+    Address of the parent of the alarm configuration
+
+confirmed
+    true, if the alarm is confirmed, else false
+
+description
+    Multilingual description of the variable, for which the alarm is configured
+
+display
+    Name of the display configured at the alarm
+
+eventtext
+    Multilingual alarm text
+
+eventtype
+    For alarms always "AlarmConditionStateType"
+
+inactivetime
+    Timestamp the alarm state changed to inactive
+
+priority
+    Priority of the alarm (1-1000)
+
+retain
+    true, if the alarm should be shown in the alarm list, false if it should be removed
+
+state
+    webMI alarm state:
+
+    - 0: inactive acknowledged
+    - 1: active unacknowledged
+    - 2: active acknowledged
+    - 3: inactive unacknowledged
+    - 5: active unacknowledged and inactive unacknowledged
+
+timestamp
+    Timestamp of the alarm change
+
+type
+    For alarms always 2
+
+username
+    The user setting the last comment (may be "System/Alarm" if the last comment was set internally)
+
+value
+    The alarm triggering value
+
+valueservertimestamp
+    Server timestamp of the alarm triggering value
+
+valuestatus
+    Status of the alarm triggering value
+
+valuetimestamp
+    Source timestamp of the alarm triggering value
+
+Additional properties of the alarm object for atvise scada:
+
+AckedState
+    Multilingual textual representation of the acknowledgment state of the alarm
+
+ActiveState
+    Multilingual textual representation of the active state of the alarm
+
+ActiveStateId
+    true, if the alarm is active, else false
+
+AlarmId
+    Unique identifier of the alarm
+
+BranchId
+    OPC UA BranchId of the alarm
+
+Comment
+    Optional comment (e.g. when acknowledging the alarm), always set together with the *username*
+
+ConditionName
+    Name of the alarm condition (e.g. for "AGENT.OBJECTS.var.ALARM.COND" the name is "COND")
+
+ConfirmedState
+    Multilingual textual representation of the Confirmed state of the alarm
+
+EnabledState
+    Multilingual textual representation of the Enabled state of the alarm
+
+EnabledStateId
+    true, if the alarm condition is enabled, else false
+
+EventId
+    Unique identifier for the event, that was triggered because of the change of the alarm
+
+Groups
+    Array of alarm groups the alarm is a member of
+
+InfoBits
+    Used internally by atvise
+
+InputNode
+    Address of the variable, for which the alarm is configured
+
+LastAlarmId
+    Used internally by atvise
+
+ParentId
+    If active and inactive state of an alarm must be acknowledged, ParentId contains the AlarmId of the corresponding alarm
+
+ReceiveTime
+    Timestamp when atvise received the changed alarm
+
+ShelvingState
+    Textual representation of the shelving state, e.g. "OneShotShelved"
+
+ShelvingStateLastTransition
+    Textual respresentation of the last transition between shelving states, e.g. "UnshelvedToOneShotShelved"
+
+ShelvingStateLastTransitionTransitionTime
+    Timestamp of the last transitions between shelving states
+
+ShelvingStateUnshelveTime
+    Milliseconds until the alarm will be automatically unshelved
+
+SourceName
+    Name of the alarm configuration (e.g. for "AGENT.OBJECTS.var.ALARM.COND" the name is "ALARM")
+
+SourceNode
+    Address of the alarm configuration (e.g. for "AGENT.OBJECTS.var.ALARM.COND" the name is "AGENT.OBJECTS.var.ALARM")
+
+SuppressedOrShelved
+    true, if the alarm is either suppressed or shelved, else false
+
+SuppressedState
+    Multilingual textual representation of the Suppressed state of the alarm
+
+SuppressedStateId
+    true, if the alarm is suppressed, else false
+
+In addition, the alarm object can also contain following optional properties of the alarm category:
+
+Abbreviation
+    Abbreviation of the alarm category
+
+Color
+    Background color for the alarm
+
+Flashtimeack
+    Blinking interval in milliseconds for active unacknowledged alarms
+
+Flashtimeinack
+    Blinking interval in milliseconds for inactive unacknowledged alarms
+
+Fontcolor
+    Font color for the alarm
+
+UserColor1 - UserColor4
+    User defined colors for arbitrary use
+
+Furthermore all replacement values are also contained in the alarm object. Replacement values are not available for conditions of :ref:`mirrored alarms <alarm_mirroring>` where no current alarm exists.
+
+.. _event_object_properties:
+
+.. rubric:: Event object properties
+
+An event object (e.g. as result of :func:`webMI.data.queryFilter`) contains at least following properties:
+
+address
+    Internal address of the event source (e.g. "WebAccessLoginEventType")
+
+eventtext
+    Multilingual text of the event
+
+eventtype
+    Browsename of the OPC UA event type
+
+priority
+    Priority of the event (1-1000)
+
+timestamp
+    Timestamp when the event was triggered
+
+type
+    For events always 3
+
+username
+    The user who triggered the event
+
+EventId
+    Unique identifier of the event
+
+ReceiveTime
+    Timestamp when atvise received the event
+
+SourceName
+    Internal name of the event source (e.g. "Server/WebAccess/Login")
+
+SourceNode
+    Same as address
+
+.. _query_filter_format:
+
+.. rubric:: Filter object
+
+The filter consists of a number of properties where each property is an array of conditions. Each condition consists of a type and a value, separated by a colon. Each condition must be expressed as a string.
+
+e.g.::
+
+    {address: ["v:AGENT.OBJECTS.MyVariable"]}
+
+"address" is the property, "v" the type and "AGENT.OBJECTS.MyVariable" the value.
+
+The type of a condition must be one of the following:
+
+v
+    The value of the property must match the value in the filter exactly.  e.g. ``{value: ["v:123"]}`` means, that the value in the entry in the archive must be exactly "123" for the entry to be returned.
+
+g
+    The value in the filter is a GLOB pattern (supports the wildcards '\*' and '?'). The value of the property must match this pattern for the entry to be returned. e.g. ``{address: ["g:AGENT.OBJECTS.data.alarm*"]}`` matches all addresses starting with "AGENT.OBJECTS.data.alarm".
+
+n
+    The value consists of up to two pairs of an operator and a corresponding numerical value. The supported operators are <, <=, >=, >, <> and =. e.g. ``{value: ["n:>=10<20"]}`` means, that the value in the entry in the archive must be between 10 (inclusive) and 20 (exclusive) for the entry to be returned.
+
+u
+    The entry is returned, if the property is undefined, e.g. ``{ShelvingState: ["u:"]}`` returns entries where the property *ShelvingState* doesn't exist.
+
+Following properties are supported:
+
+type
+    Type of the requested data: 1 - value changes (incl. aggregates), 2 - alarms, 3 - events
+
+    If missing in the filter, value changes, alarms and events will be requested (corresponds to ``{type: ["v:1", "v:2", "v:3"]}``).
+
+    .. hint:: Behavior for type 2 has changed with atvise 3.0: If type 2 is requested, older versions of atvise returned entries for alarms (type 2 in the result) and events (type 99 in the result). Since atvise 3.0, type 2 will only return alarm entries and events must be requested separately with type 3.
+
+address
+    Address of a variable; can - depending on the type of the condition - contain wildcards.
+
+timestamp
+    The time stamp of the entry (source time, alarm time); is mostly used with the filter type "n:" (see example below). Time stamps are always expressed as number of milliseconds since 1970-01-01 00:00 AM UTC (JavaScript time).
+
+value
+    The value of the entry for value changes, the alarm triggering value for alarms.
+
+eventtext
+    Active/inactive text for alarms, event text for events.
+
+priority
+    For alarms only: priority of the alarm.
+
+username
+    For alarms and events only: The user, who generated the entry in the archive (e.g. acknowledgement of an alarm, login).
+
+language
+    Language code as e.g. "en" for English. The setting has the following effect on translated attributes (for example, Description, alarm text).
+
+    #. filters are only applied to the text translated into that language.
+    #. values are returned only in this language.
+
+archive
+    The archives to consider for the query.
+
+aggregate
+    The requested aggregate function (e.g. { aggregate: ["v:Average"] }). For a list of supported aggregate functions, see :ref:`here <aggregate_functions>`.
+
+interval
+    The aggregate interval.
+
+unit
+    The unit of the aggregate interval. Possible values are "m" (minutes), "h" (hours), "d" (days) and "M" (month). For the aggregate function "Sampled" you can also use "s" (seconds).
+
+select
+    Returns only the specified properties in the result. E.g. if you only need timestamp and value, use { select: ["v:timestamp", "v:value"] }.
+
+.. _query_numrows:
+
+numrows
+    The maximum number of values that should be returned initially when requesting historical data. A continuation point will be part of the returned data if more values are available. See "continuationpoint" in :ref:`query result <query_result>` below for how to handle the continuation point. If "numrows" is not used, no continuation point will be used and the query returns all available values, possible limited by the setting :ref:`queryLimit in atserver.ini<atserver_ini_querylimit>`.
+
+This list of properties is an open list. This means that other webMI servers can support different properties or only a subset of the properties mentioned above. Usually at least "type", "address" and "timestamp" are used.
+
+Example::
+
+    var filter = {};
+
+    // value changes only
+    filter.type = ["v:1"]
+    // values from November 20, 2013 11:00 PM to 11:30 PM
+    // month starts with 0=January!
+    var from = new Date(2013, 10, 20, 23, 0, 0).getTime();
+    var to = from + 30*60*1000; // 30min in milliseconds
+    filter.timestamp = ["n:>=" + from + "<" + to];
+    // All variables starting with AGENT.OBJECTS.MyData
+    filter.address = ["g:AGENT.OBJECTS.MyData.*"];
+    // aggregated values, 5 minute average
+    filter.aggregate = ["v:Average"];
+    filter.interval = ["v:5"];
+    filter.unit = ["v:m"];
+
+    webMI.data.queryFilter(filter, function(e){
+        console.log(e.result);
+    });
+
+.. _query_result:
+
+.. rubric:: Query result
+
+The result of a query is a JavaScript object with following properties:
+
+error
+    error code; supplied only if an error occurred
+
+errorstring
+    error text; supplied only if an error occurred
+
+More
+    true, if the result is truncated because of the query limit (see :ref:`queryLimit in atserver.ini<atserver_ini_querylimit>`), otherwise false. Only for atvise server.
+
+continuationpoint
+    If "numrows" was used in the filter, the query may return a continuation point to allow the user to retrieve huge results sets. If the returned data contains a continuation point (a value greater than 0), the "queryNext" (:func:`webMI.data.queryNext`, :func:`history.queryNext`) function can be called with the continuation point to retrieve additional data. The query is finished, when the returned continuation point is 0.
+    
+    If the query shall be canceled before all data is retrieved, use "queryRelease" (:func:`webMI.data.queryRelease`, :func:`history.queryRelease`) to free the resources used by the continuation point. Otherwise, it will be automatically released after an hour. As long as continuation points remain active, neither archive record switching nor redundancy synchronization is possible. Thus, if continuation points are created continuously and not explicitly released, these functions may be blocked permanently. The number of currently active continuation points is mapped to the statistical node :treeselection:`Information --> ModuleStatistics --> HISTORY --> CountActiveContinuationPoints`.
+
+result
+    Array with result values, where every element of the array is a type-specific Javascript object:
+
+    - Type 1: :ref:`Data variable object properties <data_variable_object_properties>`
+    - Type 2: :ref:`Alarm object properties <alarm_object_properties>`
+    - Type 3: :ref:`Event object properties <event_object_properties>`

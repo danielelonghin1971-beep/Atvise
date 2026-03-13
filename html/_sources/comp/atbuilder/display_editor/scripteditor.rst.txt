@@ -1,0 +1,199 @@
+.. _code_editor:
+
+Code Editor
+#############
+
+Click the "Script" tab to open the code editor. This editor allows to create, edit and include scripts. All linked and referenced scripts of the display are shown in the table, depending on the respective script type. Local scripts are shown in the area below.
+
+.. hint:: If you open a display via :menuselection:`File --> Open file` or open the code editor of an existing display for the first time, the "Dou you want to save changes?" dialog may be shown when closing the code editor, even if nothing was changed. In this case, the atvise builder made some necessary internal changes. Please click *Yes* to confirm the dialog.
+
+.. figure:: images/code_editor.png
+
+Script blocks are executed in the same order as they are listed in the editor. The order can be as follows:
+
+1. Linked scripts
+2. Referenced scripts
+3. Embedded script
+
+.. rubric:: Scripts
+
+- **Linked script** -- Refers to a node of type DisplayScript (under :treeselection:`Library --> ATVISE --> Display Scripts` or :treeselection:`Library --> PROJECT --> Display Scripts`). A double-click opens the script in a new tab for editing. A new entry in the table must be created for every linked display script. SVG code of the script:
+
+    .. code-block:: none
+
+        <script atv:desc="" atv:href="" atv:name="" atv:type="text/ecmascript"/>
+        
+    .. hint:: It is not possible to use substitutes ($abc$) or other dynamic links for linked scripts.
+
+- **Referenced script block** -- Allows to include atvise resources or scripts from external sources (websites). A new entry in the table must be created for every referenced script. SVG code of the script:
+
+    .. code-block:: none
+
+        <script atv:desc="" atv:name="" type="text/ecmascript" xlink:href=""/>
+
+- **Embedded script** -- Is automatically created for every display. All (local) custom scripts as well as quick dynamics and simple dynamics can be edited in this area. There can only be one embedded script for each display. SVG code of the script:
+
+    .. code-block:: none
+
+        <script atv:desc="" atv:name="" type="text/ecmascript"><![CDATA[]]></script>
+    
+    The icons on the left side of the code indicate simple and quick dynamics defined for the display. In addition, the table on the right side can be displayed. A double-click on the respective icon or table entry opens the dialog for editing dynamics. You can add new dynamics with a right-click in the table.
+
+.. hint:: Simple and quick dynamics that are nested (e.g. inside an if condition) cannot be shown. If a syntax error is detected in the script (see :ref:`Messages<builder_messages>`), not all dynamics may be shown. This also applies to currently written or edited code.
+
+.. rubric:: Toolbar
+
+.. figure:: images/scripteditor_toolbar.png
+
+|icon_treesel| Select in project tree
+    The current display is selected in the project tree.
+
+|icon_reload| Reload
+    The editor is reloaded. Unsaved changes will be discarded after confirming via the displayed prompt.
+
+|icon_savefile| Accept Changes
+    After changing the source code, this button will save the changes and close the script editor afterwards.
+
+.. figure:: images/scripteditor_file.png
+
+|icon_new| New
+    Creates a new empty document.
+
+|icon_openfile| Open File
+    Opens the "Open File" dialog to open an existing SVG file.
+
+|icon_scripteditor_print| Print
+    Opens the 'Print' dialog.
+
+|icon_saveas| Save As
+    Opens the 'Save File' dialog to save the current document as an SVG file.
+
+|icon_scripteditor_undo| Undo
+    Undo the last action. Always applies to the currently selected script block.
+
+|icon_scripteditor_redo| Redo
+    Redo the last undone action. Always applies to the currently selected script block.
+
+|icon_scripteditor_copy| Copy
+    Copy a marked text (and save it to the clipboard).
+
+|icon_scripteditor_cut| Cut
+    Cut a marked text (and save it to the clipboard).
+
+|icon_scripteditor_paste| Paste
+    Paste the text from the clipboard.
+
+|icon_scripteditor_findandreplace| Find and Replace
+    Opens the following window to find character strings in the currently selected script block and/or replace them with other character strings.
+
+    .. figure:: /common_images/window_scripteditor_findreplace.png
+
+|icon_scripteditor_gotoline| Go to line
+    Opens the following window to jump to a desired line in the source code of the currently selected script block:
+
+    .. figure:: /common_images/window_scripteditor_gotoline.png
+
+|icon_scripteditor_selectcolor| Select color
+    Clicking this button will open the select color dialog. Select a color to insert its RGB code into the script editor.
+
+    .. figure:: /common_images/window_selectcolor.png
+
+|icon_scripteditor_selectnode| Select node
+    Clicking this button will open the select node dialog. Select a node to insert its node ID into the script editor.
+
+    .. figure:: /common_images/window_selectnode.png
+
+|icon_scripteditor_selectdisplay| Select display
+    Clicking this button will open the select display dialog. Select a display to insert its node ID into the script editor.
+
+    .. figure:: /common_images/window_selectdisplay.png
+
+|icon_scripteditor_selectfont| Select font
+    Clicking this button will open the select font dialog. Select a font to insert it into the script editor.
+
+    .. figure:: /common_images/window_selectfont.png
+
+|icon_scripteditor_image| Add inline image
+    Durch Klicken auf diese Schaltfläche wird das Dialogfeld "Bild auswählen" geöffnet, womit ein Bild in den Script-Block eingefügt werden kann.
+
+|einzug_vergroessern| Increase indent
+    Increase the indent on a line.
+
+|einzug_verkleinern| Decrease indent
+    Decrease the indent on a line.
+
+|icon_scripteditor_linebreak| Wrap words
+    Enables the automatic word wrap in all script blocks.
+
+|icon_scripteditor_numbers| Show line numbers
+    Shows line numbers in all script blocks.
+
+|icon_scripteditor_currentline| Highlight current line
+    Highlights the currently selected line in the current script block. 
+
+|icon_scripteditor_showtabs| Show blanks and tabs
+    Shows blanks and tabs in all script blocks.
+
+|icon_scripteditor_parentheses| Show matching parentheses
+    Shows matching parentheses in all script blocks.
+
+|icon_scripteditor_addlinked| Add linked script
+    Adds a linked script. Click the :guilabel:`...` button to open the following dialog for selecting a display script: 
+
+    .. figure:: images/scripteditor_displayscript.png
+
+|icon_scripteditor_addreferenced| Add referenced script
+    Adds a referenced script. The source can be specified via the *URL* field. 
+
+|icon_scripteditor_moveup| Move currently selected script up
+    Moves the currently selected script up (only within the same script type).
+
+|icon_scripteditor_movedown| Move currently selected script down
+    Moves the currently selected script down (only within the same script type).
+
+|icon_scripteditor_delete| Delete currently selected script block
+    Deletes the currently selected script block. The embedded script block cannot be deleted.
+
+.. |icon_new| image:: /common_images/icon_new.png
+.. |icon_openfile| image:: /common_images/icon_openfile.png
+.. |icon_paste| image:: /common_images/icon_paste.png
+.. |icon_scripteditor_print| image:: /common_images/icon_print.png
+.. |icon_treesel| image:: /common_images/icon_treeselect.png
+.. |icon_file| image:: images/scripteditor_file.png
+.. |einzug_vergroessern| image:: images/einzug_vergroessern.png
+.. |einzug_verkleinern| image:: images/einzug_verkleinern.png
+.. |icon_saveas| image:: /common_images/icon_saveas.png
+.. |icon_savefile| image:: /common_images/icon_savefile.png
+.. |icon_scripteditor_copy| image:: /common_images/icon_scripteditor_copy.png
+.. |icon_scripteditor_cut| image:: /common_images/icon_scripteditor_cut.png
+.. |icon_scripteditor_findandreplace| image:: /common_images/icon_scripteditor_findandreplace.png
+.. |icon_scripteditor_gotoline| image:: /common_images/icon_scripteditor_gotoline.png
+.. |icon_scripteditor_loadfromdisc| image:: /common_images/icon_scripteditor_loadfromdisc.png
+.. |icon_scripteditor_paste| image:: /common_images/icon_scripteditor_paste.png
+.. |icon_scripteditor_redo| image:: /common_images/icon_scripteditor_redo.png
+.. |icon_scripteditor_selectcolor| image:: /common_images/icon_scripteditor_selectcolor.png
+.. |icon_scripteditor_selectdisplay| image:: /common_images/icon_scripteditor_selectdisplay.png
+.. |icon_scripteditor_selectfont| image:: /common_images/icon_scripteditor_selectfont.png
+.. |icon_scripteditor_selectnode| image:: /common_images/icon_scripteditor_selectnode.png
+.. |icon_scripteditor_image| image:: /common_images/icon_scripteditor_image.png
+.. |icon_scripteditor_undo| image:: /common_images/icon_scripteditor_undo.png
+.. |icon_showscripteditor| image:: images/icon_showscripteditor.png
+.. |icon_scripteditor_linebreak| image:: images/scripteditor_linebreak.png
+.. |icon_scripteditor_numbers| image:: images/scripteditor_linenumbers.png
+.. |icon_scripteditor_currentline| image:: images/scripteditor_currentline.png
+.. |icon_scripteditor_showtabs| image:: images/scripteditor_showtabs.png
+.. |icon_scripteditor_parentheses| image:: images/scripteditor_parentheses.png
+.. |icon_scripteditor_warnings| image:: images/scripteditor_warnings.png
+.. |icon_scripteditor_svg| image:: images/scripteditor_svgcode.png
+.. |icon_scripteditor_addlinked| image:: images/scripteditor_linked.png
+.. |icon_scripteditor_addreferenced| image:: images/scripteditor_referenced.png
+.. |icon_scripteditor_convertembedded| image:: images/scripteditor_convertembedded.png
+.. |icon_scripteditor_convertlinked| image:: images/scripteditor_convertlinked.png
+.. |icon_scripteditor_minimize| image:: images/scripteditor_collapse.png
+.. |icon_scripteditor_maximize| image:: images/scripteditor_expand.png
+.. |icon_scripteditor_moveup| image:: images/scripteditor_moveup.png
+.. |icon_scripteditor_movedown| image:: images/scripteditor_movedown.png
+.. |icon_scripteditor_delete| image:: images/scripteditor_delete.png
+.. |icon_scripteditor_edit| image:: images/scripteditor_edit.png
+.. |icon_scripteditor| image:: images/scripteditor_svg.png
+.. |icon_reload| image:: /common_images/icon_refresh.png

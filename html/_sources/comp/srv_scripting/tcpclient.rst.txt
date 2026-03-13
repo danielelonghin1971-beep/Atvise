@@ -1,0 +1,78 @@
+TCPClient functions
+###################
+
+.. class:: TCPClient([host, port])
+
+    To use any of the functions below you first have to create a TCPClient object.
+
+    The constructor connects to the server, if *host* and *port* are given.
+
+    Parameters:
+        - **host** (String) -- Name of server for connection.
+        - **port** (Integer) -- Port of server for connection.
+
+    Example::
+
+        var t = new TCPClient("www.google.at", 80);
+
+.. !!v8!! TCPClient.connect(host, port)
+.. function:: TCPClient.connect(host, port)
+
+    Connect the TCPClient to the server.
+
+    Parameter:
+        - **host** (String) -- Name of server for connection.
+        - **port** (Integer) -- Port of server for connection.
+
+    Example::
+
+        var t = new TCPClient();
+        t.connect("www.google.at", 80);
+
+.. !!v8!! TCPClient.close()
+.. function:: TCPClient.close()
+
+    Closes the connection
+
+.. !!v8!! TCPClient.send(data)
+.. function:: TCPClient.send(data)
+
+    Send data.
+
+    Parameters:
+        - **data** (String) -- The data to send.
+
+    Example::
+
+        t.send("HELLO");
+
+.. !!v8!! TCPClient.receive(length)
+.. function:: TCPClient.receive(length)
+
+    Receive data.
+
+    Parameters:
+        - **length** (Integer) -- Specifies the maximum number of characters to receive. The function will return if the receive buffer is not empty, otherwise it blocks until something arrives.
+
+    Returns:
+        The received string. The received data is assumed to be UTF-8 encoded.
+
+    Example::
+
+        var buff = t.receive(1024);
+
+.. !!v8!! TCPClient.shutdown(how)
+.. function:: TCPClient.shutdown(how)
+
+    Shuts down the TCPClient.
+
+    Parameters:
+        - **how** (Integer) -- Defines the shutdown mode:
+
+            - 0: Further receives are disallowed
+            - 1: Further sends are disallowed
+            - 2: Further sends and receives are disallowed
+
+    Example::
+
+        t.shutdown(2);

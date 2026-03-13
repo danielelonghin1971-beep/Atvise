@@ -1,0 +1,136 @@
+Auto licensing (autolic.exe)
+############################
+
+The *autolic.exe* tool allows to automatically retrieve a user license from atvise.com, write the license data to the :file:`atserver.lic` and check the validity.
+
+Requirements
+************
+
+- An installed atvise version 
+- Auto licensing must be activated for the respective user account at atvise.com by Bachmann Visutec. The following two options are available:
+
+    - **Unencrypted mode (no autolic dongle)** -- User data is not encrypted, no additional steps are required after activating auto licensing.
+    - **Encrypted mode (autolic dongle)** -- User data can be encrypted to enhance security. A specific autolic dongle is necessary for encryption as well as retrieving the license.
+
+.. hint:: 
+    
+    - The autolic dongle can only be used for encryption and retrieving the license. It is not possible to use it as license dongle.
+    - Please contact your local distributor or visutec@bachmann.info for more information on activating auto licensing or obtaining an autolic dongle.
+
+Configuration
+*************
+
+autolic.ini
++++++++++++
+
+The :file:`autolic.ini` configuration file must be created -- encoded in UTF-8 -- to manage the necessary settings. Following sections and parameters are available:
+
+.. rubric:: [authentication]
+
+user = <user name>
+    Name of the user on `https://customer.atvise.com <https://customer.atvise.com/en>`_.
+
+password = <password>
+    Password of the user on `https://customer.atvise.com <https://customer.atvise.com/en>`_.
+
+.. rubric:: [license]
+
+number = <license ID>
+    ID of the license to be retrieved. The ID is shown in square brackets at the end of the respective license under *atvise licenses* at `https://customer.atvise.com <https://customer.atvise.com/en>`_:
+
+    .. figure:: images/license_id.png
+
+        License ID = 75 
+
+.. rubric:: [atvise]
+
+license = <path + name of the license file>
+    The retrieved license data is stored in this file. If the file does not exist, it is created when executing *autolic.exe*. If the file already exists and it is a valid license, the tool is terminated. Otherwise, the license data is retrieved and written to the file. Default: *C:\\Program Files\\atvise\\atserver.lic* or */etc/atvise/atserver.lic*
+
+server = <path + name of atserver>
+    atvise server that checks the validity of the retrieved license. Default: *C:\\Program Files\\atvise\\atserver.exe* or */usr/bin/atserver*
+
+.. hint:: It is possible to use absolute or relative paths. A relative path in the configuration file specifies the location relative to the directory that contains the *autolic.exe* file. On Linux this is the directory */usr/lib/atvise*.
+
+Example configuration file:
+
+.. code-block:: ini
+
+    [authentication]
+    user=test@atvise.com
+    password=My_atvise_password
+
+    [license]
+    number=75
+
+    [atvise]
+    license=mylicenses\test.lic
+    server=\atvise\3.9.0\atserver.exe
+
+For example, the *autolic.exe* is located in *D:\\tools*. If the application is executed, the configuration file *D:\\tools\\autolic.ini*, the license file *D:\\tools\\mylicenses\\test.lic* and the server *D:\\atvise\\3.9.0\\atserver.exe* will be utilized. 
+
+Command line parameters
++++++++++++++++++++++++
+
+The following command line parameters are also available:
+
+- **/help** -- Displays the help.
+- **/config <file>**-- Path + name of the configuration file (default: *<path of autolic.exe>\\autolic.ini*)
+- **/license <file>** --  Path + name of the file in which the retrieved license shall be stored (default: *C:\\Program Files\\atvise\\atserver.lic* or */etc/atvise/atserver.lic*) 
+- **/server <file>** -- Path + name of atvise server (default: *C:\\Program Files\\atvise\\atserver.exe* or */usr/bin/atserver*)
+- **/encrypt** -- Encrypts the configuration file and creates the :file:`autolic.enc` file. The file that is in the same directory as autolic.exe is encrypted by default. Use the */config* parameter to specify another configuration file.
+
+    .. hint:: 
+        
+        - Encryption is only possible with a connected autolic dongle. If several autolic dongles are connected, the dongle that is found first will be used for the encryption.
+        - The unencrypted configuration file :file:`autolic.ini` still exists after encrypting it and must be manually deleted.
+
+- **/serialnumber** -- Prints the serial numbers of all connected autolic dongles.
+- **/hardwarecode <hardwarecode>** -- Allows to define a specific hardware code for retrieving the license.
+- **/description <description>** -- Allows to define a custom description.
+
+.. hint:: 
+    
+    - The command line parameters */server* and */license* override the respective settings in the configuration file.
+    - In contrast to the configuration file, relative paths in command line parameters are relative to the current directory. E.g.:
+
+        *C:\\projects\\myProj>D:\\autolic.exe /config ..\\sub\\autolic.ini*
+
+     The current directory is *C:\\projects\\myProj* which means that *C:\\projects\\sub\\autolic.ini* is used as configuration file.
+
+Usage
+*****
+
+.. rubric:: Unencrypted mode
+
+Start the tool from the command line:
+
+    :command:`autolic.exe`
+    
+The license of the defined user is retrieved from atvise.com and written to the file defined via *license* parameter.
+
+.. rubric:: Encrypted mode 
+
+To secure the user data, the :file:`autolic.ini` file can be encrypted with an autolic dongle. Connect the autolic dongle and encrypt the configuration file using the command line:
+
+    :command:`autolic.exe /encrypt`
+    
+The encrypted configuration file :file:`autolic.enc` is created. You have to specify this file explicitly with the */config* parameter when retrieving the license:
+
+    :command:`autolic.exe /config "C:\\Program Files\\atvise\\autolic.enc"`
+
+The license of the defined user is retrieved from atvise.com and written to the file defined via *license* parameter.
+
+.. hint::
+
+    - The autolic dongle must be connected when retrieving the license in the encrypted mode, i.e. during runtime of autolic.exe. If several autolic dongles are connected, all of them are checked.
+    - The tool can also be started from a thumb drive. In addition to the autolic.exe the following libraries are necessary:
+
+        - Windows:
+ 
+            - iconv.dll
+            - libxml2.dll
+
+        - Linux
+
+            - libxml2.so.2

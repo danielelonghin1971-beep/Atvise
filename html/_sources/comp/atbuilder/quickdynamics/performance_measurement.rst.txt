@@ -1,0 +1,151 @@
+.. _qd_performance:
+
+Performance Measurement
+#######################
+
+This Quick Dynamic allows to open displays automatically and records the resulting performance key figures in CSV format.
+
+.. rubric:: Triggers
+
+For the performance measurement, the Quick Dynamic connects to the following triggers which are fired by most atvise object displays:
+
+- **com.atvise.performance.drawn** -- Is fired as soon as the SVG code is processed. 
+- **com.atvise.performance.interactive** -- Is fired as soon as the respective right check is completed, which means that the element is either enabled or disabled and, if necessary, is ready for interactions.
+
+.. rubric:: Parameters
+
+- **targetFrame** -- The name of the frame in which the test displays shall be opened. E.g. "content" in case of the default display.
+- **test_uid** (*Test UID*) -- Allows to identify the respective performance measurement. The given name is added to the name of the created csv file. E.g. test_uid="MyTestPlatform" --> performance-markers_MyTestPlatform_2024-02-08T07-17-19.608Z.csv
+ 
+ .. hint:: It is also possible to define *test_uid* as a URL parameter, e.g. \http://localhost:80/?test_uid=MyTestPlatform. However, the URL parameter can only be used if the Quick Dynamic is instantiated in the Default display or if the query parameters of the Default display are passed to the respective display where the Quick Dynamic is used.
+
+- **display_<Nr>** (*Display <Nr>*) -- The addresses of the displays that shall be opened sequentially. It is possible to define one address per parameter.
+- **displayList** (*Test display list*) -- The addresses of the displays that shall be opened sequentially. Addresses must be separated by semicolons (without blanks).
+- **runCount** (*How often to test the displays*) -- The number of times a test display shall be opened and measured, e.g. for calculating the average. 
+
+ .. hint:: In addition to the defined *runCount*, each display is opened at least once before the actual measurement to load and buffer possible external libraries. This means that a display is opened 6 times if a runCount of 5 is defined.
+
+- **minimumDisplayLifespan** (*Minimum display lifespan (ms)*) -- Time in milliseconds a display remains open at least before the next display is loaded. If some values are missing in the result, the next display was opened before all triggers were received. In this case, the display lifespan must be increased. 
+- **debounceDelay** (*Minimum waiting time after last trigger (ms)*) -- Time to wait after receiving a trigger before it is assumed that no further triggers will follow. 
+- **outputMode** (*Get via browser, server script, or trigger*) -- The mode that defines how the result shall be transmitted or saved.
+
+    - **browser** -- When all test runs are completed and key figures are collected, the created CSV file is downloaded via browser. Depending on the respective browser settings, the file is either directly downloaded to the default location or the file dialog for specifying a path is opened.
+    - **serverscript** -- A CSV file is stored in the file system. A corresponding server script must be implemented and passed via *webmiMethodName* parameter.
+    - **trigger** -- A trigger is fired and the event contains the CSV string that can be further processed in a callback function. The callback function must be implemented by the user.
+
+- **webmiMethodName** (*webMI Method to call in serverscript mode*) -- Name of the webMI method to which the measurement result shall be passed in CSV format. This method can, for example, store a CSV file on the file system using the provided file system API. It is also possible to further process the data in any other form.
+
+.. _performance_webmicfg:
+
+Usage
+*****
+
+.. rubric:: Preparation
+
+webmicfg.js
+  The Quick Dynamic uses the methods of the *webMI.performance* object. The methods must be explicitly enabled in the webmicfg.js to avoid an unnecessary load in productive operation. 
+  
+  Example for enabled measurement methods in the webmicfg.js::
+
+    var webMIConfig = {
+    "performance.measurement": true
+    };
+
+Test displays
+  This step can be skipped if the key figures of an existing display shall be collected. If one ore more particular components shall be specifically tested, it is necessary to create a new display and instantiate the respective components on this display.
+
+.. rubric:: Configuration
+
+The Quick Dynamic must be called in the display that contains the iframe that loads the test displays. E.g. if the test displays shall be opened in the default display of a standard project, the Quick Dynamic must be called in the default display and *content* must be defined for the *targetFrame* parameter.
+
+Either the parameters *Display 1* to *Display 10* or *displayList* can be used to open several displays. In case of the list, addresses must be separated by semicolons (without blanks). Example: AGENT.DISPLAYS.MAIN.testdisplay1;AGENT.DISPLAYS.MAIN.testdisplay2
+
+If both parameters are defined, the single displays are passed and opened before the displays in the list. 
+
+.. rubric:: Downloading test results
+
+Test results are added to a CSV table. The further processing of this table depends on the selected save mode. 
+
+„browser“ mode
+  When the test run is completed, the download of the file is triggered. Depending on the respective browser settings, the file is either directly downloaded to the default location or the file dialog for specifying a path is opened.
+
+„serverscript“ mode
+  When the test run is completed, a webMI method is called to which the content of the CSV table and the file name are passed. The user must implement this webMI method and pass its name via the corresponding Quick Dynamic parameter. 
+
+  Example for saving test results in the project folder::
+
+      const filePath = request.postvalues.filePath;
+      const csvString = request.postvalues.csvString;
+
+      var ofs = new OutputFileStream(filePath, "utf8", "output");
+      ofs.open();
+      ofs.write(csvString);
+      ofs.close();
+
+  A script parameter "request" of type :ref:`http.request<srv_script_parameters>` is necessary for the example above. 
+
+„trigger“ mode
+  When the test run is completed, the trigger „com.atvise.performance.resultReady“ is fired. File name and content of the CSV table are passed to the callback function that must be implemented by the user. 
+
+.. rubric:: Key figures
+
+docId
+  Counter that is incremented each time a display is loaded. This allows distinguishing measurements of the same display when loaded multiple times. 
+
+uptime
+  Timestamp when the visualization was initially launched. Allows to differentiate between multiple measurements with identical parameters.
+
+unloadDuration 
+  The time it takes to unload the previous page. It is measured from the start of the unloading until it is completed.
+
+networkDuration
+  The time that is required for the network request. It is measured from the start of the network request until the completed response.
+
+parsingDuration
+  The time that is required for parsing and processing the received response data. It is measured from the completion of the network request until the start of DOM parsing.
+
+processingDuration
+  The time that is required for parsing and preparing a page for display. It is measured from the completion of DOM parsing until the start of the loading process.
+
+loadDuration
+  The time of the loading process. It is measured from its start until its completion.
+
+absoluteLoadDuration
+  Shows the time in milliseconds that the browser needs for fully loading and parsing the document. Corresponds to the sum of networkDuration, parsingDuration, processingDuration and loadDuration (barring rounding differences).
+
+atvForeignObjectsProcessingDuration
+  The time that is required to parse and reposition the foreignObject elements in the DOM. 
+
+atvPerfGenTime
+  The time that is required by the generator modul in atvise to combine all elements for the display sources. 
+  
+atvDisplayDrawn
+  The time from opening the display until all embedded object displays have fired the displayDrawn trigger at least once. Most elements fire the trigger when the corresponding JavaScript code is parsed and executed for the first time.
+
+atvDisplayInteractive
+  The time from opening the display until all embedded object displays have fired the displayInteractive trigger at least once. Most elements fire the trigger when they are enabled or disabled after the respective access control checks.
+
+.. rubric:: List of object displays that support measurement triggers for *atvDisplayDrawn* and *atvDisplayInteractive*
+
+- bar (Bar Horizontal, Bar Vertical)
+- button (Button)
+- button_alarmlist_actions (Button Alarmlist)
+- button_image_display (Button Image Display)
+- button_inc_dec (Button Increment/Decrement)
+- button_open_display (Button Open Display)
+- button_set_address (Button Set Address)
+- button_switch (Button Switch)
+- checkbox (Checkbox)
+- clickarea (Clickarea)
+- combobox (Combobox)
+- gauge (Gauge)
+- in_out_date (In/Out Date)
+- in_out_datetime (In/Out Date-Time)
+- in_out_time (In/Out Time)
+- in_out_value (In/Out Value)
+- picker_address (Picker Address)
+- picker_color (Picker Color)
+- picker_date (Picker Date)
+- radiobutton (Radiobutton)
+- rocker_switch (Rocker Switch, Rocker Switch (Small), Rocker Switch Horizontal)
+- slider (Slider Horizontal, Slider Vertical)

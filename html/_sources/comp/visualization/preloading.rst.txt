@@ -1,0 +1,57 @@
+.. _preloading:
+
+Preloading
+##########
+
+Mainly preloading reduces time when switching displays on slower devices. If preloading is enabled, all displays will be preloaded first. When switching a display the SVG does not need to be fetched from the server. Instead the old display gets hidden and new one unhidden.
+
+Basically the preloading function can be activated by adding the URL parameter "preload=true" or "preload=false&includePreload[]=display_or_folder".
+
+.. hint:: Please note that the preloading functionality is only meant for simple visualizations. It is not (fully) supported for complex use cases. There are several known issues, such as:
+
+    - no support for redundancy
+    - several limitations and displaying errors in case of complex displays, iFrames or when using hostnames
+    - longer loading time of the start page as well as an increased memory and CPU load, depending on the number respectively complexity of displays
+
+.. hint:: Only displays under the folder "DISPLAYS" will be preloaded (e.g. no alarmlist or historylist included):
+
+    .. figure:: images/preloading_folder.png
+
+For example::
+
+    http://127.0.0.1:88/?preload=true
+
+In the case that only few displays should be preloaded, the opportunity is given to set the preloading parameter to the value "false" and to add individual displays, which should be preloaded by including them with the URL parameter "includePreload[]"::
+
+    http://127.0.0.1:88/?preload=false&includePreload[]=AGENT.DISPLAYS.Main&includePreload[]=AGENT.DISPLAYS.MAIN.2
+
+In this case the following displays would be preloaded:
+
+- AGENT.DISPLAYS.Main
+- AGENT.DISPLAYS.MAIN.2
+
+In the case that only few displays should be excluded from preloading it is possible to set the preloading parameter to the value "true" and to exclude individual displays, which should not be preloaded by using the URL parameter "excludePreload[]"::
+
+    http://127.0.0.1:88/?preload=true&excludePreload[]=AGENT.DISPLAYS.MAIN.2&excludePreload[]=AGENT.DISPLAYS.MAIN.3&excludePreload[]=AGENT.DISPLAYS.MAIN.4
+
+In this case the following displays would not be preloaded:
+
+- AGENT.DISPLAYS.MAIN.2
+- AGENT.DISPLAYS.MAIN.3
+- AGENT.DISPLAYS.MAIN.4
+
+You can disable preloading for the whole folder "MAIN"::
+
+    http://127.0.0.1:88/?preload=true&excludePreload[]=AGENT.DISPLAYS.MAIN
+
+If you have two different default displays with two different main content displays you can decide which one you want to preload::
+
+    http://127.0.0.1:88/?defaultdisplay=Default2&preload=true&excludePreload[]=Default&excludePreload[]=Main
+
+or::
+
+    http://127.0.0.1:88/?defaultdisplay=Default2&preload=false&includePreload[]=Default2&includePreload[]=Main2
+
+You have to exclude the default displays or include Default2 and Main2.
+
+.. hint:: If you want to have more than one default display, the name of the main content iframe on **each** default display has to be named ``content``.

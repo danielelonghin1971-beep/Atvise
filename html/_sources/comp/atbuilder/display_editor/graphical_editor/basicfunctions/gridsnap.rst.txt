@@ -1,0 +1,61 @@
+Grid, snap, zoom and freeze
+###########################
+
+.. rubric:: Grid, snap
+
+The Grid and snap bar offers the following icons:
+
+.. figure:: images/grid.png
+
+|icon_showgrid| Show grid
+    Enables or disables the grid on the display. Choose between lines and points in the config grid dialog.
+
+    .. figure:: images/display_drawingarea_grid.png
+
+|icon_snaptogrid| Snap to grid
+    Snaps the elements on the display to the grid. You can define the snap settings in the config grid dialog.
+
+|icon_configgrid| Config grid
+    Opens the "Grid settings" dialog. Set the grid size and style as desired. The snap size can also be changed.
+
+    .. figure:: images/window_gridsetting.png
+
+.. rubric:: Zoom
+
+There are 6 different ways to change the zoom of the display:
+
+.. figure:: images/zoom.png
+
+|icon_zoomin| Zoom in
+    Zooms in the view of the display.
+
+|icon_zoomout| Zoom out
+    Zooms out the view of the display.
+
+|icon_resetzoom| Reset zoom
+    Resets the zoom to standard view.
+
+|icon_fitzoom| Fit zoom
+    Fits the display to the window.
+
+|icon_zoomtorect| Zoom to rect
+    Zooms the display to a desired rectangle
+
+|icon_zoomtoselection| Zoom to Selection
+    Zooms to a marked element.
+
+.. rubric:: Freeze
+
+|freeze|
+    By activating this mode all the elements on the display are locked and can not be moved by mouse or arrow keys. It is still possible to select elements and use all functions of the graphics editor.
+
+.. |icon_fitzoom| image:: /common_images/icon_fitzoom.png
+.. |icon_resetzoom| image:: /common_images/icon_resetzoom.png
+.. |icon_zoomin| image:: /common_images/icon_zoomin.png
+.. |icon_zoomout| image:: /common_images/icon_zoomout.png
+.. |icon_zoomtorect| image:: /common_images/icon_zoomtorect.png
+.. |icon_zoomtoselection| image:: /common_images/icon_zoomtoselection.png
+.. |freeze| image:: /common_images/freeze.png
+.. |icon_configgrid| image:: /common_images/icon_configgrid.png
+.. |icon_showgrid| image:: /common_images/icon_showgrid.png
+.. |icon_snaptogrid| image:: /common_images/icon_snaptogrid.png

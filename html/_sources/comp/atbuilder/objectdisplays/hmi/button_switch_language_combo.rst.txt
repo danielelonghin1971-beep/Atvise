@@ -1,0 +1,21 @@
+Button/Display Language
+#######################
+
+This control switches the different languages that are defined in the system and displays the currently selected language or an individual text defined by a parameter value.
+
+.. rubric:: Parameters
+
+- **language text** -- If the value of this parameter is empty then the currently selected language will be displayed, otherwise the value will be displayed.
+
+Font:
+
+- **family** -- Font family (Default: Arial (Advanced), Verdana (Standard))
+- **size** -- Font size (Default: 16)
+- **color** -- Font color (default: global parameter atvFontColor (advanced), #ffffff (standard)))
+
+Appearance:
+
+- **symbol color** -- Color of the symbol (default: global parameter atvSymbolColor (advanced), #ffffff (standard)))
+- **fill color** -- Background color of the control (default: global parameter atvFillColor (advanced), #000000 (standard)))
+- :advstyle:`Advanced` **border color** -- Color of the button's border (default: global parameter atvBorderColor)
+- **stroke color when pressed** -- Color of the border when pressing the button (default: #ffffff)

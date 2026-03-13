@@ -1,0 +1,73 @@
+.. _triggerfunctions:
+
+.. hint:: Undocumented triggers are internally used by atvise. Their functionality may be changed in future atvise releases.
+
+Trigger functions
+#################
+
+.. !!webMI!! webMI.trigger.connect(triggerName, function(e){...}[, scope])
+.. function:: webMI.trigger.connect(triggerName, function(e){...}[, scope])
+
+    Connects to the trigger "triggerName". If the trigger is fired the callback function will be executed.
+
+    The parameter "scope" is optional. Three different scopes can be defined as follows:
+
+    - **global** -- The trigger can be called anywhere in the visualization
+
+        ::
+
+            webMI.trigger.connect("globalTrigger", function(e) {...});
+
+    - **internal** -- This trigger is valid within the same display
+
+        ::
+
+            webMI.trigger.connect("internalTrigger", function(e) {...}, "");
+
+    - **display** -- This trigger is valid for a defined object display
+
+        ::
+
+            webMI.trigger.connect("displayTrigger", function(e) {...}, "myDisplayID");
+
+    Example::
+
+        webMI.trigger.connect("setValue", function(e) {
+            alert(e);
+        });
+
+.. !!webMI!! webMI.trigger.fire(triggerName, value[, scope])
+.. function:: webMI.trigger.fire(triggerName, value[, scope])
+
+    Fires a value to the trigger with the name specified as "triggerName".
+
+    The parameter "scope" is optional. Three different scopes can be defined as follows:
+
+    - **global** -- The value can be retrieved anywhere in the visualization
+
+        ::
+
+            webMI.trigger.fire("globalTrigger", 23);
+
+    - **internal** -- The value can be retrieved within the same display
+
+        ::
+
+            webMI.trigger.fire("internalTrigger", 23, "");
+
+    - **display** -- The specified object display will retrieve the value
+
+        ::
+
+            webMI.trigger.fire("displayTrigger", 23, "myDisplayID");
+
+    In the control "in_out_value" exists a trigger "setValue"::
+
+        webMI.trigger.connect("setValue", function(e) {
+            var text = passwordMode ? makeStars(e.value) : e.value;
+            webMI.gfx.setText("input_label", text + unit);
+        });
+
+    Now this trigger can be used to set the value of the control "from the outside"::
+
+        webMI.trigger.fire("setValue", 100, "in_out_value_Example");

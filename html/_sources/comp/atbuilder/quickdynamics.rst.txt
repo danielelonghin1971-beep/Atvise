@@ -1,0 +1,12 @@
+.. _quickdynamics:
+
+Quick Dynamics
+##############
+
+.. toctree::
+    :glob:
+
+    quickdynamics/quick_dynamics
+    quickdynamics/*
+
+    

@@ -1,0 +1,35 @@
+Import methods from data sources
+################################
+
+When you browse an OPC UA data source and find an OPC UA method in the address space of the data source, you can create a wrapper script for the method to be able to call it from a server-side script. To create the script, right-click the method and select "Import method" from the context menu:
+
+.. figure:: images/import_method.png
+
+    Importing an OPC UA method
+
+A script with the same name as the method will be created in the METHODS folder of the data source. If a script with the name already exists, you will be asked to supply a different name. The input and output arguments of the original OPC UA method are reflected in the generated script.
+
+.. hint:: The input and output arguments of the OPC UA method are only available in the script if they are exposed by the data source.
+
+For example, to be able to import XML directly into an atvise server used as a data source, follow these steps:
+
+- Add an OPC UA data source, e.g. with the name "ds1"
+- Browse to the "importNodes" OPC UA method in the data source and import it (see screenshot above)
+- Write a server-side script to call the "importNodes" method in the data source
+
+::
+
+    var xml = "<?xml version=\"1.0\" encoding=\"UTF-8\" ?><UANodeSet ...";
+    var res = call("AGENT.DATASOURCES.ds1.METHODS.importNodes", {
+        XmlNodeSet: xml
+    });
+    if (res.error)
+        console.log("Import error: " + res.errorstring);
+    else
+        console.log(res.result.Success);
+
+The result of the call is an object with following properties:
+
+- error -- Error code; supplied only if the function could not be called
+- errorstring -- Error text; supplied only if the function could not be called
+- result -- On success an object with the output arguments of the OPC UA method call. Each output argument is available as a property with the same name as the argument.

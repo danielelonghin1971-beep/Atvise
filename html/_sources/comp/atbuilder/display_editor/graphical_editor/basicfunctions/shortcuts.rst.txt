@@ -1,0 +1,68 @@
+Keyboard Shortcuts
+##################
+
+.. csv-table::
+    :header: Context menu / ribbon menu of the canvas in the atvise builder, Shortcut
+    :widths: auto
+
+    New, :kbd:`Ctrl + N`
+    Open, :kbd:`Ctrl + O`
+    Print, :kbd:`Ctrl + P`
+    Save, :kbd:`Ctrl + S`
+    SaveAs, :kbd:`Ctrl + Shift + S`
+    ZoomIn, :kbd:`Ctrl + +`
+    ZoomOut, :kbd:`Ctrl + -`
+    Copy, :kbd:`Ctrl + C`
+    Cut, :kbd:`Ctrl + X`
+    Paste, :kbd:`Ctrl + V`
+    Delete Item(s), :kbd:`Del`
+    Cleanup SVG, :kbd:`Ctrl + Alt + C`
+    Parameters, :kbd:`Ctrl + Alt + P`
+    Settings, :kbd:`Ctrl + Alt + S`
+    Reset Transformation, :kbd:`Ctrl + R`
+    Set as default Transformation, :kbd:`Ctrl + Shift + T`
+    Set to default Transformation, :kbd:`Ctrl + T`
+    Group items, :kbd:`Ctrl + G`
+    Ungroup items, :kbd:`Ctrl + Shift + G`
+    Undo, :kbd:`Ctrl + Z`
+    Redo, :kbd:`Ctrl + Y`
+    Select All, :kbd:`Ctrl + A`
+    ""
+    **Zoom**
+    Reset Zoom, :kbd:`Ctrl + 0`
+    Fit Zoom, :kbd:`Ctrl + .`
+    ""
+    **Transform**
+    Flip vertically, :kbd:`Ctrl + M`
+    Flip horizontally, :kbd:`Ctrl + Shift + M`
+    ""
+    **Visibility**
+    Visible, :kbd:`Ctrl + Shift + H`
+    Hidden, :kbd:`Ctrl + H`
+    ""
+    Edit Shape, :kbd:`F2`
+    Edit Widget, :kbd:`F2`
+    Edit Text, :kbd:`F2`
+    Edit referenced Display, :kbd:`F2`
+    ""
+    Center Referencepoint, :kbd:`Ctrl + Shift + R`
+    Clone style, :kbd:`Ctrl + Shift + C`
+    Edit hyperlink..., :kbd:`Ctrl + L`
+    Select alternative Symbol..., :kbd:`Space`
+    Add Simple Dynamic, :kbd:`Ctrl + D`
+    ""
+    **Z-Order**
+    Send backward, :kbd:`Ctrl + B`
+    Bring forward, :kbd:`Ctrl + F`
+    Send to back, :kbd:`Ctrl + Shift + B`
+    Bring to front, :kbd:`Ctrl + Shift + F`
+    ""
+    **Align and Arrange**
+    Align left, :kbd:`Ctrl + Shift + 4`
+    Align horizontally, :kbd:`Ctrl + Shift + 1`
+    Align right, :kbd:`Ctrl + Shift + 6`
+    Distribute horizontally, :kbd:`Ctrl + Shift + 3`
+    Align top, :kbd:`Ctrl + Shift + 8`
+    Align vertically, :kbd:`Ctrl + Shift + 7`
+    Align bottom, :kbd:`Ctrl + Shift + 2`
+    Distribute vertically, :kbd:`Ctrl + Shift + 9`

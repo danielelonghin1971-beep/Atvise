@@ -1,0 +1,137 @@
+8 Parameterization option 3 - display at the object type
+########################################################
+
+In this section you will learn how to add a display to an object type, how to dynamize it using relative addressing and how to add displays of object instances to the visualization.
+
+.. hint:: Use this type of parameterization to create object displays for object types you have defined in the import XML file.
+
+.. rubric:: 8.1 Adding a new display to the object type
+
+The first step is to add a new display to the object type.
+
+1. Open the :treeselection:`Servers --> DemoServer --> OBJECTS` folder and right-click on the "L001" object.
+
+2. Choose :menuselection:`Add Display to corresponding type...` from the menu which appears.
+
+3. Type in "MainDisplay" as name for the display and add it to the object by clicking :guilabel:`OK`.
+
+.. figure:: images/w3_add_objectdisplay.png
+
+    Add a display to the object
+
+.. rubric:: 8.2 Designing an object display
+
+Design the "MainDisplay" similar to section 6.3. You can also copy the elements from the display you have drawn in section 6.3 and remove the dynamics afterwards as described in section 7.2.
+
+.. figure:: images/w3_design_display.png
+
+    Designing an object display
+
+.. rubric:: 8.3 Adding dynamization
+
+In this section we want to use predefined controls and simple dynamics to add dynamization to our object display.
+
+.. rubric:: 8.3.1 Parameterizing the three buttons
+
+We want to set the value of LightIntensity, so we have to parameterize the three buttons for 0 %, 50 % and 100 % light intensity.
+
+1. Click on one of the three buttons to mark it.
+
+2. On the right side, you can see a list of all parameters of the button. Set the text of the button by entering "0" in  the "label" field.
+
+3. To set its "base" parameter, click the |relative_button| button to activate relative addressing, then the |pointpointpoint| button to open the node select dialog.
+
+4. In the left box you can select the object type for the relative addressing, so click on :treeselection:`Variable Types --> OfficeLight`.
+
+5. In the right box you can select the variable whose change you want to react to, so select "LightIntensity". Apply the dialog by clicking :guilabel:`OK`.
+
+6. Set the "value" parameter by entering "0". This value will be set to the base address when clicking the button.
+
+7. Parameterize a button with the label "50" and value "50" the same way.
+
+8. Parameterize a button with the label "100" and value "100" the same way.
+
+.. figure:: images/w3_parameterize_buttons.png
+
+    Parameterizing the three buttons using relative addressing
+
+.. rubric:: 8.3.2 Color change of the light bulb to display the light intensity
+
+In this section, we want to add a simple dynamic to our bulb to display the light intensity.
+
+1 Click on the circle of the bulb to mark it and open the "Simple Dynamics" dialog as described in section 5.3.1.
+
+    .. hint:: The simple dynamics in this section will be similar to section 7.4., but this time the object display is located directly in the object type, so we can use the default base parameter for the object's base address.
+
+2. Choose |single_node_button| from the possibilities on the left.
+
+3. Click on the |relative_button| button to activate relative addressing and open the "node select dialog" by clicking on |pointpointpoint|.
+
+4. In the left box you can select the object type for the relative addressing, so click on :treeselection:`Variable Types --> OfficeLight`.
+
+5. In the right box you can select the variable whose change you want to react to, so select "LightIntensity". Apply the dialog by clicking :guilabel:`OK`.
+
+6. We want to change the color of the circle, so we choose |color_button| on the left in the ACTION section.
+
+7. The range of our "LightIntensity" variable goes from 0 - 100, so we choose "Value Range" as the type and enter the minimum and maximum values.
+
+8. We want to display the circle in a color range from gray to yellow, so we check the fill box and choose a gray color as the start fill and a yellow color as the stop fill by clicking on |pointpointpoint|.
+
+    We are now finished with the dynamization. Apply the dialog by clicking :guilabel:`OK`.
+
+.. figure:: images/w3_bulb_dialog.png
+
+    "Simple Dynamics" dialog for the circle of our light bulb
+
+.. rubric:: 8.3.3 The visibility of the malfunction border
+
+1. Mark the red border and open the "Simple Dynamics" dialog as described in section 5.3.1.
+
+2. Choose |single_node_button| from the possibilities on the left.
+
+3. We want to add a relative address, so click the |relative_button| button and open the "node select dialog" by clicking on |pointpointpoint|.
+
+4. In the left box you can select the object type for the relative addressing, so click on :treeselection:`Variable Types --> OfficeLight`.
+
+5. In the right box you can select the variable whose change you want to react to, so select "InternalMalfunction". Apply the dialog by clicking :guilabel:`OK`.
+
+6. We want to change the visibility of the border, so choose |button_visibility| in the ACTION part.
+
+7. If the value is true, we want the border to be visible, so choose "visible" for this condition. Add a second condition by clicking on |add_after_button|, changing the value column to "false" and choosing "invisible".
+
+8. Apply the "Simple Dynamics" dialog by clicking :guilabel:`OK`.
+
+.. figure:: images/w3_dyn_border.png
+
+    Changing the visibility of the border in dependence on a boolean value
+
+Now we have finished the engineering of our object display.
+
+.. rubric:: 8.4 Adding objects to Light_Background
+
+1. Open the "Light_Background" display (which we added in step 6.1).
+
+2. Drag & drop the objects L001 and L002 from the DemoServer into the "Light_Background" display.
+
+3. Drag & drop the :treeselection:`Objects --> L001 --> InternalMalfunction` variable into the "Light_Background" display. A small button will appear which can be used to set the variable in the visualization.
+
+4. Repeat 3, but now drag & drop :treeselection:`Objects --> L002 --> InternalMalfunction` into the display .
+
+5. Position the two object displays in rooms of your choice.
+
+.. figure:: images/w3_create_instances.png
+
+    Dragging & dropping the OfficeLight objects into the display
+
+.. rubric:: 8.5 Generating and viewing the visualization
+
+Save the display by clicking |save_button| and generate the visualization by choosing :menuselection:`Guided Actions --> Distribute to Webserver --> DemoServer`. Then start a web browser (as described in section 4) and view the "Light_Background" display in the visualization. Set the value of the light intensity of one of the objects using the three buttons and see how the color of the bulb changes. Also use the InternalMalfunction buttons to make the red border appear and disappear.
+
+.. |add_after_button| image:: /common_images/add_after_button.png
+.. |button_visibility| image:: /common_images/button_visibility.png
+.. |color_button| image:: /common_images/color_button.png
+.. |pointpointpoint| image:: /common_images/pointpointpoint.png
+.. |relative_button| image:: /common_images/relative_button.png
+.. |save_button| image:: /common_images/save_button.png
+.. |single_node_button| image:: /common_images/single_node_button.png
+

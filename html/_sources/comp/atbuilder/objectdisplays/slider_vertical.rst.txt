@@ -1,0 +1,115 @@
+.. _od_slider_vertical:
+
+Slider Vertical
+###############
+
+The slider is used for the graphical representation of the value of an address. The advanced style slider can also be used as input control.
+
+For each slider 0 to 4 limits (from “limit low low” up to “limit high high”) can be specified. These limits split the range defined by “min” and “max” in 1 to 5 intervals. Depending in what interval the value of the "base" address lies, the text color of the value will be changed according to the specified color for each limit – see below under “Appearance”. In case a limit lies below min or above max, it will not be explicitly drawn, though the text color will be changed accordingly. (e.g. max=100 and “limit high high”=120: although the slider will not go beyond “max”, the text color will change according to “limit high high color” as soon as the value reaches the “limit high high”)
+
+The limits are defined as follows:
+
+- limit low low >= value: text color according to "limit low low color"
+- limit low low < value <= limit low: text color according to "limit low color"
+- limit low < value < limit high: text color according to "color"
+- limit high <= value < limit high high: text color according to"limit high color"
+- limit high high <= value: text color according to "limit high high color"
+
+An additional border indicates the current value's negative state or an additionally defined alarm. The colors and blinking intervals are defined in global lists.
+
+.. rubric:: Triggers
+
+Following triggers can be used for this object display: 
+
+- **com.atvise.setActive** -- Can be used to enable or disable the object display.
+- **setValue** -- The object display connects to this trigger. Therefore, it is possible to set the value from the outside.
+- **valuechanged** -- Fired on value changes, e.g. by user input.
+
+::
+
+    //Disable the object display
+    webMI.trigger.fire("com.atvise.setActive", false, "myDisplayID");
+
+    //Set value of object display
+    webMI.trigger.fire("setValue", 50, "myDisplayID");
+
+    //Respond to value changes
+    webMI.trigger.connect("valuechanged", function(e) { console.log(e.value); }, "myDisplayID");
+
+.. hint:: Additional undocumented triggers are internally used by atvise. Their functionality may be changed in future atvise releases.
+
+.. rubric:: Parameters
+
+The slider has the following generic parameters:
+
+- **base** -- Address which value is used for the graphical representation
+- **alarm address** -- Optional additional address of an alarm to be shown.
+- **enable status monitoring** -- Switch monitoring of current value status on or off. (default: Yes)
+- **fire status trigger** -- Instead of the status display a here defined trigger can be fired globally.
+- **label** -- Label of the slider (default: T{Label})
+- **unit** -- Unit of the value
+- **minimum** -- Lowest border of the value (default: 0)
+- **maximum** -- Highest border of the value (default: 100)
+
+Font:
+
+- **family** -- Font family which will be applied to the value, unit and label (default: Arial)
+- **text color** -- Color which will be applied to the value, unit and label (default: global parameter atvFontColor (advanced), #000000 (standard))
+- :stdstyle:`Standard` **text fill color** -- Color which will be applied to the background of the value, unit and label (default: #d0d0d0)
+- **size for value** -- Font size which will be applied to the value (default: 12)
+- **size for label** -- Font size which will be applied to the label (default: 10)
+- **size for unit** -- Font size which will be applied to the unit (default: 10)
+
+Appearance:
+
+- **decimal places** -- Number of decimal places for the value to be displayed (default: 0)
+- :stdstyle:`Standard` **fill color not editable** -- Fill color of background areas if element is not editable (default: #b7b7b7)
+- :stdstyle:`Standard` **fill color when inactive** -- Fill color of background areas if element is inactive (default: #b7b7b7)
+- :advstyle:`Advanced` **fill color** -- Color which will be applied to the backgrounds (default: global parameter atvFillColor)
+- :advstyle:`Advanced` **bar color** -- Color of the bar if no limits are set (default: global parameter atvAccent1)
+- :advstyle:`Advanced` **bar color when inactive** -- Color of the bar if the element is inactive (default: global parameter atvInactiveColor)
+- :advstyle:`Advanced` **bar color when not editable** --  color of the bar if the element is not editable (default: #f9e199)
+- :advstyle:`Advanced` **bar color limits on** -- Color of the bar if limits are set and value is above low limits and below high limits (default: #00ff00)
+- **limit low low (off=no limit)** -- Value for limit low low (default: off, which means no limit)
+- **limit low (off=no limit)** -- Value for limit low (default: off, which means no limit)
+- **limit high (off=no limit)** -- Value for limit high (default: off, which means no limit)
+- **limit high high (off=no limit)** -- Value for limit high high (default: off, which means no limit)
+- **limit low low color** -- Color of text if "limit low low" >= value (default: #ff0000)
+- **limit low color** -- Color of text if "limit low low" < value <= "limit low" (default: #f9b233 (advanced), #ffff00 (standard))
+- **limit high color** -- Color of text if "limit high" <= value < "limit high high" (default: #f9b233 (advanced), #ffff00 (standard))
+- **limit high high color** -- Color of text if "limit high high" <= value (default: #ff0000)
+- **displayed scale** -- Scale to be used; further scales can be selected from "Object Displays (ATVISE)/Symbols/scales (default: scale_20_slider)
+- **scale color** -- Color of the scale to be used (default: #ffffff)
+- :advstyle:`Advanced` **small scale color** -- Color of the small scale to be used (default: #d7d7d7)
+- :advstyle:`Advanced` **symbol color** -- Color of the slider's symbol (default: global parameter atvBorderColor)
+- :advstyle:`Advanced` **border color** -- Color of the border around the control (default: global parameter atvBorderColor)
+- **status indication** -- Specify the status' display through a defined global list (default: global parameter atvStatusIndication)
+- **alarm indication** -- Specify the alarm's display through a defined global list (default: global parameter atvAlarmIndication)
+
+Security:
+
+- **editable** -- If set to "No" the values will only be displayed but it is not possible to manually change the slider's value (default: Yes).
+- **necessary right** -- The user must have this right to activate this button, i.e. to press one of the two buttons
+- **activation address** -- If the value of this address equals to "activation value", then the control will be active, i.e. can be pressed
+- **activation value** -- Value which activates the control
+
+    .. hint:: The activation of the control can be configured only by the necessary right, or only by the activation address and value or by both. In case both settings are made, the user must have the necessary right and the value of the "activation address" must equal the "activation value"; otherwise the control will not be activated.
+
+- **show access control notification** -- Defines if the icon for showing access control notifications shall be displayed (default: true)
+
+Options:
+
+- **address for minimum** -- Address from which the minimum will be taken; this supersedes the parameter "minimum"
+- **address for maximum** -- Address from which the maximum will be taken; this supersedes the parameter "maximum"
+- **address for limit low low** -- Address from which the "limit low low" will be taken; this supersedes the parameter "limit low low"
+- **address for limit low** -- Address from which the "limit low" will be taken; this supersedes the parameter "limit low"
+- **address for limit high** -- Address from which the "limit high" will be taken; this supersedes the parameter "limit high"
+- **address for limit high high** -- Address from which the "limit high high" will be taken; this supersedes the parameter "limit high high"
+
+Menu:
+
+- **menu positioning** -- The position the menu symbol is shown at (top-left, top-right, bottom-left, bottom-right).
+- **menu mouseover active** -- Symbol is only shown on *mouseover*.
+- **menu symbol offset x** -- Relative offset of the menu symbol to the anchor point on the x axis in pixel.
+- **menu symbol offset y** -- Relative offset of the menu symbol to the anchor point on the y axis in pixel.
+- **context menu click frame** -- Defines the size of the click frame for opening the context menu.

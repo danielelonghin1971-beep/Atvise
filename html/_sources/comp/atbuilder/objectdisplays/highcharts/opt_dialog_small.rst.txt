@@ -1,0 +1,40 @@
+Configuration - Top Display (Small)
+###################################
+
+This is the main display of the configuration dialog. The configuration dialog can be opened via the toolbar. It is mainly a navigation through the different options of the chosen chart.
+
+.. rubric:: Parameters
+
+The following common Parameters exists:
+
+- **chart name** -- This is a unique name to identify the chart instance.
+
+Appearance:
+
+- **fill color** -- Left sidebar fill color (default: global parameter atvFillColor)
+- **font color** -- Font color (default: global parameter atvFontColor)
+- **preview button background** -- Defines the background color of the "Preview" button (default: #c9d9b8)
+- **button background** -- Defines the background color of the "Back" button (default: #d7d7d7)
+- **show "Preview" button (popup mode only)** -- Activates the "Preview" button if the configuration dialog is opened in a popup (default: true)
+
+Security: load configuration:
+
+- **necessary right** -- The user must have this right for the function to work
+- **activation address** -- If the value of this address equals to "activation value", then the function will be active
+- **activation value** -- Value which activates the function
+
+Security: save configuration:
+
+- **necessary right** -- The user must have this right for the function to work
+- **activation address** -- If the value of this address equals to "activation value", then the function will be active
+- **activation value** -- Value which activates the function
+- **change compression** -- Defines if the user is allowed to change the compression settings (default: false).
+
+Subdisplay:
+
+- **display for option start** -- Start display when no series is selected (default: "Configuration - Start" object display)
+- **display for option general** -- Display opened by general button (default: "Configuration - General" object display)
+- **display for option xaxis** -- Display opened by x-axis button (default: "Configuration - X-Axis" object display)
+- **display for option yaxis** -- Display opened by y-axis button (default: "Configuration - Y-Axis" object display)
+- **display for option series** -- Display opened by data button (default: "Configuration - Series" object display)
+- **display for option save load** -- Display opened by Load / Save button (default: "Configuration - Save/Load" object display)

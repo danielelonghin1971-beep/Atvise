@@ -1,0 +1,63 @@
+Version control functions
+#########################
+
+This function allows to export nodes to the file system and to import nodes from the file system into the address space. The function is a wrapper script for the respective OPC UA methods and can be found in the atvise library (:treeselection:`Library --> ATVISE --> Script Library --> Methods`).
+
+.. rubric:: VersionControl
+
+**call("Methods.VersionControl", options)**
+
+Exports the given nodes from the address space to the file system or imports the nodes from the file system to the address space. *options* is an object with following properties (refer to :ref:`version control <versioncontrol_options>` for a detailed description of the options):
+
+- **direction** (String) -- "export" if you want to export nodes, else "import".
+- **address** (String[]) -- Specifies the nodes to be exported/imported.
+- **baseDirectory** (String, optional, default: <project directory>/versioncontrol) -- Starting point for the address space in the file system. Relative paths are relative to the project directory.
+- **recursive** (Boolean, optional, default: true) -- Defines if the child nodes of the specified nodes shall be exported/imported as well.
+- **includeDependencies** (Boolean, optional, default: true) -- Defines if only references to non-child nodes (false) or also all referenced non-child nodes (true) shall be exported/imported.
+- **forceDelete** (Boolean, optional, default: false)
+
+    - export -- Child nodes that only exist on the file system, but not in the address space, are deleted.
+    - import -- Child nodes that only exist in the address space, but not on the file system, are deleted.
+
+- **overwrite** (Boolean, optional, default: true)
+
+    - export -- All nodes and references (values and meta data) in the file system are overwritten with the data of the address space.
+    - import -- All nodes and references (values and meta data) in the address space are overwritten with the data of the file system.
+
+- **overwriteInObjects** (Boolean, optional, default: false) -- Defines if values of nodes in AGENT.OBJECTS shall be overwritten as well.
+
+The result is an object with following properties:
+
+- **error** (Integer) -- The error code, supplied only if an error occurred when calling the script.
+- **errorstring** (String) -- The error text, supplied only if an error occurred when calling the script.
+- **result** (Object)
+
+    - **errors** (Object[]) -- Array of objects containing information about errors that occurred during the export/import. Each element is an object with the following properties:
+
+      - **error** (Integer) -- Error code
+      - **errorstring** (String) -- Error text
+
+Example 1, export some nodes::
+
+    call("Methods.VersionControl", {
+        direction: "export",
+        address: ["ns=1;s=AGENT.OBJECTS.values", "ns=1;s=AGENT.OBJECTS.alert"],
+        baseDirectory: "vc_export",
+        recursive: true,
+        includeDependencies: true,
+        forceDelete: true,
+        overwrite: true,
+        overwriteInObjects: false,
+    });
+
+Example 2, import a node of the previous export::
+
+        var options = {};
+        options.direction = "import";
+        options.address = ["AGENT.OBJECTS.values"];
+        options.baseDirectory = "vc_export";
+        options.overwriteInObjects = true;
+
+        call("Methods.VersionControl", options);
+
+.. hint:: Nodes can only be imported to the same position in the address space from where they were exported.

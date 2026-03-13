@@ -1,0 +1,22 @@
+Change Visibility and Blinking
+##############################
+
+This Quick Dynamic changes the visibility (including flashing) of the applied graphic element depending on whether the value of the node defined by "nodeID" lies inside or outside of the range defined by "minRange" and "maxRange".
+
+.. rubric:: Parameters:
+
+- **nodeID** (*node triggering the change*) -- Node triggering this Quick Dynamic
+- **minRange** (*min of range*) -- Lower bound of the range in which the node's value should lie
+- **maxRange** (*max of range*) -- Upper bound of the range in which the node's value should lie; if not specified, it will be set to "minRange", i.e. the quick dynamic will be triggered at a discrete value (minRange=maxRange=value) only, and not for a range
+- **VisibilityBelowRange** (*visibility if value is below range*) -- Visibility to be set if the node's value is below the defined range; can be "Visible", "Invisible" or one of the specified flash rates
+- **VisibilityInRange** (*visibility if value is within range*) -- Visibility to be set if the node's value is within the defined range; can be "Visible", "Invisible" or one of the specified flash rates
+- **VisibilityAboveRange** (*visibility if value is above range*) -- Visibility to be set if the node's value is above the defined range; can be "Visible", "Invisible" or one of the specified flash rates
+
+Visibility options:
+
+- visible
+- invisible
+- Flash every 250ms
+- Flash every 500ms
+- Flash every 750ms
+- Flash every 1500ms

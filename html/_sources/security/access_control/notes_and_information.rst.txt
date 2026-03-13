@@ -1,0 +1,416 @@
+.. _ac_notes:
+
+Information & notes
+###################
+
+.. _ac_defaultrights:
+
+Default rights
+**************
+
+The following default rights are set for every project to ensure that atvise is working properly:
+
+- **Entire address space (except AGENT.ALARMING, AGENT.DATASOURCES, AGENT.HISTORY, AGENT.SMTPSERVERS, AGENT.WEBACCESS, SYSTEM.SECURITY, SYSTEM.TRANSLATIONS, ObjectTypes.PROJECT, VariableTypes.PROJECT)** -- *Visibility* and *Read* for everyone
+
+    Additional rights can be explicitly defined via system functions or user-defined nodes. Therefore, not all nodes in e.g. AGENT.OBJECTS must be visible for everyone.
+
+    .. hint:: SYSTEM.SECURITY is invisible for everyone except project administrators or users with the *Engineer* right for this subtree. 
+
+- **Serverside scripts** -- *Execute* for everyone
+
+    - Applies primarily to all scripts in SYSTEM.LIBRARY.ATVISE and SYSTEM.LIBRARY.PROJECT that are directly called by OPC UA (menu scripts) or visualization (webMI method scripts). It is possible to define separate rights for individual scripts.
+
+Engineering
+***********
+
+Quick Dynamics
+++++++++++++++
+
+If a user has only the *Visibility* right for Quick Dynamics (e.g. via system function *atvise library*), the user cannot open Quick Dynamics via the project tree. However, it is possible to add Quick Dynamics to displays and set the respective parameters in the configuration dialog by using the graphics editor.
+
+Version control
++++++++++++++++
+
+When using the :ref:`version control <versioncontrol>` to import a project or single nodes, the user must have sufficient :ref:`rights<ac_rights>` (*Engineer*) for the respective nodes. Otherwise, the complete data cannot be imported which may result in inconsistencies or errors within the project. 
+
+Alarming
+++++++++
+
+- Defining different rights for active and inactive alarms is not possible. 
+- Local rights for passed-through alarms must be configured for the corresponding data source or the system function *Data sources*. The permission check is performed in the data source itself, with the user that was defined for the data source connection. 
+- It is not possible to configure rights for statistical nodes or to check them at runtime.
+
+.. _ac_scripting:
+
+Scripting
++++++++++
+
+The :ref:`metadata of scripts<scripteditor_metadata>` is extended by the following information:
+
+- **Script owner** -- The owner of the script, i.e. the user that created the script. If the script is created by an anonymous session, an empty string is defined in the metadata. If no owner exists (i.e. the <owner> tag is missing), the system ("root") is considered as script owner. 
+- **Script runcontext** -- Defines in which context, either "caller" (default) or "owner", the script is executed. If the <runcontext> tag is missing, the caller's runcontext is used. See section "Executing scripts" below.
+
+The script owner is used for changing scripts, the runcontext for executing scripts. 
+
+    .. rubric:: Creating and deleting scripts 
+
+    The *Engineer* right for the respective part of the address space is necessary to create or delete scripts. E.g. in order to create a menu script, you need the *Engineer* right for the :treeselection:`SYSTEM --> LIBRARY --> PROJECT --> MENUSCRIPTS` folder.
+
+    .. rubric:: Editing scripts
+
+    There is a two-stage permission check for editing scripts: 
+
+        - **Stage 1** -- The user needs the *Engineer* right for the script.
+        - **Stage 2** -- Depends on the script owner in the metadata. There are two options: 
+            
+            - The script owner is not "root": The user can only edit the script code but not the metadata. Thus, saving the edited script does not change the *script owner* and *script runcontext*.
+            - The script owner is "root" (or the <owner> tag is missing): The system is the script owner. The script code can only be changed by users that also have the *Configure scripts* right for the script. In this case, the user is allowed to change the metadata as well.
+
+    .. rubric:: Executing scripts
+
+    #. It is verified whether the script can be executed. The session calling the script needs the *Execute* right to execute the script. The calling session is:
+
+        - In case of OPC UA clients (including menu scripts from the builder), the respective UA session.
+        - In case of webMI clients, the UA session created for the webMI session.
+        - In case of scripts triggered by the system (timer, node, etc.), the internal root session.
+
+    #. It is determined whether the "caller" or the "owner" is used for calling the script:
+
+        - If the script is triggered by the system the "owner" is used. In this case, the content of the runcontext does not matter. 
+        - Otherwise, the metadata's runcontext is used:
+
+            - If "caller" is defined, the session that called the script is used (the session that was used for executing the script).
+            - If "owner" or no runcontext is defined, the session depends on the script owner: 
+
+                - root or no owner: The internal root session is used.
+                - Any other owner (user exists): A session is created for this user. If an empty string is set, an anonymous session is used.
+                - Any other owner (user does not exist): This is a configuration error. The script cannot be executed and error code BadConfigurationError is returned and written to the server log.
+
+     See :ref:`Ua functions<ua_functions>` for examples of system and user triggered scripts.
+    
+    .. rubric:: script object
+    
+    The :ref:`script object<script_object>` allows to view the metadata of scripts:
+
+        - The user that called the script.
+        - The user in whose context the script is running.
+
+    This information is also passed to all scripts that are called by another script. If a script calls other scripts ("call", "execute"), it is checked if the current runcontext has the *Execute* right for the script to be called. If the rights are sufficient, the runcontext is passed to the called script and the script is running in the same context as the calling script. 
+
+    .. attention:: The original metadata of called scripts is not considered in this case. If a script started by "root" calls another script (belonging to a "normal" user), this script will also run with the rights of the "root" user. The "normal" user could edit the script and write code that is running with more rights than allowed. In order to prevent this, you can remove the user from the metadata of all scripts, that are called by "execute" or "call". In this case, "normal" users cannot edit these scripts anymore. 
+
+    .. rubric:: Calling menu scripts from atvise builder
+
+    - The builder determines the menu scripts available for the user (via *Visibility* right)
+    - If the user wants to execute a menuscript, the parameter list is read. If the user does not have the *Execute* right, a *BadUserAccessDenied* error is returned.
+    - If the user has sufficient rights, the dialog to enter the parameters is opened and the script is called.
+
+.. _ac_inheritance:
+
+Inheritance
++++++++++++
+
+Node permissions are automatically passed on to all child nodes until specific rights are defined for a sub node. Starting from this point, the rights defined for this sub node are inherited by its child nodes. There are the following exceptions:
+
+- **Private groups:** Rights defined for private groups will always be inherited, even if there are separate rights for a child node. 
+- **Types and instances:** 
+
+    - Rights are not passed on to nodes that are no real child nodes (e.g. shared nodes at types respectively the instances). This also applies to private groups.
+    - Shared nodes:
+
+        - Private groups for shared nodes can only be defined at the type. Therefore, the rights for these shared nodes must be defined at the type and the configured rights are valid for all instances.
+        - Shared nodes configured for a type also get possible rights from system function "Types".
+        - Normal sub nodes of a shared node inherit its rights.
+
+    - If an alarm right is configured for one instance, this right is only applied to this particular instance, even if the alarm configuration is "shared". This also applies to nodes of instances that are used to trigger a script.
+
+The following example clarifies the different behavior. G1 and G2 are normal groups whereas G3 is a private group. Directly configured rights are bold, inherited rights are italic: 
+
+.. list-table::
+    :header-rows: 1
+    :widths: auto
+    :stub-columns: 4
+
+    * - Node
+      - 
+      -
+      -
+      - G1
+      - G2
+      - G3 
+    * - AGENT.OBJECTS:
+      - 
+      - 
+      -
+      - **Read**
+      - **Write**
+      - **Engineer**
+    * - 
+      - folder1:
+      -  
+      - 
+      - *Read*
+      - *Write*
+      - *Engineer*
+    * -
+      -
+      - folder1_1:
+      -
+      -  
+      - **Engineer**
+      - *Engineer*
+    * - 
+      - 
+      - 
+      - nodeX:
+      -  
+      - **Engineer** 
+      - *Engineer*
+    * - 
+      - folder2:
+      -  
+      - 
+      - **Engineer**
+      - 
+      - *Engineer*
+    * - 
+      - 
+      - folder2_1
+      - 
+      - *Engineer*
+      - 
+      - *Engineer*
+
+Overriding instances
+++++++++++++++++++++
+
+Rights configured for a type can be overridden for instances. In this case the configuration for the type is ignored and only the rights configured for the instance are considered. For example:
+
+- ObjectType MyType
+    - MyFolder: G1: Read
+- Inst1
+    - MyFolder: G2: Write
+
+The "MyFolder" rights are overridden for the instance. This means that "G2: Write" is configured for "Inst1.MyFolder" and all of its child nodes.    
+
+Visualization 
+**************
+
+.. _ac_cookie:
+
+Cookie support
+++++++++++++++
+
+.. rubric:: Data access
+
+Requests from the browser to the server can be authenticated and assigned to sessions when enabling the cookie support. This allows to check whether the requested data or resources shall be accessible. The cookie support can be enabled by the :ref:`Use cookie<use_cookies>` checkbox in the http or https settings of the respective server. Access to the requested data depends on the following factors:
+
+    - Request method -- A distinction is made between:
+
+        - webMI POST requests (e.g. webMI.data.read, webMI.data.queryFilter)
+        - webMI GET requests (e.g. webMI.frame.setSrc, webMI.display.openDisplay, webMI.display.openUrl, webMI.gfx.setImage)
+        - other POST or GET requests (resources like displays, images, etc.) that are not loaded by webMI functions but are e.g. directly referenced in displays. This also applies to manually implemented requests like *new XMLHttpRequest()*)
+        
+    - Cookie support enabled or disabled
+    - Authenticated or anonymous user 
+
+The following table shows in which case the requested data can be accessed:
+
+.. list-table:: Access to requested data
+    :header-rows: 1
+    :stub-columns: 1
+
+    * - 
+      - Cookie support disabled
+      - Cookie support enabled 
+    * - webMI POST requests
+      - Yes
+      - Yes
+    * - webMI GET requests
+      - Yes, only for authenticated users
+      - Yes, only for authenticated users
+    * - Other POST/GET requests 
+      - No
+      - Yes
+
+.. hint:: The *SameSite* attribute defines in which context the cookie is sent. In this case, *SameSite* is set to *Lax*.
+
+.. rubric:: Login and authentication
+
+Cookies are not enabled in atvise by default. This means that a user must log in and authenticate to the visualization after every browser refresh or when opening the visualization in another browser tab. If :ref:`two-factor authentication<ac_2fa>` is enabled, the second factor is required every time, even when using :ref:`login methods<authentication>` *digest* or *ntlm*. Enabling cookie support allows to maintain the user data of the current session after a browser refresh as well as across multiple browser tabs, which means that the user remains logged in.
+
+The following table shows the login and authentication behavior when cookies are disabled:
+
+.. list-table:: Login and authentication after browser refresh or when opening new browser tabs
+    :header-rows: 1
+    :stub-columns: 1
+
+    * - 
+      - Normal login
+      - Two-factor authentication enabled
+    * - *form* login
+      - Every time
+      - Both factors every time
+    * - *script* login with atvise user
+      - Every time
+      - Both factors every time
+    * - *script* login without atvise user 
+      - Every time
+      - First factor every time
+    * - *digest* login
+      - One time
+      - First factor once, second factor every time
+    * - *ntlm* login with atvise user
+      - Automatic
+      - Second factor every time
+    * - *ntlm* login without atvise user
+      - Automatic
+      - Automatic
+
+.. _ac_visualization:
+
+Resources
++++++++++
+
+.. rubric:: Whitelist
+
+Some specific resources are required to ensure that all the necessary information can be displayed in the visualization at all times. Therefore, the following resources are whitelisted, i.e. excluded from the access control:
+
+- SYSTEM.RESOURCES/authentication.htm
+- SYSTEM.RESOURCES/favicon.ico
+- SYSTEM.RESOURCES/font/css/*
+- SYSTEM.RESOURCES/font/webfonts/*
+- SYSTEM.RESOURCES/index.htm
+- SYSTEM.RESOURCES/other/promise.polyfill.min.js
+- SYSTEM.RESOURCES/webmi.js
+- SYSTEM.RESOURCES/webmicfg.js
+- SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Symbols.60x60.prohibition_sign_grey
+- SYSTEM.LIBRARY.PROJECT.OBJECTDISPLAYS.Symbols.60x60.prohibition_sign_grey
+- SYSTEM.LIBRARY.ATVISE.QUICKDYNAMICS.*
+- SYSTEM.LIBRARY.PROJECT.QUICKDYNAMICS.*
+
+.. hint:: All Quick Dynamics are transmitted to the visualization as a package (project.js) since dynamic loading and unloading of Quick Dynamics is not supported.
+
+.. rubric:: atv:required
+
+The *atv:required* parameter can be used to set a resource as mandatory. In this case, opening the visualization is aborted with an error when the respective resource cannot be loaded. 
+
+Example::
+
+    <script src="mandatory.js" type="text/javascript" atv:required="true">
+
+Object display rights
++++++++++++++++++++++
+
+Following rules are applied to object displays when defining access rights:
+
+- **Read:** If a value is not readable because of insufficient rights, *N/A* is displayed instead. Missing rights that are necessary for a correct display (e.g. the *Read* right for min/max values or the activation address) are indicated by the :ref:`notifier symbol<access_control_notifier>` |notifier|.
+- **Write:** If a value is not writable because of insufficient rights, the input element is deactivated and grayed out. However, readable values are still displayed. Missing rights that are necessary for writing (configuration errors, e.g. write limits cannot be read) are indicated by the notifier symbol |notifier|. 
+- **Displays:** Keyboards and other SVG inputs are only checked if SVG input is enabled. If a necessary display is not available (e.g. a display to be opened), the element is deactivated and grayed out. If a button symbol is not available, the respective symbol is replaced by the *access denied* symbol and the button is deactivated, grayed out and the notifier symbol |notifier| is displayed.
+
+The following table shows the behavior depending on missing rights: 
+
+.. list-table:: Behavior on missing rights
+    :header-rows: 1
+
+    * - Node (Parameter)
+      - Missing necessary right
+      - Object display behavior
+    * - Base 
+      - Read
+      - Grayed out + N/A (value is not displayed)
+    * - Base or alternative output address (input element)
+      - Write (Nodes), Execute (Scripts)
+      - Grayed out
+    * - Min/Max for display
+      - Read
+      - Grayed out + |notifier| + N/A (necessary e.g. for bars)
+    * - Min/Max for writing
+      - Read
+      - Grayed out + |notifier|
+    * - Limits of displayed values (4x)
+      - Read
+      - |notifier|
+    * - Alarm address
+      - Read
+      - |notifier|
+    * - Activation address
+      - Read
+      - Grayed out + |notifier|
+
+.. _ac_config_nodes:
+
+Configuration nodes for graphics elements
++++++++++++++++++++++++++++++++++++++++++
+
+The configuration of several visualization components are stored on specific nodes. These configuration nodes must be considered when creating displays for the visualization. It must be ensured that the necessary nodes are created and that visualization users have read or write access to them. 
+
+The respective nodes can either be created automatically by a user with the *Engineer* right (by opening the respective component via atvise visualization) or manually in atvise builder (as nodes of type String). Proceed as follows when configuring one of the following visualization components.
+
+.. rubric:: Highcharts
+
+Configurations of highcharts displays are stored on the node *AGENT.OBJECTS.TrendCfg* by default. The node can be changed via display parameter *configuration node* or the configuration dialog in the visualization. A user needs at least the *Read* right for this node and its subnodes to open highcharts components in the visualization. The following rights can be defined for the created nodes:
+
+    - **Read** -- The user can read existing configurations and open the highcharts display.
+    - **Write** -- The user can edit existing configurations (e.g., via configuration dialog in the visualization) and create new configuration nodes.
+
+.. rubric:: Archive management
+    
+Configurations of the archive management are stored in the folder *AGENT.OBJECTS.ATVISE.ArchiveManagement* by default. The following nodes of type String must exist in this folder and must be writable by the user:
+
+    - currentStep
+    - statusDetails
+    - transferDetails
+    
+The following components are used or called by the archive management and must be considered as well:
+
+    - **Auto-Scheduler** -- The configuration of the Auto-Scheduler is stored on the node *AGENT.OBJECTS.ATVISE.AutoSchedulerConfig* of type String and its subnodes by default. The node can be changed by the display parameter *node for auto-scheduler config* of the archive management. The user needs the *Write* right for this node as well as the *Configure scripts* right for the underlying server script *AutoScheduler*.
+
+    - **Disk Space Monitoring** --  If this Quick Dynamic is used by an authenticated user with default node *SYSTEM.INFORMATION.DIAGNOSTICS.DirectoryMonitoringConfig*, the following nodes will be created by a server script:
+
+        - SYSTEM.INFORMATION.DIAGNOSTICS.DISK.atviseHistoryDriveUsedPercent
+        - SYSTEM.INFORMATION.DIAGNOSTICS.DirectoryMonitoringConfig
+
+      If the configuration node is changed, these nodes are created by the Quick Dynamic. In this case, the user must have the *Engineer* right. 
+
+.. rubric:: Button Favorites
+    
+For every user a corresponding configuration node is created as subnode of *AGENT.OBJECTS.ButtonCfg*. This default node can be changed via display parameter *configuration node*. All configuration nodes are locked and cannot be browsed, read or edited by other users.
+
+If the node is created manually, a node of type String with content "{"buttonConfigIndex": ""}" must be defined.
+
+.. rubric:: Timer
+    
+The configuration is stored on node *AGENT.OBJECTS.TimerConfig* by default. The node can be changed via display parameter *timer configuration node*. In addition, the user needs the *Execute* right for the following webMI methods: 
+
+    - LIBRARY.ATVISE.WEBMIMETHODS.AddNode
+    - LIBRARY.ATVISE.WEBMIMETHODS.SetNodeValue
+    - LIBRARY.ATVISE.WEBMIMETHODS.CheckNodeExists
+
+.. rubric:: Logger
+    
+The following default nodes are automatically created by the logger and inherit the rights from AGENT.OBJECTS:
+
+    - AGENT.OBJECTS.ATVISE
+    - AGENT.OBJECTS.ATVISE.Logger
+    - AGENT.OBJECTS.ATVISE.Logger.atvise.Info
+    - AGENT.OBJECTS.ATVISE.Logger.atvise.Warning
+    - AGENT.OBJECTS.ATVISE.Logger.atvise.Error
+    - AGENT.OBJECTS.ATVISE.Status
+
+The user needs the *Engineer* right to create new nodes for a log entry. It is recommended to create the necessary nodes in atvise builder. However, it is also possible to automatically create the nodes when writing a new log entry by a user with the *Engineer* right for the (parent) reference address. If the user does not have sufficient rights, an error message is shown in the server log. 
+
+    - Example:
+
+        Existing node:    
+        AGENT.OBJECTS.ATVISE.Logger.custom1.Info
+
+        New node:
+        AGENT.OBJECTS.ATVISE.Logger.custom1.Warning --> The user needs the *Engineer* right for AGENT.OBJECTS.ATVISE.Logger.custom1
+
+        New node:
+        AGENT.OBJECTS.ATVISE.Logger.custom2.Warning --> The user needs the *Engineer* right for AGENT.OBJECTS.ATVISE.Logger
+
+    In addition, a user needs the *Write* respectively the *Read* right for the respective node to write or read log entries.
+
+    .. |notifier| image:: images/access_control_notifier.png

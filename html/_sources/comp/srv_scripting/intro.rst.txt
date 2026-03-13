@@ -1,0 +1,387 @@
+.. _server_scripting_reference:
+
+Introduction
+############
+
+For conventions used for the documentation of the JavaScript functions see :doc:`conventions`.
+
+Server scripts can be written with the :ref:`server_script_editor` and can be used in different ways, e.g. as script elements on nodes.
+
+The JavaScript interpreter of atvise implements the following additional features:
+
+:doc:`control_and_diagnostics`
+    Flow control and diagnostic
+
+:doc:`globals_object`
+    Shared storage for scripts
+
+:doc:`script_object`
+    Metadata of scripts
+
+:doc:`server_object`
+    Server information and live backup
+
+:doc:`opcua_object`
+    General operations for the OPC UA address space
+
+:doc:`ua`
+    Manipulation of OPC UA nodes and references
+
+:doc:`alarming`
+    Manipulation of alarms
+
+:doc:`childprocess`
+    Starting and controlling child processes
+
+:doc:`csvreader`
+    Reading of CSV data (into table)
+
+:doc:`filesystem`
+    Manipulation of the file system
+
+:doc:`inputfilestream`
+    Reading files
+
+:doc:`outputfilestream`
+    Writing files
+
+:doc:`xmldoc`
+    Parsing of XML documents
+
+:doc:`httpclient`
+    Sending HTTP(S) requests
+
+:doc:`smtpclient`
+    Sending emails via SMTPClient
+
+:doc:`tcpclient`
+    Handling TCP Connections
+
+:doc:`odbcclient`
+    Handling ODBC Connections
+
+:doc:`history`
+    Writes data values into the history archive
+
+:doc:`archive_locking`
+    Archive information and locking
+
+:doc:`xml_export_import`
+    XML export/import for nodes
+
+:doc:`access_control`
+    Handling access rights
+
+:doc:`datasources`
+    Browse, read and write for data sources
+
+:doc:`security`
+    Handling user passwords
+
+:doc:`translations`
+    Handling translations
+
+Please note, especially when using atvise script extensions like TCP or ODBC: Only execute() is asynchronous. All other calls of methods of extension are synchronous.
+
+.. rubric:: Definition
+
+In atvise, scripts are stored in nodes, as is all other information. Nodes containing script must be of type "VariableTypes.ATVISE.ScriptCode" so that they are recognized by atvise as a script. Creating scripts using the menu item "Add Script ..." will automatically use this type.
+
+.. rubric:: Location
+
+Scripts can be stored below an arbitrary node in the address space. However, some special scripts must be stored at predefined locations.
+
+webMI callable scripts
+    These scripts must be located at the Node SYSTEM.LIBRARY.PROJECT.WEBMIMETHODS. In atvise builder, these scripts are below "webMI Method scripts".
+
+Scripts callable via HTTP
+    These scripts work like any other atvise resource (static content delivered by the integrated web server) and are therefore below System.Resources. They can be managed directly in the Resources tree.
+
+Script libraries
+    Script libraries are scripts that contain common code that can be called by any other scripts. Frequently used code can be implemented in a standalone script and stored at a predefined location.
+
+    The default location for script libraries is SYSTEM.LIBRARY.PROJECT.SERVERSCRIPTS (in the tree below the "Script Library"). Scripts that are in this folder can be called by their names as well. By means of folders, the library can be structured thematically, for example.
+
+    In addition to the default location of script libraries, script libraries can be located at arbitrary nodes. In this case, the script can be called by its full nodeID.
+
+Scripts triggered by timer
+    Scripts that are triggered by timers can be anywhere in the address space. It is recommended, however, that scheduled scripts are stored in a common folder.
+
+Scripts with relative addressing
+    Scripts that have relatively addressed parameters can only be accessed by node parameters that are hierarchically below the base node. A script may be triggered by several relatively-addressed nodes. All of these triggering node parameters must have one common ancestor, that is the base node. In most cases, this will be the direct object type or a folder in an object type.
+
+.. rubric:: Script Name
+
+The name of scripts can be freely chosen. For scripts that are invoked via a webMI call, the name must begin with a capital letter, however.
+
+.. rubric:: Script Editor
+
+The editor for the script code will be opened by double-clicking on the node that contains the script.
+
+A script consists of two parts: the definition of the parameters that are passed on to the script when you call them and the actual JavaScript code.
+
+.. _srv_script_parameters:
+
+.. rubric:: Script Editor: Parameters
+
+All scripts have an implicit parameter called "base" that can be accessed in the script. For scripts triggered by the atvise server, "base" is an object with following properties:
+
+    - **nodeid** (String) -- The nodeID of the base node of the script (e.g. the instance where the script is currently running)
+    - **trigger** (Object) -- An object specifying the parameter that triggered the script:
+
+        - **name** (String) -- The name of the parameter
+        - **type** (String) -- Type of the parameter
+
+However, if a script calls another script via :func:`call`, only the content of "base.nodeid" will be passed as "base" to the called script. In any case, "base" can be used to create a valid Ua object with ``Ua.findNode(base)`` (see :ref:`Ua functions<ua_functions>`).
+
+All other parameters are defined in the upper part of the editor. The definition of a parameter consists of the name and the type of the parameter.
+
+Following types are available:
+
+alarm
+    The alarm parameter is an alarm condition object. This parameter will be set, if the alarm status of a matching alarm condition changes.
+
+    .. hint:: The script will be triggered for every single change of the alarm status. Besides becoming active or inactive, such a change can also be e.g. shelving, commenting or deleting the alarm condition.
+
+    For a list of properties of the alarm object see :ref:`alarm_object_properties`.
+
+boolean
+    boolean
+
+numeric
+    numeric value
+
+string
+    string
+
+node
+    The node parameter is a Node object with the properties: value, status, sourcetime, servertime and trigger (true, if the node triggered the script, otherwise false). The properties can be accessed via dot notation. If the specified node doesn't exist or is not a variable, the parameter is null.
+
+node.value
+    OPC UA value of the node. If the specified node doesn't exist or is not a variable, the parameter is null.
+
+node.status
+    OPC UA status of the node. If the specified node doesn't exist or is not a variable, the parameter is null.
+
+node.sourcetime
+    OPC UA source timestamp of the node. If the specified node doesn't exist or is not a variable, the parameter is null.
+
+node.servertime
+    OPC UA server timestamp of the node. If the specified node doesn't exist or is not a variable, the parameter is null.
+
+timer
+    The script runs daily on one or more specified times. A start or end date can be set optionally. The repetition time refers to one day and will be considered if the calculated time is in the range 00:00:00 to 23:59:59. The start time and end time are given in **local time**. The **end time is exclusive**, so the script is not triggered on this day if the triggering time is greater than or equal to the end time. Triggering times calculated from start time and repetitions are in **local time** as well. So if daylight saving time changes on a day then the day has either duplicated or non-existent times. The calculated triggering timestamps are in **local time** as well, so daylight saving time changes influence the triggering times: If a timestamp is duplicated on a day the calculated triggering timestamps will trigger on both timestamps. If a timestamp does not exist on a day then the script will be not triggered at that time stamp. See :doc:`scheduling_rules`.
+
+    .. hint:: Scripts which are triggered by a timer are released once the entire system is up!
+
+    .. hint:: Days on daylight saving time changes do not have 24 hours. They have either 23 or 25 hours.
+
+interval
+    The script runs daily on one or more specified times. A start or end date can be set optionally. The first daily triggering time is specified by offset. The number of triggering times is limited by count - or the end of the day - and the timespan between triggering times is given by interval. The offset is specified in **standard time**. **Standard time** does not take into account daylight saving time changes. So the triggering times will be shifted by one hour if daylight saving time is on. See :doc:`scheduling_rules`.
+
+    .. hint:: In standard time all days - including those with daylight saving time changes - have 24 hours.
+
+once
+    The script runs once at the specified timestamp in **local time**.
+
+startup
+    The script will start when the atvise server starts.
+
+    .. hint:: Scripts of this trigger type are triggered during the startup process before the WebAccess module and thus before the entire system is up!
+
+shutdown
+    The script will start when the atvise server is shut down. The atvise server will not be stopped until the script has finished.
+
+http
+    The http parameter is an object with the properties *request*, *response*, *ip* and *session*. See below for a description of the properties. It is only available when the script was called from an HTTP client.
+
+http.request
+    The request object. It has the following properties:
+
+    - **query** (String) -- The full query string of the URL from which the script is called
+    - **content** (String) -- The complete content (body) of the HTTP request
+    - **getvalues** (Object) -- A JavaScript object with all the parameters of a GET request as properties of the object
+    - **postvalues** (Object) -- A JavaScript object with all the parameters of a POST request as properties of the object
+    - **headers** (Object) -- A JavaScript object with all HTTP header fields as key-value pairs (e.g.: "headers":"Accept":"*/*", "Accept-Encoding":"gzip, deflate, br", "Accept-Language":"en-US;q=0.7",...})
+
+http.response
+    The response object. Allows to set HTTP header lines via setHeader(name, value) and writing the content via write(data).
+
+http.ip
+    IP address of the HTTP client.
+
+http.session
+    The session object. It has the following properties:
+
+    - **authentication** (String) -- Authentication type ("basic", "digest", "negotiate", "ntlm");
+    - **status** (String) -- Authentication state ("NotAuthenticated", "Authenticated", "InvalidUserOrPassword", "AuthenticationServiceError", "AuthenticationSecurityError")
+    - **realm** (String) -- Authentication realm
+    - **user** (String) -- Authenticated user or "null"
+    - **uri.path** (String) -- Request URL
+    - **uri.query** (String) -- Request query
+    - **client.ip** (String) -- IP address of the HTTP client
+    - **client.port** (Number) -- Port of the HTTP client
+    - **host.name** (String) -- Name of the HTTP server
+    - **host.ip** (String) -- IP address of the HTTP server
+    - **host.port** (Number) -- Port of the HTTP server
+    - **id** (Number) -- Session ID
+    - **clientToken** (String) -- Session client token (no empty string if /webMI/?createsession was called before)
+
+Example for a script parameter with name *h* of type *http*::
+
+    console.log(h.request.ip);
+    h.response.write("Hello, world!");
+
+Example for a script parameter with name *req* of type *http.request*::
+
+    console.log(req.getvalues["name"]); // passed as ?name=MyName
+
+session
+    The session parameter is an object with the property *user*. It is only available for scripts that are invoked via a webMI call.
+
+session.user
+    The login name of the user who is logged in to the browser.
+
+**Trigger**: Is only relevant for parameters of the types *node* (including *node.value*, ...), *alarm*, *timer*, *interval*, *once*, *startup* and *shutdown*. For *node* and *alarm* it indicates whether the script is triggered if the node or the alarm status changes. For *timer*, *interval*, *once*, *startup* and *shutdown* it is used to enable or disable the triggering of the script. Several parameters may be defined with triggering. Triggering a script by another parameter will set the parameters of type *alarm*, *timer* and *interval* to null.
+
+**Relative** (|relative_button|): Is only relevant for parameters of the type *node* (including *node.value*, ...) and *alarm* and indicates whether the given address is relative to the base or an absolute NodeID.
+
+**Value**: The content depends on the type of the parameter:
+
+alarm
+    *Value* is an OPC UA NodeID of the alarm condition in the so-called "XML" format (e.g.: "ns=1;s=AGENT.OBJECTS.TestNode.Alarm.Condition"). If you drag and drop nodes, the NodeID is entered correctly. For absolute NodeIDs (see description of *Relative* above) a GLOB pattern (supports the wildcards '\*' and '?') can also be used.
+
+boolean, number, string
+    *Value* is a value of the appropriate type (true / false, integer / floating-point number or an arbitrary string). *Value* is passed on directly to the script. Such parameters are useful in scripts that are called by other scripts, because the value is used as default value if the calling script is not passing the parameter.
+
+node, node.\*
+    *Value* is an OPC UA NodeID in the so-called "XML" format (e.g.: "ns=1;s=AGENT.OBJECTS.my_node"). If you drag and drop nodes, the NodeID is entered correctly.
+
+timer, once, startup, shutdown, session, session.\*, http, http.\*
+    *Value* is not used.
+
+.. hint:: The types *array*, *filecontent*, *stream*, *textfilecontent* and *uainput* are meant for :ref:`menu scripts <menu_scripts>` only. 
+
+.. rubric:: Script Code
+
+JavaScript code can be written in the lower part of the script editor. All parameters defined by "parameter name" in the upper part and "base" can be used as a variable name in the code.
+
+.. rubric:: Return values (only for webMI call)
+
+The return value of a call initiated by webMI scripts is always a JavaScript object. The type of the returned value determines the exact contents of this object:
+
+No return value
+    Empty JavaScript object (no properties)
+
+simple value or array
+    JavaScript Object with the property "result", which contains the value returned by the script
+
+JavaScript Object
+    The object is passed to the caller 1:1
+
+Examples::
+
+    return "a value"; // {result: "a value"}
+    return [1, 2, 3]; // {result: [1, 2, 3]}
+    return {name: "hugo", age: 33}; // {name: "hugo", age: 33}
+
+The access via client-side JavaScript to the above examples is::
+
+    webMI.data.call("ScriptName", {}, function(ret) {
+       ret.result; // "a value"
+       ret.result[1]; // 2
+       ret.name; // "hugo"
+    });
+
+.. rubric:: Error handling (only for webMI call)
+
+If the script fails, an exception is thrown. If this is not captured in the script itself, then the following JavaScript object is returned to the caller::
+
+    {error: -1, errorstring: "error message"}
+
+You can use the same error object for errors you want to return to the caller.
+
+.. attention:: **Negative error codes** are reserved for **internal use.** Using negative error codes may lead to unexpected behavior of the visualization.
+
+.. rubric:: Calling a script from an HTTP client
+
+Scripts that were created in :treeselection:`Resources` can be accessed directly through web browser input from a corresponding URL. A script named "myreport", for example, located in the folder "scripts", can be accessed via ``http://localhost/scripts/myreport``. Parameters with ``?par1=value1&par2=value2`` are passed on to the script. A complete call could look like ``http://localhost/scripts/myreport?format=csv&type=summary``.
+
+Example 1: Return a simple report with historical data:
+
+Create a script with the parameters *request* of type *http.request* and *response* of type *http.response* JavaScript code like::
+
+    // This script can be called with the corresponding parameters:
+    //         node, max
+    // through a URL in a browser, e.g.:
+    // http://localhost/simplereport?node=instance.values.temperature&max=10
+
+    var par = request.getvalues;
+    var n = Ua.findNode("AGENT.OBJECTS." + par["node"]);
+    var numvalues = parseInt(par["max"]);
+    var data = n.result.dataHistory({
+        endTime: new Date(),
+        numValues: numvalues
+    });
+
+    // return web page
+    response.write("<html><head><title>Simple Report</title></head><body>");
+    // write report body...
+    response.write("</body></html>");
+
+Example 2: Send a PDF file from the disk to the web client via "binary" mode of the "response.write" function::
+
+    var ifs = new InputFileStream("C:/temp/test.pdf", "binary");
+    ifs.open();
+    response.setHeader("Content-Type", "application/pdf");
+    response.write(ifs.read(0), "binary");
+    ifs.close();
+
+.. rubric:: webMI call
+
+This method can be used in displays to call scripts and use the return value from scripts in the display itself.
+
+Example for scripts to create an instance of an object type including a MirrorBase:
+
+Client side script::
+
+    webMI.data.call("CreateInst", {
+       typedef: "Engine",
+       instname: "Engine1",
+       mirrorbase: "ds/ns=1;s=engines"
+    }, function(ret) {
+          console.log(ret);
+    });
+
+Server side script "CreateInst" (with parameter *request* of type *http.request*)::
+
+    // This script can be called with the parameters:
+    //         typedef, instname, mirrorbase
+    // through webMI call.
+
+    var typedef = request.postvalues["typedef"];
+    var instname = request.postvalues["instname"];
+    var mirrorbase = request.postvalues["mirrorbase"];
+
+    var full_type = "ObjectTypes.PROJECT.MyTypes." + typedef;
+    var instance_base = "AGENT.OBJECTS.MYOBJECTS";
+    var full_name = instance_base + "." + instname;
+    var node = Ua.findNode(full_name);
+
+    node.createNode({
+       nodeClass: Ua.NodeClass.OBJECT,
+       parent: instance_base,
+       typeDefinition: full_type
+    });
+
+    var mirror = Ua.findNode(full_name + ".RelMirrorBase");
+
+    mirror.createNode({
+        nodeClass: Ua.NodeClass.VARIABLE,
+        parent: full_name,
+        typeDefinition: "VariableTypes.ATVISE.Mirror.Relative.Base",
+        dataType: Ua.DataType.STRING,
+        value: mirrorbase
+    });
+
+.. |relative_button| image:: /common_images/relative_button.png

@@ -1,0 +1,272 @@
+.. _report_functions:
+
+Report functions
+################
+
+.. rubric:: Introduction
+
+These functions can be used to created a report based on a :ref:`template<report_template>`. Comply with the following steps when using report functions:
+
+#. Create an instance of the report class
+
+    - Define the template
+    - Define the time basis for the report
+
+#. Query data with Report.generate()
+
+    - The template is processed by atvise
+    - Markups of the template are converted to queries according to their type (node, query, alarm, meta)
+    - Queries are passed to callback function and must be executed according to their type 
+
+        - Type node: Ua.findNode(query);
+        - Type alarm: alarming.read(query);
+        - Type query: history.query(query));
+        - Type meta: return custom data
+
+    - The query result is written to memory 
+
+    .. hint:: Please note the following when returning custom data to the report (e.g. via meta script): 
+
+        - The decimal point must be used as decimal mark for values.
+        - Passed Timestamps must be passed as JavaScript timestamps or in *simplified extended ISO Format (ISO 8601)*. 
+    
+     Other formats may cause problems when converting or displaying data. 
+
+#. Save the report with Report.save() or Report.saveAsPdf() in the file system
+
+.. rubric:: Creating a report object
+
+.. class:: Report(templateFile[, options])
+
+    To use any of the functions below, a report object must be created at first. 
+
+    Parameters:
+        - **templateFile** (String) -- File path and template name.
+        - **options** (Object, optional, default: {}) -- An object with following properties:
+
+            - **reportTime** (Date, optional, default: Date.now()) -- Time base for creating the report. E.g.: *Date.now()* or *new Date(2023, 2, 17, 10, 0, 0)*. The time of report generation is used as basis for querying data (see :ref:`markup parameter data<markup_query>`).
+            - **language** (String, optional, default: "") -- The language (e.g. "de-DE" or "de") that shall be used when the result of a query contains a multi-language string. If not defined (""), the language of the operating system is used. In case that the given language does not exist in the returned string, either the english text (if available) or the first occurring language is used.
+
+    Example::
+
+        var report = new Report("C:/proj/report/myTemplate.xlsx", {
+            reportTime: Date.now(),
+            language: "en"
+        });
+
+.. rubric:: Properties
+
+.. attribute:: Report.runtimes
+
+    This property returns a JavaScript object with the following arrays:
+
+    - **installed** (array of strings) -- A list of all .NET runtimes installed on the system. Empty array if no .NET runtime is installed.
+    - **suitable** (array of strings) -- Shows which of the installed .NET runtimes is :ref:`suitable<report_intro>` for the atvise report. Empty array if no installed runtime is suitable. 
+
+    Example::
+
+        console.log(report.runtimes);
+        // Output: {"installed":["["Microsoft.NETCore.App <version> <install path>","...","..."],"suitable":["Microsoft.NETCore.App <version> <install path>"]}
+
+.. attribute:: Report.usedDotnetDeployment
+
+    This property returns the following JavaScript object: 
+
+    - **usedDotnetDeployment** (String) -- Shows the used .NET runtime (see :ref:`useSelfContainedDotnet<ini_script>` in :file:`atserver.ini`). Possible values:
+
+        - self-contained -- The .NET runtime provided by atvise is used.
+        - framework-dependent -- The .NET runtime installed on the system is used.
+
+    Example::
+
+        console.log(report.usedDotnetDeployment);
+        // Output: {"usedDotnetDeployment":"self-contained"}
+
+
+.. rubric:: Functions
+
+.. function:: Report.generate(callback)
+
+    The given template is loaded into memory and all of the template's queries (defined via *data* and *type*, see :ref:`atvise report > templates - markup language<report_markup>`) are converted to atvise-compliant queries. The converted queries are passed to the callback function which retrieves and returns the required data for every query. The retrieved data is written to memory. The callback function is called until all queries of the template are executed. 
+
+    Parameters:
+        - **callback** (function) -- The callback function that is called to query the data. The function must be called with a JavaScript object with the following properties:
+
+            - **type** (String) -- Query type (node, query, meta or alarm). Corresponds to the markup parameter of the same name.
+            - **data** (String) -- The query that must be executed according to its type. Corresponds to the markup parameter of the same name.
+
+         Depending on the type, the callback function must retrieve and return the required data:
+
+            - Type node -- Result of Ua.findNode()
+            - Type query -- Result of history.query()
+            - Type alarm -- alarming.list or alarming.read(conditionId)[0]
+            - Type meta -- Custom JavaScript object. The maximum nesting depth of this object is restricted to 128.
+    
+         Throwing an exception allows to stop the callback function in case of an error (see example). Report.generate() is terminated as well and returns {error: -1, errorstring: "<Exception>"}.
+
+    Returns:
+        - JavaScript object with the following properties:
+
+            - **error** (Integer) -- Error code
+            - **errorstring** (String) -- Error text
+
+    Example::
+
+        var report = new Report("template.xlsx");
+        var result = report.generate(function(query){
+            var ret;
+            
+            switch (query.type) {
+                case "node":
+                    ret = Ua.findNode(query.data);
+                    return ret.result;
+
+                case "query":
+                    ret = history.query(query.data);
+                    return ret.result;
+
+                case "alarm":
+                    if (query.data === "") {
+                        ret = alarming.list;
+                    } else {
+                        ret = alarming.read(query.data)[0];
+                    }
+                    return ret;
+
+                case "meta":
+                    if (query.data === "test") {
+                        ret = [{ reportCreatedBy: script.caller, reportTime: Date.now(), customData: "if data parameter in template = 'test'" }];
+                    } else {
+                        //if data parameter is anything else, call metascript "myCustomScript" and pass additional parameters
+                        var script_result = call("AGENT.OBJECTS.myCustomScript", {"data": query.data, "Parameter_1": "Value 1", "Parameter_2": "Value 2"});
+                        return script_result;
+                    }
+                    return ret;
+
+                default:
+                    throw "Unimplemented type of " + query.type;
+                }
+        });
+        if (result.error)
+            console.error(result.errorstring);
+        else
+            result = report.save("report.xlsx");
+
+.. function:: Report.save(xlsxOutputFile[, options])
+
+    Saves the report in the given file. 
+
+    Parameters:
+        - **xlsxOutputFile** (String) -- Name of the file (including file path and extension) to be saved. 
+        - **options** (Object, optional, default: {}) -- An object with following properties:
+
+            - **overwrite** (Boolean, optional, default: false) -- Defines if an existing file with the same name shall be overwritten.
+
+    Returns:
+        - JavaScript object with the following properties:
+
+            - **error** (Integer) -- Error code
+            - **errorstring** (String) -- Error text
+
+.. function:: Report.saveAsPdf(pdfOutputFile[, options])
+
+    Saves the report as PDF file in the given language. It is also possible to define the worksheets that shall be included. 
+
+    Parameters:
+        - **pdfOutputFile** (String) -- Name of the file (including file path and extension) to be saved.
+        - **options** (Object, optional, default: {}) -- An object with following properties:
+ 
+            - **startWorksheet** (Integer, optional, default: 0) -- The first worksheet that shall be included. 0 means that all worksheets are included and the *EndWorkSheet* parameter is ignored.
+            - **endWorksheet** (Integer, optional, default: 0) -- The last worksheet that shall be included.
+            - **locale** (String, optional, default: "") -- Defines the language that is used when saving the report file, e.g. "en-US". The language specifies the formatting of e.g. time (e.g.:  de-DE: "30.05.2023 16:19" -- en-US: "5/30/2023 16:19") or decimal point (e.g.: de-DE: 42,5 -- en-US: 42.5). If no language is defined (""), the language of the operating system is used.
+            - **overwrite** (Boolean, optional, default: false) -- Defines if an existing file with the same name shall be overwritten.
+
+    Returns:
+        - JavaScript object with the following properties:
+
+            - **error** (Integer) -- Error code
+            - **errorstring** (String) -- Error text
+
+.. function:: Report.convertToPdf(xlsxInputFile, pdfOutputFile[, options])
+
+    Allows to convert a report file into a new Excel or PDF file with the given language.
+
+    Parameters:
+        - **xslxInputFile** (String) -- Name of the report file (including file path and extension) that shall be converted.
+        - **pdfOutputFile** (String) -- Name of the file (including file path and extension) that shall be created.
+        - **options** (Object, optional, default: {}) -- An object with following properties:
+ 
+            - **startWorksheet** (Integer, optional, default: 0) -- The first worksheet that shall be included. 0 means that all worksheets are included and the *EndWorkSheet* parameter is ignored.
+            - **endWorksheet** (Integer, optional, default: 0) -- The last worksheet that shall be included.
+            - **locale** (String, optional, default: "") -- Defines the language that is used when saving the report file, e.g. "en-US". The language specifies the formatting of e.g. time (e.g.:  de-DE: "30.05.2023 16:19" -- en-US: "5/30/2023 16:19") or decimal point (e.g.: de-DE: 42,5 -- en-US: 42.5). If no language is defined (""), the language of the operating system is used.
+            - **overwrite** (Boolean, optional, default: false) -- Defines if an existing file with the same name shall be overwritten.
+
+    Returns:
+        - JavaScript object with the following properties:
+
+            - **error** (Integer) -- Error code
+            - **errorstring** (String) -- Error text
+
+.. function:: Report.release()
+
+    Clears the used memory immediately. Otherwise, the memory will be cleared automatically at a later time.
+
+Example::
+
+    // Set the report time to one minute ago
+    var start = Date.now() - 60000;
+
+    // Initialize report
+    var report = new Report("D:/Report/Template.xlsx", { reportTime: start });
+
+    // Generate report
+    var result = report.generate(function (query) {
+		var ret;
+		
+        switch (query.type) {
+            case "node":
+                ret = Ua.findNode(query.data);
+                return ret.result;
+
+            case "query":
+                ret = history.query(query.data);
+                return ret.result;
+
+            case "alarm":
+                if (query.data === "") {
+                    ret = alarming.list;
+                } else {
+                    ret = alarming.read(query.data)[0];
+                }
+                return ret;
+
+            case "meta":
+                if (query.data === "test") {
+                    ret = [{ reportCreatedBy: script.caller, reportTime: Date.now(), customData: "if data parameter in template = 'test'" }];
+                } else {
+                    //if data parameter is anything else, call metascript "myCustomScript" and pass additional parameters
+                    var script_result = call("AGENT.OBJECTS.myCustomScript", {"data": query.data, "Parameter_1": "Value 1", "Parameter_2": "Value 2"});
+                    return script_result;
+                }
+                return ret;
+
+            default:
+                throw "Unimplemented type of " + query.type;
+        }
+    });
+
+    // Handle errors or save to file
+    if (result.error) {
+        console.error(result.errorstring);
+    } else {
+        report.save("./Report.xlsx", { overwrite: true });
+        report.saveAsPdf("./Report.pdf", {
+            startWorksheet: 0,
+            endWorksheet: 2,
+            locale: "en-US",
+            overwrite: true
+        });
+    }
+
+    // Clear memory explicitly
+    report.release();

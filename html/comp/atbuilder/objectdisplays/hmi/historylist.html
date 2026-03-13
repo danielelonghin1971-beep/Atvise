@@ -1,0 +1,1467 @@
+﻿
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Historylist &mdash; atvise 3.13.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/theme_rtd_overrides.css?v=3ac1cdb9" />
+
+  
+    <link rel="shortcut icon" href="../../../../_static/atvise.ico"/>
+      <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../../_static/documentation_options.js?v=1ae1804b"></script>
+      <script src="../../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../../../_static/search_data.js"></script>
+      <script src="../../../../_static/language_data.js?v=8b189327"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+    <link rel="next" title="Historylist (800x425)" href="historylist_small.html" />
+    <link rel="prev" title="Display Date" href="date_display.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../../index.html" class="icon icon-home">
+            atvise
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../../welcome.html">Welcome to atvise</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../how_to_use_this_help.html">How to use this help</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../before_you_start.html">Before you start</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../before_you_start.html#system-requirements">System Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../before_you_start.html#migration-information-short-description">Migration Information - short description</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../before_you_start.html#information-for-svg">Information for SVG</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../before_you_start.html#software-license-agreement">Software License Agreement</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../installation_and_licensing.html">Installing &amp; licensing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../installation_and_licensing.html#installing-atvise">Installing atvise</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../installation_and_licensing.html#licensing">Licensing</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../installation_and_licensing.html#getting-an-atvise-webmi-or-scada-license">Getting an atvise webMI or scada license</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../installation_and_licensing.html#atvise-scada-ccd-licensing">atvise scada CCD licensing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../installation_and_licensing.html#fixed-client-licensing">Fixed client licensing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../installation_and_licensing.html#web-client-licensing">Web client licensing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../installation_and_licensing.html#data-source-licensing">Data source licensing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../installation_and_licensing.html#mirrored-variable-licensing">Mirrored variable licensing</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../tutorials.html">Tutorials</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../tutorials/scada.html">First steps: atvise scada</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../tutorials/scada/tutorial1.html">1 Starting atvise</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../tutorials/scada/tutorial2.html">2 Start and connect atvise builder</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../tutorials/scada/tutorial3.html">3 The first display</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../tutorials/scada/tutorial4.html">4 Dynamics</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../tutorials/scada/tutorial4/tutorial4_1.html">4.1 The first dynamics</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../tutorials/scada/tutorial4/tutorial4_2.html">4.2 Using predefined controls</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../tutorials/scada/tutorial4/tutorial4_3.html">4.3 Using quick dynamics</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../tutorials/scada/tutorial4/tutorial4_4.html">4.4 Using simple dynamics</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../tutorials/scada/tutorial5.html">5 Connecting to a foreign server</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../tutorials/scada/tutorial6.html">6 Object-oriented engineering</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../tutorials/scada/tutorial7.html">7 Adding an object display</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../tutorials/scada/tutorial8.html">8 Adding historization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../tutorials/scada/tutorial9.html">9 Adding alarms</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../tutorials/scada/tutorial10.html">10 Adding user rights</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../tutorials/webmi.html">First steps: atvise webMI</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../tutorials/webmi/tutorial1.html">1 Start atvise</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../tutorials/webmi/tutorial2.html">2 Add server and import data variables</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../tutorials/webmi/tutorial3.html">3 Draw a display and generate visualization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../tutorials/webmi/tutorial4.html">4 The visualization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../tutorials/webmi/tutorial5.html">5 Parameterization option 1 - direct addressing</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../tutorials/webmi/tutorial5/tutorial5_1.html">5.1 Using predefined controls</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../tutorials/webmi/tutorial5/tutorial5_2.html">5.2 Using quick dynamics</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../tutorials/webmi/tutorial5/tutorial5_3.html">5.3 Using the simple dynamics dialog</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../tutorials/webmi/tutorial6.html">6 Parameterization option 2a - object oriented</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../tutorials/webmi/tutorial7.html">7 Parameterization option 2b - object oriented</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../tutorials/webmi/tutorial8.html">8 Parameterization option 3 - display at the object type</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../tutorials/howtos.html">How-tos</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../tutorials/howtos/accesscontrol.html">Configure access control for the first time</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../tutorials/howtos/mirroring.html">Mirror alarms considering access control and user mapping</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../tutorials/howtos/mirroring.html#data-source-configuration">Data source configuration</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../tutorials/howtos/mirroring.html#configuring-ds-atvise">Configuring &quot;ds_atvise&quot;</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../tutorials/howtos/mirroring.html#configuring-the-main-project">Configuring the main project</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../security.html">Security</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../security/access_control.html">atvise access control</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../security/access_control/access_control_intro.html">Introduction</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../security/access_control/access_control_intro.html#basics">Basics</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../security/access_control/access_control_intro.html#overview">Overview</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../security/access_control/use_cases.html">Common use cases</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../security/access_control/notes_and_information.html">Information &amp; notes</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../security/access_control/notes_and_information.html#default-rights">Default rights</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../security/access_control/notes_and_information.html#engineering">Engineering</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="../../../../security/access_control/notes_and_information.html#quick-dynamics">Quick Dynamics</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../security/access_control/notes_and_information.html#version-control">Version control</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../security/access_control/notes_and_information.html#alarming">Alarming</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../security/access_control/notes_and_information.html#scripting">Scripting</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../security/access_control/notes_and_information.html#inheritance">Inheritance</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../security/access_control/notes_and_information.html#overriding-instances">Overriding instances</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../security/access_control/notes_and_information.html#visualization">Visualization</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="../../../../security/access_control/notes_and_information.html#cookie-support">Cookie support</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../security/access_control/notes_and_information.html#resources">Resources</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../security/access_control/notes_and_information.html#object-display-rights">Object display rights</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../security/access_control/notes_and_information.html#configuration-nodes-for-graphics-elements">Configuration nodes for graphics elements</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../security/certificates.html">Certificates</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../security/certificates/intro.html">Introduction</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../security/certificates/intro.html#certificate-management-basics">Certificate management basics</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../security/certificates/intro.html#usage-of-certificates-in-atvise">Usage of certificates in atvise</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../security/certificates/configuration.html">Configuration</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../security/certificates/configuration.html#command-line-parameters">Command line parameters</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../security/certificates/configuration.html#atvise-server">atvise server</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../security/certificates/configuration.html#atvise-builder">atvise builder</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../security/certificates/configuration.html#basic-settings-for-self-signed-certificates">Basic settings for self-signed certificates</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../security/certificates/certificates.html">Application Instance Certificate</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../security/certificates/certificates.html#x-509v3-format">X.509v3 format</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../security/certificates/certificate_store.html">Certificate store</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../security/certificates/certificate_store.html#server-applications">Server applications</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../security/certificates/certificate_store.html#client-applications">Client applications</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../security/certificates/certificate_store.html#directory-structure">Directory structure</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="../../../../security/certificates/certificate_store.html#certificate-chains-in-atvise">Certificate chains in atvise</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../security/certificates/certificate_management.html">Certificate management</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../security/certificates/certificate_management.html#atvise-builder">atvise builder</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="../../../../security/certificates/certificate_management.html#connection-certificates">Connection certificates</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../security/certificates/certificate_management.html#user-certificates">User certificates</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../security/certificates/certificate_management.html#atvise-server">atvise server</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../security/certificates/certificate_management.html#atpkicli-exe">atpkicli.exe</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../security/certificates/first_steps.html">First connection using self-signed certificates</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../security/certificates/first_steps.html#connecting-atvise-builder-and-server">Connecting atvise builder and server</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../security/certificates/first_steps.html#login-with-user-certificates">Login with user certificates</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../security/certificates/first_steps.html#connecting-to-data-sources">Connecting to data sources</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../../../atvise_components.html">Reference manual</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../../intro.html">Overview of the atvise components</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../visualization.html">atvise visualization</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../visualization/intro.html">Introduction</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../visualization/intro.html#user-interface">User interface</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../visualization/login.html">Login &amp; authentication</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../visualization/login.html#login">Login</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../visualization/login.html#two-factor-authentication">Two-factor authentication</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../visualization/login.html#user-information">User information</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../visualization/logout.html">Logout &amp; auto reconnect</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../visualization/logout.html#logout">Logout</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../visualization/logout.html#auto-reconnect">Auto reconnect</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../visualization/navigation.html">Navigation</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../visualization/navigation.html#components">Components</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="../../../visualization/navigation.html#display-navigation">Display &quot;navigation&quot;</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="../../../visualization/navigation.html#examples">Examples</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="../../../visualization/navigation.html#creation-of-a-custom-menu">Creation of a custom menu</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../visualization/navigation.html#visibility-and-animation">Visibility and animation</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../visualization/navigation.html#limitation-of-the-passed-parameters">Limitation of the passed parameters</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../visualization/alarmlist.html">Alarm list</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../visualization/historylist.html">History list</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../visualization/responsive_design_lite.html">Responsive Design Lite</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../visualization/scaling.html">Scaling</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../visualization/tabhandler.html">Tab Handler</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../visualization/trend_highcharts.html">Highcharts Trend</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../visualization/trend_highcharts.html#main-display">Main display</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../visualization/trend_highcharts.html#configuration-dialog">Configuration dialog</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../visualization/tooltips.html">Tooltips</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../visualization/consistency_handler.html">Consistency handler</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../visualization/preloading.html">Preloading</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../visualization/url_parameters.html">URL parameters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../visualization/webmi_events.html">webMI events</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../visualization/timer.html">Timer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../visualization/html_table.html">HTML table</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../visualization/html_table.html#components">Components</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="../../../visualization/html_table.html#display-table">Display &quot;table&quot;</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../visualization/html_table.html#display-table-panel">Display &quot;table_panel&quot;</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../visualization/html_table.html#display-table-footer-status-bar">Display &quot;table_footer&quot; (status bar)</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../visualization/html_table.html#display-table-notification">Display &quot;table_notification&quot;</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="../../../visualization/html_table.html#runtime-mode-loading-data">Runtime mode (loading data)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../visualization/html_table.html#security-mechanisms">Security mechanisms</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../visualization/html_table.html#coding-and-reference">Coding and reference</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="../../../visualization/html_table.html#first-steps">First steps</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../visualization/html_table.html#basic-structure-of-the-configuration">Basic structure of the configuration</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../visualization/html_table.html#parameters-of-the-configuration">Parameters of the configuration</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../visualization/html_table.html#using-the-table-controller">Using the table controller</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="../../../visualization/html_table.html#formatting-column-contents">Formatting column contents</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../visualization/html_table.html#customizing-table-appearance">Customizing table appearance</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../visualization/archivemanagement.html">Archive Management</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../visualization/archivemanagement.html#display">Display</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../visualization/archivemanagement.html#configuration">Configuration</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../visualization/archivemanagement.html#using-the-display">Using the display</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../visualization/logger.html">Logger</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../visualization/eventlog.html">Access control event log</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../visualization/recipes.html">Recipe management</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../visualization/recipes.html#manage-recipe-templates">Manage recipe templates</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../visualization/recipes.html#edit-recipe-templates">Edit recipe templates</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../visualization/recipes.html#manage-recipes">Manage recipes</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../visualization/recipes.html#edit-recipes">Edit recipes</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../visualization/recipes.html#activate-recipes">Activate recipes</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="../../../visualization/recipes.html#recipe-picker">Recipe picker</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../visualization/recipes.html#recipe-picker-small">Recipe picker (small)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../atvise_server_reference.html">atvise server</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../atserver/intro.html">Introduction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../atserver/atserver_ini.html">atserver.ini</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../atserver/default_import.html">Default import and standard resources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../atserver/statistics.html">Statistics of atvise server</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../atvise_monitor_reference.html">atvise monitor</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../atmonitor/basics.html">Basics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../atmonitor/licensing.html">Licensing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../atmonitor/projects.html">Server and project console</a></li>
+</ul>
+</li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../../atvise_builder_reference.html">atvise builder</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../../intro.html">Introduction</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../intro.html#command-line-parameters">Command line parameters</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../intro.html#server-connection-dialog">Server connection dialog</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../intro.html#layout">Layout</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../intro.html#overview">Overview</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="../../intro.html#menu">1. Menu</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../intro.html#navigator">2. Navigator</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../intro.html#editor-and-viewer">3. Editor and Viewer</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../intro.html#global-search-message-library">4. Global Search / Message / Library</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../menu.html">Menu</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../menu/intro.html">Introduction</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../menu/global_search.html">Global Search</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../menu/project_history.html">Project history and change log</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../menu/xml_export_and_import.html">XML export and import</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../menu/atvise_live.html">atvise live</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../menu/version_control.html">Version Control</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="../../menu/version_control.html#configuration">Configuration</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../menu/version_control.html#export-import">Export / Import</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="../../menu/access_control.html">Access Control</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="../../menu/access_control.html#settings">Settings…</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../menu/access_control.html#access-control-editor">Access control editor</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="../../menu/access_control.html#nodes">1. Nodes</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../../menu/access_control.html#groups">2. Groups</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../../menu/access_control.html#rights">3. Rights</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="../../menu/access_control.html#edit-current-user">Edit Current User…</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../tree.html">Project</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../tree/intro.html">Introduction</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../tree/webmi_server.html">webMI server</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="../../tree/webmi_srv/intro.html">Introduction</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../tree/webmi_srv/add_webmi_server.html">Add and edit server</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="../../tree/webmi_srv/add_webmi_server.html#general">General</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../../tree/webmi_srv/add_webmi_server.html#distribution">Distribution</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../../tree/webmi_srv/add_webmi_server.html#files">Files</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../../tree/webmi_srv/add_webmi_server.html#layout">Layout</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="../../tree/webmi_srv/import.html">Objects - Importing</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../tree/webmi_srv/generate.html">Generate visualization</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="../../tree/scada_server.html">My Server</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="../../tree/scada_srv/intro.html">Introduction</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../tree/scada_srv/layouts.html">Layouts</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../tree/scada_srv/datasources.html">Handling data sources</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="../../tree/scada_srv/datasources/intro.html">Introduction</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../../tree/scada_srv/datasources/add_datasource.html">Add data source</a><ul>
+<li class="toctree-l7"><a class="reference internal" href="../../tree/scada_srv/datasources/add_ds/ds_opcua.html">Add OPC UA data source</a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../tree/scada_srv/datasources/add_ds/add_redundant_datasource.html">Add redundant data source</a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../tree/scada_srv/datasources/add_ds/ds_opccom.html">Add OPC COM data source</a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../tree/scada_srv/datasources/add_ds/ds_webmi.html">Add webMI data source</a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../tree/scada_srv/datasources/add_ds/ds_snmp.html">Add SNMP data source</a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../tree/scada_srv/datasources/add_ds/ds_opcua_s7.html">Add atvise OPC UA to S7 data source</a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../tree/scada_srv/datasources/add_ds/ds_connect.html">Add atvise connect data source</a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../tree/scada_srv/datasources/add_ds/ds_connect_x.html">Add atvise connect X data source</a></li>
+</ul>
+</li>
+<li class="toctree-l6"><a class="reference internal" href="../../tree/scada_srv/datasources/import_methods.html">Import methods from data sources</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../../tree/scada_srv/datasources/opc_dcom_configuration.html">OPC COM configuration</a><ul>
+<li class="toctree-l7"><a class="reference internal" href="../../tree/scada_srv/datasources/opc_dcom_configuration.html#atvise-x64-server">atvise x64 server</a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../tree/scada_srv/datasources/opc_dcom_configuration.html#opc-dcom">OPC DCOM</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="../../tree/scada_srv/displays.html">Manage displays</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../tree/scada_srv/data_structure.html">Objects</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="../../tree/scada_srv/data_structure/create_datastructure.html">Creating a data structure</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../../tree/scada_srv/data_structure/mirroring.html">Mirror variables from data sources</a><ul>
+<li class="toctree-l7"><a class="reference internal" href="../../tree/scada_srv/data_structure/mirroring/intro.html">Mirror variables from data sources</a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../tree/scada_srv/data_structure/mirroring/absolute.html">Direct - absolute mirroring</a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../tree/scada_srv/data_structure/mirroring/relative.html">Object oriented - relative mirroring</a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../tree/scada_srv/data_structure/mirroring/manual.html">Manual adding/editing of mirror properties</a></li>
+</ul>
+</li>
+<li class="toctree-l6"><a class="reference internal" href="../../tree/scada_srv/data_structure/scripts.html">Adding scripts to nodes</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="../../tree/scada_srv/alarming.html">Alarming</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="../../tree/scada_srv/alarming/configuration.html">Configuration</a><ul>
+<li class="toctree-l7"><a class="reference internal" href="../../tree/scada_srv/alarming/configuration.html#alarm-categories">Alarm categories</a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../tree/scada_srv/alarming/configuration.html#prevention-and-modification-scripts">Prevention and modification scripts</a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../tree/scada_srv/alarming/configuration.html#alarm-configuration">Alarm configuration</a></li>
+</ul>
+</li>
+<li class="toctree-l6"><a class="reference internal" href="../../tree/scada_srv/alarming/groups.html">Alarm groups and sum alarms</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../../tree/scada_srv/alarming/statistics.html">Alarm statistics</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../../tree/scada_srv/alarming/mirror.html">Mirroring</a><ul>
+<li class="toctree-l7"><a class="reference internal" href="../../tree/scada_srv/alarming/mirror.html#general">General</a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../tree/scada_srv/alarming/mirror.html#conditions">Conditions</a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../tree/scada_srv/alarming/mirror.html#field-mapping">Field mapping</a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../tree/scada_srv/alarming/mirror.html#colors-and-flash-intervals">Colors and flash intervals</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="../../tree/scada_srv/historize.html">Historizing data</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="../../tree/scada_srv/historize/archive_groups.html">Add Archive Group</a><ul>
+<li class="toctree-l7"><a class="reference internal" href="../../tree/scada_srv/historize/archive_groups.html#data">Data</a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../tree/scada_srv/historize/archive_groups.html#aggregate">Aggregate</a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../tree/scada_srv/historize/archive_groups.html#event">Event</a></li>
+</ul>
+</li>
+<li class="toctree-l6"><a class="reference internal" href="../../tree/scada_srv/historize/historize_aggregate.html">Historizing (and aggregating) a node</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../../tree/scada_srv/historize/passthrough.html">Pass-through queries</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../../tree/scada_srv/historize/synchronize.html">Synchronization</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../../tree/scada_srv/historize/historical_query.html">Query history</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../../tree/scada_srv/historize/swapin_out.html">Swapping in/out archive files</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../../tree/scada_srv/historize/history_settings.html">Historization settings</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="../../tree/scada_srv/aggregate.html">Aggregating data</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="../../tree/scada_srv/aggregate.html#general">General</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../../tree/scada_srv/aggregate.html#aggregate-functions">Aggregate functions</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../../tree/scada_srv/aggregate.html#parametrization-of-aggregates">Parametrization of aggregates</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../../tree/scada_srv/aggregate.html#query-of-aggregates">Query of aggregates</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="../../tree/scada_srv/diagnostics.html">Diagnostics</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../tree/scada_srv/smtp_settings.html">SMTP settings</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../tree/scada_srv/http_settings.html">HTTP settings</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="../../tree/scada_srv/http_settings.html#creating-and-configuring-web-servers">Creating and configuring web servers</a><ul>
+<li class="toctree-l7"><a class="reference internal" href="../../tree/scada_srv/http_settings.html#using-ntlm">Using NTLM</a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../tree/scada_srv/http_settings.html#login-logout-script">Login / Logout script</a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../tree/scada_srv/http_settings.html#protected-calls">Protected calls</a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../tree/scada_srv/http_settings.html#modifying-the-http-header">Modifying the HTTP header</a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../tree/scada_srv/http_settings.html#unauthorized-response-script">Unauthorized Response Script</a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../tree/scada_srv/http_settings.html#access-denied-displays">Access Denied Displays</a></li>
+</ul>
+</li>
+<li class="toctree-l6"><a class="reference internal" href="../../tree/scada_srv/http_settings.html#using-https">Using HTTPS</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="../../tree/global_parameters.html">Global parameters</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="../../tree/global_parameters.html#default-global-parameters-and-lists">Default global parameters and lists</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../tree/global_parameters.html#adding-a-global-parameter">Adding a global parameter</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../tree/global_parameters.html#adding-a-global-list">Adding a global list</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="../../tree/adding_displays_to_variable_types.html">Adding displays to variable types</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../tree/languages.html">Languages</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="../../tree/languages.html#translation-editor">Translation editor</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../tree/languages.html#using-translations-in-builder">Using translations in builder</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../tree/languages.html#displaying-translations-in-the-visualization">Displaying translations in the visualization</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="../../tree/users_groups.html">Users and groups</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="../../tree/users_groups.html#users">Users</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../tree/users_groups.html#groups">Groups</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="../../tree/cross_references.html">Cross references</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../tree/views.html">Views</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../tree/menu_scripts.html">Menu scripts</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../display_editor.html">Display Editor</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../display_editor/intro.html">Introduction</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../display_editor/graphical_editor.html">Graphical Editor</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="../../display_editor/graphical_editor/intro.html">Introduction</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="../../display_editor/graphical_editor/intro.html#basic-element-handling">Basic element handling</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="../../display_editor/graphical_editor/basicfunctions.html">Editor functions</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="../../display_editor/graphical_editor/basicfunctions/standardfunctions.html">Standard functions</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../../display_editor/graphical_editor/basicfunctions/gridsnap.html">Grid, snap, zoom and freeze</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../../display_editor/graphical_editor/basicfunctions/edit.html">Edit items</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../../display_editor/graphical_editor/basicfunctions/drawshapes.html">Drawing shapes</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../../display_editor/graphical_editor/basicfunctions/attributesstyles.html">Attributes and styles</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../../display_editor/graphical_editor/basicfunctions/context_menu.html">Context menu functions</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../../display_editor/graphical_editor/basicfunctions/shortcuts.html">Keyboard Shortcuts</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="../../display_editor/graphical_editor/dynamics.html">Dynamics</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="../../display_editor/graphical_editor/dynamics/simpledynamics.html">Simple dynamics</a><ul>
+<li class="toctree-l7"><a class="reference internal" href="../../display_editor/graphical_editor/dynamics/simpledynamics/intro.html">Introduction</a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../display_editor/graphical_editor/dynamics/simpledynamics/right.html">0. RIGHT</a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../display_editor/graphical_editor/dynamics/simpledynamics/event.html">1. EVENT</a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../display_editor/graphical_editor/dynamics/simpledynamics/result.html">2. RESULT</a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../display_editor/graphical_editor/dynamics/simpledynamics/action.html">3. ACTION</a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../display_editor/graphical_editor/dynamics/simpledynamics/examples.html">Examples</a></li>
+</ul>
+</li>
+<li class="toctree-l6"><a class="reference internal" href="../../display_editor/graphical_editor/dynamics/quick_dynamics_predefined.html">Quick Dynamics</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="../../display_editor/graphical_editor/svg_attributes.html">SVG attributes</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../display_editor/graphical_editor/display_parameters.html">Display parameters</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../display_editor/graphical_editor/display_para_ways.html">Object-oriented parameterization</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../display_editor/graphical_editor/how_to_simple_bar.html">Example: Simple bar display</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="../../display_editor/scripteditor.html">Code Editor</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../quickdynamics.html">Quick Dynamics</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../quickdynamics/quick_dynamics.html">Edit quick dynamics</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../quickdynamics/access_control_element_notifier.html">Access Control Element Notifier</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../quickdynamics/access_control_manager.html">Access Control Manager</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="../../quickdynamics/access_control_manager.html#usage">Usage</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="../../quickdynamics/acknowledge_alarm.html">Acknowledge Alarm</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../quickdynamics/aggregate_manager.html">Aggregate Manager</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../quickdynamics/alarmmanagement.html">Alarmmanagement</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../quickdynamics/autologout.html">Auto Logout</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../quickdynamics/autoreconnect.html">Auto Reconnect</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../quickdynamics/change_color_by_alarm.html">Change Color by Alarm</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../quickdynamics/change_color_by_node.html">Change Color by Node</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../quickdynamics/change_display_by_node.html">Change Display by Node</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../quickdynamics/change_display_on_event.html">Change Display on Event</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../quickdynamics/change_opacity.html">Change Opacity</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../quickdynamics/change_stroke_by_node.html">Change Stroke by Node</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../quickdynamics/change_visibility_and_blinking.html">Change Visibility and Blinking</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../quickdynamics/configuration.html">Configuration</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../quickdynamics/consistency_handler.html">Consistency Handler</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../quickdynamics/disk_space_monitoring.html">Disk Space Monitoring</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../quickdynamics/element_menu.html">Element menu</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="../../quickdynamics/element_menu.html#usage">Usage</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="../../quickdynamics/element_menu_default_items.html">Element Menu Default Items</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../quickdynamics/element_menu_manager.html">Element Menu Manager</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../quickdynamics/index.html">Index</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../quickdynamics/login_handler.html">Login handler</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="../../quickdynamics/login_handler.html#usage">Usage</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="../../quickdynamics/move.html">Move</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../quickdynamics/navigation.html">Navigation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../quickdynamics/open_context_menu.html">Open Context Menu</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../quickdynamics/open_element_menu.html">Open Element Menu</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../quickdynamics/open_main_menu.html">Open Main Menu</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../quickdynamics/open_picker.html">Open Picker</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../quickdynamics/open_popup.html">Open PopUp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../quickdynamics/performance_measurement.html">Performance Measurement</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="../../quickdynamics/performance_measurement.html#usage">Usage</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="../../quickdynamics/redundancy_popup.html">Show Redundancy Information</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../quickdynamics/rotate.html">Rotate</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../quickdynamics/save_as.html">Save As</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../quickdynamics/scale.html">Scale</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../quickdynamics/set_node.html">Set Node</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../quickdynamics/set_slider_horizontal.html">Set Slider Horizontal</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../quickdynamics/set_slider_vertical.html">Set Slider Vertical</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../quickdynamics/set_text.html">Set Text</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../quickdynamics/tab_handler.html">Tab Handler</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../quickdynamics/time_formats.html">Time Formats</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="../../quickdynamics/time_formats.html#splitTime"><code class="docutils literal notranslate"><span class="pre">splitTime()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../quickdynamics/time_formats.html#splitTimeToString"><code class="docutils literal notranslate"><span class="pre">splitTimeToString()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="../../quickdynamics/tooltip.html">Tooltip</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../quickdynamics/treeview.html">Tree View</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="../../quickdynamics/treeview.html#collapse"><code class="docutils literal notranslate"><span class="pre">collapse()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../quickdynamics/treeview.html#collapseAll"><code class="docutils literal notranslate"><span class="pre">collapseAll()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../quickdynamics/treeview.html#expand"><code class="docutils literal notranslate"><span class="pre">expand()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../quickdynamics/treeview.html#expandAll"><code class="docutils literal notranslate"><span class="pre">expandAll()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../quickdynamics/treeview.html#getSelectedNode"><code class="docutils literal notranslate"><span class="pre">getSelectedNode()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../quickdynamics/treeview.html#selectNode"><code class="docutils literal notranslate"><span class="pre">selectNode()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../quickdynamics/treeview.html#setTreeStructure"><code class="docutils literal notranslate"><span class="pre">setTreeStructure()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../quickdynamics/treeview.html#setSelectableTypes"><code class="docutils literal notranslate"><span class="pre">setSelectableTypes()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../quickdynamics/treeview.html#filter"><code class="docutils literal notranslate"><span class="pre">filter()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../quickdynamics/treeview.html#off"><code class="docutils literal notranslate"><span class="pre">off()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../quickdynamics/treeview.html#on"><code class="docutils literal notranslate"><span class="pre">on()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../quickdynamics/treeview.html#destroy"><code class="docutils literal notranslate"><span class="pre">destroy()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="../../quickdynamics/writelog.html">Write Log Entry</a></li>
+</ul>
+</li>
+<li class="toctree-l3 current"><a class="reference internal" href="../../objectdisplays.html">Object Displays</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="../archivemanagement.html">Archive management</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="../archivemanagement/add_schedule.html">Add Schedule</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../archivemanagement/archive_management.html">Archive Management</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../archivemanagement/auto_scheduler.html">Auto-Scheduler Management</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../archivemanagement/confirmation_dialog.html">Confirmation Dialog</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="../dashboard.html">Dashboard</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="../dashboard/charts.html">Charts</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="../dashboard/charts/bar.html">Bar</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../dashboard/charts/gauge.html">Gauge</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../dashboard/charts/pie.html">Pie and Doughnut</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../dashboard/charts/progress.html">Progress Bar</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="../dashboard/base_custom_tile.html">Base Custom Tile</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../dashboard/base_value_tile.html">Base Value Tile</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../dashboard/chart_bar_tile.html">Chart Bar Tile</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../dashboard/chart_gauge_tile.html">Chart Gauge Tile</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../dashboard/chart_line_tile.html">Chart Line Tile</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../dashboard/chart_progress_tile.html">Chart Progress Bar Tile</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="../dialog.html">Dialogs</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="../dialogs/alarm_comment.html">Alarm Comment Dialog</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../dialogs/alarm_timeshelve.html">Timed Shelve Dialog</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../dialogs/datepicker_dialog.html">Date Picker Dialog</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../dialogs/email_dialog.html">E-mail configurator</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../dialogs/login_dialog.html">Login Dialog</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../dialogs/login2FA_dialog.html">Login Dialog (2FA)</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../dialogs/message_board.html">Message Board</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../dialogs/message_dialog.html">Message Dialog</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../dialogs/message_dialog_small.html">Message Dialog (Small)</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../dialogs/picker_color_dialog.html">Color Picker Dialog</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../dialogs/user_editor.html">User Editor</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../dialogs/pw_editor.html">Password Editor</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="../highcharts.html">Highcharts</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="../highcharts/button_back.html">Button Back</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../highcharts/button_back_small.html">Button Back (Small)</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../highcharts/button_config.html">Configuration Selector</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../highcharts/button_forward.html">Button Forward</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../highcharts/button_forward_small.html">Button Forward (Small)</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../highcharts/buttons_start_end_time.html">Time Range Selector</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../highcharts/highcharts.html">Chart Container</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../highcharts/legend.html">Legend Table</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../highcharts/main_display.html">Main Display</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../highcharts/main_display_small.html">Main Display (800x425)</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../highcharts/main_display_small_portrait.html">Main Display (800x900)</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../highcharts/opt_dialog.html">Configuration - Top Display</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../highcharts/opt_dialog_small.html">Configuration - Top Display (Small)</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../highcharts/opt_general.html">Configuration - General</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../highcharts/opt_general_small.html">Configuration - General (Small)</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../highcharts/opt_save_load.html">Configuration - Save/Load</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../highcharts/opt_save_load_small.html">Configuration - Save/Load (Small)</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../highcharts/opt_series.html">Configuration - Series</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../highcharts/opt_series_small.html">Configuration - Series (Small)</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../highcharts/opt_series_bar_column.html">Configuration - Bar/Column</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../highcharts/opt_series_bar_column_small.html">Configuration - Bar/Column (Small)</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../highcharts/opt_series_line_area.html">Configuration - Line/Area</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../highcharts/opt_series_line_area_small.html">Configuration - Line/Area (Small)</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../highcharts/opt_series_pie.html">Configuration - Pie</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../highcharts/opt_start.html">Configuration - Start</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../highcharts/opt_xaxis.html">Configuration - X-Axis</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../highcharts/opt_xaxis_small.html">Configuration - X-Axis (Small)</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../highcharts/opt_yaxis.html">Configuration - Y-Axis</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../highcharts/opt_yaxis_small.html">Configuration - Y-Axis (Small)</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../highcharts/toolbar.html">Toolbar</a></li>
+</ul>
+</li>
+<li class="toctree-l4 current"><a class="reference internal" href="../hmi.html">HMI</a><ul class="current">
+<li class="toctree-l5"><a class="reference internal" href="accesscontrol.html">Access Control Log</a></li>
+<li class="toctree-l5"><a class="reference internal" href="accesscontrol_log.html">Access Control Log Dialog</a></li>
+<li class="toctree-l5"><a class="reference internal" href="alarmlist.html">Alarmlist</a></li>
+<li class="toctree-l5"><a class="reference internal" href="alarmlist_log.html">Alarmlist Log</a></li>
+<li class="toctree-l5"><a class="reference internal" href="alarmlist_popup.html">Alarmlist Popup</a></li>
+<li class="toctree-l5"><a class="reference internal" href="alarmlist_small.html">Alarmlist (Small)</a></li>
+<li class="toctree-l5"><a class="reference internal" href="alarmlist_small_portrait.html">Alarmlist (Small - Portrait)</a></li>
+<li class="toctree-l5"><a class="reference internal" href="alarmlog.html">Alarmlog Three Rows</a></li>
+<li class="toctree-l5"><a class="reference internal" href="alarmlog_1row.html">Alarmlog One Row</a></li>
+<li class="toctree-l5"><a class="reference internal" href="alarmlog_touch.html">Alarmlog Three Rows (Small)</a></li>
+<li class="toctree-l5"><a class="reference internal" href="area.html">Background Area</a></li>
+<li class="toctree-l5"><a class="reference internal" href="button_display_login.html">Button/Display Login</a></li>
+<li class="toctree-l5"><a class="reference internal" href="button_group_alarm.html">Group Alarm</a></li>
+<li class="toctree-l5"><a class="reference internal" href="button_group_display.html">Group Display</a></li>
+<li class="toctree-l5"><a class="reference internal" href="button_group_zoom.html">Group Zoom</a></li>
+<li class="toctree-l5"><a class="reference internal" href="button_login.html">Button Login</a></li>
+<li class="toctree-l5"><a class="reference internal" href="button_switch_language.html">Button Switch Language</a></li>
+<li class="toctree-l5"><a class="reference internal" href="button_switch_language_combo.html">Button/Display Language</a></li>
+<li class="toctree-l5"><a class="reference internal" href="button_zoom_1.html">Button Reset Zoom</a></li>
+<li class="toctree-l5"><a class="reference internal" href="button_zoom_in.html">Button Zoom-In</a></li>
+<li class="toctree-l5"><a class="reference internal" href="button_zoom_out.html">Button Zoom-Out</a></li>
+<li class="toctree-l5"><a class="reference internal" href="button_zoom_rect.html">Button Zoom-Area</a></li>
+<li class="toctree-l5"><a class="reference internal" href="clock_analog.html">Clock Analog</a></li>
+<li class="toctree-l5"><a class="reference internal" href="clock_combi.html">Clock Combined</a></li>
+<li class="toctree-l5"><a class="reference internal" href="date_display.html">Display Date</a></li>
+<li class="toctree-l5 current"><a class="current reference internal" href="#">Historylist</a></li>
+<li class="toctree-l5"><a class="reference internal" href="historylist_small.html">Historylist (800x425)</a></li>
+<li class="toctree-l5"><a class="reference internal" href="historylist_small_portrait.html">Historylist (800x900)</a></li>
+<li class="toctree-l5"><a class="reference internal" href="iframe.html">iFrame: To Display a Display</a></li>
+<li class="toctree-l5"><a class="reference internal" href="time_display.html">Display Time</a></li>
+<li class="toctree-l5"><a class="reference internal" href="time_display_advanced.html">Display Time Advanced</a></li>
+<li class="toctree-l5"><a class="reference internal" href="top.html">Topframe Large (1280x120)</a></li>
+<li class="toctree-l5"><a class="reference internal" href="top_1024.html">Topframe (1024x210)</a></li>
+<li class="toctree-l5"><a class="reference internal" href="top_800.html">Topframe Small (800x120)</a></li>
+<li class="toctree-l5"><a class="reference internal" href="top_800_onerow.html">Topframe One Row</a></li>
+<li class="toctree-l5"><a class="reference internal" href="user_display.html">Display User</a></li>
+<li class="toctree-l5"><a class="reference internal" href="datasource.html">Datasource State</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="../keyboard.html">Keyboard</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="../keyboard/keyboard.html">Alphanumerical Keyboard</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../keyboard/number_keyboard.html">Numerical Keyboard</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="../layoutelements.html">Layoutelements</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="../layoutelements/box_language.html">Language Box (357x65)</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../layoutelements/box_language_small.html">Language Box (178x65)</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../layoutelements/box_user.html">User Box (358x65)</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../layoutelements/box_user_small.html">User Box (246x65)</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../layoutelements/button_alarmlog.html">Button Alarmlog</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../layoutelements/button_alarmlog_small.html">Button Alarmlog (Small)</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../layoutelements/button_custom.html">Button Custom</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../layoutelements/button_custom_small.html">Button Custom (Small)</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../layoutelements/button_favorites.html">Button Favorites</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../layoutelements/button_favorites_small.html">Button Favorites (Small)</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../layoutelements/button_favorites_small_half.html">Button Favorites (small, half)</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../layoutelements/button_group_zoom.html">Group Zoom</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../layoutelements/button_view_access.html">Button Access Control Log</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../layoutelements/button_view_log.html">General Log Button</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../layoutelements/date.html">Date Element</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../layoutelements/fav_input.html">Favorites Name Input</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../layoutelements/redu_info.html">Redundancy Info</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../layoutelements/time.html">Time Element</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="../logger.html">Logger</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="../logger/logger_button.html">Button Open Log</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../logger/logger_dialog.html">Log View</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../logger/logger_dialog_small.html">Log View (Small)</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="../recipemanager.html">Recipe management</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="../recipemanager/add_popup.html">Add Popup</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../recipemanager/error_popup.html">Error Popup</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../recipemanager/recipe_delete.html">Delete Dialog</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../recipemanager/recipe_editor.html">Recipe Editor</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../recipemanager/recipe_manager.html">Recipe Manager</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../recipemanager/recipe_navigation.html">Switch Templates/Recipes</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../recipemanager/recipe_picker_combobox.html">Recipe Picker (Small)</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../recipemanager/recipe_picker_confirm.html">Confirmation Dialog</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../recipemanager/recipe_picker_table.html">Recipe Picker</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../recipemanager/recipe_template_editor.html">Recipe Template Editor</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../recipemanager/recipe_template_manager.html">Recipe Template Manager</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="../redundancy.html">Redundancy</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="../redundancy/status.html">Redundancy State</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../redundancy/vitality_table.html">Vitality Table</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../redundancy/warning_dialog.html">Warning</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="../report.html">Report</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="../report/edit_dialog.html">Report Editor</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../report/email_dialog.html">E-mail configuration</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../report/manager.html">Report Management</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../report/run_dialog.html">Generate Report Dialog</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../report/view_dialog.html">Report Viewer</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="../tables.html">Slickgrid</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="../slickgrid/table.html">Table</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../slickgrid/table_footer.html">Table Footer</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../slickgrid/table_keyboard.html">SVG Keyboard (table extension)</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../slickgrid/table_notification.html">Button Table Notification</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../slickgrid/table_panel.html">Table Panel</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="../timer.html">Timer</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="../timer/timer.html">Timer</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="../bar_horizontal.html">Bar Horizontal</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../bar_vertical.html">Bar Vertical</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../button.html">Button</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../button_alarmlist_actions.html">Button Alarmlist</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../button_image_display.html">Button Image Display</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../button_inc_dec.html">Button Increment/Decrement</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../button_open_display.html">Button Open Display</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../button_set_address.html">Button Set Address</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../button_switch.html">Button Switch</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../checkbox.html">Checkbox</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../clickarea.html">Clickarea</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../combobox.html">Combobox</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../gauge.html">Gauge</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../in_out_date.html">In/Out Date</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../in_out_datetime.html">In/Out Date-Time</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../in_out_password.html">In/Out Password</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../in_out_time.html">In/Out Time</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../in_out_value.html">In/Out Value</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../label.html">Label</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../navigation.html">Navigation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../picker_address.html">Picker Address</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../picker_color.html">Picker Color</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../picker_date.html">Picker Date</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../picker_interval.html">Picker Interval</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../picker_value.html">Picker Value</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../radiobutton.html">Radiobutton</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../rocker_switch.html">Rocker Switch</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../rocker_switch_small.html">Rocker Switch (Small)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../rocker_switch_horizontal.html">Rocker Switch Horizontal</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../slider_horizontal.html">Slider Horizontal</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../slider_vertical.html">Slider Vertical</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../server_script_editor.html">Server script editor</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../atvise_maintenance.html">atvise maintenance tool</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../atmaintenance/intro.html">Introduction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../atmaintenance/project_database.html">Project Database Operations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../atmaintenance/archive.html">Archive(s) Operations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../atmaintenance/options.html">Options</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../atmaintenance/log_files.html">Log files</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../scripting_reference.html">Client/Browserside scripting</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../scripting/intro.html">Introduction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../scripting/configuration.html">Configuration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../scripting/general_functions.html">General functions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../scripting/general_functions.html#webMI.addEvent"><code class="docutils literal notranslate"><span class="pre">webMI.addEvent()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../scripting/general_functions.html#webMI.addOnload"><code class="docutils literal notranslate"><span class="pre">webMI.addOnload()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../scripting/general_functions.html#webMI.addOnunload"><code class="docutils literal notranslate"><span class="pre">webMI.addOnunload()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../scripting/general_functions.html#webMI.callExtension"><code class="docutils literal notranslate"><span class="pre">webMI.callExtension()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../scripting/general_functions.html#webMI.hasRight"><code class="docutils literal notranslate"><span class="pre">webMI.hasRight()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../scripting/general_functions.html#webMI.inList"><code class="docutils literal notranslate"><span class="pre">webMI.inList()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../scripting/general_functions.html#webMI.sprintf"><code class="docutils literal notranslate"><span class="pre">webMI.sprintf()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../scripting/general_functions.html#webMI.query-key"><code class="docutils literal notranslate"><span class="pre">webMI.query[key]</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../scripting/general_functions.html#webMI.escapeHTML"><code class="docutils literal notranslate"><span class="pre">webMI.escapeHTML()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../scripting/general_functions.html#webMI.unescapeHTML"><code class="docutils literal notranslate"><span class="pre">webMI.unescapeHTML()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../scripting/general_functions.html#webMI.secureString"><code class="docutils literal notranslate"><span class="pre">webMI.secureString()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../scripting/general_functions.html#webMI.getMethodSupport"><code class="docutils literal notranslate"><span class="pre">webMI.getMethodSupport()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../scripting/general_functions.html#webMI.getFeatureSupport"><code class="docutils literal notranslate"><span class="pre">webMI.getFeatureSupport()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../scripting/general_functions.html#webMI.getClientInfo"><code class="docutils literal notranslate"><span class="pre">webMI.getClientInfo()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../scripting/general_functions.html#webMI.getMailPolicy"><code class="docutils literal notranslate"><span class="pre">webMI.getMailPolicy()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../scripting/general_functions.html#webMI.getPasswordPolicy"><code class="docutils literal notranslate"><span class="pre">webMI.getPasswordPolicy()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../scripting/general_functions.html#webMI.getSessionID"><code class="docutils literal notranslate"><span class="pre">webMI.getSessionID()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../scripting/general_functions.html#webMI.localizeNumber"><code class="docutils literal notranslate"><span class="pre">webMI.localizeNumber()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../scripting/data.html">Data functions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../scripting/data.html#webMI.data.call"><code class="docutils literal notranslate"><span class="pre">webMI.data.call()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../scripting/data.html#webMI.data.read"><code class="docutils literal notranslate"><span class="pre">webMI.data.read()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../scripting/data.html#webMI.data.subscribe"><code class="docutils literal notranslate"><span class="pre">webMI.data.subscribe()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../scripting/data.html#webMI.data.unsubscribe"><code class="docutils literal notranslate"><span class="pre">webMI.data.unsubscribe()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../scripting/data.html#webMI.data.subscribeBlock"><code class="docutils literal notranslate"><span class="pre">webMI.data.subscribeBlock()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../scripting/data.html#webMI.data.write"><code class="docutils literal notranslate"><span class="pre">webMI.data.write()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../scripting/data.html#webMI.data.addEventListener"><code class="docutils literal notranslate"><span class="pre">webMI.data.addEventListener()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../scripting/data.html#webMI.data.login"><code class="docutils literal notranslate"><span class="pre">webMI.data.login()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../scripting/data.html#webMI.data.logout"><code class="docutils literal notranslate"><span class="pre">webMI.data.logout()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../scripting/data.html#webMI.data.changeemail"><code class="docutils literal notranslate"><span class="pre">webMI.data.changeemail()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../scripting/data.html#webMI.data.changepassword"><code class="docutils literal notranslate"><span class="pre">webMI.data.changepassword()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../scripting/data.html#webMI.data.twofactorLogin"><code class="docutils literal notranslate"><span class="pre">webMI.data.twofactorLogin()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../scripting/data.html#webMI.data.twofactorSendMail"><code class="docutils literal notranslate"><span class="pre">webMI.data.twofactorSendMail()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../scripting/data.html#webMI.data.twofactorGetOTPAuth"><code class="docutils literal notranslate"><span class="pre">webMI.data.twofactorGetOTPAuth()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../scripting/data.html#webMI.data.pause"><code class="docutils literal notranslate"><span class="pre">webMI.data.pause()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../scripting/data.html#webMI.data.resume"><code class="docutils literal notranslate"><span class="pre">webMI.data.resume()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../scripting/data.html#webMI.data.isPaused"><code class="docutils literal notranslate"><span class="pre">webMI.data.isPaused()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../scripting/data.html#webMI.data.queryFilter"><code class="docutils literal notranslate"><span class="pre">webMI.data.queryFilter()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../scripting/data.html#webMI.data.queryNext"><code class="docutils literal notranslate"><span class="pre">webMI.data.queryNext()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../scripting/data.html#webMI.data.queryRelease"><code class="docutils literal notranslate"><span class="pre">webMI.data.queryRelease()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../scripting/data.html#webMI.data.subscribeFilter"><code class="docutils literal notranslate"><span class="pre">webMI.data.subscribeFilter()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../scripting/data.html#webMI.data.unsubscribeFilter"><code class="docutils literal notranslate"><span class="pre">webMI.data.unsubscribeFilter()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../scripting/data.html#webMI.data.readFilter"><code class="docutils literal notranslate"><span class="pre">webMI.data.readFilter()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../scripting/data.html#webMI.data.customRequest"><code class="docutils literal notranslate"><span class="pre">webMI.data.customRequest()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../scripting/data.html#webMI.data.loadScript"><code class="docutils literal notranslate"><span class="pre">webMI.data.loadScript()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../scripting/data.html#webMI.data.getRights"><code class="docutils literal notranslate"><span class="pre">webMI.data.getRights()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../scripting/alarm.html">Alarm functions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../scripting/alarm.html#webMI.alarm.accept"><code class="docutils literal notranslate"><span class="pre">webMI.alarm.accept()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../scripting/alarm.html#webMI.alarm.acceptDisplay"><code class="docutils literal notranslate"><span class="pre">webMI.alarm.acceptDisplay()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../scripting/alarm.html#webMI.alarm.subscribe"><code class="docutils literal notranslate"><span class="pre">webMI.alarm.subscribe()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../scripting/alarm.html#webMI.alarm.unsubscribe"><code class="docutils literal notranslate"><span class="pre">webMI.alarm.unsubscribe()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../scripting/graphics.html">Graphics functions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../scripting/graphics.html#webMI.translate"><code class="docutils literal notranslate"><span class="pre">webMI.translate()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../scripting/graphics.html#webMI.gfx.setRotation"><code class="docutils literal notranslate"><span class="pre">webMI.gfx.setRotation()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../scripting/graphics.html#webMI.gfx.setMoveX"><code class="docutils literal notranslate"><span class="pre">webMI.gfx.setMoveX()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../scripting/graphics.html#webMI.gfx.setMoveY"><code class="docutils literal notranslate"><span class="pre">webMI.gfx.setMoveY()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../scripting/graphics.html#webMI.gfx.setScaleX"><code class="docutils literal notranslate"><span class="pre">webMI.gfx.setScaleX()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../scripting/graphics.html#webMI.gfx.setScaleY"><code class="docutils literal notranslate"><span class="pre">webMI.gfx.setScaleY()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../scripting/graphics.html#webMI.gfx.setSkewX"><code class="docutils literal notranslate"><span class="pre">webMI.gfx.setSkewX()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../scripting/graphics.html#webMI.gfx.setSkewY"><code class="docutils literal notranslate"><span class="pre">webMI.gfx.setSkewY()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../scripting/graphics.html#webMI.gfx.setFill"><code class="docutils literal notranslate"><span class="pre">webMI.gfx.setFill()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../scripting/graphics.html#webMI.gfx.setVisible"><code class="docutils literal notranslate"><span class="pre">webMI.gfx.setVisible()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../scripting/graphics.html#webMI.gfx.createPoint"><code class="docutils literal notranslate"><span class="pre">webMI.gfx.createPoint()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../scripting/graphics.html#webMI.gfx.getScreenCTM"><code class="docutils literal notranslate"><span class="pre">webMI.gfx.getScreenCTM()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../scripting/graphics.html#webMI.gfx.getAbsoluteOffset"><code class="docutils literal notranslate"><span class="pre">webMI.gfx.getAbsoluteOffset()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../scripting/graphics.html#webMI.gfx.getAbsoluteScaleFactor"><code class="docutils literal notranslate"><span class="pre">webMI.gfx.getAbsoluteScaleFactor()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../scripting/graphics.html#webMI.gfx.getBoundingClientRect"><code class="docutils literal notranslate"><span class="pre">webMI.gfx.getBoundingClientRect()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../scripting/graphics.html#webMI.gfx.setScaledEvents"><code class="docutils literal notranslate"><span class="pre">webMI.gfx.setScaledEvents()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../scripting/graphics.html#webMI.gfx.scaleEventCoordinates"><code class="docutils literal notranslate"><span class="pre">webMI.gfx.scaleEventCoordinates()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../scripting/widget.html">Widget functions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../scripting/widget.html#webMI.widget.getValue"><code class="docutils literal notranslate"><span class="pre">webMI.widget.getValue()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../scripting/widget.html#webMI.widget.setDisabled"><code class="docutils literal notranslate"><span class="pre">webMI.widget.setDisabled()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../scripting/widget.html#webMI.widget.setValue"><code class="docutils literal notranslate"><span class="pre">webMI.widget.setValue()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../scripting/display.html">Display functions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../scripting/display.html#webMI.display.openWindow"><code class="docutils literal notranslate"><span class="pre">webMI.display.openWindow()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../scripting/display.html#webMI.display.openDisplay"><code class="docutils literal notranslate"><span class="pre">webMI.display.openDisplay()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../scripting/display.html#webMI.display.openUrl"><code class="docutils literal notranslate"><span class="pre">webMI.display.openUrl()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../scripting/display.html#webMI.display.closeWindow"><code class="docutils literal notranslate"><span class="pre">webMI.display.closeWindow()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../scripting/display.html#webMI.display.showPopup"><code class="docutils literal notranslate"><span class="pre">webMI.display.showPopup()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../scripting/display.html#webMI.frame.getActiveFrames"><code class="docutils literal notranslate"><span class="pre">webMI.frame.getActiveFrames()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../scripting/sound.html">Sound functions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../scripting/sound.html#webMI.sound.play"><code class="docutils literal notranslate"><span class="pre">webMI.sound.play()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../scripting/sound.html#webMI.sound.stop"><code class="docutils literal notranslate"><span class="pre">webMI.sound.stop()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../scripting/trigger_functions.html">Trigger functions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../scripting/trigger_functions.html#webMI.trigger.connect"><code class="docutils literal notranslate"><span class="pre">webMI.trigger.connect()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../scripting/trigger_functions.html#webMI.trigger.fire"><code class="docutils literal notranslate"><span class="pre">webMI.trigger.fire()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../scripting/key_functions.html">Key functions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../scripting/key_functions.html#webMI.keys.addCombinationListener"><code class="docutils literal notranslate"><span class="pre">webMI.keys.addCombinationListener()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../scripting/key_functions.html#webMI.keys.addDownListener"><code class="docutils literal notranslate"><span class="pre">webMI.keys.addDownListener()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../scripting/key_functions.html#webMI.keys.addPressListener"><code class="docutils literal notranslate"><span class="pre">webMI.keys.addPressListener()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../scripting/key_functions.html#webMI.keys.addUpListener"><code class="docutils literal notranslate"><span class="pre">webMI.keys.addUpListener()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../scripting/key_functions.html#webMI.keys.isDown"><code class="docutils literal notranslate"><span class="pre">webMI.keys.isDown()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../scripting/performance.html">Performance functions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../scripting/performance.html#webMI.performance.setMarker"><code class="docutils literal notranslate"><span class="pre">webMI.performance.setMarker()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../scripting/performance.html#webMI.performance.getMarkers"><code class="docutils literal notranslate"><span class="pre">webMI.performance.getMarkers()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../scripting/performance.html#webMI.performance.clearMarkers"><code class="docutils literal notranslate"><span class="pre">webMI.performance.clearMarkers()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../server_scripting_reference.html">SCADA serverside scripting</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../srv_scripting/intro.html">Introduction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../srv_scripting/conventions.html">Conventions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../srv_scripting/scheduling_rules.html">Scheduling rules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../srv_scripting/access_control.html">Access control functions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../srv_scripting/access_control.html#conf.setPermissionsForGroup"><code class="docutils literal notranslate"><span class="pre">conf.setPermissionsForGroup()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../srv_scripting/access_control.html#conf.getPermissionsForGroup"><code class="docutils literal notranslate"><span class="pre">conf.getPermissionsForGroup()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../srv_scripting/access_control.html#conf.deletePermissionsFromGroup"><code class="docutils literal notranslate"><span class="pre">conf.deletePermissionsFromGroup()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../srv_scripting/access_control.html#conf.setPermissionsForNode"><code class="docutils literal notranslate"><span class="pre">conf.setPermissionsForNode()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../srv_scripting/access_control.html#conf.getPermissionsForNode"><code class="docutils literal notranslate"><span class="pre">conf.getPermissionsForNode()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../srv_scripting/access_control.html#conf.deletePermissionsFromNode"><code class="docutils literal notranslate"><span class="pre">conf.deletePermissionsFromNode()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../srv_scripting/access_control.html#conf.getRuntimePermissionsForNode"><code class="docutils literal notranslate"><span class="pre">conf.getRuntimePermissionsForNode()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../srv_scripting/alarming.html">Alarming functions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../srv_scripting/alarming.html#alarming.list"><code class="docutils literal notranslate"><span class="pre">alarming.list</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../srv_scripting/alarming.html#alarming.conditions"><code class="docutils literal notranslate"><span class="pre">alarming.conditions</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../srv_scripting/alarming.html#alarming.configuration"><code class="docutils literal notranslate"><span class="pre">alarming.configuration()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../srv_scripting/alarming.html#alarming.read"><code class="docutils literal notranslate"><span class="pre">alarming.read()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../srv_scripting/alarming.html#alarming.conditionid"><code class="docutils literal notranslate"><span class="pre">alarming.conditionid()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../srv_scripting/alarming.html#alarming.groups"><code class="docutils literal notranslate"><span class="pre">alarming.groups</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../srv_scripting/alarming.html#alarming.group"><code class="docutils literal notranslate"><span class="pre">alarming.group()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../srv_scripting/alarming.html#alarming.acknowledge"><code class="docutils literal notranslate"><span class="pre">alarming.acknowledge()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../srv_scripting/alarming.html#alarming.confirm"><code class="docutils literal notranslate"><span class="pre">alarming.confirm()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../srv_scripting/alarming.html#alarming.comment"><code class="docutils literal notranslate"><span class="pre">alarming.comment()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../srv_scripting/alarming.html#alarming.shelve"><code class="docutils literal notranslate"><span class="pre">alarming.shelve()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../srv_scripting/alarming.html#alarming.unshelve"><code class="docutils literal notranslate"><span class="pre">alarming.unshelve()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../srv_scripting/alarming.html#alarming.suppress"><code class="docutils literal notranslate"><span class="pre">alarming.suppress()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../srv_scripting/alarming.html#alarming.unsuppress"><code class="docutils literal notranslate"><span class="pre">alarming.unsuppress()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../srv_scripting/alarming.html#alarming.disable"><code class="docutils literal notranslate"><span class="pre">alarming.disable()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../srv_scripting/alarming.html#alarming.enable"><code class="docutils literal notranslate"><span class="pre">alarming.enable()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../srv_scripting/archive_locking.html">Archive locking functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../srv_scripting/certificates.html">Certificate functions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../srv_scripting/certificates.html#server.certificates.list"><code class="docutils literal notranslate"><span class="pre">server.certificates.list()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../srv_scripting/certificates.html#server.certificates.trust"><code class="docutils literal notranslate"><span class="pre">server.certificates.trust()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../srv_scripting/certificates.html#server.certificates.reject"><code class="docutils literal notranslate"><span class="pre">server.certificates.reject()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../srv_scripting/certificates.html#server.certificates.create"><code class="docutils literal notranslate"><span class="pre">server.certificates.create()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../srv_scripting/certificates.html#server.certificates.upload"><code class="docutils literal notranslate"><span class="pre">server.certificates.upload()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../srv_scripting/certificates.html#server.certificates.read"><code class="docutils literal notranslate"><span class="pre">server.certificates.read()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../srv_scripting/certificates.html#server.certificates.delete"><code class="docutils literal notranslate"><span class="pre">server.certificates.delete()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../srv_scripting/certificates.html#server.certificates.defaults"><code class="docutils literal notranslate"><span class="pre">server.certificates.defaults()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../srv_scripting/certificates.html#server.certificates.expired"><code class="docutils literal notranslate"><span class="pre">server.certificates.expired()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../srv_scripting/certificates.html#server.certificates.syncStores"><code class="docutils literal notranslate"><span class="pre">server.certificates.syncStores()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../srv_scripting/certificates.html#constants">Constants</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../srv_scripting/certificates.html#certificate-object">Certificate object</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../srv_scripting/childprocess.html">ChildProcess functions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../srv_scripting/childprocess.html#ChildProcess"><code class="docutils literal notranslate"><span class="pre">ChildProcess</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../srv_scripting/childprocess.html#ChildProcess.exec"><code class="docutils literal notranslate"><span class="pre">ChildProcess.exec()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../srv_scripting/childprocess.html#ChildProcess.execAsync"><code class="docutils literal notranslate"><span class="pre">ChildProcess.execAsync()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../srv_scripting/childprocess.html#ChildProcess.write"><code class="docutils literal notranslate"><span class="pre">ChildProcess.write()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../srv_scripting/childprocess.html#ChildProcess.running"><code class="docutils literal notranslate"><span class="pre">ChildProcess.running()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../srv_scripting/childprocess.html#ChildProcess.terminate"><code class="docutils literal notranslate"><span class="pre">ChildProcess.terminate()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../srv_scripting/childprocess.html#ChildProcess.join"><code class="docutils literal notranslate"><span class="pre">ChildProcess.join()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../srv_scripting/childprocess.html#ChildProcess.exitCode"><code class="docutils literal notranslate"><span class="pre">ChildProcess.exitCode</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../srv_scripting/childprocess.html#ChildProcess.stdErr"><code class="docutils literal notranslate"><span class="pre">ChildProcess.stdErr</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../srv_scripting/childprocess.html#ChildProcess.stdOut"><code class="docutils literal notranslate"><span class="pre">ChildProcess.stdOut</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../srv_scripting/control_and_diagnostics.html">Control and diagnostic functions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../srv_scripting/control_and_diagnostics.html#call"><code class="docutils literal notranslate"><span class="pre">call()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../srv_scripting/control_and_diagnostics.html#execute"><code class="docutils literal notranslate"><span class="pre">execute()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../srv_scripting/control_and_diagnostics.html#lock"><code class="docutils literal notranslate"><span class="pre">lock()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../srv_scripting/control_and_diagnostics.html#console.log"><code class="docutils literal notranslate"><span class="pre">console.log()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../srv_scripting/control_and_diagnostics.html#console.info"><code class="docutils literal notranslate"><span class="pre">console.info()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../srv_scripting/control_and_diagnostics.html#console.debug"><code class="docutils literal notranslate"><span class="pre">console.debug()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../srv_scripting/control_and_diagnostics.html#console.warn"><code class="docutils literal notranslate"><span class="pre">console.warn()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../srv_scripting/control_and_diagnostics.html#console.error"><code class="docutils literal notranslate"><span class="pre">console.error()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../srv_scripting/csvreader.html">CSVReader functions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../srv_scripting/csvreader.html#CSVReader"><code class="docutils literal notranslate"><span class="pre">CSVReader</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../srv_scripting/csvreader.html#CSVReader.load"><code class="docutils literal notranslate"><span class="pre">CSVReader.load()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../srv_scripting/csvreader.html#CSVReader.parse"><code class="docutils literal notranslate"><span class="pre">CSVReader.parse()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../srv_scripting/datasources.html">Data source functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../srv_scripting/filesystem.html">FileSystem functions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../srv_scripting/filesystem.html#FileSystem"><code class="docutils literal notranslate"><span class="pre">FileSystem</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../srv_scripting/filesystem.html#FileSystem.capacity"><code class="docutils literal notranslate"><span class="pre">FileSystem.capacity()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../srv_scripting/filesystem.html#FileSystem.freeSpace"><code class="docutils literal notranslate"><span class="pre">FileSystem.freeSpace()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../srv_scripting/filesystem.html#FileSystem.copy"><code class="docutils literal notranslate"><span class="pre">FileSystem.copy()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../srv_scripting/filesystem.html#FileSystem.move"><code class="docutils literal notranslate"><span class="pre">FileSystem.move()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../srv_scripting/filesystem.html#FileSystem.listRootDirectories"><code class="docutils literal notranslate"><span class="pre">FileSystem.listRootDirectories()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../srv_scripting/filesystem.html#FileSystem.createFile"><code class="docutils literal notranslate"><span class="pre">FileSystem.createFile()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../srv_scripting/filesystem.html#FileSystem.deleteFile"><code class="docutils literal notranslate"><span class="pre">FileSystem.deleteFile()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../srv_scripting/filesystem.html#FileSystem.isFile"><code class="docutils literal notranslate"><span class="pre">FileSystem.isFile()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../srv_scripting/filesystem.html#FileSystem.fileSize"><code class="docutils literal notranslate"><span class="pre">FileSystem.fileSize()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../srv_scripting/filesystem.html#FileSystem.creationDate"><code class="docutils literal notranslate"><span class="pre">FileSystem.creationDate()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../srv_scripting/filesystem.html#FileSystem.modificationDate"><code class="docutils literal notranslate"><span class="pre">FileSystem.modificationDate()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../srv_scripting/filesystem.html#FileSystem.createDirectory"><code class="docutils literal notranslate"><span class="pre">FileSystem.createDirectory()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../srv_scripting/filesystem.html#FileSystem.deleteDirectory"><code class="docutils literal notranslate"><span class="pre">FileSystem.deleteDirectory()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../srv_scripting/filesystem.html#FileSystem.isDirectory"><code class="docutils literal notranslate"><span class="pre">FileSystem.isDirectory()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../srv_scripting/filesystem.html#FileSystem.listDirectory"><code class="docutils literal notranslate"><span class="pre">FileSystem.listDirectory()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../srv_scripting/filesystem.html#FileSystem.directorySize"><code class="docutils literal notranslate"><span class="pre">FileSystem.directorySize()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../srv_scripting/globals_object.html">globals object</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../srv_scripting/globals_object.html#globals.set"><code class="docutils literal notranslate"><span class="pre">globals.set()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../srv_scripting/globals_object.html#globals.get"><code class="docutils literal notranslate"><span class="pre">globals.get()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../srv_scripting/globals_object.html#globals.has"><code class="docutils literal notranslate"><span class="pre">globals.has()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../srv_scripting/globals_object.html#globals.remove"><code class="docutils literal notranslate"><span class="pre">globals.remove()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../srv_scripting/history.html">History functions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../srv_scripting/history.html#history.write"><code class="docutils literal notranslate"><span class="pre">history.write()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../srv_scripting/history.html#history.query"><code class="docutils literal notranslate"><span class="pre">history.query()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../srv_scripting/history.html#history.queryNext"><code class="docutils literal notranslate"><span class="pre">history.queryNext()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../srv_scripting/history.html#history.queryRelease"><code class="docutils literal notranslate"><span class="pre">history.queryRelease()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../srv_scripting/history.html#history.aggregate"><code class="docutils literal notranslate"><span class="pre">history.aggregate()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../srv_scripting/history.html#history.directory"><code class="docutils literal notranslate"><span class="pre">history.directory</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../srv_scripting/history.html#history.swapin"><code class="docutils literal notranslate"><span class="pre">history.swapin</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../srv_scripting/httpclient.html">HTTPClient functions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../srv_scripting/httpclient.html#HTTPClient"><code class="docutils literal notranslate"><span class="pre">HTTPClient</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../srv_scripting/httpclient.html#HTTPClient.request"><code class="docutils literal notranslate"><span class="pre">HTTPClient.request()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../srv_scripting/httpclient.html#HTTPClient.get"><code class="docutils literal notranslate"><span class="pre">HTTPClient.get()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../srv_scripting/inputfilestream.html">InputFileStream functions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../srv_scripting/inputfilestream.html#InputFileStream"><code class="docutils literal notranslate"><span class="pre">InputFileStream</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../srv_scripting/inputfilestream.html#InputFileStream.open"><code class="docutils literal notranslate"><span class="pre">InputFileStream.open()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../srv_scripting/inputfilestream.html#InputFileStream.close"><code class="docutils literal notranslate"><span class="pre">InputFileStream.close()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../srv_scripting/inputfilestream.html#InputFileStream.read"><code class="docutils literal notranslate"><span class="pre">InputFileStream.read()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../srv_scripting/inputfilestream.html#InputFileStream.readLine"><code class="docutils literal notranslate"><span class="pre">InputFileStream.readLine()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../srv_scripting/odbcclient.html">ODBCClient functions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../srv_scripting/odbcclient.html#ODBCClient"><code class="docutils literal notranslate"><span class="pre">ODBCClient</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../srv_scripting/odbcclient.html#ODBCClient.open"><code class="docutils literal notranslate"><span class="pre">ODBCClient.open()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../srv_scripting/odbcclient.html#ODBCClient.close"><code class="docutils literal notranslate"><span class="pre">ODBCClient.close()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../srv_scripting/odbcclient.html#ODBCClient.query"><code class="docutils literal notranslate"><span class="pre">ODBCClient.query()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../srv_scripting/odbcclient.html#ODBCClient.info"><code class="docutils literal notranslate"><span class="pre">ODBCClient.info()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../srv_scripting/odbcclient.html#ODBCClient.sources"><code class="docutils literal notranslate"><span class="pre">ODBCClient.sources()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../srv_scripting/odbcclient.html#ODBCClient.types"><code class="docutils literal notranslate"><span class="pre">ODBCClient.types()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../srv_scripting/odbcclient.html#ODBCClient.tables"><code class="docutils literal notranslate"><span class="pre">ODBCClient.tables()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../srv_scripting/odbcclient.html#ODBCClient.columns"><code class="docutils literal notranslate"><span class="pre">ODBCClient.columns()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../srv_scripting/opcua_object.html">opcua object</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../srv_scripting/opcua_object.html#opcua.readFilter"><code class="docutils literal notranslate"><span class="pre">opcua.readFilter()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../srv_scripting/outputfilestream.html">OutputFileStream functions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../srv_scripting/outputfilestream.html#OutputFileStream"><code class="docutils literal notranslate"><span class="pre">OutputFileStream</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../srv_scripting/outputfilestream.html#OutputFileStream.open"><code class="docutils literal notranslate"><span class="pre">OutputFileStream.open()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../srv_scripting/outputfilestream.html#OutputFileStream.close"><code class="docutils literal notranslate"><span class="pre">OutputFileStream.close()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../srv_scripting/outputfilestream.html#OutputFileStream.write"><code class="docutils literal notranslate"><span class="pre">OutputFileStream.write()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../srv_scripting/outputfilestream.html#OutputFileStream.writeLine"><code class="docutils literal notranslate"><span class="pre">OutputFileStream.writeLine()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../srv_scripting/report.html">Report functions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../srv_scripting/report.html#Report"><code class="docutils literal notranslate"><span class="pre">Report</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../srv_scripting/report.html#Report.runtimes"><code class="docutils literal notranslate"><span class="pre">Report.runtimes</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../srv_scripting/report.html#Report.usedDotnetDeployment"><code class="docutils literal notranslate"><span class="pre">Report.usedDotnetDeployment</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../srv_scripting/report.html#Report.generate"><code class="docutils literal notranslate"><span class="pre">Report.generate()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../srv_scripting/report.html#Report.save"><code class="docutils literal notranslate"><span class="pre">Report.save()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../srv_scripting/report.html#Report.saveAsPdf"><code class="docutils literal notranslate"><span class="pre">Report.saveAsPdf()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../srv_scripting/report.html#Report.convertToPdf"><code class="docutils literal notranslate"><span class="pre">Report.convertToPdf()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../srv_scripting/report.html#Report.release"><code class="docutils literal notranslate"><span class="pre">Report.release()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../srv_scripting/script_object.html">script object</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../srv_scripting/script_object.html#script.owner"><code class="docutils literal notranslate"><span class="pre">script.owner</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../srv_scripting/script_object.html#script.caller"><code class="docutils literal notranslate"><span class="pre">script.caller</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../srv_scripting/script_object.html#script.executor"><code class="docutils literal notranslate"><span class="pre">script.executor</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../srv_scripting/script_object.html#script.runContext"><code class="docutils literal notranslate"><span class="pre">script.runContext</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../srv_scripting/script_object.html#script.trigger"><code class="docutils literal notranslate"><span class="pre">script.trigger</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../srv_scripting/script_object.html#script.priority"><code class="docutils literal notranslate"><span class="pre">script.priority</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../srv_scripting/security.html">Security functions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../srv_scripting/security.html#checkUserPassword"><code class="docutils literal notranslate"><span class="pre">checkUserPassword()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../srv_scripting/security.html#setUserPassword"><code class="docutils literal notranslate"><span class="pre">setUserPassword()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../srv_scripting/server_object.html">server object</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../srv_scripting/server_object.html#server.database"><code class="docutils literal notranslate"><span class="pre">server.database</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../srv_scripting/server_object.html#server.database.backup"><code class="docutils literal notranslate"><span class="pre">server.database.backup()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../srv_scripting/server_object.html#server.event.create"><code class="docutils literal notranslate"><span class="pre">server.event.create()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../srv_scripting/server_object.html#server.script.origin"><code class="docutils literal notranslate"><span class="pre">server.script.origin</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../srv_scripting/server_object.html#server.shared.directory"><code class="docutils literal notranslate"><span class="pre">server.shared.directory</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../srv_scripting/server_object.html#server.statistics"><code class="docutils literal notranslate"><span class="pre">server.statistics</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../srv_scripting/server_object.html#server.webaccess.deleteSessions"><code class="docutils literal notranslate"><span class="pre">server.webaccess.deleteSessions()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../srv_scripting/server_object.html#server.webaccess.getSessionInfos"><code class="docutils literal notranslate"><span class="pre">server.webaccess.getSessionInfos()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../srv_scripting/smtpclient.html">SMTPClient functions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../srv_scripting/smtpclient.html#SMTPClient"><code class="docutils literal notranslate"><span class="pre">SMTPClient</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../srv_scripting/smtpclient.html#SMTPClient.addAttachment"><code class="docutils literal notranslate"><span class="pre">SMTPClient.addAttachment()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../srv_scripting/smtpclient.html#SMTPClient.send"><code class="docutils literal notranslate"><span class="pre">SMTPClient.send()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../srv_scripting/tcpclient.html">TCPClient functions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../srv_scripting/tcpclient.html#TCPClient"><code class="docutils literal notranslate"><span class="pre">TCPClient</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../srv_scripting/tcpclient.html#TCPClient.connect"><code class="docutils literal notranslate"><span class="pre">TCPClient.connect()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../srv_scripting/tcpclient.html#TCPClient.close"><code class="docutils literal notranslate"><span class="pre">TCPClient.close()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../srv_scripting/tcpclient.html#TCPClient.send"><code class="docutils literal notranslate"><span class="pre">TCPClient.send()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../srv_scripting/tcpclient.html#TCPClient.receive"><code class="docutils literal notranslate"><span class="pre">TCPClient.receive()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../srv_scripting/tcpclient.html#TCPClient.shutdown"><code class="docutils literal notranslate"><span class="pre">TCPClient.shutdown()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../srv_scripting/translations.html">Translation functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../srv_scripting/ua.html">Ua functions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../srv_scripting/ua/intro.html">Introduction</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../srv_scripting/ua/uanode.html">UaNode functions (deprecated)</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="../../../srv_scripting/ua/uanode.html#UaNode"><code class="docutils literal notranslate"><span class="pre">UaNode</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../srv_scripting/ua/uanode.html#UaNode.exists"><code class="docutils literal notranslate"><span class="pre">UaNode.exists()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../srv_scripting/ua/uanode.html#UaNode.create"><code class="docutils literal notranslate"><span class="pre">UaNode.create()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../srv_scripting/ua/uanode.html#UaNode.remove"><code class="docutils literal notranslate"><span class="pre">UaNode.remove()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../srv_scripting/ua/uanode.html#UaNode.browse"><code class="docutils literal notranslate"><span class="pre">UaNode.browse()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../srv_scripting/ua/uanode.html#UaNode.addreference"><code class="docutils literal notranslate"><span class="pre">UaNode.addreference()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../srv_scripting/ua/uanode.html#UaNode.deletereference"><code class="docutils literal notranslate"><span class="pre">UaNode.deletereference()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../srv_scripting/ua/uanode.html#UaNode.assign"><code class="docutils literal notranslate"><span class="pre">UaNode.assign()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../srv_scripting/ua/uanode.html#UaNode.datahistory"><code class="docutils literal notranslate"><span class="pre">UaNode.datahistory()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../srv_scripting/ua/uanode.html#UaNode.datahistoryRelease"><code class="docutils literal notranslate"><span class="pre">UaNode.datahistoryRelease()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../srv_scripting/ua/uanode.html#UaNode.call"><code class="docutils literal notranslate"><span class="pre">UaNode.call()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../srv_scripting/ua/uanode.html#UaNode.good"><code class="docutils literal notranslate"><span class="pre">UaNode.good()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../srv_scripting/ua/uanode.html#UaNode.bad"><code class="docutils literal notranslate"><span class="pre">UaNode.bad()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../srv_scripting/ua/uanode.html#UaNode.uncertain"><code class="docutils literal notranslate"><span class="pre">UaNode.uncertain()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../srv_scripting/ua/uanode.html#UaNode.equal"><code class="docutils literal notranslate"><span class="pre">UaNode.equal()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../srv_scripting/ua/uanode.html#UaNode.toString"><code class="docutils literal notranslate"><span class="pre">UaNode.toString()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../srv_scripting/ua/uanode.html#UaNode.statusToString"><code class="docutils literal notranslate"><span class="pre">UaNode.statusToString()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../srv_scripting/ua/uanode.html#UaNode.nodeclassToString"><code class="docutils literal notranslate"><span class="pre">UaNode.nodeclassToString()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="../../../srv_scripting/ua/ua.html">Ua functions</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="../../../srv_scripting/ua/ua.html#Ua.findNode"><code class="docutils literal notranslate"><span class="pre">Ua.findNode()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../srv_scripting/ua/ua.html#Ua.createNode"><code class="docutils literal notranslate"><span class="pre">Ua.createNode()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../srv_scripting/ua/ua.html#Ua.readFilter"><code class="docutils literal notranslate"><span class="pre">Ua.readFilter()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../srv_scripting/ua/ua.html#Ua.Status"><code class="docutils literal notranslate"><span class="pre">Ua.Status()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../srv_scripting/ua/ua.html#class-specific-functions">Class specific functions</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="../../../srv_scripting/ua/ua.html#Ua.-Class-.remove"><code class="docutils literal notranslate"><span class="pre">Ua.&lt;Class&gt;.remove()</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="../../../srv_scripting/ua/ua.html#Ua.-Class-.browse"><code class="docutils literal notranslate"><span class="pre">Ua.&lt;Class&gt;.browse()</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="../../../srv_scripting/ua/ua.html#Ua.-Class-.addReference"><code class="docutils literal notranslate"><span class="pre">Ua.&lt;Class&gt;.addReference()</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="../../../srv_scripting/ua/ua.html#Ua.-Class-.deleteReference"><code class="docutils literal notranslate"><span class="pre">Ua.&lt;Class&gt;.deleteReference()</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="../../../srv_scripting/ua/ua.html#Ua.-Class-.equal"><code class="docutils literal notranslate"><span class="pre">Ua.&lt;Class&gt;.equal()</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="../../../srv_scripting/ua/ua.html#Ua.-Class-.valueOf"><code class="docutils literal notranslate"><span class="pre">Ua.&lt;Class&gt;.valueOf()</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="../../../srv_scripting/ua/ua.html#Ua.Variable.assign"><code class="docutils literal notranslate"><span class="pre">Ua.Variable.assign()</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="../../../srv_scripting/ua/ua.html#Ua.Variable.dataHistory"><code class="docutils literal notranslate"><span class="pre">Ua.Variable.dataHistory()</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="../../../srv_scripting/ua/ua.html#Ua.Variable.dataHistoryRelease"><code class="docutils literal notranslate"><span class="pre">Ua.Variable.dataHistoryRelease()</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="../../../srv_scripting/ua/ua.html#Ua.-Class-.toString"><code class="docutils literal notranslate"><span class="pre">Ua.&lt;Class&gt;.toString()</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="../../../srv_scripting/ua/ua.html#Ua.Method.call"><code class="docutils literal notranslate"><span class="pre">Ua.Method.call()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="../../../srv_scripting/ua/ua.html#object-properties">Object properties</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../srv_scripting/ua/ua.html#constants">Constants</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../srv_scripting/version_control.html">Version control functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../srv_scripting/xmldoc.html">XMLDoc functions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../srv_scripting/xmldoc.html#XMLDoc"><code class="docutils literal notranslate"><span class="pre">XMLDoc</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../srv_scripting/xmldoc.html#XMLNode.attribute"><code class="docutils literal notranslate"><span class="pre">XMLNode.attribute()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../srv_scripting/xmldoc.html#XMLNode.first"><code class="docutils literal notranslate"><span class="pre">XMLNode.first()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../srv_scripting/xmldoc.html#XMLNode.last"><code class="docutils literal notranslate"><span class="pre">XMLNode.last()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../srv_scripting/xmldoc.html#XMLNode.next"><code class="docutils literal notranslate"><span class="pre">XMLNode.next()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../srv_scripting/xmldoc.html#XMLNode.previous"><code class="docutils literal notranslate"><span class="pre">XMLNode.previous()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../srv_scripting/xml_export_import.html">XML export and import functions</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../tools.html">atvise tools &amp; third-party components</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../tools/atlauncher.html">atvise builder launcher</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../tools/atlauncher.html#requirements">Requirements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../tools/atlauncher.html#configuration">Configuration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../tools/atlauncher.html#execution">Execution</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../tools/autolic.html">Auto licensing (autolic.exe)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../tools/autolic.html#requirements">Requirements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../tools/autolic.html#configuration">Configuration</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../tools/autolic.html#autolic-ini">autolic.ini</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../tools/autolic.html#command-line-parameters">Command line parameters</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../tools/autolic.html#usage">Usage</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../tools/report.html">atvise report</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../tools/report/report_intro.html">Introduction</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../tools/report/report_intro.html#requirements">Requirements</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../tools/report/report_intro.html#basics">Basics</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../tools/report/report_intro.html#overview">Overview</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../tools/report/report_template.html">Template</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../tools/report/report_template.html#markup-language">Markup Language</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="../../../../tools/report/report_template.html#parameters">Parameters</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../tools/report/report_template.html#examples">Examples</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../tools/report/report_template.html#behavior-when-inserting-data">Behavior when inserting data</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../tools/report/report_generate.html">Generating reports</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../tools/report/generate/intro.html">Introduction</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../tools/report/generate/configurations.html">Report configurations</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="../../../../tools/report/generate/configurations.html#creating-report-configurations">Creating report configurations</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="../../../../tools/report/generate/configurations.html#report-management">Report Management</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../../../../tools/report/generate/configurations.html#report-editor">Report Editor</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../../../../tools/report/generate/configurations.html#create-reports-manually">Create reports manually</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../../../../tools/report/generate/configurations.html#global-settings-for-e-mail-notifications">Global settings for e-mail notifications</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../../../../tools/report/generate/configurations.html#report-viewer">Report viewer</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../tools/report/generate/configurations.html#creating-reports-via-visualization">Creating reports via visualization</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../tools/thirdparty.html">Integrating third-party components</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../tools/thirdparty/integration_scope3.html">Integrating Scope 3 into atvise</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../tools/thirdparty/integration_scope3.html#scope-3-configuration-on-m1-controller">Scope 3 configuration on M1 controller</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../tools/thirdparty/integration_scope3.html#highcharts-configuration-with-scope-3-as-data-source">Highcharts configuration with Scope 3 as data source</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../tools/thirdparty/webmipro.html">M1 webMI pro</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../known_issues.html">Known issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../support_further_information.html">Support and further information</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">atvise</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../../atvise_components.html">Reference manual</a></li>
+          <li class="breadcrumb-item"><a href="../../../atvise_builder_reference.html">atvise builder</a></li>
+          <li class="breadcrumb-item"><a href="../../objectdisplays.html">Object Displays</a></li>
+          <li class="breadcrumb-item"><a href="../hmi.html">HMI</a></li>
+      <li class="breadcrumb-item active">Historylist</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul><div class="rst-breadcrumbs-buttons" role="navigation" aria-label="Sequential page navigation">
+        <a href="date_display.html" class="btn btn-neutral float-left" title="Display Date" accesskey="p"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="historylist_small.html" class="btn btn-neutral float-right" title="Historylist (800x425)" accesskey="n">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+  </div>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="historylist">
+<span id="od-historylist"></span><h1>Historylist<a class="headerlink" href="#historylist" title="Link to this heading"></a></h1>
+<p>The history list is an advanced control that displays historical data based on a query to the server. Four types of data are displayed:</p>
+<ul class="simple">
+<li><p>Alarms</p></li>
+<li><p>Value changes</p></li>
+<li><p>Aggregates</p></li>
+<li><p>(OPC-UA-) Events</p></li>
+</ul>
+<div class="admonition hint">
+<p class="admonition-title">Hint</p>
+<p>To historize alarms and events, an archive group &quot;event&quot; must be added to the historization archives. For aggregates an archive group &quot;aggregate&quot; must be added to the historization archives.</p>
+</div>
+<p class="rubric">Filter</p>
+<p>On top of the history list display you can find a set of filter elements. By clicking the &quot;Advanced filter&quot; button more filter settings become available. You can specify a combination of filters and apply them to the list by clicking the &quot;Apply filter&quot; button. With the button &quot;Reset filter&quot; you can reset the history list to the default parameters again.</p>
+<ul class="simple">
+<li><p><strong>From</strong> – The start date for the query (default: 1 minute or starttime in seconds of the parameter list).</p></li>
+<li><p><strong>To</strong> – The end date for the query (default: now).</p></li>
+<li><p><strong>Type</strong> – Filter by type: Alarms, aggregates, events und values.</p></li>
+</ul>
+<div class="admonition hint">
+<p class="admonition-title">Hint</p>
+<p>Instead of filtering by a &quot;From-To&quot; time area, a optional filtering by a specific start or end time can be set.</p>
+</div>
+<p>For alarms, events and values the following filter parameters are available:</p>
+<ul class="simple">
+<li><p><strong>Address</strong> – Filter by the address of the node.</p></li>
+<li><p><strong>Value</strong> – Filter by the value of the historical data entry.</p></li>
+<li><p><strong>Archive</strong> – Filter by name of the archive.</p></li>
+<li><p><strong>Comment</strong> – Filter by comment.</p></li>
+<li><p><strong>Username</strong> – Filter by username.</p></li>
+<li><p><strong>Eventtext</strong> – Filter by alarm or event text.</p></li>
+<li><p><strong>Min. priority</strong> – &quot;Greater equal&quot; filter by priority.</p></li>
+<li><p><strong>Group</strong> – Filter by group.</p></li>
+<li><p><strong>Live view</strong> – Activate the live mode.</p></li>
+</ul>
+<p>When activating the live checkbox the list immediately displays the changes that are happening at the moment. If activated, the history list can be filtered only by type.</p>
+<p>For aggregates the following filter parameters are available:</p>
+<ul class="simple">
+<li><p><strong>Adress</strong> – Filter by the address of the node.</p></li>
+<li><p><strong>Value</strong> – Filter by the value of the historical data entry.</p></li>
+<li><p><strong>Archive</strong> – Filter by name of the archive.</p></li>
+<li><p><strong>Aggregate</strong> – Filter by aggregate.</p></li>
+</ul>
+<div class="admonition hint">
+<p class="admonition-title">Hint</p>
+<p>The button &quot;Apply filter&quot; uses your filter settings to start the query to the server. Please be aware that a long filter period (e.g. data of one week) can result in a huge amount of data that will take some time to be loaded.</p>
+</div>
+<p>If the aggregate is filtered by the template combo box (only supported on compatible servers like atvise Scada), the client uses the template settings (type, unit, interval) for the server request. Because of this the server response can include results of other aggregate templates with the same parameters.</p>
+<p class="rubric">Priority</p>
+<p>The (column) priority defined in the global list is used to display different columns on different devices (screen sizes). Columns of priority 1 are displayed on every device, columns of priority 2 and higher are hidden on small displays (smartphones), columns of priority 3 and higher are only visible on bigger displays (desktop computers).</p>
+<p class="rubric">Parameters</p>
+<ul class="simple">
+<li><p><strong>table ID</strong> – Unique table identifier (default: &quot;history_table&quot;)</p></li>
+<li><p><strong>table header height</strong> – Height of the table header in px (default: 30)</p></li>
+<li><p><strong>table row height</strong> – Height of the table row in px (default: 20)</p></li>
+</ul>
+<p>Columns:</p>
+<ul class="simple">
+<li><p><strong>configuration</strong> – The configuration of the columns is stored in a <a class="reference internal" href="../../tree/global_parameters.html#global-parameters-historylist"><span class="std std-ref">global list</span></a>. In this global list column names, visibility, width, etc. are defined. A template is included in atvise. (default: atvObjectDisplays.Historylist.Columns)</p></li>
+</ul>
+<p>Font:</p>
+<ul class="simple">
+<li><p><strong>font family</strong> – Font family applied to the table (default: Arial)</p></li>
+<li><p><strong>font color</strong> – Color which will be applied to labels and values (default: global parameter atvFontColor)</p></li>
+<li><p><strong>table header font size</strong> – Font size applied to the table header. (default: 12)</p></li>
+<li><p><strong>table row font size</strong> – Font size applied to the table rows. (default: 12)</p></li>
+<li><p><strong>table detail font size</strong> – Font size applied to the detail area. (default: 12)</p></li>
+<li><p><strong>table footer font size</strong> – Font size applied to the table footer. (default: 12)</p></li>
+</ul>
+<p>Appearance:</p>
+<ul class="simple">
+<li><p><strong>fill color</strong> – Fill color of the top background area (default: global parameter atvFillColor).</p></li>
+<li><p><strong>border color</strong> – Color of borders (default: global parameter atvBorderColor).</p></li>
+<li><p><strong>symbol color</strong> – Color of symbols (default: global parameter atvSymbolColor).</p></li>
+<li><p><strong>table colors</strong> – Global color configuration (default: global list atvObjectDisplays.Tables.ColorConfig)</p></li>
+<li><p><strong>custom theme</strong> – Name of the custom theme (default: atviseTheme). Refer to <a class="reference internal" href="../../../visualization/html_table.html#html-table-customizing"><span class="std std-ref">customizing table appearance</span></a> for further information.</p></li>
+<li><p><strong>status indication</strong> – Specify the status' display through a defined global list (default: global parameter atvStatusIndication)</p></li>
+<li><p><strong>shelve symbol</strong> – Symbol for shelved alarms (default: SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Symbols.alarmlist.shelve)</p></li>
+<li><p><strong>unshelved symbol</strong> – Symbol for unshelved alarms (default: SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Symbols.alarmlist.shelve)</p></li>
+<li><p><strong>one shot shelved symbol</strong> – Symbol for one shot shelved alarms (default: SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Symbols.alarmlist.shelveOnce)</p></li>
+<li><p><strong>timed shelved symbol</strong> – Symbol for timed shelved alarms (default: SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Symbols.alarmlist.shelveTime)</p></li>
+<li><p><strong>suppressed symbol</strong> – Symbol for suppressed alarms (default: SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Symbols.alarmlist.suppress)</p></li>
+<li><p><strong>unsupressed symbol</strong> – Symbol for unsuppressed alarms (default: SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Symbols.alarmlist.suppress)</p></li>
+<li><p><strong>enabled symbol</strong> – Symbol for enabled alarms (default: SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Symbols.alarmlist.enabled)</p></li>
+<li><p><strong>disabled symbol</strong> – Symbol for disabled alarms (default: SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Symbols.alarmlist.enabled)</p></li>
+<li><p><strong>confirmed symbol</strong> – Symbol for confirmed alarms (default: SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Symbols.alarmlist.confirm)</p></li>
+<li><p><strong>unconfirmed symbol</strong> – Symbol for unconfirmed alarms (default: SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Symbols.alarmlist.confirm)</p></li>
+</ul>
+<p>Options:</p>
+<ul class="simple">
+<li><p><strong>data mode</strong> – Data mode for the standard filtering (default: continue)</p></li>
+<li><p><strong>data per request</strong> – Number of data sets per request/continuation point (default: 10000)</p></li>
+<li><p><strong>data limitation</strong> – Number of maximum processed data sets (default: 250000)</p></li>
+<li><p><strong>detail mode</strong> – Show alarms, values or both (default: all)</p></li>
+<li><p><strong>paging</strong> – Activated paging buttons (default: true)</p></li>
+<li><p><strong>filter bar enabled</strong> – Show filter bar (default: true)</p></li>
+<li><p><strong>filter regular expressions</strong> – Regular expressions can be used for the filter (default: false)</p></li>
+<li><p><strong>filter use placeholder</strong> – Activation of the &quot;*&quot; placeholder in the search function (default: false)</p></li>
+<li><p><strong>filter case sensitive</strong> – Filter works case sensitive (default: false)</p></li>
+<li><p><strong>filter minimum length</strong> – Minimal number of signs for the filter to work (default: 1)</p></li>
+<li><p><strong>filter delay [ms]</strong> – Delay till filtering starts after entering a sign (default: 1000)</p></li>
+<li><p><strong>cell linebreak</strong> – Too long text will be broken to new lines. If there is no more space the text will be cut ending with &quot;…&quot; (default: false)</p></li>
+<li><p><strong>columns reorderable</strong> – Columns can be reordered (default: true)</p></li>
+<li><p><strong>multiselect on cell click</strong> – Click for multiselection works on the whole row (default: true)</p></li>
+</ul>
+<p>Menu options:</p>
+<ul class="simple">
+<li><p><strong>show menu</strong> – Display the menu (default: true)</p></li>
+<li><p><strong>custom menu title</strong> – Title of the custom menu (default: &quot;T{Export CSV}&quot;)</p></li>
+<li><p><strong>show picker menu</strong> – Display the picker menu (default: true)</p></li>
+<li><p><strong>picker menu title</strong> – Title of the picker menu (default: true: &quot;T{Columns}&quot;)</p></li>
+<li><p><strong>menu height</strong> – Height of the menu (default: 300)</p></li>
+<li><p><strong>menu width</strong> – Width of the menu (default: 250)</p></li>
+</ul>
+<p>Default filter:</p>
+<p>Default filter values defining the start up filter for the history list.</p>
+<ul class="simple">
+<li><p><strong>start time</strong> – Value in seconds to go back from the current time (default: 60)</p></li>
+<li><p><strong>min. priority</strong></p></li>
+<li><p><strong>source</strong> (address)</p></li>
+<li><p><strong>user</strong></p></li>
+<li><p><strong>eventtext</strong></p></li>
+<li><p><strong>value</strong></p></li>
+<li><p><strong>archive</strong></p></li>
+<li><p><strong>type</strong></p></li>
+<li><p><strong>live view</strong> (default: false)</p></li>
+<li><p><strong>aggregate</strong> (default: Average)</p></li>
+<li><p><strong>aggregate interval</strong> (default: 1)</p></li>
+<li><p><strong>aggregate unit</strong> (default: m)</p></li>
+<li><p><strong>comment</strong></p></li>
+<li><p><strong>group</strong></p></li>
+<li><p><strong>range filter mode</strong> (default: From - To)</p></li>
+</ul>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="date_display.html" class="btn btn-neutral float-left" title="Display Date" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="historylist_small.html" class="btn btn-neutral float-right" title="Historylist (800x425)" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2007-2025, Bachmann Visutec GmbH.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(false);
+      });
+  </script> 
+
+</body>
+</html>

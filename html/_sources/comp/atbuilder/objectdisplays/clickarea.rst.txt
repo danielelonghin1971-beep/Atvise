@@ -1,0 +1,69 @@
+Clickarea
+#########
+
+This control can be used as an overlay element which reacts on clicks.
+
+In addition, the following triggers are fired:
+
+- valuechanged: on *mouseclick*
+- valuechangedMouseUp: on *mouseup*
+- valuechangedMouseDown: on *mousedown*
+
+.. rubric:: Triggers
+
+Following triggers can be used for this object display: 
+
+- **com.atvise.setActive** -- Can be used to enable or disable the object display.
+- **valuechanged** -- Fired on value changes, e.g. by user input.
+
+::
+
+    //Disable the object display
+    webMI.trigger.fire("com.atvise.setActive", false, "myDisplayID");
+
+    //Respond to value changes
+    webMI.trigger.connect("valuechanged", function(e) { console.log(e.value); }, "myDisplayID");
+
+.. hint:: Additional undocumented triggers are internally used by atvise. Their functionality may be changed in future atvise releases.
+
+.. rubric:: Parameters
+
+This control has the following generic parameters:
+
+- **base** -- This address will be set to "value" on *mouseclick*
+- **value** -- The "base" will be set to this value on *mouseclick*
+
+Appearance:
+
+- **fill color when inactive** -- Clickarea's fill color if not active (default: global parameter atvInactiveColor  (advanced), #8c8c8c (standard))
+- **focus stroke color** -- The color of the stroke which will be set when the area is focused (default: #ffffff)
+- :advstyle:`Advanced` **border color** -- Color of the border around the area (default: global parameter atvBorderColor)
+
+Options:
+
+- **address to set at mousedown** -- The value of "value mousedown" will be set to this address if the mouse button is pressed
+- **value mousedown** -- Value to be set on *mousedown*
+- **address to set at mouseup** -- The value of "value mouseup" will be set to this address if the mouse button is release
+- **value mouseup** -- Value to be set on *mouseup*
+- **tab index** -- Defines the order for changing between the object displays by using the tab key
+- **tooltip** -- Displays a tooltip box with the entered text (standard HTML-Elements can be entered)
+
+    .. hint:: If nothing is specified in this group, "value" will be set to "base".
+
+Security:
+
+- **necessary right** -- The user must have this right to activate this clickarea, i.e. to press the clickarea
+- **activation address** -- If the value of this address equals to "activation value", then the clickarea will be active, i.e. can be pressed
+- **activation value** -- Value which activates the clickarea
+
+    .. hint:: The activation of a clickarea can be configured only by the necessary right, or only by the activation address and value or by both. In case both settings are made, the user must have the necessary right and the value of the "activation address" must equal the "activation value"; otherwise the clickarea will not be activated.
+
+    - **show access control notification** -- Defines if the icon for showing access control notifications shall be displayed (default: true)
+
+Menu:
+
+- **menu positioning** -- The position the menu symbol is shown at (top-left, top-right, bottom-left, bottom-right).
+- **menu mouseover active** -- Symbol is only shown on *mouseover*.
+- **menu symbol offset x** -- Relative offset of the menu symbol to the anchor point on the x axis in pixel.
+- **menu symbol offset y** -- Relative offset of the menu symbol to the anchor point on the y axis in pixel.
+- **context menu click frame** -- Defines the size of the click frame for opening the context menu.

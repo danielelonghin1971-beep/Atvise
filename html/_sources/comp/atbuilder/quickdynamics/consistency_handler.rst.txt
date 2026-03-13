@@ -1,0 +1,6 @@
+Consistency Handler
+###################
+
+This Quick Dynamic allows to define a group of object displays when creating a display, whose variables will be consistently read from or written to the PLC. 
+
+A description for using the Tab Handler can be found in the chapter :ref:`atvise visualization > Consistency Handler <visu_consistency_handler>`.

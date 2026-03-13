@@ -1,0 +1,15 @@
+Add Popup
+#########
+
+Object display to add new recipe templates and recipes.
+
+.. rubric:: Parameters
+
+General:
+
+- **config node** -- Node for configuration of templates and recipes (Default: AGENT.OBJECTS.recipes)
+- **mode** -- Template or recipe (default: template)
+- **title** -- Title (default: T{Title})
+- **trigger name** -- Trigger for interaction
+- **label line 1** -- Label line 1 (default: label1)
+- **label line 2** -- Label line 2 (default: label2)

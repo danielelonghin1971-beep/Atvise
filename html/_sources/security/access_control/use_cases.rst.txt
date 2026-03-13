@@ -1,0 +1,90 @@
+.. _ac_use_cases:
+
+Common use cases
+################
+
+This section shows the necessary settings for some common use cases.
+
+.. rubric:: Working as always (atvise versions < 3.6)
+
+Define user *root* and all other users as project administrators. Enable option :ref:`Set anonymous and NTLM users as project administrator<menu_access_control>`.
+
+.. rubric:: No restrictions for logged in users, read-only for anonymous users
+
+Use the access control editor to enable all available rights for the *AuthenticatedUser* group for all system functions. Allow anonymous access by disabling the :ref:`Require OPC UA authentication<menu_access_control>` respectively the *Require visualization authentication* option. Anonymous sessions have read access for parts of the address space by default. If anonymous sessions should be able to read everything, enable *Read* (if available, otherwise at least *Visibility*) for all remaining system functions for the group "Anonymous".
+
+.. rubric:: No restrictions for logged in users, no access for anonymous users
+
+Enable the :ref:`Require OPC UA authentication<menu_access_control>` respectively the *Require visualization authentication* option. Use the access control editor to enable all available rights for the *AuthenticatedUser* group for all system functions.
+
+.. rubric:: Edit displays
+
+The user must be member of a group that has the *Engineer* right for system function "Displays".
+
+.. rubric:: Edit types
+
+The user must be member of a group that has the right *Engineer* for system function "Types". This allows to edit types in ObjectTypes.PROJECT and VariableTypes.PROJECT.
+
+.. hint:: If an existing type is changed, e.g. a node is added), all operations necessary for adding the node (e.g. creating a node for all instances) are performed with the root session. 
+
+.. rubric:: Create instance of type in AGENT.OBJECTS
+
+The user must be member of a group that has the right *Engineer* for system function "Objects".
+
+.. hint:: If the user is allowed to create an instance, the further instantiation is executed by the root session. This ensures that the instance can be completely created.
+
+.. rubric:: Full access to AGENT.OBJECTS
+
+The user must be a member of a group that has all rights enabled for system function "Objects". This includes the right to configure rights in AGENT.OBJECTS.
+
+.. rubric:: Full access to a subtree of AGENT.OBJECTS
+
+The user must be a member of a group that has all rights for the respective subnode.
+
+.. rubric:: Change node values in AGENT.OBJECTS
+
+The user must be a member of a group that has the *Write* right for system function "Objects". This allows to write values but no structural changes. 
+
+.. hint:: This right does not allow value changes that are interpreted as "parameterization", i.e. value changes of instances of atvise types (MirrorOutput, smoothing, etc). For parameterizations the right *Engineer* is required.
+
+.. rubric:: Configure rights
+
+The user must be a member of a group that has the *Configure access control* right for the respective subtree. 
+
+.. rubric:: Execute menu scripts or webMI method scripts
+
+Every menu script and webMI method script is executable for every user by default. If the execution shall be limited, the default setting must be overridden. The *Execute* right must be configured for the specific group and script.
+
+.. rubric:: Edit object display with display script
+
+The user must be a member of a group that has the *Engineer* right for system function "Project Library".
+
+.. rubric:: Use Paste & Mirror
+
+The user must be a member of a group that has the *Remote browse* right for the data source. This allows browsing the data source and selecting node by "Copy". In addition, the user must be member of a group that has the *Engineer* right for the subtree to which the nodes shall be inserted via "Paste&Mirror".
+
+.. rubric:: Acknowledge alarms
+
+The user must be a member of a group that has the right *Acknowledge alarms* for system function "Objects". It is also possible to define the right for a specific subtree in order to limit the user permissions. 
+
+.. rubric:: Make changes to SYSTEM.LIBRARY.ATVISE
+
+The user must be a member of a group that has the *Engineer* right for system function "atvise Library". This allows changes like importing new libraries or bugfixes for displays or script code provided by atvise.
+
+.. rubric:: Edit alarm configuration
+
+The user must be a member of a group that has the right *Engineer* for the respective sub tree. Only the right for the alarm configuration (the instance of type AlarmConfiguration) is relevant. The user automatically gets the right for all child nodes of the alarm configuration, including alarm conditions. Therefore, an alarm configuration can either be configured completely or not at all. 
+
+.. rubric:: Import / export
+
+The user must be a member of a group that has the *Execute* right for the respective system function ("Version control import", "Version control export", "XML import" or "XML export"). In case of an import, you may need additional rights depending on the data to be imported. E.g.:
+
+- *Engineer* for Objects
+- *Engineer* for Types
+- *Engineer* for Historical archives
+- *Engineer* for Alarming
+- *Engineer* for Security
+
+.. rubric:: Visualization
+
+The user must be a member of a group that has the *Read* right for system function "History archives" in order to e.g. select archives or aggregates in the history list.

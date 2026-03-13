@@ -1,0 +1,278 @@
+/* override table width restrictions */
+@media screen and (min-width: 767px) {
+
+   .wy-table-responsive table td {
+      /* !important prevents the common CSS stylesheets from overriding
+         this as on RTD they are loaded after this stylesheet */
+      white-space: normal !important;
+   }
+
+   .wy-table-responsive {
+      overflow: visible !important;
+   }
+   
+}
+
+.wy-table td, .rst-content table.docutils td, .rst-content table.field-list td, .wy-table th, .rst-content table.docutils th, .rst-content table.field-list th {
+   padding: 4px 8px;
+   vertical-align: top;
+   line-height: 16px;
+}
+
+.wy-menu-vertical a {
+   line-height: 14px;
+   color: #ffffff;
+}
+
+.fa-home:before, .icon-home:before {
+   content: url(atvise_logo.png);
+   display: flex;
+   height: 79px;
+   justify-content: center;
+}
+
+.rst-content .wy-breadcrumbs .icon.icon-home:before {
+   content: "atvise";
+   height: auto;
+}
+
+.wy-side-nav-search {
+   background-color: #ffffff;
+}
+
+.wy-side-nav-search>div.version {
+   color: #cbcbcb;
+   font-weight: bold;
+   display: inline;
+   left: -100px;
+}
+
+.wy-side-nav-search input[type=text] {
+   background-color: #cbcbcb;
+   border: 0px;
+   color: #ffffff;
+   margin-top: 10px;
+}
+
+.wy-side-nav-search>a {
+   display: inline;
+   color: #cbcbcb;
+   padding: 0px 6px;
+}
+
+.wy-nav-side, .wy-nav-top {
+    background: #5377b7;
+}
+
+.wy-nav-content {
+   max-width: 100%;
+}
+
+.rst-content dl p, .rst-content dl table {
+   margin-bottom: 6px;
+}
+
+.rst-content p.rubric {
+   font-size: 18px;
+   margin-top: 24px;
+}
+
+.rst-content span.menuselection {
+   border: 1px solid;
+   background: #ffffff;
+   border-radius: 2px;
+   font-size: 80%;
+   padding: 2px 4px;
+   margin: auto 2px;
+}
+
+.rst-content span.treeselection {
+   border: 1px solid;
+   background: #eeeeee;
+   border-radius: 2px;
+   font-size: 80%;
+   padding: 2px 4px;
+   margin: auto 2px;
+}
+
+.rst-content .section ul li blockquote {
+   margin-top: 6px;
+   margin-bottom: 6px;
+}
+
+.rst-content li p.first, .rst-content li blockquote, .rst-content .section ol p, .rst-content .document .section ul li p, .rst-content dl ul, .rst-content dl ol {
+   margin-bottom: 0px;
+}
+
+.rst-content .admonition {
+   margin-top: 12px;
+   margin-bottom: 12px;
+}
+
+.rst-content p, .rst-content .section ul, .rst-content .section ul li ul.simple, .rst-content ol.arabic {
+   margin-bottom: 6px;
+}
+
+/*remove margins in toctree lists*/
+.rst-content .toctree-wrapper ul li ul{
+   margin-top: 0px;
+   margin-bottom: 0px;
+}
+
+/* remove margin-bottom after last li-element in table, match font size of li-element in table*/
+.rst-content .section .row-even ul, .rst-content .section .row-odd ul, .rst-content .section .wy-table-responsive ul p {
+   margin-bottom: 0px;
+   font-size: .9rem;
+}
+
+.rst-content dd {
+   line-height: 24px;
+}
+
+ .rst-content img {
+   vertical-align: bottom;
+   margin-bottom: 4px;
+}
+
+.rst-content dl {
+   margin-top: 12px;
+   margin-bottom: 12px;
+}
+
+.rst-content pre.literal-block, .rst-content div[class^="highlight"] {
+   margin: 1px 0 6px 0;
+}
+
+.rst-content div.figure {
+   margin-bottom: 12px;
+   margin-top: 12px;
+}
+
+.rst-content div.figure p:last-child.caption {
+   margin-bottom: 12px;
+}
+
+.rst-content .highlighted {
+   padding: 0 0px;
+}
+
+h1{
+   border-style: none;
+   border-bottom-style:double;
+   border-color:#f2d600;
+   border-bottom-width: 8px;
+   color:#000000;
+   padding: 1px;
+
+}
+
+h2{
+   border-style:none;
+   border-bottom-style: solid;
+   border-color: #f2d600;
+   color: #000000;
+}
+
+h3{
+   border-style:none;
+   text-decoration-line:underline;
+   text-decoration-color: #f2d600;
+   color:#000000;
+   
+}
+
+.rubric{
+   
+   text-decoration-line:underline;
+   text-decoration-color: #f2d600;
+   text-decoration-style:dotted;
+}
+
+.rst-content span.advstyle {
+   border: 2px solid;
+   border-color: #5377b7;
+   color: #5377b7;
+   border-radius: 2px;
+   font-size: 80%;
+   padding: 2px 4px;
+   margin: auto 2px;
+}
+
+span.stdstyle {
+   border: 2px solid;
+   border-color: #f88d00;
+   color: #f88d00;
+   border-radius: 2px;
+   font-size: 80%;
+   padding: 2px 4px;
+   margin: auto 2px;
+}
+
+.red{
+   color: red;
+}
+
+.blue{
+   color: blue;
+}
+
+.purple{
+   color:purple;
+}
+
+div.tableinline {
+   width: auto;
+   display: flex;
+   column-gap: 5px;
+   text-align: center;
+}
+
+div.tableinline * {
+   margin-right: 5px;
+}
+
+div.tableinline p {
+   display: flex;
+   align-items: center;
+   text-align: vertical;
+}
+
+.wy-menu-vertical li.current>a span.toctree-expand,
+.wy-menu-vertical li.on a span.toctree-expand,
+.wy-menu-vertical li span.toctree-expand {
+    display: inline-block;
+    font: normal normal normal 14px/1 FontAwesome;
+    font-size: inherit;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale
+}
+
+.fa-minus-square-o:before,
+.wy-menu-vertical li.current>a span.toctree-expand:before,
+.wy-menu-vertical li.on a span.toctree-expand:before {
+    content: "\f147"; /* fa-minus-square-o */
+}
+
+.fa-plus-square-o:before,
+.wy-menu-vertical li span.toctree-expand:before {
+    content: "\f196"; /* fa-plus-square-o */
+}
+
+.wy-menu-vertical li span.toctree-expand {
+    display: block;
+    float: left;
+    margin-left: -1.2em;
+    font-size: .8em;
+    line-height: 1.6em;
+    color: #4d4d4d;
+    border: none;
+    background: none;
+    padding: 0
+}
+
+.wy-menu-vertical li a:hover {
+    background-color: #f0f8ff !important;  /* gewünschte Farbe */
+    color: #404040 !important;             /* Textfarbe bei Hover */
+    cursor: pointer;
+}

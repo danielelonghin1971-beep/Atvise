@@ -1,0 +1,12 @@
+.. _od_report:
+
+Report
+######
+
+.. toctree::
+
+    report/edit_dialog
+    report/email_dialog
+    report/manager
+    report/run_dialog
+    report/view_dialog

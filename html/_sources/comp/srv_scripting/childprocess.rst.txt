@@ -1,0 +1,142 @@
+ChildProcess functions
+######################
+
+.. rubric:: Introduction
+
+The ChildProcess functions allow a server-side script to start and control commands in child processes.
+
+Please consider following hints and restrictions when using the ChildProcess functions:
+
+- GUI programs are not supported. Depending on the platform, the GUI program and the user context of the atvise server, starting such a program may work, but we strongly recommend to start only command line programs that show no windows and need no user interaction.
+- Some programs create an asynchronous process to do the real work and exit immediately. It is not possible to control this asynchronous process in any way. This leads to the next hint:
+- Check the task manager of your system for running processes started with one of the ChildProcess functions. Especially for programs mentioned in the previous hint it may look like the program already exited normally but the asynchronous process is still running.
+- See also the description of the functions below for function-specific hints.
+
+.. danger:: The commands run in the user context of the atvise server. Depending on how the atvise server was started, the commands may run with administrative rights. Check your commands carefully to prevent unintentional access to resources normally not accessible for unprivileged users.
+
+.. rubric:: Creating a ChildProcess object
+
+.. class:: ChildProcess(command[, options])
+
+    To use any of the functions below you first have to create a ChildProcess object.
+
+    To execute the command use one of the functions :func:`ChildProcess.exec` or :func:`ChildProcess.execAsync`.
+
+    Parameters:
+        - **command** (String) -- Specifies the command to execute.
+        - **options** (Object, optional, default: {}) -- An object with following properties:
+
+            - **args** (String[], optional, default: []) -- Specifies the arguments to pass to the command.
+            - **workingDir** (String, optional, default: "") -- Specifies the working directory of the command.
+            - **env** (Object, optional, default: {}) -- Specifies the environment variables to set for the command.
+
+    Example::
+
+        var cp = new ChildProcess("mybackup.bat", {
+            args: ["--days", 2],
+            env: { TEMP: "C:/TEMP" }
+        });
+        cp.execAsync();
+
+.. rubric:: Synchronous execution
+
+.. !!v8!! ChildProcess.exec([options])
+.. function:: ChildProcess.exec([options])
+
+    Executes the command and blocks the script until the command exits or the timeout expires.
+
+    Parameters:
+        - **options** (Object, optional, default: {}) -- An object with following properties:
+
+            - **stdIn** (String, optional, default: "") -- The text to be written to the *standard input* of the command. After the text is written, *standard input* will be closed.
+            - **timeout** (Integer, optional, default: 30) -- The timeout in seconds. When the timeout expires the command will be terminated.
+
+    Returns:
+        true, if the command could be executed and exited normally, otherwise false.
+
+    Example::
+
+        var cp = new ChildProcess("python.exe", { args: ["-i"] });
+        if (cp.exec({ stdIn: "2**64-1", timeout: 10 }))
+            console.log("Result: ", cp.stdOut);
+
+.. rubric:: Asynchronous execution
+
+.. !!v8!! ChildProcess.execAsync()
+.. function:: ChildProcess.execAsync()
+
+    Executes the command in the background without blocking the script. The functions :func:`ChildProcess.write`, :func:`ChildProcess.running`, :func:`ChildProcess.terminate` and :func:`ChildProcess.join` can be used to control the execution of the command.
+
+    Returns:
+        true, if the command could be executed, otherwise false.
+
+.. !!v8!! ChildProcess.write(text[, options])
+.. function:: ChildProcess.write(text[, options])
+
+    Writes the given text to the *standard input* of the command. The function can be called multiple times as long as the command is still running.
+
+    Parameters:
+        - **text** (String) -- The text to be written to the *standard input* of the command.
+        - **options** (Object, optional, default: {}) --  An object with following properties:
+
+            - **timeout** (Integer, optional, default: 0) -- The timeout in seconds to wait for a response from the command. If not specified or 0, write will return immediately.
+
+    Returns:
+        true, if the command is running, the text was written and - if a timeout was specified - the response was received before the timeout expired. In all other cases false is returned.
+
+    Example::
+
+        var cp = new ChildProcess("sqlite3.exe", { args: ["-interactive", "-batch", "dbfile.db"] });
+        if (cp.execAsync())
+        {
+            cp.write("select count(*) from mytable;\n", { timeout: 2 });
+            console.log("Count: ", cp.stdOut);
+            cp.write("select * from mytable;\n", { timeout: 10 });
+            console.log("Data:", cp.stdOut);
+            cp.write(".exit\n");
+        }
+        else
+            console.error("Failed to execute sqlite3.exe!");
+
+.. !!v8!! ChildProcess.running()
+.. function:: ChildProcess.running()
+
+    Checks if the command is still running.
+
+    Returns:
+        true, if the command is running, otherwise false.
+
+.. !!v8!! ChildProcess.terminate()
+.. function:: ChildProcess.terminate()
+
+    Terminates the running command but doesn't wait for termination.
+
+    Returns:
+        true, if the command is no longer running or termination of the command was successfully initiated, otherwise false.
+
+.. !!v8!! ChildProcess.join([options])
+.. function:: ChildProcess.join([options])
+
+    Waits until the command exits.
+
+    Parameters:
+        - **options** (Object, optional, default: {}) --  An object with following properties:
+
+            - **timeout** (Integer, optional, default: 0) -- The timeout in seconds to wait for the command to exit. If it is 0, join will wait infinitely.
+
+    Returns:
+        true, if the command is no longer running or exits before the timeout (if any) expires. false, if the timeout expires and the command is still running.
+
+.. rubric:: Information about the command
+
+.. attribute:: ChildProcess.exitCode
+
+    The *exit code* of the command. Only available after a normal exit of the command.
+
+.. attribute:: ChildProcess.stdErr
+
+    The content of the *standard error* of the command.
+
+.. attribute:: ChildProcess.stdOut
+
+    The content of the *standard output* of the command.

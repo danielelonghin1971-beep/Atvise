@@ -1,0 +1,136 @@
+.. _od_historylist_small:
+
+Historylist (800x425)
+######################
+
+This is a version for smaller displays of tablets or smartphones. The history list is an advanced control that displays historical data based on a query to the server. Four types of data are displayed: 
+
+- Alarms
+- Value changes
+- Aggregates
+- (OPC-UA-) Events
+
+.. hint:: To historize alarms and events, an archive group "event" must be added to the historization archives. For aggregates an archive group "aggregate" must be added to the historization archives.
+
+.. rubric:: Filter
+
+On top of the history list display you can find a set of filter elements. By clicking the "Advanced filter" button more filter settings become available. You can specify a combination of filters and apply them to the list by clicking the "Apply filter" button. With the button "Reset filter" you can reset the history list to the default parameters again.
+
+- **From** -- The start date for the query (default: 1 minute or starttime in seconds of the parameter list).
+- **To** -- The end date for the query (default: now).
+- **Type** -- Filter by type: Alarms, aggregates, events und values.
+
+.. hint:: Instead of filtering by a "From-To" time area, a optional filtering by a specific start or end time can be set.
+
+For alarms, events and values the following filter parameters are available:
+
+- **Address** -- Filter by the address of the node.
+- **Value** -- Filter by the value of the historical data entry.
+- **Archive** -- Filter by name of the archive.
+- **Comment** -- Filter by comment.
+- **Username** -- Filter by username.
+- **Eventtext** -- Filter by alarm or event text.
+- **Min. priority** -- "Greater equal" filter by priority.
+- **Group** -- Filter by group.
+- **Live view** -- Activate the live mode.
+
+When activating the live checkbox the list immediately displays the changes that are happening at the moment. If activated, the history list can be filtered only by type.
+
+For aggregates the following filter parameters are available:
+
+- **Adress** -- Filter by the address of the node.
+- **Value** -- Filter by the value of the historical data entry.
+- **Archive** -- Filter by name of the archive.
+- **Aggregate** -- Filter by aggregate.
+
+.. hint:: The button "Apply filter" uses your filter settings to start the query to the server. Please be aware that a long filter period (e.g. data of one week) can result in a huge amount of data that will take some time to be loaded.
+
+If the aggregate is filtered by the template combo box (only supported on compatible servers like atvise Scada), the client uses the template settings (type, unit, interval) for the server request. Because of this the server response can include results of other aggregate templates with the same parameters.
+
+.. rubric:: Priority
+
+The (column) priority defined in the global list is used to display different columns on different devices (screen sizes). Columns of priority 1 are displayed on every device, columns of priority 2 and higher are hidden on small displays (smartphones), columns of priority 3 and higher are only visible on bigger displays (desktop computers).
+
+.. rubric:: Parameters
+
+- **table ID** -- Unique table identifier (default: "history_table")
+- **table header height** -- Height of the table header in px (default: 20)
+- **table row height** -- Height of the table row in px (default: 20)
+
+Columns:
+
+- **configuration** -- The configuration of the columns is stored in a :ref:`global list <global_parameters_historylist>`. In this global list column names, visibility, width, etc. are defined. A template is included in atvise. (default: atvObjectDisplays.Historylist.Columns)
+
+Font:
+
+- **font family** -- Font family applied to the table (default: Arial)
+- **font color** -- Color which will be applied to labels and values (default: global parameter atvFontColor)
+- **table header font size** -- Font size applied to the table header (default: 12).
+- **table row font size** -- Font size applied to the table rows (default: 12).
+- **table detail font size** -- Font size applied to the detail area (default: 12).
+- **table footer font size** -- Font size applied to the table footer (default: 12).
+
+Appearance:
+
+- **fill color** -- Fill color of the top background area (default: global parameter atvFillColor).
+- **border color** -- Color of borders (default: global parameter atvBorderColor).
+- **symbol color** -- Color of symbols (default: global parameter atvSymbolColor).
+- **table colors** -- Global color configuration (default: global list atvObjectDisplays.Tables.ColorConfig)
+- **custom theme** -- Name of the custom theme (default: atviseTheme). Refer to :ref:`customizing table appearance <html_table_customizing>` for further information.
+- **status indication** -- Specify the status' display through a defined global list (default: global parameter atvStatusIndication)
+- **shelve symbol** -- Symbol for shelved alarms (default: SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Symbols.alarmlist.shelve)
+- **unshelved symbol** -- Symbol for unshelved alarms (default: SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Symbols.alarmlist.shelve)
+- **one shot shelved symbol** -- Symbol for one shot shelved alarms (default: SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Symbols.alarmlist.shelveOnce) 
+- **timed shelved symbol** -- Symbol for timed shelved alarms (default: SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Symbols.alarmlist.shelveTime) 
+- **suppressed symbol** -- Symbol for suppressed alarms (default: SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Symbols.alarmlist.suppress)
+- **unsupressed symbol** -- Symbol for unsuppressed alarms (default: SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Symbols.alarmlist.suppress) 
+- **enabled symbol** -- Symbol for enabled alarms (default: SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Symbols.alarmlist.enabled) 
+- **disabled symbol** -- Symbol for disabled alarms (default: SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Symbols.alarmlist.enabled) 
+- **confirmed symbol** -- Symbol for confirmed alarms (default: SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Symbols.alarmlist.confirm) 
+- **unconfirmed symbol** -- Symbol for unconfirmed alarms (default: SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Symbols.alarmlist.confirm) 
+
+Options:
+
+- **data mode** -- Data mode for the standard filtering (default: continue)
+- **data per request** -- Number of data sets per request/continuation point (default: 10000)
+- **data limitation** -- Number of maximum processed data sets (default: 250000)
+- **detail mode** -- Show alarms, values or both (default: all)
+- **paging** -- Activated paging buttons (default: true)
+- **filter bar enabled** -- Show filter bar (default: true)
+- **filter regular expressions** -- Regular expressions can be used for the filter (default: false)
+- **filter use placeholder** -- Activation of the "*" placeholder in the search function (default: false)
+- **filter case sensitive** -- Filter works case sensitive (default: false)
+- **filter minimum length** -- Minimal number of signs for the filter to work (default: 1)
+- **filter delay [ms]** -- Delay till filtering starts after entering a sign (default: 1000)
+- **cell linebreak** -- Too long text will be broken to new lines. If there is no more space the text will be cut ending with "..." (default: false)
+- **columns reorderable** -- Columns can be reordered (default: true)
+- **multiselect on cell click** -- Click for multiselection works on the whole row (default: true)
+
+Menu options:
+
+- **show menu** -- Display the menu (default: true)
+- **custom menu title** -- Title of the custom menu (default: "T{Export CSV}")
+- **show picker menu** -- Display the picker menu (default: true)
+- **picker menu title** -- Title of the picker menu (default: true: "T{Columns}")
+- **menu height** -- Height of the menu (default: 300)
+- **menu width** -- Width of the menu (default: 250)
+
+Default filter:
+
+Default filter values defining the start up filter for the history list.
+
+- **start time** -- Value in seconds to go back from the current time (default: 60)
+- **min. priority**
+- **source** (address)
+- **user**
+- **eventtext**
+- **value**
+- **archive**
+- **type**
+- **live view** (default: false)
+- **aggregate** (default: Average)
+- **aggregate interval** (default: 1)
+- **aggregate unit** (default: m)
+- **comment**
+- **group**
+- **range filter mode** (default: From - To)

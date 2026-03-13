@@ -1,0 +1,37 @@
+.. _client_scripting_reference:
+
+Introduction
+############
+
+:doc:`configuration`
+    Configuration of the webMI JavaScript library
+
+:doc:`general_functions`
+    General functionality
+
+:doc:`data`
+    Reading, writing and subscribing of/to data.
+
+:doc:`alarm`
+    Setting, unsetting and acknowledging alarms.
+
+:doc:`graphics`
+    Drawing, transforming and changing attributes of SVG elements.
+
+:doc:`widget`
+    Getting and setting widget values, enabling/disabling widgets.
+
+:doc:`display`
+    Setting and zooming the viewbox, opening child windows.
+
+:doc:`sound`
+    Playing and stopping sounds.
+
+:doc:`trigger_functions`
+    Display trigger
+
+:doc:`key_functions`
+    Read keyboard input
+
+:doc:`performance`
+    Managing performance measurements that are persisted via the browser's *localStorage*.

@@ -1,0 +1,15 @@
+Configuration - X-Axis
+######################
+
+This display provides the management of the x-axis for the chart.
+
+.. rubric:: Parameters
+
+This control has the following parameters:
+
+- :advstyle:`Advanced` **font color** -- Color which will be applied to the labels (default: global parameter atvFontColor)
+- :advstyle:`Advanced` **fill color** -- Left sidebar fill color (default: global parameter atvFillColor)
+
+Appearance:
+
+- :stdstyle:`Standard` **number of series** -- Number of displayed series (default: 6)

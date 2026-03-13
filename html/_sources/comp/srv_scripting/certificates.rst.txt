@@ -1,0 +1,238 @@
+Certificate functions
+#####################
+
+.. function:: server.certificates.list(store[, types])
+
+    Lists all certificates in the given certificate store.
+
+    Parameters: 
+        - **store** (Number) -- The certificate store, whose certificates shall be listed (see :ref:`constants<cert_const>`).
+        - **types** (Array<Number>, optional) -- Allows filtering by certificate types, e.g., Own, Trusted, etc. (see :ref:`constants<cert_const>`).
+
+    Returns:
+        Object with the following properties:
+
+            - **result** -- A list of :ref:`certificate objects<cert_object>`
+            - **error** -- Error code
+            - **errorstring** -- Error message
+
+.. function:: server.certificates.trust(store, type, certificateName)
+
+    Trusts the given certificate. 
+
+    Parameters: 
+        - **store** (Number) -- The certificate store where the certificate is located.
+        - **type** (Number) -- The certificate type, e.g., Own, Trusted, etc.
+        - **certificateName** (String) -- Name of the certificate that shall be trusted.
+
+    Returns:
+        Object with the following properties:
+
+            - **result** -- True, if the certificate was trusted, otherwise false.
+            - **error** -- Error code
+            - **errorstring** -- Error message
+ 
+.. function:: server.certificates.reject(store, type, certificateName) 
+
+    Rejects the given certificate.
+
+    Parameters:
+        - **store** (Number) -- The certificate store where the certificate is located.
+        - **type** (Number) -- The certificate type, e.g., Own, Trusted, etc.
+        - **certificateName** (String) -- Name of the certificate that shall be rejected.
+    
+    Returns:
+        Object with the following properties:
+
+            - **result** -- True, if the certificate was rejected, otherwise false
+            - **error** -- Error code
+            - **errorstring** -- Error message
+ 
+.. function:: server.certificates.create(store, certificateName[, commonName]) 
+
+    Creates a self-signed certificate in the given certificate store. The settings are taken from the :ref:`cert.ini<cert_ini>` file.
+
+    Parameters:
+        - **store** (Number) -- The certificate store, where the certificate shall be created.
+        - **certificateName** (String) -- Name of the created certificate.
+        - **commonName** (String, optional) -- CommonName for the created certificate. If not specified, the certificate's file name is used. 
+
+    Returns:
+        Object with the following properties:
+
+            - **result** -- True, if the certificate was created, otherwise false.
+            - **error** -- Error code
+            - **errorstring** -- Error message
+ 
+.. function:: server.certificates.upload(store, type, certificateName)
+
+    Uploads certificates to the given certificate store. The passed content is written to a file and stored in the certificate store. 
+
+    Parameters:
+        - **store** (Number) -- The certificate store where the certificate shall be uploaded.
+        - **type** (Number) -- The certificate type, e.g., Own, Trusted, etc.
+        - **certificateName** (String) -- Name of the certificate file that shall be created.
+        - **content** (String) -- The base64 encoded certificate content that shall be uploaded and written to the file.
+        
+    Returns:
+        Object with the following properties:
+
+            - **result** -- True, if the certificate was uploaded, otherwise false.
+            - **error** -- Error code
+            - **errorstring** -- Error message
+
+.. function:: server.certificates.read(store, type, certificateName)
+
+    Reads the attributes of the given certificate.
+
+    Parameters:
+        - **store** (Number) -- The certificate store where the certificate is located.
+        - **type** (Number) -- The certificate type, e.g., Own, Trusted, etc.
+        - **certificateName** (String) -- Name of the certificate that shall be read.
+        
+    Returns:
+        Object with the following properties:
+
+            - **result** -- :ref:`Certificate-Objekt<cert_object>` or an empty object in case of an error.
+            - **error** -- Error code
+            - **errorstring** -- Error message
+ 
+.. function:: server.certificates.delete(store, type, certificateName)
+
+    Deletes the given certificate from the file system.
+
+    Parameters:
+        - **store** (Number) -- The certificate store where the certificate is located.
+        - **type** (Number) -- The certificate type, e.g., Own, Trusted, etc.
+        - **certificateName** (String) -- Name of the certificate that shall be deleted.
+
+    Returns:
+        Object with the following properties:
+
+            - **result** -- True, if the certificate was deleted, otherwise false.
+            - **error** -- Error code
+            - **errorstring** -- Error message
+ 
+.. function:: server.certificates.defaults(store)
+
+    Reads the default values specified in the :ref:`cert.ini<cert_ini>` file and from the process image that are used for creating a self-signed certificate.
+
+    Parameters:
+        - **store** (Number) -- The certificate store.
+
+    Returns:
+        Object with the following properties:
+
+            - **result** -- Object containing all available default values. It corresponds to the :ref:`certificate object<cert_object>` including the properties *iniPath* and *storePath*.
+            - **error** -- Error code
+            - **errorstring** -- Error message
+ 
+.. function:: server.certificates.expired(store, type, certificateName)
+
+    Validates the given certificate.
+    
+    Parameters:
+        - **store** (Number) -- The certificate store where the certificate is located.
+        - **type** (Number) -- The certificate type, e.g., Own, Trusted, etc.
+        - **certificateName** (String) -- Name of the certificate that shall be validated.
+
+    Returns:
+        Object with the following properties:
+
+            - **result** -- Object with the following properties: 
+            
+                - expired
+                - reminderNeeded
+                - validTo
+
+            - **error** -- Error code
+            - **errorstring** -- Error message
+ 
+.. function:: server.certificates.syncStores()
+
+    Allows to synchronize certificate stores manually between redundancy partners.
+
+    Returns:
+        Object with the following properties:
+
+            - **result** -- True, if the synchronization was successful, otherwise false.
+            - **error** -- Error code
+            - **errorstring** -- Error message
+
+.. _cert_const:
+
+Constants
+*********
+
+- server.certificates.STORE_HTTPS
+- server.certificates.STORE_SERVER
+- server.certificates.STORE_MIRROR
+- server.certificates.TYPE_OWN
+- server.certificates.TYPE_TRUSTED
+- server.certificates.TYPE_REJECTED
+- server.certificates.TYPE_ISSUER
+- server.certificates.TYPE_USERS_OWN
+- server.certificates.TYPE_USERS_TRUSTED
+- server.certificates.TYPE_USERS_REJECTED
+- server.certificates.TYPE_USERS_ISSUER
+- server.certificates.ITYPE_ROOT
+- server.certificates.ITYPE_INTERMEDIATE
+- server.certificates.ITYPE_END
+
+.. _cert_object:
+
+Certificate object
+******************
+
+Object with the following properties, containing information for the respective certificate fields (see also :ref:`X.509v3 format<certificate_fields>`):
+
+- data
+
+    - extensions
+    
+        - basicConstraints
+        - crlDistributionPoints
+        - extendedKeyUsage
+        - keyUsage
+
+    - fields
+
+        - keyLength
+        - keyType
+        - serialNumber
+        - signatureType
+        - signatureTypeNID
+        - validFrom
+        - validTime
+        - validTo
+
+    - issuer:
+
+        - commonName
+        - country
+        - domainComponent
+        - locality
+        - organization
+        - organizationalUnit
+        - state
+        
+    - subject
+
+        - commonName
+        - country
+        - domainComponent
+        - locality
+        - organization
+        - organizationalUnit
+        - state
+
+    - subjectAltName:
+
+        - dnsNames
+        - email
+        - ipAddresses
+        - uri 
+          
+    - issuerType
+    - name
+    - type

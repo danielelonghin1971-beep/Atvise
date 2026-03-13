@@ -1,0 +1,32 @@
+Open Context Menu
+#################
+
+This Quick Dynamic opens a context menu at the specified element.
+
+.. rubric:: Parameters:
+
+- **x** (*x coordinate*) -- The x coordinate for the menu (absolute to the display).
+- **y** (*y coordinate*) -- The y coordinate for the menu (absolute to the display).
+- **key<Nr>** (*first, second, third, fourth, fifth entry key*) -- Text for the entries 1-5
+- **value<Nr>** (*first, second, third, fourth, fifth entry value*) -- Value for the entries 1-5
+- **trigger** (*trigger name*) -- Name of the trigger that will receive the selected value.
+- **outputNode** (*output node*) -- The selected value will be written to this node.
+- **onEvent** (*trigger event*) -- The event triggering this Quick Dynamic, which is one of the following:
+
+    - **click** -- Mouse click
+    - **dblclick** -- Double-click of mouse button
+    - **mousedown** -- Press down the mouse button
+    - **mouseup** -- Release the mouse button
+    - **mouseover** -- Move the mouse cursor over the applied graphic element
+    - **mousemove** -- Move the mouse anywhere over the applied graphic element
+    - **mouseout** -- Move the mouse cursor out of the applied graphic element
+
+- **itemsCount** (*maximum displayed items (0 = all)*) -- With this parameter you can set the amount of items shown in the dropdown field.
+
+    .. hint:: If there are more items in the list than displayed, you can browse the list.
+
+- **fontSize** (*font size*) -- Sets the font size of the items in the dropdown field.
+- **minWidth** (*minimum width of the PopUp*) -- Sets the minimum width of the menu.
+- **style** (*style*) -- Style settings for the pop up
+- **closeOnMouseout** (*close on mouseout*) -- Context menu closes on mouse out.
+- **clickAreaId** (*click area ID*) -- ID of the element that is used as click area for opening the context menu. If not defined, the click area of the element that was selected in the graphical editor when instantiating the Quick Dynamic is used.

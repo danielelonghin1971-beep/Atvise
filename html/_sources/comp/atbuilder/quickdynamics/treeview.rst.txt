@@ -1,0 +1,132 @@
+Tree View
+#########
+
+This Quick Dynamic creates a tree view based on a OPC UA node structure.
+
+The following options and methods are provided:
+
+- **renderTo** (*foreign object ID*) -- The id of the DIV-element the tree should be created in.
+- **startAddress** (*start address*) -- The OPC UA address to start displaying the tree from (default: AGENT.OBJECTS)
+- **busyIndicatorTolerance** (*busy indicator delay*) -- The time span until the busy indicator is displayed [ms] (default: 100).
+- **expandoOffset** (*icon offset*) -- The distance from the expando to the leaf icon [px] (default: 3).	
+- **fontSize** (*font size*) -- The font size for the treeView [px] (default: 12).
+- **imagePaths** (*image paths*) -- The image paths for the tree icons (default: {"baseVariableImage":"/treeView/icons/baseVariable.svg", "folderImage": "/treeView/icons/folder.svg", "aggregateFunctionImage":"/treeView/icons/aggregateFunction.svg", "collapsedLeafImage": "/treeView/icons/leafCollapsed.svg", expandedLeafImage:"/treeView/icons/leafExpanded.svg"}). 
+- **leafIndentation** (*child indentation*) -- The indentation for child leaves [px] (default: 15).	
+- **leafPadding** (*margin*) -- The padding top and bottom between the leaves [px] (default: 2).	
+- **selectableTypes** (*type filter*) -- The types of leaves that can be selected (default: ["baseVariable", "aggregateFunction"]).	
+- **searchDepth** (*search depth*) -- The maximal folder depth the filter method is searching at (default: 100).
+- **dataSourceFilePath** (*filename of datasource implementation*) -- The path to the selected data source (default: treeView/datasources/opcua.js).
+- **dialogDisplay** (*display for error message*) -- Display for error message (default:SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Advanced.dialogs.message_dialog_small).
+- **dataSourceType** (*name of data source*) -- Name of the data source, (default: opcUA).
+- **dataSourceOptions** (*options for data source*) -- Options for data source, (default: {}).
+- **nodeCacheActive** (*set caching behavior for tree view*) -- The caching behavior for the tree view (default: true). If true, node information will be preloaded and cached. Can also be configured via object display :ref:`Main Display<maindisplay>`.
+
+.. hint:: If the Quick Dynamic shall be used without a specific data source, the ad-hoc mode must be enabled. The ad-hoc mode is enabled if either *dataSourceType* or *dataSourceFilePath* is not defined. See description of the *setTreeStructure* method below for further information.
+
+.. rubric:: Methods
+
+.. function:: collapse(node)
+
+    Collapses the given leaf. 
+    
+    Parameters: 
+        - **node** (HTMLElement) -- Node of the leaf to be collapsed.
+
+.. function:: collapseAll()
+
+    Collapses all leaves.
+
+.. function:: expand(node)
+
+    Expands the given leaf. 
+
+    Parameters:
+        - **node** (HTMLElement) -- Node of the leaf to be expanded
+
+.. function:: expandAll()
+
+    Expands all leaves.
+
+.. function:: getSelectedNode()
+
+    Gets the data for the currently selected tree element.
+
+    Returns:
+        An object that contains the data from the selected element.
+
+.. function:: selectNode(nodePath, aggregatePath, skipCollapse)
+
+    Selects a specific node in the tree.
+
+    Parameters:
+        - **nodePath** (String) -- Node address to select (e.g. "AGENT.OBJECT.folder1.myNode")
+        - **aggregatePath** (String) -- Aggregate address to select (in relation to nodePath, e.g. "AGENT.HISTORY.AGGREGATETEMPLATES.myTemplate.myAverage")
+        - **skipCollapse** (Boolean) -- Defines if all nodes shall be collapsed
+
+.. function:: setTreeStructure(struct)
+
+    Allows to define the structure for the tree view in ad-hoc mode.
+
+    Parameters:
+        - **struct** (Array of objects) -- The structure for the tree view. The properties *id* (must be unique), *type* and *children* are mandatory (see example below) when defining the structure. Other properties can be used as well. 
+
+    Example::
+
+        treeView.setTreeStructure([
+            {
+                id: "root",
+                type: "folder",
+                children: [
+                    { id: "folder1", type: "folder", children: [
+                        { id: "file1inFolder1", type: "file" },
+                        { id: "file2inFolder1", type: "file" },
+                        { id: "file3inFolder1", type: "file" }
+                    ]}
+                ]
+            }
+        ]);
+
+.. function:: setSelectableTypes(types)
+
+    Allows to set the selectable types of leaves at runtime.
+
+    Parameters:
+        - **types** (Array of strings) -- The node types that shall be selectable (e.g. ["folder", "file"])
+
+.. function:: filter(searchString, refreshSearchData)
+
+    Only shows tree elements (nodes), that contain a specific search string.
+
+    Parameters:
+        - **searchString** (String) -- The string to filter for (e.g. "myNode")
+        - **refreshSearchData** (Boolean) -- Refreshes the node data used for filtering (necessary when the nodes have been updated on server-side)
+
+.. function:: off(name, callback)
+
+    Detaches an event handler from the tree view.
+
+    Parameters:
+        - **name** (String) -- Name of the event to detach
+        - **callback** (TreeVew#eventCallback) -- The function to detach
+
+.. function:: on(name, callback, scope)
+
+    Attaches an event handler to the tree view .
+
+    Parameters:
+        - **name** (String) -- Name of the event to attach. Available events:
+
+            - expand
+            - expandAll
+            - collapse
+            - collapseAll
+            - select
+            - render
+            - ready
+
+        - **callback** (TreeVew#eventCallback) -- The callback to execute on the event
+        - **scope** (Object) -- The context to call the callback with
+
+.. function:: destroy()
+
+    Destroys the tree view and releases memory.

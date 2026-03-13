@@ -1,0 +1,22 @@
+Default import and standard resources
+#####################################
+
+.. rubric:: General
+
+When a new project is created, atvise is importing the atvise library from a set of XML files. Which files are imported depends on the kind of your license. The XML files provided as part of the atvise installation can be found in the sub-directory "defaultimport" of the installation directory (Windows) respectively in "/usr/share/atvise/defaultimport" (Linux). Only files with the extension ".xml" are considered.
+
+The XML files in the "defaultimport" directory are always imported, regardless of the kind of your license. If you have a "scada" license, the XML files in the "defaultimport/scada" directory are also imported. If you have a "redundancy" license, the XML files in the "defaultimport/scada/redundancy" directory are imported. Other directories are always ignored.
+
+If you start a project that was created with a more restrictive license, the additional XML files matching your current license are automatically imported. E.g. if you start a project that was created with a "scada" license and you currently have a "redundancy" license, the XML files in the "defaultimport/scada/redundancy" are imported.
+
+.. rubric:: Customer specific import files
+
+If you have import files that should be imported into every new project on your PC, create a "defaultimport" directory in the "%ALLUSERSPROFILE%/atvise" (Windows) respectively "/etc/atvise" (Linux) directory and copy your files there. The sub-directories "scada" and "scada/redundancy" are optional.
+
+These XML files are imported after the files provided by atvise.
+
+.. rubric:: Project specific import files
+
+Sometimes it is useful to prepare a directory for a new project where specific XML files should be imported when the new project is started. In this case you can create a "defaultimport" sub-directory in your project directory and place the XML files there. When you start your project the first time, they will be imported. The sub-directories "scada" and "scada/redundancy" are optional.
+
+These files are imported after all other files found in the directories described above. Note: If the installation directory is used as the project directory, they will not be imported again.

@@ -1,0 +1,15 @@
+Warning
+#######
+
+In a redundancy environment this dialog shows warning and information dialogs corresponding to the current redundancy status. It refers to the "message_dialog" display in the folder "dialogs" of the corresponding layout.
+
+These are the potential messages:
+
+- Redundancy status has changed. Reload page to apply potential changes.
+- Redundancy status has changed. You are now connected to SNOP.
+- Redundancy status has changed. You are now connected to the active server.
+
+.. rubric:: Parameter
+
+- :advstyle:`Advanced` **trigger on button 1** -- Being triggered on click on button 1
+- :advstyle:`Advanced` **trigger on button 2** -- Being triggered on click on button 2

@@ -1,0 +1,14 @@
+Change Color by Node
+####################
+
+This Quick Dynamics changes the color and stroke of the applied graphic element depending on whether or not the value of the node is within the defined range.
+
+.. rubric:: Parameters:
+
+- **nodeID** (*node triggering the change*) -- This node (value within or out of the defined range) triggers this Quick Dynamic
+- **minRange** (*min of range*) -- Lower bound of the range in which the node's value should lie
+- **maxRange** (*max of range*) -- Upper bound of the range in which the node's value should lie; if not specified, it will be set to "minRange", i.e. the quick dynamic will be triggered at a discrete value (minRange=maxRange=value) only, and not for a range
+- **fillInRange** (*fill color when inside range*) -- This fill color of the graphic element will be set when the value of the node is within the defined range
+- **strokeInRange** (*stroke color when inside range*) -- This stroke color of the graphic element will be set when the value of the node is within the defined range
+- **fillOutRange** (*fill color when outside range*) -- This fill color of the graphic element will be set when value of the node is out of the defined range
+- **strokeOutRange** (*stroke color when outside range*) -- This stroke color of the graphic element will be set when the value of the node is out of the defined range

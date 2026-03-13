@@ -1,0 +1,47 @@
+.. _od_accesscontrol_log:
+
+Access Control Log Dialog
+#########################
+
+A default dialog for access control log messages.
+
+.. rubric:: Parameters
+
+- **table ID** -- Unique table identifier (default: "history_table")
+
+Font:
+
+- **font family** -- Font family applied to the table (default: Arial)
+- **font color** -- Color which will be applied to labels and values (default: global parameter atvFontColor)
+
+Table:
+
+- **table header height** -- Height of the table header in px (default: 42)
+- **table row height** -- Height of the table row in px (default: 32)
+- **table header font size** -- Font size applied to table headers (default: 17)
+- **table row font size** -- Font size applied to the table rows (default: 15)
+  
+Appearance:
+
+- **fill color** -- Fill color of the top background area (default: global parameter atvFillColor).
+- **border color** -- Color of borders (default: global parameter atvBorderColor).
+- **symbol color** -- Color of symbols (default: global parameter atvSymbolColor).
+- **table colors** -- Global color configuration (default: global list atvObjectDisplays.Tables.ColorConfig)
+- **custom theme** -- Name of the custom theme (default: atviseTheme). Refer to :ref:`customizing table appearance <html_table_customizing>` for further information.
+
+Options:
+
+- **data limitation** -- Number of maximum processed data sets (default: 250000)
+- **paging** -- Activated paging buttons (default: true)
+- **cell linebreak** -- Too long text will be broken to new lines. If there is no more space the text will be cut ending with "..." (default: false)
+- **columns reorderable** -- Columns can be reordered (default: true)
+- **multiselect on cell click** -- Click for multiselection works on the whole row (default: true)
+
+Menu options:
+
+- **show menu** -- Display the menu (default: true)
+- **custom menu title** -- Title of the custom menu (default: "T{Export CSV}")
+- **show picker menu** -- Display the picker menu (default: true)
+- **picker menu title** -- Title of the picker menu (default: true: "T{Columns}")
+- **menu height** -- Height of the menu (default: 300)
+- **menu width** -- Width of the menu (default: 250)

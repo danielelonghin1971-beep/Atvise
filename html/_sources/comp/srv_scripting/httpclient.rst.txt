@@ -1,0 +1,99 @@
+.. _httpclient:
+
+HTTPClient functions
+####################
+
+.. class:: HTTPClient([options])
+
+    To use any of the functions below you first have to create an HTTPClient object.
+
+    Parameters:
+        - **options** (Object, optional, default: {})
+
+            - **maxredirects** (Integer, optional, default: 10) -- Specifies the maximum number of redirects for requests.
+            - **agent** (String, optional, default: "atvise-agent/1.0"} -- Specifies the user agent for requests.
+
+    Example::
+
+        var http = new HTTPClient();
+
+        //Supported HTTP methods:
+        console.log(HTTPClient.SUPPORTED_METHODS);
+
+.. !!v8!! HTTPClient.request(options)
+.. function:: HTTPClient.request(options)
+
+    Sends the given request.
+
+    Parameters:
+        - **options** (Object)
+
+            - **protocol** (String, optional, default: "http") -- Specifies the protocol of the request, "http" or "https".
+            - **hostname** (String, optional, default: "localhost") -- Specifies the name of the web server the request should be sent to.
+            - **port** (Integer, optional, default: 0) -- Specifies the port of the web server. If not specified, the default port of the protocol will be used.
+            - **path** (String, optional, default: "/") -- Specifies the path of the resource that is requested from the web server.
+            - **timeout** (Integer, optional, default: 0) -- Specifies the timeout of the request in seconds. 0 means no timeout.
+            - **method** (String, optional, default: "GET") -- Specifies the method of the request. Supported methods can be determined via static variable *HTTPClient.SUPPORTED_METHODS*.
+            - **data** (String, optional, default: "") -- Only for *method* "POST", "PUT" or "PATCH": Specifies the data that is sent as the body of the request.
+            - **headers** (Object, optional, default: {}) -- Specifies HTTP headers to be sent with the request.
+            - **auth** (Object, optional, default: {})-- Specifies authentication properties for the request. An object with following properties:
+
+                - **method** (String) -- The authentication method, either "basic" or "digest".
+                - **user** (String) -- The username.
+                - **password** (String) -- The password.
+
+            - **encoding** (String, optional, default: "") -- Used to override the encoding of the response data. Can be ``UTF-8``, ``UTF-16`` or ``ISO-8859-1``. If not set, the encoding of the response data will be taken from the response headers. If it cannot be found in the headers or is not one of the supported encodings, ``ISO-8859-1`` will be used.
+
+    Returns:
+        An object with following properties:
+
+        - status -- HTTP status of the request
+        - url -- URL of the request
+        - headers -- HTTP headers of the response
+        - data -- Content of the response of the web server, converted according to the given encoding (see parameter *encoding* above)
+        - error -- In case of an error: the error text
+
+    Example 1, GET request::
+
+        var res = http.request({
+            protocol: "https",
+            hostname: "www.example.com",
+            path: "/data.txt",
+            headers: {"Pragma" : "no-cache"},
+            auth: { method: "digest", user: "me", password: "secret" }
+        });
+
+    Example 2, atvise "info" request::
+
+        var res = http.request({
+            method: "POST",
+            path: "/webMI/?info"
+        });
+
+.. !!v8!! HTTPClient.get(url[, options])
+.. function:: HTTPClient.get(url[, options])
+
+    Sends the given request. Like the function :func:`HTTPClient.request`, but allows to specify the URL as string instead of single properties of the options object.
+
+    Parameters:
+        - **url** (String) -- Specifies the URL of the request.
+        - **options** (Object, optional, default: {})
+
+            - **timeout** (Integer, optional, default: 0) -- Specifies the timeout of the request in seconds. 0 means no timeout.
+            - **method** (String, optional, default: "GET") -- Specifies the method of the request. Supported methods can be determined via static variable *HTTPClient.SUPPORTED_METHODS*.
+            - **data** (String, optional, default: "") -- Only for *method* "POST", "PUT" or "PATCH": Specifies the data that is sent as the body of the request.
+            - **headers** (Object, optional, default: {}) -- Specifies HTTP headers to be sent with the request.
+            - **auth** (Object, optional, default: {})-- Specifies authentication properties for the request. An object with following properties:
+
+                - **method** (String) -- The authentication method, either "basic" or "digest".
+                - **user** (String) -- The username.
+                - **password** (String) -- The password.
+
+            - **encoding** (String, optional, default: "") -- Used to override the encoding of the response data. Can be ``UTF-8``, ``UTF-16`` or ``ISO-8859-1``. If not set, the encoding of the response data will be taken from the response headers. If it cannot be found in the headers or is not one of the supported encodings, ``ISO-8859-1`` will be used.
+
+    Returns:
+        The result of the request (see :func:`HTTPClient.request`).
+
+    Example::
+
+        var res = http.get("https://www.example.com/data.txt", { timeout: 10 });

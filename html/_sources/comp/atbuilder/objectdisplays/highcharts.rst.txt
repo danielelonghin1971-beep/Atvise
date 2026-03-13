@@ -1,0 +1,35 @@
+Highcharts
+##########
+
+.. toctree::
+
+    highcharts/button_back
+    highcharts/button_back_small
+    highcharts/button_config
+    highcharts/button_forward
+    highcharts/button_forward_small
+    highcharts/buttons_start_end_time
+    highcharts/highcharts
+    highcharts/legend
+    highcharts/main_display
+    highcharts/main_display_small
+    highcharts/main_display_small_portrait
+    highcharts/opt_dialog
+    highcharts/opt_dialog_small
+    highcharts/opt_general
+    highcharts/opt_general_small
+    highcharts/opt_save_load
+    highcharts/opt_save_load_small
+    highcharts/opt_series
+    highcharts/opt_series_small
+    highcharts/opt_series_bar_column
+    highcharts/opt_series_bar_column_small
+    highcharts/opt_series_line_area
+    highcharts/opt_series_line_area_small
+    highcharts/opt_series_pie
+    highcharts/opt_start
+    highcharts/opt_xaxis
+    highcharts/opt_xaxis_small
+    highcharts/opt_yaxis
+    highcharts/opt_yaxis_small
+    highcharts/toolbar

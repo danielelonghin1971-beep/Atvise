@@ -1,0 +1,140 @@
+Introduction
+############
+
+.. rubric:: Menu bar
+
+Below you will find the submenus of the menu bar and descriptions of how to use them:
+
+.. figure:: images/menue_builder.png
+
+- Connect or disconnect to/from a server
+- Opens the Project Console
+- Opens the certificate management for connection certificates
+- Changes the server log level
+- Imports an XML document
+- Shows your project's history
+- Opens atvise live in a tab
+- Opens the preferences dialog
+- Change builder's language
+- Closes the builder
+
+.. figure:: images/menue_guided_actions.png
+
+- Adds an OpcUA, OpcCOM or webMI source to a scada server
+- Adds an atvise webMI-compliant server to your project
+- Adds an atvise webMI demo web server to your project
+- Starts an atvise webMI demo web server in console mode
+- Imports all variables from a specific source
+- Adds a display to a specific server
+- Generates the complete visualization and sends it to a target device
+- Opens the visualization in your standard browser
+- Opens an external tool
+
+.. figure:: images/menu_versioncontrol.png
+
+- Exports the project's entire address space
+- Imports the project's entire address space
+- Opens the configuration dialog for defining the base directory
+
+.. figure:: images/menu_accesscontrol.png
+
+- Opens the access control editor for assigning access rights
+- Opens the settings dialog
+- Opens the user editor for the current user
+
+.. figure:: images/menue_profiles.png
+
+- Switch between the profiles which were added in the preferences dialog
+
+.. figure:: images/menue_view.png
+
+- View or hide the Second Window for editing displays, scripts, etc.
+- View or hide the Global Search window
+- View or hide the Message window
+- View or hide the Navigator window (contains the Project and Node Browser tabs)
+- View or hide the Library window
+- View or hide the Node Browser tab
+
+.. figure:: images/menue_help.png
+
+- Opens the atvise help file
+- Context sensitive help for certain areas
+- Version information and further information about Qt
+- Information about the atvise builder
+
+.. rubric:: Preferences
+
+With the help of the preference settings, you can customize the builder´s setup to your needs:
+
+.. rubric:: General Preferences
+
+Under general preferences you can
+
+- have the atvise builder remember the size of the parameter dialog
+- set a default profile
+- have the builder remember a specific number of the last-connected servers
+
+.. figure:: images/preferences_general.png
+
+.. rubric:: Profiles
+
+Root Nodes:
+    - Customize the tree view's items according to your preferences by selecting an item and using the arrows in the middle to add it to or remove it from the target.
+
+General:
+    - Show or hide the node browser in the "View" menu
+    - Allow or disallow webMI type and instance manipulation
+
+SVG Editor:
+    - Show or hide different toolbar or menu items
+    - Enable bindings
+    - Allow catalog editing
+    - Show or hide default transformation items
+
+Dynamics:
+    - Allow or disallow simple dynamics
+    - Show or hide dynamics and identifier
+
+Attributes:
+    - Enable or disable SVG attributes
+    - Allow or disallow manual overwrites
+
+.. figure:: images/preferences_profiles.png
+
+.. rubric:: Text Editor
+
+Font & Colors:
+    - Define font size, style and color.
+
+Behavior:
+    - Enable text wrapping
+    - Show or hide line numbers, whitespaces and tabs
+    - Set the tab size
+    - Enable or disable highlighting of the current line
+    - Show or hide information and errors
+    - Show or hide matching parentheses
+    - Show or hide function declarations
+    - Enable or disable automatic closing of brackets and quotes
+    - Enable or disable code completion
+
+.. figure:: images/preferences_texteditor.png
+
+.. rubric:: External Tools
+
+.. figure:: images/preferences_external_applications.png
+
+.. figure:: images/preferences_external_applications_2.png
+
+Here you can collect external Tools/Applications which can be started from the menu.
+
+- Enter a unique name that will be displayed in the menu
+- Command, that starts the tool/application (e.g. the path of the \*.exe-file)
+- Optional arguments for the tool
+- Optional working directory for the tool
+
+Starting external tools from the menu:
+
+- Names are listed in order given in dialog.
+- Command will be called.
+
+.. figure:: images/preferences_external_applications_3.png

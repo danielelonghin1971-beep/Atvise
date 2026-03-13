@@ -1,0 +1,74 @@
+Security functions
+##################
+
+.. !!v8!! checkUserPassword(username, password)
+.. function:: checkUserPassword(username, password)
+
+    Allows to check user and password depending on the current :ref:`password policy<menu_access_control>`.
+
+    .. hint:: This function can only be used within a :ref:`login script<loginscript>`.
+
+    Parameters:
+        - **username** (String) -- User name.
+        - **password** (String) -- Password of the user in plain text.
+
+    Returns:
+        An object with the following properties:
+
+        - **authorized** (Boolean) -- Shows if the credentials are valid and the given user is authorized. The properties below provide further information in case that *authorized = false*, e.g. because of an invalid or expired password.
+        - **delay** (Number) -- The remaining delay time (in milliseconds) until the next login attempt is possible.
+        - **expired** (Boolean) -- Indicates if the password is expired.
+        - **expiry** (Number) -- The number of remaining days that the password will be valid. 1 means that it is the last day the password can be used. A number <= 0 means that the password has already expired n days ago and logging in with this password is not possible anymore.
+        - **locktime** (Number) -- The remaining time (in milliseconds) the user is locked. -1 means that the user is permanently locked and must be unlocked by a project administrator.
+        - **passwordreminder** (Boolean) -- Indicates if the user gets a reminder for changing the password.
+        - **tries** (Number) -- The number of remaining login attempts before the user is locked.
+
+    Example::
+
+        var checkResult = checkUserPassword(username, password);
+        return {
+            "success": checkResult.authorized,
+            "authresult": {
+                "tries": checkResult.tries,
+                "locktime": checkResult.locktime,
+                "delay": checkResult.delay,
+                "expiry": (checkResult.passwordreminder || checkResult.expired) ? checkResult.expiry : null,
+            }
+        };
+
+.. !!v8!! setUserPassword(username, newpassword[, oldpassword])
+.. function:: setUserPassword(username, newpassword[, oldpassword])
+
+    Allows to set or change the password for a user. Project administrators can set the password for any user, normal users can set only their own password.
+
+    Parameters:
+        - **username** (String) -- User name.
+        - **newpassword** (String) -- New password.
+        - **oldpassword** (String, optional) -- Old password, only necessary if users want to change their own password.
+
+    Returns:
+        An object with the following properties:
+
+        - **isvalid** (Boolean) -- Shows if setting the password was successful. 
+        - **resultflags** (Number) -- Mask with following flags:
+
+            - ISACTIVE = 1
+            - MINLENGTH = 2
+            - REQUIRELOWERCASE = 4
+            - REQUIREUPPERCASE = 8
+            - REQUIREDIGIT = 16
+            - REQUIRESPECIALCHAR = 32
+            - REQUIRENEWPASSWORD = 64
+            - REQUIRENAMEEXCLUSION = 128
+            - REQUIREFULLNAMEEXCLUSION = 256
+            - INVALIDUSER = 512
+            - INVALIDOLDPASSWORD = 1024
+            - HASSURROUNDINGWHITESPACE = 2048
+            - SETPASSWORDINDELAY = 4096
+            - USERLOCKED = 8192
+
+    Example::
+
+        var res = setUserPassword("Username", "NewPassword", "OldPassword");
+        if (!res.isvalid)
+            console.log("Setting password failed with: " + res.resultflags);

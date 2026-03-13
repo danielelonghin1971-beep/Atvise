@@ -1,0 +1,177 @@
+XMLDoc functions
+################
+
+.. class:: XMLDoc(data, type)
+
+    To use any of the functions below you first have to create an XMLdoc object.
+
+    Parameters:
+        - **data** (String) -- Specifies the XML string or file to load and parse.
+        - **type** (String, optional, default: "string"} -- Specifies the type of the first parameter. Available values are:
+
+            - "string" -- The first parameter contains the XML data as string.
+            - "file" -- The XML data will be read from the file specified by the first parameter.
+
+    Example::
+
+        var x = new XMLDoc("testfile.xml", "file");
+        var x2 = new XMLDoc("c:/test/testfile.xml", "file");
+        var x3 = new XMLDoc("<root><data/></root>", "string");
+
+.. rubric:: XMLDoc object properties
+
+The XMLDoc object contains following attributes:
+
+- **root** (XMLNode) -- The root node of the XML document.
+- **version** (String) -- The version string in the XML document.
+- **encoding** (String) -- The encoding of the XML document.
+- **standalone** (Boolean) -- The standalone attribute of the XML document.
+
+The XMLDoc class contains following constants (according to libxml2):
+
+.. !!v8!! XMLDoc.ELEMENT_NODE
+.. !!v8!! XMLDoc.ATTRIBUTE_NODE
+.. !!v8!! XMLDoc.TEXT_NODE
+.. !!v8!! XMLDoc.CDATA_SECTION_NODE
+.. !!v8!! XMLDoc.ENTITY_REF_NODE
+.. !!v8!! XMLDoc.ENTITY_NODE
+.. !!v8!! XMLDoc.PI_NODE
+.. !!v8!! XMLDoc.COMMENT_NODE
+.. !!v8!! XMLDoc.DOCUMENT_NODE
+.. !!v8!! XMLDoc.DOCUMENT_TYPE_NODE
+.. !!v8!! XMLDoc.DOCUMENT_FRAG_NODE
+.. !!v8!! XMLDoc.NOTATION_NODE
+.. !!v8!! XMLDoc.HTML_DOCUMENT_NODE
+.. !!v8!! XMLDoc.DTD_NODE
+.. !!v8!! XMLDoc.ELEMENT_DECL
+.. !!v8!! XMLDoc.ATTRIBUTE_DECL
+.. !!v8!! XMLDoc.ENTITY_DECL
+.. !!v8!! XMLDoc.NAMESPACE_DECL
+.. !!v8!! XMLDoc.XINCLUDE_START
+.. !!v8!! XMLDoc.XINCLUDE_END
+.. !!v8!! XMLDoc.DOCB_DOCUMENT_NODE
+
+
+- ELEMENT_NODE
+- ATTRIBUTE_NODE
+- TEXT_NODE
+- CDATA_SECTION_NODE
+- ENTITY_REF_NODE
+- ENTITY_NODE
+- PI_NODE
+- COMMENT_NODE
+- DOCUMENT_NODE
+- DOCUMENT_TYPE_NODE
+- DOCUMENT_FRAG_NODE
+- NOTATION_NODE
+- HTML_DOCUMENT_NODE
+- DTD_NODE
+- ELEMENT_DECL
+- ATTRIBUTE_DECL
+- ENTITY_DECL
+- NAMESPACE_DECL
+- XINCLUDE_START
+- XINCLUDE_END
+- DOCB_DOCUMENT_NODE
+
+.. !!v8!! XMLNode.attribute(name[, namespace])
+.. function:: XMLNode.attribute(name[, namespace])
+
+    Parameters:
+        - **name** (String) -- Specifies the name of the attribute to query.
+        - **namespace** (String, optional, default: "") -- Specifies the namespace of the attribute.
+
+    Returns:
+        The value of the attribute of the current node.
+
+    Example::
+
+        console.log(x.root.first("script").attribute("type"));
+
+.. !!v8!! XMLNode.first([nameOrType[, namespace]])
+.. function:: XMLNode.first([nameOrType[, namespace]])
+.. !!v8!! XMLNode.last([nameOrType[, namespace]])
+.. function:: XMLNode.last([nameOrType[, namespace]])
+
+    Parameters:
+        - **nameOrType** (String/Integer) -- Specifies the name (String) or type (Integer) of the child to search for. Ignored if empty (String) or 0 (Integer). For type the XMLDoc constants can be used e.g: XMLDoc.ELEMENT_NODE.
+        - **namespace** (String, optional, default: "") -- Specifies the namespace of the child node to search for. The namespace will be taken into account if the first parameter is a name.
+
+    Returns:
+        The first/last child node of the current node or null if no such node exists.
+
+    Example::
+
+                     var doc = new XMLDoc("testfile.xml", "file");
+                     var x = doc.root;
+                     for (x = x.first(); x; x = x.next())
+                       console.log(x.name);
+
+.. !!v8!! XMLNode.next(nameOrType, namespace)
+.. function:: XMLNode.next(nameOrType, namespace)
+.. !!v8!! XMLNode.previous(nameOrType, namespace)
+.. function:: XMLNode.previous(nameOrType, namespace)
+
+    Parameters:
+        - **nameOrType** (String/Integer) -- Specifies the name (String) or type (Integer) of the sibling to search for. Ignored if empty (String) or 0 (Integer). For type the XMLDoc constants can be used e.g: XMLDoc.ELEMENT_NODE.
+        - **namespace** (String, optional, default: "") -- Specifies the namespace of the sibling node to search for. The namespace will be taken into account if the first parameter is a name.
+
+    Returns:
+        The next/previous sibling node of the current node or null if no such node exists.
+
+    Example:
+
+    XML File "testfile.xml":
+
+    .. code-block:: xml
+
+        <?xml version="1.0" encoding="UTF-8"?>
+        <TS>
+            <message>
+                <source>OK</source>
+                <translation>OK</translation>
+            </message>
+            <message>
+                <source>Cancel</source>
+                <translation>Abbrechen</translation>
+            </message>
+        </TS>
+
+    Script code:
+
+    The sample code will output the content of every <translation> node to the server log file::
+
+        var doc = new XMLDoc("testfile.xml", "file");
+        var message = doc.root.first("message");
+        for (; message; message = message.next("message")) {
+            var trans = message.first("translation");
+            console.log(trans.first(XMLDoc.TEXT_NODE).content);
+        }
+
+    The sample code below will output the names of the SVG arguments of the default display to the server log file::
+
+         var atv = "http://webmi.atvise.com/2007/svgext";
+         var display = Ua.findNode("AGENT.DISPLAYS.Default");
+         var xmlDoc = new XMLDoc(display.result.value);
+         for (var svg = xmlDoc.root.first("svg"); svg; svg = svg.next("svg")){
+             for (var param = svg.first("argument", atv); param; param = param.next("argument", atv)){
+                 var name = param.attribute("name");
+                 console.log("argument name=", name);
+             }
+         }
+
+.. rubric:: XMLNode object properties
+
+Each XMLNode object has following properties:
+
+- **content** (String) -- Content of the node.
+- **line** (Integer) -- Line number of the node in the source text.
+- **name** (String) -- Name of the node.
+- **namespace** (String) -- The name space of the node.
+- **prefix** (String) -- The name space prefix of the node.
+- **parent** (XMLNode) -- Parent of the node.
+- **type** (Integer) -- Type of the node.
+
+.. hint:: The XMLNode Object denotes an internal JavaScript object that can not be created in server scripts directly. It just denotes the object returned from the corresponding functions.
+
+.. hint:: The text content of a node can only be read with the child node of type XMLDoc.TEXT_NODE - like in the example above. If the content is inside a CDATA section, then the type XMLDoc.CDATA_SECTION_NODE must be used.

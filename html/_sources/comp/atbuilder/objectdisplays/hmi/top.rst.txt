@@ -1,0 +1,29 @@
+Topframe Large (1280x120)
+#########################
+
+This control is used as the top frame by default (You can find the reference to it on the "Default" display).
+It's a collection of the most important controls (display main menu, alarm handling, login and language buttons...).
+
+.. rubric:: Parameters
+
+- **message dialog** --  Dialog for showing messages, information or warnings (default: SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Advanced.dialogs.message_dialog)
+- **small message dialog** --  Dialog for showing messages, information or warnings (default: SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Advanced.dialogs.message_dialog_small)
+- **user editor dialog** -- Opens dialog for displaying and editing user information. (default: SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Advanced.dialogs.user_editor)
+- **password editor dialog** -- Opens dialog for changing the user password. (default: SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Advanced.dialogs.pw_editor)
+
+Appearance:
+
+- :advstyle:`Advanced` **font color** -- Font color which will be applied to the values (default: global parameter atvFontColor)
+- :advstyle:`Advanced` **background color** -- The control's background color (default: global parameter atvFillColor)
+
+Alarm:
+
+- **min alarm priority** -- Minimum alarm priority to be displayed (default: 0)
+- **max alarm priority** -- Maximum alarm priority to be displayed (default: 0)
+
+Notifications:
+
+- **redundancy warning dialog** -- Dialog that is shown in case of a SOP/SNOP switchover in split mode. (default: SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Advanced.redundancy.warning_dialog) 
+- **redundancy connection dialog** -- Dialog that is shown in case of connection switchovers and indicates a possible data loss in the visualization. (default: SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Advanced.dialogs.message_dialog)
+- **show SOP notification** -- Enables or disables the SOP/SNOP warning dialog. *false* means that the dialog is not shown if reloading the visualization was not necessary. (default: true) 
+- **show connection notification** -- Enables or disables the connection dialog. *false* means that the dialog is not shown if reloading the visualization was not necessary. The visualization is not reloaded when FQDNs are used. (default: true)

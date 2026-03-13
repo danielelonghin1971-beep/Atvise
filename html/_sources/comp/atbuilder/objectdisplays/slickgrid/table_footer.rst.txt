@@ -1,0 +1,34 @@
+Table Footer
+############
+
+This display supplements the table with a status bar with page navigation and information about the current data status. For this, the display must be inserted in the display in which the table is located. A special configuration, such as for the table, is not required for this display. All you have to do is set the table name in the parameters.
+
+.. hint:: From version 3.4 svg icons are no longer supported in footer. Please only use symbols from the library of Font Awesome Free.
+
+.. rubric:: Conditions
+
+The table library requires jQuery > 1.7 and is currently shipped with jQuery 3.7.x.
+
+To avoid compatibility issues, the included jQuery version is only used if no already existing version is detected. Therefore jQuery should already be used in an existing project the spreadsheet library to them. Therefore, make sure that in this case a jQuery version > 1.7.x is used!
+
+.. rubric:: Parameters
+
+The status bar has the following general parameters:
+
+- **base** -- Currently not in use
+- **table ID** -- Unique table name
+- **symbol first page** -- Symbol to open the first page (default: <i class="fas fa-fast-backward"></i>)
+- **symbol previous page** -- Symbol to open the previous page (default: <i class="fas fa-step-backward"></i>)
+- **symbol pause** -- Symbol for pause (default: <i class="fas fa-pause"></i>)
+- **symbol stop** -- Symbol for pause (default: <i class="fas fa-stop"></i>)
+- **symbol next page** -- Symbol to scroll to the next page (default: <i class="fas fa-step-forward"></i>)
+- **symbol last page** -- Symbol to open the last page (default: <i class="fas fa-fast-forward"></i>)
+- **symbol laod pages** -- Symbol for loading the next pages in manual mode (Standard: <i class="fas fa-download"></i>)
+- **symbol search** -- Symbol for search (default: <i class="fas fa-search"></i>)
+- **symbol truncate** -- Symbol when reaching the overflow (default: <i class="fas fa-ban"></i> )
+- **symbol triggered** -- Symbol for trigger mode (default: <i class="fas fa-angle-double-down"></i> )
+- **symbol continue** -- Symbol for continue mode (default: <i class="fas fa-cog fa-spin"></i> )
+- **symbol live** -- Symbol for live mode (default: <i class="fas fa-sync fa-spin"></i> )
+- **symbol manually** -- Symbol for manually mode (default: <i class="fas fa-check"></i> )
+- **symbol done** -- Symbol for all data loaded (default: <i class="fas fa-download"></i> )
+

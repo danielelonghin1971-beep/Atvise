@@ -1,0 +1,18 @@
+Set Node
+########
+
+This Quick Dynamic sets the value of the defined node to the value defined by the parameter "value" depending on one of the events defined by "onEvent".
+
+.. rubric:: Parameters:
+
+- **nodeID** (*node to be set*) -- Node for which the value will be set
+- **value** (*sets node to value*) -- The node specified above will be set to this value
+- **onEvent** (*trigger event*) -- The event triggering this Quick Dynamic, which is one of the following:
+
+    - **click** -- Mouse click
+    - **dblclick** -- Double-click of mouse button
+    - **mousedown** -- Press down the mouse button
+    - **mouseup** -- Release the mouse button
+    - **mouseover** -- Move the mouse cursor over the applied graphic element
+    - **mousemove** -- Move the mouse anywhere over the applied graphic element
+    - **mouseout** -- Move the mouse cursor out of the applied graphic element

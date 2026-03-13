@@ -1,0 +1,69 @@
+.. _redundant_ds:
+
+Add redundant data source
+#########################
+
+With the functionality of redundant data sources one can combine several identical physical data sources and/or several physical connections to a data source to one logical data source. In case of a connection failure the system switches to the next available connection.
+
+This functionality can be used for all types of data sources.
+
+.. hint:: To be able to use redundant data sources, a dedicated license is required.
+
+If such a license is available, the tab "General" of the "Edit Data Source" dialog will change as follows:
+
+.. figure:: images/add_redundant_data_source.png
+
+    Dialog: Add data source
+
+The items from "Alternative URLs" to "Current Connection" can be used for the configuration of redundant data sources as follows:
+
+Alternative URLs
+    Clicking the button :guilabel:`Add` will add further URLs to the list in addition to the Source URL. Such a URL can either be a URL to the same data source via a different network or a URL to a second physical data source.
+
+    The order of the Source URL and of the alternative URLs defines the priority where the Source URL has the highest priority. In case of a connection failure, the system will always switch to the available connection with the highest priority. I.e., first the system will try to establish a connection via the Source URL. If this is not possible, the connection to the "alternative URL 1" will be established. Is this also not possible, then the connection to "alternative URL 2" will be established and so on.
+
+    If the system communicates over a low priority connection (e.g. "alternative URL 2") and a connection of higher priority becomes available (e.g. Source URL), then the system will switch to the connection of higher priority. With the modes "Hot" and "Monitored" (see below) the switching will happen as soon as the connection of higher priority is available. When using the mode "Cold" such switching will only occur in case the current connection is lost.
+
+    Clicking the button :guilabel:`Delete` will remove the selected alternative URL from the list.
+
+Behavior of alternative URLs
+    Defines how the switching to the next connection will be performed in case of a connection failure.
+
+    - **Cold** -- The connection to the alternative URLs will not already be established during start-up but only when switching to such an alternative URL. In this mode the communicated data volume is the lowest since the communication is only done over one connection. Thus, switching to another connection will take more time than in other modes, since the whole connection has to be established. In case the connection cannot be established the system will switch to the next connection. In this mode data loss might occur when switching between connections.
+    - **Monitored (=default)** -- The connection will already be established to all configured URLs during start-up. The highest priority connection will be used for communication. For the other URLs only a keep alive for monitoring the connection will be established. In this mode the communicated data volume is a little bit higher than in "Cold" mode, since in addition to the normal communication the keep alive will be sent to the other connections. Thus, switching to another connection will be faster since the next available connection is known due to the keep alive and only the monitored items have to be subscribed for the already established connection. However, data loss might also occur when switching between connections.
+    - **Hot** -- The connection (including subscriptions) will already be established to all configured URLs during start-up. The atvise system will only process notifications from the connection of highest priority. Notifications from other connections will be buffered for a short period. Therefore this mode has the highest communicated data volume since the notifications will be sent over all connections. But the switching is the fastest and will be done without data loss.
+     
+     We recommend setting *Sampling interval* to 0, i.e. the fastest practical rate. In this case, a proper *Queue size* must be manually defined, depending on the actual sampling interval of the data source and the configured *Publishing interval*.
+
+Switching Mode
+    Defines whether in case of a connection failure the system shall switch between the connections according to the configured priority (= "Automatic") or the communication is bound to an explicit configured URL (e.g. "Only alternative URL 1").
+
+.. hint:: 
+    
+    - In case an explicit connection is configured and this connection will fail, no switching to another connection will be performed.
+    - atvise does not apply the OPC UA *ServiceLevel*, neither as server nor client. If a redundant (atvise) system is used as redundant data source, the connection may be switched to the currently passive server (Secondary). In this case, there is no write access to the data source which means that e.g. it is not possible to acknowledge alarms in the data source or change the value of mirrored nodes.  
+
+Current Connection
+    This field indicates which configured URL is used for the current communication.
+
+    Example:
+
+    Given the following configuration:
+
+    - Source URL: ``opc.tcp://192.168.111.1:4840``
+    - Alternative URL 1: ``opc.tcp:// 192.168.111.2:4840``
+    - Alternative URL 2: ``opc.tcp:// 192.168.222.1:4840``
+    - Alternative URL 3: ``opc.tcp:// 192.168.222.2:4840``
+
+    **Assumption**: "Alternative URL 1" is not available, all other connections are OK and the current communication is done via the Source URL.
+
+    Mode **Cold**:
+
+    #. Source URL fails -> switching to "Alternative URL 2" (since "Alternative URL 1" is not available)
+    #. "Alternative URL 1" is available again -> nothing will happen
+    #. "Alternative URL 2" fails -> switching to "Alternative URL 1" (since "Alternative URL 1" has a higher priority than "Alternative URL 2" and the Source URL is still not available)
+
+    Modes **Monitored** and **Hot**:
+
+    #. Source URL fails -> switching to "Alternative URL 2" (since "Alternative URL 1" is not available)
+    #. "Alternative URL 1" is available again -> switching to "Alternative URL 1" (since "Alternative URL 1" has a higher priority than "Alternative URL 2" and the Source URL is still not available)

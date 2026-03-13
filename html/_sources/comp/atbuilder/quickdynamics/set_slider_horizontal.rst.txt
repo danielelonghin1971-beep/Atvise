@@ -1,0 +1,4 @@
+Set Slider Horizontal
+#####################
+
+Internally used by atvise component :ref:`slider horizontal <od_slider_horizontal>` (advanced style).

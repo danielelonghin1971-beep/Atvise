@@ -1,0 +1,18 @@
+Time Range Selector
+###################
+
+This display will be used to set the time axis and can be used together with the "highcarts" display. It contains two buttons for setting begin and end time.
+
+.. rubric:: Parameters
+
+The following common parameters are available:
+
+- **chart name** -- Unique name of the chart instance (default: trend1)
+- **x-axis index** -- Index of the x-axis to be addressed (default: 0)
+- **font color** -- Color which will be applied to the labels (default: global parameter atvFontColor (advanced), #000000 (standard))
+- :advstyle:`Advanced` **border color** -- Border color of the selector (default: global parameter atvBorderColor) 
+- **small message dialog display** -- Dialog for showing messages, information or warnings (default: small message dialog object display)
+
+.. rubric:: Examples
+
+Create a display and add a trend display and this display by drag & drop. Set the desired chart name on both displays. They have to be identical.

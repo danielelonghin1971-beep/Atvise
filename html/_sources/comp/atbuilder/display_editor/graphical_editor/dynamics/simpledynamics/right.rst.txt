@@ -1,0 +1,11 @@
+0. RIGHT
+########
+
+.. figure:: images/dynamics_right_useraccess.png
+
+Choose if user access rights are necessary or not.
+
+|button_dyn_ri_needright|  User Access Rights
+    If a user does not have permission to execute dynamics on the display, user access rights can be set. To show an error message (message box), check the respective option and choose an error text.
+
+.. |button_dyn_ri_needright| image:: /common_images/button_dyn_ri_needright.png

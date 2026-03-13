@@ -1,0 +1,217 @@
+.. _smtpclient_functions:
+
+SMTPClient functions
+####################
+
+.. class:: SMTPClient(obj)
+
+    To use any of the functions below you first have to create an SMTPClient object.
+
+    The constructor creates the specified SMTP client. The SMTP server will be contacted in the send command. The connection parameters are stored internally until sending.
+
+    Parameters:
+        - **obj** -- Input parameter object:
+
+            - **server** (String) -- Specifies the name of the SMTP server to be opened.
+            - **port** (Integer, optional, default: 25) -- Specifies the port number of the SMTP server to be opened.
+            - **security** (Integer, optional, default: SMTPClient.TLS_OFF) -- Specifies the encryption type of the connection. Possible values are SMTPClient.TLS_OFF, SMTPClient.TLS_EXPLICIT and SMTPClient.TLS_IMPLICIT.
+            - **authentication** (Integer, optional, default: SMTPClient.AUTH_LOGIN) -- Specifies the authentication method. Possible values are SMTPClient.AUTH_NONE, SMTPClient.AUTH_PLAIN, SMTPClient.AUTH_LOGIN and SMTPClient.AUTH_MD5.
+            - **user** (String, optional, default: "") -- Specifies the login user of the SMTP server. "" = no authentication.
+            - **password** (String, optional, default: "") -- Specifies the login password of the SMTP server.
+            - **max_attachment_size_mb** (Integer, optional, default: 10) -- Specifies the maximum size of attachments to be sent. 0 means no size limit. 
+
+    Description of the encryption types:
+
+    - **SMTPClient.TLS_OFF**
+
+        SMTPClient communicates with the server over an unencrypted channel. Username and password are sent unencrypted.
+
+    - **SMTPClient.TLS_EXPLICIT**
+
+        SMTPClient explicitly requests TLS/SSL encryption to be switched on by sending STARTTLS. If the server supports STARTTLS, SMTPClient communicates with the server using an encrypted channel. Username and password are sent encrypted.
+
+        Explicit mode usually uses the same port as plain (unsecure) mode. Common ports are 25 and 587.
+
+    - **SMTPClient.TLS_IMPLICIT**
+
+        SMTPClient connects to the server and TLS/SSL encryption is switched on implicitly as soon as the channel is established. SMTPClient communicates with the server using an encrypted channel. Username and password are sent encrypted.
+
+        Implicit mode requires a dedicated port. This port cannot be the same port used for plain (unsecure) mode or for TLS/SSL explicit mode. Common port is 465.
+
+    Example::
+
+        var smtp = new SMTPClient({
+            server: "mail.isp.com",
+            port: 25,
+            security: SMTPClient.TLS_OFF,
+            authentication: SMTPClient.AUTH_LOGIN,
+            user: "myname",
+            password: "mypassword"
+        });
+
+.. !!v8!! SMTPClient.addAttachment(obj)
+.. function:: SMTPClient.addAttachment(obj)
+
+    Adds an attachment to the email. 
+
+    Parameters:
+        - **type** (Integer) -- Defines the attachment type:
+
+            - *SMTPClient.A_FILE* -- A file of the filesystem shall be attached.
+            - *SMTPClient.A_DATA* -- Data provided via JavaScript (e.g. Ua.findNode()) shall be attached.
+            
+        The following parameters depend on the specified attachment type:
+
+        SMTPClient.A_FILE:
+
+        - **name** (String, optional, default: file name (without spaces) + extension) -- Name of the attachment.
+        - **content_type** (String) -- The MIME type that specifies the type of the sent data.
+        - **file_path** (String) -- File path and name that shall be attached.
+        - **inline** (Boolean, optional, default: false) -- Defines if the attachment shall be inline, i.e. within the message body. If *true*, the *body* parameter of SMTPClient.send() must be specified accordingly (see example below).
+        - **is_encoded** (Boolean, optional, default: false) -- Defines if the content of the attached file is already base64 encoded.
+        
+        SMTPClient.A_DATA:
+
+        - **name** (String) -- Name of the attachment. 
+        - **content_type** (String) -- The MIME type that specifies the type of the sent data.
+        - **data** (String) -- The data that shall be attached.
+        - **inline** (Boolean, optional, default: false) -- Defines if the attachment shall be inline, i.e. within the message body. If *true*, the *body* parameter of SMTPClient.send() must be specified accordingly (see example below).
+        - **is_encoded** (Boolean, optional, default: false) -- Defines if the content of the attached file is already base64 encoded. 
+
+    Example::
+
+        var smtp = new SMTPClient({
+            server: "smtp.office365.com",
+            port: 587,
+            security: SMTPClient.TLS_EXPLICIT,
+            authentication: SMTPClient.AUTH_LOGIN,
+            user: "me@domain.com",
+            password: "mysecurepassword"
+        });
+
+        smtp.addAttachment({
+            type: SMTPClient.A_FILE,
+            name: "icon1.png",
+            content_type: "image/png",
+            file_path: "C:\\Users\\test\\icons\\icon1.png",
+            inline: true
+        });
+
+        smtp.addAttachment({
+            type: SMTPClient.A_DATA,
+            name: "my_atvise_setup.exe",
+            content_type: "application/octet-stream",
+            data: Ua.findNode("SYSTEM.LIBRARY.PROJECT.RESOURCES/my_atvise_setup.exe").result.value,
+            inline: false,
+            is_encoded: false
+        });
+
+        smtp.send({
+            from: "me@domain.com",
+            to: "you@domain.com",
+            content_type: "text/html; charset=utf-8",
+            subject: "test",
+            body: "<html>\
+                    <head>\
+                        <meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">\
+                    </head>\
+                    <body>\
+                        <p>This is the new icon:</p>\
+                        <img src=\"cid:icon1.png\" width=\"150\" height=\"50\" \\>\
+                        </body>\
+                   </html>"
+        });
+
+.. !!v8!! SMTPClient.send(obj)
+.. function:: SMTPClient.send(obj)
+
+    Send the given email message.
+
+    Parameters:
+        - **obj** -- Input parameter object:
+
+            - **from** (String) -- Specifies the name of the sender.
+            - **to** (String) -- Specifies the name of the recipient(s). Multiple recipients are separated by ';'.
+            - **cc** (String, optional, default: "") -- Specifies the carbon copy recipient(s).
+            - **bcc** (String, optional, default: "") -- Specifies the blind carbon copy recipient(s).
+            - **subject** (String, optional, default: "") -- Specifies the subject of the mail.
+            - **body** (String, optional, default: "") -- Specifies the message of the mail.
+            - **reply_to** (String, optional, default: "") -- "Reply-To" field of the mail.
+            - **content_type** (String, optional, default: "text/plain; charset=utf-8" -- "Content-Type" of the email.
+            - **content_transfer_encoding** (String, optional, default: "") -- Specifies the "Content-Transfer-Encoding" field of the mail header. Possible values:
+
+                - BASE64
+                - QUOTED-PRINTABLE
+                - 8BIT
+                - 7BIT
+                - BINARY
+                - x-token
+
+            - **mime_version** (String, optional, default: "") -- Specifies the "MIME-Version" field of the mail header. Possible values: "1.0"
+            - **head** (String, optional, default: "") -- Specifies the message header. The Date field will be filled in automatically and cannot be redefined. The following fields are filled in if the header = "":
+
+                - Reply To
+                - MIME Version
+                - Content Type
+
+    Returns:
+        true if sending was successful false otherwise.
+
+    Example::
+
+        smtp.send({
+            from: "me",
+            to: "you",
+            subject: "hello",
+            body: "hello again!"
+        });
+        console.log(smtp.diagnostic);
+
+    SMTP servers not supporting explicit but implicit TLS/SSL::
+
+        var smtp = new SMTPClient({
+            server: "smtp.mail.yahoo.com",
+            port: 465,
+            security: SMTPClient.TLS_IMPLICIT,
+            user: "atvise.test@yahoo.com",
+            password: "test",
+            authentication: SMTPClient.AUTH_LOGIN
+        });
+
+    SMTP servers supporting explicit TLS/SSL can be used in the following way::
+
+        var smtp = new SMTPClient({
+            server: "smtp.live.com",
+            port: 587,
+            security: SMTPClient.TLS_EXPLICIT,
+            user: "atvise.test@hotmail.com",
+            password: "test",
+            authentication:SMTPClient.AUTH_PLAIN
+        });
+
+    Whether an SMTP server supports explicit TLS/SSL or not can be checked with SMTPClient.serverinfo::
+
+        smtp.send({
+            from: '"atvise Yahoo" <atvise.test@yahoo.com>',
+            to: "name@url.com",
+            subject: "yahoo mail test",
+            body:"yahoo mail test"
+        });
+        console.log(smtp.serverinfo);
+
+    SMTPClient.serverinfo will be set in SMTPClient.send(). After calling send(), SMTPClient.serverinfo can be searched for '250-STARTTLS'. If it is found then the server supports explicit TLS/SSL.
+
+.. rubric:: SMTPClient object properties
+
+The SMTPClient object contains following properties:
+
+- **diagnostic** -- SMTP server diagnostic after send()
+- **serverinfo** -- SMTP server information after send()
+- **server** -- SMTP server name
+- **port** -- SMTP port
+- **security** or (for compatibility) **secure** -- SMTP security mode: 0 (TLS_OFF), 1 (TLS_EXPLICIT), 2 (TLS_IMPLICIT)
+- **authentication** -- The authentication method to talk to the SMTP server: 0 (AUTH_NONE), 1 (AUTH_PLAIN), 2 (AUTH_LOGIN), 3 (AUTH_MD5)
+- **maxAttachmentSize** -- The maximum attachment size in MB 
+- **username** -- The username to log on to the SMTP server
+- **password** -- The password to log on to the SMTP server
+- **connectionTimeout** -- Defines how long the client attempts to connect to the e-mail server. 0 (default) = 300 seconds, >0 = number of seconds 

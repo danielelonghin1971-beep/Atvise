@@ -1,0 +1,20 @@
+Scale
+#####
+
+This Quick Dynamic scales the applied graphic element in the X and/or Y direction depending on the value of the defined node and the range defined by "minValue" and "maxValue", i.e. the range defined by "minValue" and "maxValue" will be translated to the percent range defined by "startScaleX" and "stopScaleX" and/or by "startScaleY" and "stopScaleY".
+
+.. hint:: Scaling in the X direction will only be done if both "startScaleX" and "stopScaleX" are defined. Scaling in the Y direction will only be done if both "startScaleY" and "stopScaleY" are defined.
+
+.. rubric:: Example:
+
+The defined range of the value from 0 (=minValue) to 100 (=maxValue) will be translated to 0 (=startScaleX) to 10 (=stopScaleX) in X direction
+
+.. rubric:: Parameters:
+
+- **nodeID** (*node triggering the change*) -- This node triggers this Quick Dynamic
+- **minValue** (*min value*) -- Lower bound of the range in which the node's value should lie
+- **maxValue** (*max value*) -- Upper bound of the range in which the node's value should lie
+- **startScaleX** (*start position for X-direction*) -- Start position (in percent) for the X direction where "minValue" will be translated to
+- **stopScaleX** (*stop position for X-direction*) -- Stop position (in percent) for the X direction where "maxValue" will be translated to
+- **startScaleY** (*start position for Y-direction*) -- Start position (in percent) for the Y direction where "minValue" will be translated to
+- **stopScaleY** (*stop position for Y-direction*) -- Stop position (in percent) for the Y direction where "maxValue" will be translated to

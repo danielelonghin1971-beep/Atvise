@@ -1,0 +1,30 @@
+2. RESULT
+#########
+
+.. figure:: images/sd_0123_part2.png
+
+The following table explains how to use the different types of results.
+
+|button_dyn_rs_node| Take value from node
+    Specify the source address and attribute from another node to take its value.
+
+|button_dyn_rs_timer| Timed actions
+    Specify the interval and count times for execution of an adjusted action.
+
+    - maximum counts: 999 times
+    - maximum intervals: 99999 ms
+
+    .. figure:: images/dynamics_result_timer.png
+
+|button_dyn_rs_widget| Take value from widget
+    Specify the ID of the widget to take its value for an action.
+
+|button_dyn_rs_calculation| Recalculate original result value
+    Enter a desired value and a mathematical calculation for the new value.
+
+    .. figure:: images/dynamics_result_calculation.png
+
+.. |button_dyn_rs_calculation| image:: /common_images/button_dyn_rs_calculation.png
+.. |button_dyn_rs_node| image:: images/button_dyn_rs_node.png
+.. |button_dyn_rs_timer| image:: /common_images/button_dyn_rs_timer.png
+.. |button_dyn_rs_widget| image:: /common_images/button_dyn_rs_widget.png

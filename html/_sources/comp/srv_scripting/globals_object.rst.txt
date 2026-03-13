@@ -1,0 +1,75 @@
+globals object
+##############
+
+The *globals* object can be used as storage for data shared between different scripts. Scripts are running isolated from each other, so there is no direct access to variables created in different scripts.
+
+.. attention::  Creating a variable without the keyword ``var`` will not make it global and issues a warning in the log file::
+
+        var myFirstVariable = 1; // normal local variable
+        mySecondVariable = 2; // variable will not(!) be global, but can be used locally
+
+    The warning in the log file will only be issued the first time a global variable is detected. If the same variable is later used in a different script, the variable will not be logged again until the server is restarted.
+
+.. !!v8!! globals.set(key, value)
+.. function:: globals.set(key, value)
+
+    Sets data in the shared storage.
+
+    Parameters:
+        - **key** (String) -- Specifies the name of the data.
+        - **value** (Any) -- Specifies the value to set. Can be any JavaScript value including array, object and an instance of any atvise specific extension class like e.g. ODBCClient (see examples below).
+
+            .. attention:: If *value* is a JavaScript object with functions, the functions will not be available when you read back the value with :func:`globals.get`.
+
+    Examples::
+
+        globals.set("myint", 42); // integer
+        globals.set("myarr", [1, 2, 3]); // array
+        globals.set("myobj", { name: "Fred", age: 31, f: function() {} }); // object
+
+    ::
+
+        var odbc = new ODBCClient("DSN=...");
+        odbc.open();
+        globals.set("myodbc", odbc); // atvise extension class
+
+.. !!v8!! globals.get(key)
+.. function:: globals.get(key)
+
+    Reads data from the shared storage.
+
+    Parameters:
+        - **key** (String) -- Specifies the name of the data.
+
+    Returns:
+        The previously stored value with the given *key* or *null* if no data for the *key* exists.
+
+    Examples::
+
+        var obj = globals.get("myobj");
+        console.log(obj.name, " is ", obj.age , " years old"); // "Fred is 31 years old"
+        obj.f(); // error, function not available!
+
+    ::
+
+        var odbc = globals.get("myodbc");
+        odbc.query("SELECT ...");
+
+.. !!v8!! globals.has(key)
+.. function:: globals.has(key)
+
+    Checks the shared storage for data.
+
+    Parameters:
+        - **key** (String) -- Specifies the name of the data.
+
+    Returns:
+        true, if data for *key* exists, otherwise false.
+
+.. !!v8!! globals.remove(key)
+.. function:: globals.remove(key)
+
+    Removes data from the shared storage.
+
+    Parameters:
+        - **key** (String) -- Specifies the name of the data.

@@ -1,0 +1,205 @@
+.. _report_configurations:
+
+Report configurations
+#####################
+
+The necessary configuration for automatic report generation must be stored as server script under :treeselection:`AGENT --> OBJECTS --> ATVISE --> Report`. Report configurations can be created via the provided object displays.
+
+.. rubric:: Automatic generation
+
+Report configurations can be enabled for automatic generation at definable intervals. Active report configurations are checked every minute and automatically executed at the specified time to generate the respective report. The status of the automatic generation (number of automated reports, log entries for generated reports) is stored on the node *AGENT.OBJECTS.ATVISE.Report.schedulerLog*. 
+
+.. hint:: It is not possible to enable more than 100 configurations for automatic reports. 
+
+.. _report_objectdisplay:
+
+Creating report configurations
+******************************
+
+The following object displays are available to create configurations and generate reports (see :ref:`Report object displays<od_report>` for a list of all parameters).
+
+Report Management
++++++++++++++++++
+
+This display allows to create and edit configurations to generate reports.
+
+.. figure:: ../images/report_manager.png 
+
+The table shows all available configurations. Clicking :guilabel:`+` opens the report editor for creating new configurations. :guilabel:`-` allows to delete selected configurations. |report_create| opens the dialog to generate reports for the selected configurations manually. |report_mail| opens the global mail settings.
+
+|report_edit| opens the report editor to edit the respective configuration. The checkbox in the *Active* column allows to enable or disable the respective configuration for automatic report generation at the specified time. Already created PDF reports can be viewed directly in the browser by clicking |report_view|.
+
+Report Editor
++++++++++++++
+
+This display allows to create and edit configurations. 
+
+.. figure:: ../images/report_editor.png 
+
+Name
+  The report configuration is saved as server script with this name. Cannot be changed after saving the configuration. 
+
+Group
+  Allows to select a folder that has been created in the address space under *AGENT.OBJECTS.ATVISE.Report*. Groups can be used to organize report configurations or define specific user rights. Cannot be changed after saving the configuration.
+
+Template
+  Report template.
+
+XLSX rep.
+  Excel output file.
+
+PDF rep.
+  PDF output file (optional). 
+
+.. hint:: The path to the respective file name can be absolute or relative. Relative paths must start with "./" or ".\\" and are relative to the project directory. File names can contain the wildcards {YYYY}, {YY}, {MM}, {DD}, {hh}, {mm} or {ss} that are replaced by the reportTime when creating the report. E.g.: "Report_{YYYY}-{MM}-{DD}_{hh}-{mm}-{ss}.xlsx".
+
+Worksheets
+  Defines the worksheets that shall be included when converting a report into PDF. 0 means that all worksheets are included.
+
+Language
+  Defines the language that is used for displaying multi-language strings as well as converting the report file to PDF, e.g. "en-US". If not defined, the language of the operating system is used.
+  
+  - Multi-language texts: If a query result contains multi-language texts, only the defined language is displayed in the generated report. In case that the given language does not exist in the returned string, either the english text (if available) or the first occurring language is used. The translation must be enabled in the report template (see :ref:`markup parameter translate<markup_lang>`).
+  - Converting to PDF: The language specifies the formatting of e.g. time (e.g.:  de-DE: "30.05.2023 16:19" -- en-US: "5/30/2023 16:19") or decimal point (e.g.: de-DE: 42,5 -- en-US: 42.5), however, translations of texts via T{} are not possible.
+
+.. _report_time:
+
+Schedule
+  Months, days, weekdays, hours and minutes can be combined to define the time for creating the report automatically. Numbers within a field must be separated by "," if for example several months or days shall be defined. The configuration above creates a report at 12:30 on every 1 :sup:`st` and 15 :sup:`th` day of every odd month. The time of report generation is used as basis for querying data (see :ref:`markup parameter data<markup_query>`).
+
+  The following applies to empty fields:  
+  
+  - If all fields are empty, no automatic report is generated.
+  - If a value is defined for at least one field, default values are used for the remaining fields:
+  
+    - All possible values of a field are used by default if at least one smaller time unit is defined. For example: The value 10 is defined for field *Hours*, all other fields are empty. All possible values are used for *Months* and *Days* (1-12 and 1-31 respectively). Thus, the report is generated daily at ten o'clock.
+    - The smallest possible value of a field is used by default if at least one bigger time unit is defined. For example: The value 5 is defined for field *Days*, all other fields are empty. As described above, all possible values are used by default for *Months* (i.e. 1-12). The smallest possible value is used for *Hours* and *Minutes* (i.e. 0). Thus, the report is generated on the fifth day of each month at 00:00 AM. 
+
+Data offset
+  Offset in minutes that allows to delay the report generation (e.g. if data is available at a later time). The originally defined reportTime is used for querying the data and creating the report. E.g.: reportTime = 15:00, cycleoffset = 10 minutes -> The report is created at 15:10, however, the timestamp used for the query is 15:00.
+
+Metascript 
+  *Script* -- This script is called for creating meta data. The tag defined via the *data* parameter in a markup is passed to this script, i.e. it is possible to generate different meta data (refer to :ref:`template - markup language<markup_query>` for further information). The script must be defined via absolute node ID, e.g. "AGENT.OBJECTS.myCustomScript".
+
+  *Parameter* -- Allows to pass additional parameters as object or string to the script. An object is validated before its elements are passed to the metascript. Strings are always passed as "additionalInfo" to the metascript. The respective parameters must be defined as :ref:`script parameter<srv_script_parameters>` in the metascript:
+
+    .. figure:: ../images/report_meta_param1.png 
+
+      Parameters passed as object, e.g.: {"Parameter_1": "Value 1", "Parameter_2": 12345}
+
+    .. figure:: ../images/report_meta_param2.png 
+
+      Parameter passed as string, script parameter must always be named "additionalInfo"
+
+.. hint:: Please note the following if the metascript is returning data to the report: 
+
+    - The decimal point must be used as decimal mark for values.
+    - Timestamps must be passed as JavaScript timestamps or in *simplified extended ISO Format (ISO 8601)*. 
+    
+    Other formats may cause problems when converting or displaying data. 
+
+E-mail notifications
+  Allows to enable or disable e-mail notifications for this report. It is possible to add PDF or XLSX reports as attachment to the mails.
+
+  The :guilabel:`Settings` button opens the following display for the necessary configuration like recipient(s), subject, message and attachment.
+
+  .. figure:: ../images/report_mail_settings.png 
+
+  If active, an e-mail is sent after each report generation.
+
+After clicking :guilabel:`Save` the report configuration is stored as serverscript AGENT.OBJECTS.ATVISE.Report.<Group>.<MyReportConfig>.
+
+Example - report configuration AGENT.OBJECTS.ATVISE.Report.Report1::
+
+    var configuration = {
+        active          : true,
+        advanced        : false,
+        name            : "Report1",
+        cycleTime       : {
+                            "minutes": [30], //0-59
+                            "hours": [12], //0-23
+                            "daysOfMonth": [1,15], //1-31
+                            "months": [1,3,5,7,9,11], //1-12
+                            "daysOfWeek": [] //0-7 = Sunday is 0 or 7
+                          },
+        cycleOffset     : 0,
+        locale          : "en-US",
+        template        : "./Templates/Report_template.xlsx",
+        xlsxReport      : "./Reports/Report1_{YYYY}-{MM}-{DD}_{hh}-{mm}.xlsx",
+        pdfReport       : "./Reports/Report1_{YYYY}-{MM}-{DD}_{hh}-{mm}.pdf",
+        htmlReport      : "",
+        startWorksheet  : 0,
+        endWorksheet    : 0,
+        metaScript      : "AGENT.OBJECTS.myCustomScript",
+        scriptParameter : "{\"Parameter_1\":\"Value 1\"}",
+        email           : {
+                            "active": true,
+                            "attachment": ["xlsx", "pdf"],
+                            "to": ["user1@atvise.at"],
+                            "cc": ["user2@atvise.at","user3@atvise.at"],
+                            "bcc": [],
+                            "subject": "New generated report",
+                            "body": ""
+                          },
+        overwrite       : true,
+        reportTime      : reportTime
+    }
+
+    //Do not change script from here
+    if (reportTime != "")
+      return call("Report.GenerateReport", { configuration: configuration });
+    else
+      return JSON.stringify(configuration);
+
+.. hint:: 
+  
+  - If the *advanced* parameter is set to *true*, the configuration cannot be edited via object displays in the visualization. This is necessary if the configuration was modified directly in the script. Otherwise, these changes would be overwritten by saving the configuration via the Report Editor. 
+  - The parameter *htmlReport* is currently not in use and is reserved for future enhancements.
+  - The parameter *overwrite* defines if a report with the same name shall be overwritten.
+
+Create reports manually
++++++++++++++++++++++++
+
+This display is meant for creating reports manually. Select the respective report configuration(s) and click the |report_create| button in the report management display to open the dialog. Define the report time and click :guilabel:`Generate` to create the report.
+
+.. figure:: ../images/report_dialog.png
+
+The data offset defined for the report configuration is not applied when generating a report manually. Thus, the report may not contain all data. 
+
+Global settings for e-mail notifications 
+++++++++++++++++++++++++++++++++++++++++
+
+Clicking |report_mail| opens the following display:
+
+.. figure:: ../images/report_mail_global.png 
+
+Active
+    Enables e-mail notifications globally for all configurations. Can be overridden in the respective settings of a configuration.
+
+SMTP server
+    Allows to select any already created :ref:`SMTP server<smtp_settings>`.
+
+Sender address
+    Sender address that is used for sending the e-mails.
+
+Report viewer
++++++++++++++
+
+|report_view| opens the following display to view generated reports of the respective configuration online.
+
+.. hint:: This display uses the integrated PDF viewer of the respective browser, i.e. the browser must support opening and viewing PDFs. Please ensure that the appropriate option for opening PDFs is enabled in the browser settings.
+
+.. figure:: ../images/report_viewer.png
+
+Creating reports via visualization
+**********************************
+
+Report configurations can be executed via webMI functions to generate a report in the visualization:: 
+
+    webMI.data.call("ReportRunConfiguration", {configuration: "myOptionalFolder.ConfigurationDemo", reportTime: Date.now()}, function(e) {})
+
+.. |report_active| image:: ../images/report_active.png
+.. |report_edit| image:: ../images/report_edit.png
+.. |report_create| image:: ../images/report_create.png
+.. |report_view| image:: ../images/report_view.png 
+.. |report_mail| image:: ../images/report_mail.png   

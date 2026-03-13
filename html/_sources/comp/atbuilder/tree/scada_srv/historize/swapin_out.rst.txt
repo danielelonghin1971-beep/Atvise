@@ -1,0 +1,23 @@
+Swapping in/out archive files
+*****************************
+
+For maintaining archive files you can either use the archive management (see :ref:`archivemanagement` resp. :ref:`od_archivemanagement`) or proceed as follows:
+
+.. rubric:: Swapping out archive files 
+
+If you want to swap out archive files before they are automatically deleted (see *Partition interval* and *File limit* above) use the :ref:`archive locking <archive_locking_functions>` and :ref:`file system <filesystem_functions>` functions to move the archive files to a different directory of your choice. Moving an archive file takes following steps:
+
+- Determine the full path to the archive file by using the *FileSystem* functions or *ArchiveLocking.ArchiveName*.
+- Lock the archive file with *ArchiveLocking.Lock* to ensure that there are no open transactions and the file can be safely moved.
+- If the lock succeeded, move the archive file with *FileSystem.move*.
+- If the move fails, you may unlock the archive file with *ArchiveLocking.Unlock* or wait until the lock timeout expires and the file is automatically unlocked. As long as archives are locked, they cannot be queried.
+
+.. attention:: Don't copy or move an archive file without locking it first, because this could lead to a corrupt archive file.
+
+.. rubric:: Swapping in archive files
+
+For read only access to archived data, backed up archive files can be copied into the "swapin" folder below the "database" folder (both folders can be specified in :ref:`atserver.ini <atserver_ini_database>`). Any archive files in the "swapin" folder will automatically be used for queries. If you are finished using an archive file you can simply delete it.
+
+.. hint:: 
+    - In case an archive file with the same name can be found in the "database" and "swapin" folders at the same time, the file in the "database" folder will be ignored and queries will only return data from the file in the "swapin" folder. Also, new data will not be written to the archive file in the "database" folder until the file in the "swapin" folder is deleted.
+    - If you copy or move archive files manually, you have to ensure that the atserver has the proper user rights to read and write the archives.

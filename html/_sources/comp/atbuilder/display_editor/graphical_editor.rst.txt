@@ -1,0 +1,14 @@
+.. _graphical_editor:
+
+Graphical Editor
+################
+
+.. toctree::
+
+    graphical_editor/intro
+    graphical_editor/basicfunctions
+    graphical_editor/dynamics
+    graphical_editor/svg_attributes
+    graphical_editor/display_parameters
+    graphical_editor/display_para_ways
+    graphical_editor/how_to_simple_bar

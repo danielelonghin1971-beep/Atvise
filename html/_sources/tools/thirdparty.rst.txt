@@ -1,0 +1,8 @@
+Integrating third-party components
+##################################
+
+.. toctree::
+    :maxdepth: 1
+
+    thirdparty/integration_scope3
+    thirdparty/webmipro

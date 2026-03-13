@@ -1,0 +1,25 @@
+Alphanumerical Keyboard
+#######################
+
+The keyboard display offers an on-screen keyboard for string input.
+
+Simple text input by clicking once on the desired key and complete the input by clicking the "EN" key (This will write the current input to the given address node "Target"). The "delete" key can be used to delete single characters or to remove the whole input by holding it at least for 1 second. To abort and escape the input it is necessary to click the "X" button on the bottom left corner.
+
+There are currently two different keyboard layouts that will be supported (english, german), which are automatically set depending on the client's language.
+
+.. rubric:: Parameters
+
+The following common Parameters exists:
+
+- **Initial Value** -- Value that will be set initially
+- **Target** -- Address target node to write input to
+- **Tabstop** -- Tabstop that will be used for the TAB key (default: 4)
+- **password mode** -- Hides characters and shows stars instead (default: No)
+- **trigger to be fired** -- Name of the global trigger which will be fired when the input is complete
+- :advstyle:`Advanced` **color** -- Font color of the keyboard (default: global parameter atvFontColor)
+- :advstyle:`Advanced` **fill color** -- Background color of the text display (default: global parameter atvFillColor)
+
+
+.. rubric:: Examples
+
+Create a display with a button that opens a window with the keyboard by clicking on to it and add the desired target node to the query.

@@ -1,0 +1,138 @@
+Radiobutton
+###########
+
+The radiobutton switches between two values (equal to the button switch) and can be used as input or output control only. Several radiobuttons can be combined to a radiobutton group where always only one radiobutton can be ticked.
+
+It can be used in the following modes:
+
+#. **only "base" is specified**: 
+
+    In this case additionally the "value" has to be set. With this configuration, on each click, the "base" will be set to "value". The radiobutton will be ticked, if the value of "base" equals "value".
+#. **"base" and "address to set" are specified**:
+    
+    With this configuration, on each click, the following happens:
+
+        - The radiobutton will be ticked if the value of the "base" equals "value".
+        - On click "address to set" will be set to "value".
+        - The radiobutton itself will change the state (ticked or not) only when the "base" is changed (feedback channel).
+
+#. **neither "base" nor “address to set” are specified**:
+    
+    In this case, the trigger "valuechanged" with the value from "value" will be fired. This trigger can be used to add a Simple Dynamic to this radiobutton which reacts on the trigger and fires a new trigger. This new trigger can then be used by other elements.
+
+An additional border indicates the current value's negative state or an additionally defined alarm. The colors and blinking intervals are defined in global lists.
+
+.. rubric:: Triggers
+
+Following triggers can be used for this object display: 
+
+- **com.atvise.setActive** -- Can be used to enable or disable the object display.
+- **valuechanged** -- Fired on value changes, e.g. by user input.
+
+::
+
+    //Disable the object display
+    webMI.trigger.fire("com.atvise.setActive", false, "myDisplayID");
+
+    //Respond to value changes
+    webMI.trigger.connect("valuechanged", function(e) { console.log(e.value); }, "myDisplayID");
+
+.. hint:: Additional undocumented triggers are internally used by atvise. Their functionality may be changed in future atvise releases.
+
+.. rubric:: Parameters
+
+This control has the following generic parameters:
+
+- **base** -- Depending whether or not "address to set" is specified, the behavior is according to mode 1 and 3 above
+- **alarm address** -- Optional additional address of an alarm to be shown.
+- **radio group id** -- If you want to combine several radiobuttons to a group, set this parameter for all radiobutton of the group to the same value (e.g. myradiobuttongroup)
+- **label** -- Label of the radiobutton (default: T{Radiobutton})
+- **value** -- Value which defines when the radiobutton is ticked
+- **enable status monitoring** -- Switch monitoring of current value status on or off. (default: Yes)
+- **fire status trigger** -- Instead of the status display a here defined trigger can be fired globally.
+
+Font:
+
+- **family** -- Font family which will be applied to value (default: Arial)
+- **size** -- Font size which will be applied to the value (default: 12)
+- **color** -- Color which will be applied to the value (default: global parameter atvFontColor (advanced), #000000 (standard))
+
+Appearance:
+
+- **preselect this option** -- If set to "true", the radiobutton will be ticked on load; otherwise not. This takes only effect if no "base" and no "address to set" are specified. (default: false)
+- **fill color** -- Fill color of the radiobutton (default: global parameter atvFillColor (advanced), #d0d0d0 (standard))
+- :advstyle:`Advanced` **select area fill color** -- Fill color of the select area (default: #ffffff)
+- :advstyle:`Advanced` **select area fill color pressed** -- Fill color of the select area when pressed (default: #f2f2f2)
+- **fill color when inactive** -- Fill color if not active (default: global parameter atvInactiveColor (advanced), #8c8c8c (standard))
+- **symbol** -- Symbol which is shown if radiobutton is ticked; further symbols can be selected from "Object Displays (ATVISE)/Symbols/20x20 (default: disc)
+- **symbol color** -- Color of the symbol to be used (default: global parameter atvSymbolColor (advanced), #000000 (standard))
+- **stroke color pressed** -- The color of the stroke which will be set when the radiobutton is clicked (default: #e5e5e5 (advanced), #ffffff (standard))
+- **focus stroke color** -- The color of the stroke which will be set when the button is focused (default: #ffffff)
+- :advstyle:`Advanced` **border color** -- Color of the border around the control (default: global parameter atvBorderColor)
+- **status indication** -- Specify the status' display through a defined global list (default: global parameter atvStatusIndication)
+- **alarm indication** -- Specify the alarm's display through a defined global list (default: global parameter atvAlarmIndication)
+
+Options:
+
+- **address to set** -- Depending whether or not "base" is specified, the behavior is according to mode 2 and 3 above
+- **consistency group** -- Name of the consistency group
+- **tab index** -- Defines the order for changing between the object displays by using the tab key
+- **tooltip** -- Displays a tooltip box with the entered text (standard HTML-Elements can be entered)
+
+Security:
+
+- **necessary right** -- The user must have this right to activate the radiobutton i.e. to tick the radiobutton
+- **activation address** -- If the value of this address equals to "activation value", then the radiobutton will be active, i.e. can be pressed
+- **activation value** -- Value which activates the radiobutton
+    
+    .. hint:: The activation of the radiobutton can be configured only by the necessary right, or only by the activation address and value or by both. In case both settings are made, the user must have the necessary right and the value of the "activation address" must equal the "activation value"; otherwise the radiobutton will not be activated.
+
+Menu:
+
+- **menu positioning** -- The position the menu symbol is shown at (top-left, top-right, bottom-left, bottom-right).
+- **menu mouseover active** -- Symbol is only shown on *mouseover*.
+- **menu symbol offset x** -- Relative offset of the menu symbol to the anchor point on the x axis in pixel.
+- **menu symbol offset y** -- Relative offset of the menu symbol to the anchor point on the y axis in pixel.
+- **context menu click frame** -- Defines the size of the click frame for opening the context menu.
+
+.. rubric:: Example 1
+
+For mode 2 as described above assume the following parameters:
+
+- **base**: node_feedback
+- **value**: 1
+- **address to set**: node_set
+
+Furthermore assume that the values of "base" and "address to set" are set to 0.
+
+#. With these setting the checkbox will not be ticked.
+#. On click, "node_set" will be set to 1 (= "value"); the radiobutton is still not ticked (value of "base" is still different from "value")
+#. As soon as "base" is set to 1 (feedback channel from PLC), the radiobutton will now be ticked (value of "base" is now equal to "value")
+
+.. rubric:: Example 2
+
+For mode 2 as described above with a group of radiobuttons assume the following parameters:
+
+Radionbutton 1:
+
+- **base**: node_feedback
+- **radio group id**: mygroup
+- **label**: eins
+- **value**: 1
+- **address to set**: node_set
+
+Radionbutton 2:
+
+- **base**: node_feedback
+- **radio group id**: mygroup
+- **label**: ezwei
+- **value**: 2
+- **address to set**: node_set
+
+Furthermore assume that the values of "base" and "address to set" are set to 0.
+
+#. With these setting no checkbox will be ticked.
+#. On click on the Radiobutton1, "node_set" will be set to 1 (= "value"); the Radiobutton1 is still not ticked (value of "base" is still different from "value")
+#. As soon as "base"of Radiobutton1 is set to 1 (feedback channel from PLC), the Radiobutton1 will now be ticked (value of "base" is now equal to "value")
+#. On click on the Radiobutton2, "node_set" will be set to 2 (= "value"); the Radiobutton1 is still ticked (value of "base" is still different from "value")
+#. As soon as "base" of Radiobutton2 is set to 2 (feedback channel from PLC), the Radiobutton2 will now be ticked (value of "base" is now equal to "value")

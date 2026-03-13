@@ -1,0 +1,17 @@
+Rotate
+######
+
+This Quick Dynamic rotates the applied graphic element depending on the value of the defined node and the range defined by "startAngle" and "stopAngle", i.e. the
+range defined by "minValue" and "maxValue" will be translated to the range defined by "startAngle" and "stopAngle".
+
+.. rubric:: Example:
+
+The defined range of the value from 0 (=minValue) to 100 (=maxValue) will be translated to 0 (=startAngle) to 360° (=stopAngle)
+
+.. rubric:: Parameters:
+
+- **nodeID** (*node triggering the change*) -- This node triggers this Quick Dynamic
+- **minValue** (*min value*) -- Lower bound of the range in which the node's value should lie
+- **maxValue** (*max value*) -- Upper bound of the range in which the node's value should lie
+- **startAngle** (*start angle*) -- Start position for the rotation where "minValue" will be translated to
+- **stopAngle** (*stop angle*) -- Stop position for the rotation where "maxValue" will be translated to

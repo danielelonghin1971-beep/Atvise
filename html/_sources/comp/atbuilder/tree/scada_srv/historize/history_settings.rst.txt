@@ -1,0 +1,26 @@
+Historization settings
+**********************
+
+Activate threshold checks to prevent an overflow of the drive due to the historization.
+
+Right-click on :treeselection:`History Archives` and select :menuselection:`Edit History Settings...` will open the dialog "Edit History Settings" to configure the percentage (range 0 to 100) of the thresholds "High" and "Critical" as well as the paths for archive management. Setting both thresholds to 0 will deactivate this functionality.
+
+.. figure:: images/history_settings.png
+
+    Changing historization settings
+
+.. attention:: It is necessary to manually create the :treeselection:`SYSTEM.INFORMATION.DIAGNOSTICS.DISK.atviseHistoryDriveUsedPercent` node in order to activate and monitor the configured thresholds. As described in the following section, the current storage utilization must be written on this node. 
+
+.. rubric:: Thresholds for disk usage 
+
+To check whether the current storage utilization of the drive exceeds one of the thresholds, the current storage utilization of the drive, where the archives are located, has to be written on a dedicated node (range 0 - 100). Therefore the node "SYSTEM.INFORMATION.DIAGNOSTICS.DISK.atviseHistoryDriveUsedPercent" of type "Float" has to be created. The used storage can be determined by server-side scripting (with a periodically triggered script using the :ref:`filesystem_functions` :func:`FileSystem.capacity` and :func:`FileSystem.freeSpace`) or by using SNMP.
+
+In case the current storage utilization exceeds the threshold "High", a warning will be written to the atvise logfile. Exceeding the threshold "Critical" will result in deactivating the historization. The query of historical data will still be possible.
+
+In case the current storage utilization declines below the threshold "Critical" but is still higher than the threshold "High", an entry will be written to the atvise logfile but the historization still keeps deactivated. Only in case the current storage utilization declines below the threshold "High", the historization will be enabled again and an entry will be written to the atvise logfile.
+
+.. _historize_archive_management:
+
+.. rubric:: Paths for archive management
+
+Allows to define the backup and restore directory for the :ref:`archive management <archivemanagement>`. You have to specify absolute paths on the computer the atserver is running on.

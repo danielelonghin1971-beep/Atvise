@@ -1,0 +1,38 @@
+.. _opc_dcom_configuration:
+
+OPC COM configuration
+#####################
+
+atvise x64 server
++++++++++++++++++
+
+To enable the usage of atvise x64 server with OPC COM data sources, the following steps must be completed:
+
+1. Deinstall all OPC Core Components previously installed - x64 and x86 as well.
+2. Download OPC Core Components x64 3.00 (105.1) or higher from http://www.opcfoundation.org.
+3. Install OPC Core Components x64 3.00 (105.1) or higher. This will install x86 version as well.
+
+After the installation, the atvise server is ready for OPC COM data sources. No restart is needed. The atvise builder will now show the available OPC COM data sources
+
+OPC DCOM
+++++++++
+
+If you are running the atvise server as a service (default installation), you may have communication problems with some OPC DCOM servers because of DCOM rights (even if the DCOM server and the atvise server run on the same machine). The reason for this is that the atvise server service is executed per Windows default by the "System" user, the OPC DCOM server by the local user.
+
+To resolve this problem, reconfigure the authentication of the atvise server service and the OPC DCOM server so that they are both executed by the same user:
+
+.. rubric:: atvise server service
+
+Start -> Settings -> Control Panel -> Administrative Tools -> Services -> atvise server -> right-click -> Properties -> Log On tab:
+
+.. figure:: images/dcom_configuration_service.png
+
+    Configure a user for the service log-on
+
+.. rubric:: OPC DCOM server
+
+Start -> Settings -> Control Panel -> Administrative Tools -> Component Services -> Computers -> My Computer -> DCOM Config -> [Your DCOM OPC server] -> right-click -> Properties -> Identity tab:
+
+.. figure:: images/dcom_configuration_server.png
+
+    Configuring the OPC server to the same user

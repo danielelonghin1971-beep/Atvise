@@ -1,0 +1,32 @@
+Views
+#####
+
+With OPC UA Views you can define entry points into the address space which only show a subset of the available nodes.
+
+A view can contain further views or references to other nodes.
+
+.. attention:: All elements in views are references to the actual nodes. This means that changes directly affect the nodes themselves. If you delete a node from a view, the actual node will be deleted. If you rather want to remove the node only from the view without actually deleting it, you have to use the menu item :menuselection:`Remove from View` (:kbd:`Alt+Del`).
+
+Views can be created below the entry :treeselection:`Views` with the menu item :menuselection:`Add View...`.
+
+.. figure:: images/views1.png
+
+There a 3 ways to fill views with content:
+
+.. rubric:: Add references
+
+By selecting :menuselection:`Add References to View...` the node selector will be opened, which allows you to select the nodes you want to add to the view as references.
+
+.. figure:: images/views2.png
+
+.. rubric:: Paste references
+
+You can simply copy nodes under :treeselection:`OBJECTS` and then paste them as references into the view by selecting :menuselection:`Paste References into View...`.
+
+.. figure:: images/views3.png
+
+.. rubric:: Paste a view
+
+A previously copied view can be added to an existing view by selecting :menuselection:`Paste View`. This allows you to modify the hierarchy of already existing views.
+
+.. figure:: images/views4.png

@@ -1,0 +1,11 @@
+.. _datasources:
+
+Handling data sources
+#####################
+
+.. toctree::
+
+    datasources/intro
+    datasources/add_datasource
+    datasources/import_methods
+    datasources/opc_dcom_configuration

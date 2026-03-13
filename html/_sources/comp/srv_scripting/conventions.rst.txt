@@ -1,0 +1,26 @@
+Conventions
+###########
+
+For the documentation of the server-side JavaScript functions following conventions are used:
+
+- Optional parameters are enclosed in brackets (e.g. ``execute(script[, parameters[, settings])``)
+- Optional parameters and properties of objects are labeled as *optional* and the *default* is specified
+- All other parameters and properties are implicitely mandatory
+- The parameters can have following types:
+
+    .. csv-table:: Parameter types
+        :header: Name, Default, Description
+        :widths: auto
+
+        String, ``""``, a UTF-8 string
+        Double, ``0.0``, a floating point value
+        Integer, ``0``, an integer value
+        Boolean, ``false``, a boolean value that can be ``true`` or ``false``
+        UaNodeId, ``""``, a nodeId of a node in the address space
+        Date, ``undefined``, a JavaScript Date object
+        Object, ``{}``, a JavaScript object
+        Function, ``undefined``, a callback function
+        Any, ``undefined``, for parameters accepting any type
+
+- The parameter type follows the name of the parameter in braces (e.g. ``script (UaNodeId)``)
+- If a parameter is an array, brackets are added to the type (e.g. ``Object[]``). The default value of an optional Array is the empty array.

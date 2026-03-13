@@ -1,0 +1,18 @@
+iFrame: To Display a Display
+############################
+
+The iframe container is a control that can be used in two ways:
+
+- simple: Define a display or any web URL that will be displayed.
+- advanced: Iframe that is used as a navigation frame (the zoom and open display buttons can be used to interact with the iframe).
+
+The advanced mode is activated with the display parameter "add navigation frame functionality".
+
+.. rubric:: Parameters
+
+- **url** -- Web URL (or internal URL for resources on the server) to be displayed.
+- **display to open** -- Display from the visualization that will be loaded.
+- **name** -- Name of the frame (for interaction with zoom and open display buttons, also for usage with target parameter of the action window from the simple dynamics dialog or the webMI.display.openDisplay function). The name must be unique in a project (default: myframe)
+- **add navigation frame functionality (zoom,...)** -- The iframe will be loaded with triggers for navigation and zooming ("advanced mode") (default: false)
+- **default frame** -- Set to true if this is the default frame (Default: true)
+- **small message dialog display** -- Dialog for showing messages, information or warnings (e.g. if the number of available CCDs is exceeded) (default: SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Advanced.dialogs.message_dialog_small)

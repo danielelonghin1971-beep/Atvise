@@ -1,0 +1,37 @@
+User Box (246x65)
+#################
+
+This display shows the currently logged in user and allows users to log in or out. The left button opens the access log popup window.
+
+.. rubric:: Parameters
+
+This control has the following generic parameters:
+
+- **color** -- Background color of language box (default: global parameter atvFillColor)
+- **display for access log** -- Access log display which is opened when clicking on the button (default: SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Advanced.hmi.accesscontrol_log)
+
+Font:
+
+- **font family** -- Font family which will be applied to text and the button's label (default: Arial)
+- **font size** -- Font size which will be applied to text and the button's label (default: 18)
+- **font color** -- Color which will be applied to text and the button's label (default: global parameter atvFontColor)
+
+Appearance:
+
+- **symbol login** - symbol that will be used for the login state (Default: SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAY.Symbols.20x20.login)
+- **symbol logout** - symbol that will be used for the logout state (Default: SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAY.Symbols.20x20.logout)
+- **symbol color login** - fill color for the login symbol (default: global parameter atvSymbolColor)
+- **symbol color logout** - fill color for the logout symbol (default: global parameter atvSymbolColor)
+- **symbol scaling** -- Scaling of symbol in percent (default: 100)
+
+Login dialog:
+
+- **width** -- Width of the login dialog (default: 430)
+- **height** -- Height of the login dialog (default: 300)
+
+PopUp:
+
+- **popup width** -- Width of the access log popup (default: 770)
+- **popup height** -- Height of the access log popup (default: 430)
+- **popup position x** -- X position of the access log popup (default: 0)
+- **popup position y** -- Y position of the access log popup (default: 90)

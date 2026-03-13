@@ -1,0 +1,10 @@
+Configuration - Line/Area
+#########################
+
+This display is part of the "opt_series" display and provide specific settings for the chart types line and area.
+
+.. rubric:: Parameters
+
+This control has the following parameter:
+
+- :advstyle:`Advanced` **font color** -- Color which will be applied to the labels (default: global parameter atvFontColor)

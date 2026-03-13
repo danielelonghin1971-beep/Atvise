@@ -1,0 +1,42 @@
+Alarm functions
+###############
+
+.. rubric:: webMI.alarm.accept
+
+.. !!webmi!! webMI.alarm.accept(ids)
+.. function:: webMI.alarm.accept(ids)
+
+    Accepts the alarm conditions defined by the array ids. Each id can be an alarm condition (conditionID) or an AlarmId.
+
+.. !!webmi!! webMI.alarm.acceptDisplay()
+.. function:: webMI.alarm.acceptDisplay()
+
+    Accepts all *unaccepted* alarms that are subscribed on the current display (via :func:`webMI.alarm.subscribe`).
+
+.. !!webmi!! webMI.alarm.subscribe(conditionID, function(e){...})
+.. function:: webMI.alarm.subscribe(conditionID, function(e){...})
+
+    Subscribes to the alarm specified by conditionID. Every time the alarm state of this condition changes, the callback function is executed and an :ref:`alarm object <alarm_object_properties>` is passed in as parameter *e*.
+
+    Returns a subscriptionId, which can be used to unsubscribe the alarm state changes.
+
+    Example::
+
+        webMI.alarm.subscribe("AGENT.OBJECTS.bAlarmNode.AlarmConfiguration.Condition1", function(e) {
+            var value = e.state;
+            if (value == 0)
+                alert("State of alarm changed to Off, Acknowledged!");
+            if (value == 1)
+                alert("State of alarm changed to On, Unacknowledged!");
+            if (value == 2)
+                alert("State of alarm changed to On, Acknowledged!");
+            if (value == 3)
+                alert("State of alarm changed to Off, Unacknowledged!");
+            if (value == 5)
+                alert("State of alarm changed to On Off, Unacknowledged!");
+        });
+
+.. !!webmi!! webMI.alarm.unsubscribe(subscriptionId)
+.. function:: webMI.alarm.unsubscribe(subscriptionId)
+
+    Unsubscribes the alarm condition with the given subscriptionId (return value from :func:`webMI.alarm.subscribe`). The previously created subscription will not receive a notification of the callback function anymore.

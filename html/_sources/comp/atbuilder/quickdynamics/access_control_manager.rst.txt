@@ -1,0 +1,159 @@
+Access Control Manager
+######################
+
+This Quick Dynamic is automatically loaded by the default display. It retrieves the respective user rights from the server and buffers them to reduce the number of server requests. In addition, this Quick Dynamic allows to configure global settings for Access Control Element Notifications.
+
+.. rubric:: Parameters
+
+- **dialogEnabled** (*enable notification dialog*) -- Enables the notification dialog. If the user's rights are not sufficient for an action (e.g. writing values), the notification dialog, defined via *dialogDisplay* parameter, pops up. 
+- **elementNotification** (*enable element notification*) -- Enables/disables the notification for elements in case of insufficient access rights (see also :ref:`Access Control Element Notifier<access_control_notifier>`).
+- **bufferTime** (*rights buffertime (s)*) -- Defines how long the retrieved user rights (user, node, timestamp and right) will be buffered. During this time, user rights will be taken from the buffer. After the buffer time, a new request is sent to the server when accessing nodes. 0 means that there is only one request, i.e. a refresh of the visualization is necessary for any further request. Default: 300 seconds
+- **updateCacheOnDisplayChange** (*clear rights cache on display change*) -- Defines if cached rights shall be reloaded on display change. Default: true
+- **dialogDisplay** (*dialog display*) -- The display that is opened in case of insufficient rights for an action.
+- **elementSymbol** (*element notification symbol*) -- The symbol that is shown in case of insufficient access rights. It is possible to use font awesome icons (HTML) or image files.
+- **elementColor** (*element notification color*) -- The color of the shown symbol. 
+- **elementBackground** (*element notification background*) -- The background color of the shown symbol.
+- **elementBorderColor** (*element notification border color*) -- The border color of the shown symbol.
+- **elementMargin** (*element notification margin*) -- The margin of the shown symbol.
+- **elementErrorOnly** (*element notification error only*) -- Defines if notifications are only shown in case of an error.
+
+Usage
++++++
+
+.. rubric:: Functions 
+
+The following functions are available for using the Quick Dynamic:
+
+- **getConfiguration** -- Returns the currently set global parameters
+- **setConfiguration** -- Sets the global parameters at runtime
+- **clearRightsStorage** -- Allows to clear the cached rights. Thus, rights will be retrieved from the server in any case
+- **getRights** -- Returns the requested rights as an array 
+- **getRightsDict** -- Returns the requested rights as an object
+- **assist.addNode** -- Checks if the rights for creating a node are sufficient and executes a callback function depending on the result
+- **assist.handleWithPermissions** -- Checks the passed permissions and executes a callback function depending on the result
+
+.. rubric:: Simple use cases
+
+Get currently defined global parameters
+    It is possible to get specific parameters or all parameters if no argument is passed. 
+
+    Example::
+
+        var accessControlManager;
+        if (webMI.getAccessControlSupport()) {
+            accessControlManager = webMI.callExtension("SYSTEM.LIBRARY.ATVISE.QUICKDYNAMICS.Access Control Manager");
+        }
+
+        var acBufferTime = accessControlManager.getConfiguration("bufferTime");
+        var acConfiguration = accessControlManager.getConfiguration();
+
+Set global parameters
+    The global configuration can be changed by passing key-value pairs.
+
+    Example::
+
+        accessControlManager.setConfiguration("bufferTime", 300);
+        accessControlManager.setConfiguration(["bufferTime", "updateCacheOnDisplayChange"], [300, false]);
+
+Clear cached rights
+    When the defined buffer time is up, rights are automatically retrieved from the server again. If you want to request rights before that, clear the cache with the *clearRightsStorage* function. 
+
+    Example::
+
+        accessControlManager.clearRightsStorage();
+
+Return rights for a list of nodes
+    The *getRights* and *getRightsDict* functions return specific rights for defined nodes. Please note that nodes and rights must be defined at the same position.
+
+    Example::
+
+        accessControlManager.getRights(
+            ["AGENT.OBJECTS.node1", "AGENT.OBJECTS.node1", "AGENT.OBJECTS.node2"],
+            ["read", "write", "read"],
+            function (response) {
+                console.log(response);
+                // {
+                //     "result": [
+                //         {
+                //             "address": "AGENT.OBJECTS.node1",
+                //             "right": "read",
+                //             "value": true
+                //         },
+                //         {
+                //             "address": "AGENT.OBJECTS.node1",
+                //             "right": "write",
+                //             "value": false
+                //         },
+                //         {
+                //             "address": "AGENT.OBJECTS.node2",
+                //             "right": "read",
+                //             "value": true
+                //         }
+                //     ]
+                // }
+
+            }
+        );
+
+        accessControlManager.getRightsDict(
+            ["AGENT.OBJECTS.node1", "AGENT.OBJECTS.node1", "AGENT.OBJECTS.node2"],
+            ["read", "write", "read"],
+            function (response) {
+                console.log(response);
+                // {
+                //     "AGENT.OBJECTS.node1": {
+                //         "read": true,
+                //         "write": false
+                //     },
+                //     "AGENT.OBJECTS.node2": {
+                //         "read": true
+                //     }
+                // }
+            }
+        );
+
+Create node based on user rights
+    The helper function *assist.addNode* allows to create nodes depending on the rights of the currently logged in user. It also provides a fallback function in case the user rights are insufficient. 
+
+    Example – create node with callback and fallback function::
+
+        accessControlManager.assist.addNode(
+            {
+                address: newNodeAddress,
+                typeDefinition: "i=62",
+                dataType: "STRING",
+                value: "{}",
+                nodeClass: "NODECLASS_VARIABLE",
+                writePolicy: 2
+            },
+            function () {
+                doThingWithNewNode(newNodeAddress);
+            },
+            function (error) {
+                console.error(error);
+            }
+        );
+
+Call generic function based on user rights
+    The helper function *assist.handleWithPermissions* allows to call a function depending on specific user rights. In case of insufficient rights, an alternate function can be called.
+
+    Example – function call with permission check and fallback function::
+
+        accessControlManager.assist.handleWithPermissions(
+            [
+                {
+                    "node": "AGENT.OBJECTS",
+                    "right": "read"
+                },
+                {
+                    "node": "SYSTEM.LIBRARY.ATVISE.WEBMIMETHODS.BrowseNodes",
+                    "right": "execute"
+                }
+            ],
+            function () {
+                callBrowseNodesOnNode("AGENT.OBJECTS");
+            },
+            function () {
+                informUserOfMissingRights();
+            }
+        );

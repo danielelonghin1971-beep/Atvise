@@ -1,0 +1,93 @@
+1. EVENT
+########
+
+The event specified in this part of the Simple Dynamics defines the trigger for executing the dynamization. On the left side of the dialog you can choose the type of event you want to react to.
+
+.. figure:: images/dynamics_event_singlenode.png
+
+The following describes the different types of events:
+
+|button_dyn_single_node| Single Node / Alarm Change Event
+    This event allows you to react to the change of a specified attribute of a specified data variable. You can type in the following information:
+
+    **Specify source**
+
+    In the text box, you can specify the source address of a desired node. Press the |pointpointpoint| button to open the node selection dialog. Press down the |relative_button| button to select a relative address (starting at the base of an object type).
+
+    If the alarmstate has been selected then the alarm condition of the corresponding alarm has to be selected under "Specific source".
+
+    **Specify attribute**
+
+    In the list box on the right of the address text box you can choose between value, timestamp, alarm state or state of the node defined to react to.
+
+    **Specify value type**
+
+    The value type of the source node will be set automatically depending on the data type of the selected data variable, but it can be changed manually.
+
+|button_dyn_ev_mouse| Mouse event
+    This event allows you to react to different kinds of mouse interaction.
+
+    .. figure:: images/dynamics_event_mouse.png
+
+|button_dyn_ev_timer| Timer event
+    Specify interval for cyclic execution of an adjusted action.
+
+|button_dyn_ev_display| Display event
+    The display event enables you to fire an action when:
+
+    - a new display is loaded (Load)
+    - an open display is unloaded (Unload)
+    - the zoom of a display is changed (Viewbox (Zoom) changed)
+
+|button_dyn_ev_condition| Condition node change event
+    The condition event will fire an action when all of the added conditions are met.
+
+    .. figure:: images/dynamics_event_condition.png
+
+    Columns:
+
+    1. Address: Specify the source address and attribute of a desired node.
+    2. Data type of the specified node:
+
+        - B - Boolean
+        - N - Number
+        - S - String
+        - A - Alarm
+        - O - Other
+
+    3. Comparative operator
+    4. Value
+
+|button_dyn_ev_key| Keystroke event
+    The keystroke event is activated when a key (or combination of keys) is pressed. Choose a modifier (none, alt, ctrl, shift) and a key (alphanumeric, numeric, function keys).
+
+    .. figure:: images/dynamics_event_key.png
+
+.. _sd_event_trigger:
+
+|button_dyn_ev_trigger| Trigger event
+    Is executed when another dynamization fires the specified trigger name in the Action->Trigger part.
+
+    Example:
+
+    .. figure:: images/dynamics_event_trigger.png
+
+|button_dyn_ev_userinput| User-input event
+    Depending on the user input, an action will be executed (mainly used for widgets). There are three different input validations:
+
+    - no validation (waiting for a user input without limitations)
+    - validate by a discrete list of values
+    - validate by range (minimum, maximum) for user input
+
+    .. hint:: Can be used for HTML elements only, not for object displays.
+
+.. |button_dyn_ev_condition| image:: images/button_dyn_ev_condition.png
+.. |button_dyn_ev_display| image:: images/button_dyn_ev_display.png
+.. |button_dyn_ev_key| image:: /common_images/button_dyn_ev_key.png
+.. |button_dyn_ev_mouse| image:: /common_images/button_dyn_ev_mouse.png
+.. |button_dyn_ev_timer| image:: images/button_dyn_ev_timer.png
+.. |button_dyn_ev_trigger| image:: /common_images/button_dyn_ev_trigger.png
+.. |button_dyn_ev_userinput| image:: /common_images/button_dyn_ev_userinput.png
+.. |button_dyn_single_node| image:: images/button_dyn_single_node.png
+.. |pointpointpoint| image:: /common_images/pointpointpoint.png
+.. |relative_button| image:: /common_images/relative_button.png

@@ -1,0 +1,12 @@
+Statistics of atvise server
+###########################
+
+The internal statistics of atvise server can be accessed in the information folder of the project tree.
+
+.. figure:: images/statistics.png
+
+    Information folder in the project tree
+
+The statistic nodes can be viewed in the information folder in the project tree. In the visualization the statistic nodes must be explicitly read and cannot be subscribed.
+
+The statistic nodes reflect internal states of modules and they cannot be written. The statistic nodes of the modules may change dynamically depending on the module state. E.g. in the WEBACCESS module the number of sessions and the statistics on each session may vary.

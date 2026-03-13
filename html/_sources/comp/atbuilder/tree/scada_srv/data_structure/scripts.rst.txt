@@ -1,0 +1,18 @@
+.. _add_script_to_node:
+
+Adding scripts to nodes
+#######################
+
+The script editor is a tool for writing JavaScript code. You have the opportunity to use all JavaScript elements. You can write a script for every node. This makes working in the atvise builder very flexible and comfortable.
+
+Using server scripting, you can extend the functionality of atvise SCADA. All internal nodes of atvise SCADA can be accessed in a server script. Server scripts can be triggered by a time, value change, alarm, etc.
+
+A detailed description of the server scripting elements can be found at :ref:`SCADA serverside scripting <server_scripting_reference>`.
+
+.. rubric:: Adding a script
+
+If you want to add a script to a node, right-click it, choose :menuselection:`Add Script...` and give the script a name. Double-clicking opens it in the script editor. In the section :ref:`server_script_editor` you will find a detailed explanation about the script editor.
+
+.. figure:: images/add_script.png
+
+    Adding a script to a node

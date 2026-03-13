@@ -1,0 +1,42 @@
+2 Add server and import data variables
+######################################
+
+.. rubric:: 2.1 Adding and configuring a demo server to the project
+
+In the first step, we will add a "webMI DEMO Webserver" to the project. To do so, we will use the "Guided Actions" located in the menu bar.
+
+1. Choose :menuselection:`Guided Actions --> Add atvise webMI DEMO Webserver` from the menu bar.
+
+2. Choose a project directory for the demo server.
+
+3. Now you can choose a layout and size for your default display.
+
+    .. hint:: The webMI DEMO Webserver will start in a console window. The server uses port 81 to deliver the webMI visualization.
+
+    .. hint:: You could also start the DemoServer after adding it to the project by choosing :menuselection:`Guided Actions --> Start atvise webMI DEMO Webserver`
+
+4. Confirm the dialog which appears by clicking :guilabel:`Yes` to start the demo web server (if you haven't started it yet).
+
+5. Now the "DemoServer" appears in the server list at the upper left side of the atvise builder interface
+
+.. figure:: images/add_server.png
+
+    Adding an atvise webMI DEMO Webserver to the project
+
+.. figure:: images/demoserver.png
+
+    The DemoServer appears in the server list
+
+.. rubric:: 2.2 Importing data variables
+
+In this step, we will import the data variables that are integrated in the "DemoServer" (the corresponding data structure is defined in the variables.xml file located in the [atvise_folder]/webmi folder).
+
+1. Choose :menuselection:`Guided Actions --> Import all variables from --> DemoServer` from the menu bar.
+
+2. Confirm the dialog which appears by clicking :guilabel:`Yes`. Now the data variables will be imported into the atvise builder's object structure.
+
+3. A window will appear, informing you that all variables were imported successfully. Apply the dialog by clicking :guilabel:`OK`.
+
+.. figure:: images/import_xml.png
+
+    Import the data structure of the DemoServer (defined in the variables.xml file)

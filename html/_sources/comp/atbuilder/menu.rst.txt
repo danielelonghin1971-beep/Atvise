@@ -1,0 +1,12 @@
+Menu
+####
+
+.. toctree::
+
+    menu/intro
+    menu/global_search
+    menu/project_history
+    menu/xml_export_and_import
+    menu/atvise_live
+    menu/version_control
+    menu/access_control

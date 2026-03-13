@@ -1,0 +1,338 @@
+.. _atserver_ini:
+
+atserver.ini
+############
+
+The configuration parameters of the server can be specified in the file atserver.ini. The file is optional, if it doesn't exist, default values will be used for all parameters.
+
+The search order for atserver.ini is:
+
+1. In the installation directory of atvise server, if it is not found there, in each parent directory it will be searched continuously. The first found is used.
+2. In %ALLUSERSPROFILE%\\atvise
+3. In the project directory
+
+In each step, a atserver.ini file can be found. If one is found, it will be loaded. Settings from later loaded files have priority over previously loaded files.
+
+The format of the file is:
+
+.. code-block:: ini
+
+    [section]
+    key = value
+    ;this is a comment
+
+The settings are organized in sections with the name of the section in brackets, e.g. [general]. Each setting is a key/value pair. The key is case insensitive but for good readability and searchability it should be written exactly as shown below. A line starting with a semicolon is a comment.
+
+Here is the description of the possible sections, settings and according default values:
+
+.. rubric:: [general]
+
+.. _backupBeforeConversion:
+
+backupBeforeConversion = true
+    Defines if the original nodes.db is automatically backed up before :ref:`converting the project<update_projects>`. This backup mechanism helps to prevent losing projects of older versions unintentionally.
+
+.. _encryptionType:
+
+encryptionType = *encryption level*
+    Defines the encryption level of the project database. The encryption can be enabled to improve the protection against unauthorized access to project database and historical archives. 
+    The selected level is stored in the respective database file. It is not possible to change the encryption type for an already encrypted file. Changes to the encryption type are only applied to new files. The following encryption levels are available:
+
+       - **0 (none)** -- No encryption
+       - **1 (simple)** -- Simple encryption, less secure, no impact on performance
+       - **2 (complex)** -- Complex encryption that provides more data security, impact on performance for computers with slow CPU 
+
+    Old data (of versions < 3.6) is not encrypted. The only exception is the nodes.db, which will be updated to the selected encryption type (simple or complex) on the first start with atvise |release|.
+
+.. _knownhosts:
+
+knownHosts = *full path including filename of known_hosts file*
+    Defines the path to the *known_hosts* file which is required for using SFTP. The file must correspond to OpenSSH format. 
+
+loglevel = info
+    No longer used and replaced with the "defaultLevel" setting in the section [log].
+
+requiredVersion = *x.y*
+    Defines with which atvise version the project may be started. If the version number does not match this entry, the project cannot be started. Thus, an accidental :ref:`conversion<update_projects>` of the nodes.db to a newer version can be prevented. x represents the major, y the minor version number of atvise. If no number is defined, the version is not checked.
+
+.. attention:: The thread settings below are crucial for atvise to work properly. If you are unsure about the consequences of changing these settings, please contact the atvise support team for assistance.
+
+tbbMaxThreadCount = *number of logical CPU cores*
+    The maximum number of threads to be used by the thread library.
+
+tbbMemorySoftLimitMB = *memory limit in MB* (default: 500)
+    Defines a memory limit for the TBB scalable allocator. If you set this limit, the allocator buffers less memory and excessive memory is freed. This results in a reduction of memory consumption. Setting 0 means that the limit is disabled. 
+
+    .. hint:: 
+        The given value is a **soft limit**, which means that the actual memory consumption may exceed the limit. 
+        
+        Using this parameter may affect the performance. 
+
+threadMinCount<TYPE>, threadMaxCount<TYPE>
+    Defines the minimum and maximum number of threads per *<TYPE>* respectively in total. A maximum of 0 means no limit. *<TYPE>* can be one of the following, minimum and maximum are specified in the form (Min/Max):
+
+    - Total (10/48) -- The total minimum and maximum number of threads that are used by the task manager
+    - Aggregate (1/2) -- Threads used for aggregating data
+    - Common (1/0) -- Threads used for common internal processing
+    - Generator (1/0) -- Threads used for generating displays
+    - History (1/0) -- Threads used for historizing and querying data
+    - OpcUA (1/12) -- Threads used for server-side scripts called as menu scripts
+    - Sampling (1/1) -- Threads used for sampling
+    - Script (1/12) -- Threads used for all other server-side scripts
+    - System (2/12) -- High priority threads for internal system use
+    - WebAccess (1/0) -- Threads used for serving various web server requests
+
+threadMaxTaskQueueSize = 3, threadAddDuration = 500, threadAddNum = 3
+    Defines the behavior for creating additional threads. When at least *threadMaxTaskQueueSize* tasks are waiting in the task queue for free threads, *threadAddNum* threads will be created after a delay of *threadAddDuration* milliseconds to process these tasks.
+
+twoFactorIssuer = *name of the issuer* (default: atvise)
+    Allows to set the name of the issuer that is used for :ref:`app authentication<ac_2fa>`. May be necessary for some authenticator apps to prevent collisions between users of the same name in different projects.
+
+.. rubric:: [alarm]
+
+.. _atserver_ini_alarmrate:
+
+alarmRatePeriod = 1
+    Time period (in minutes) for which the :ref:`alarm rates <alarm_statistics>` will be calculated.
+
+.. _atserver_ini_max_shelve:
+
+defaultMaxTimeShelved = 0
+    The default of the maximum time period (in milliseconds) an alarm may be shelved. A value of 0 means no limit.
+
+.. rubric:: [history]
+
+.. _atserver_ini_database:
+
+dataDir = database
+    Location of the history directory, where archive sets are stored. This setting may be specified as an absolute or relative path. A relative path is considered as relative to the project directory (nodes.db).
+
+.. _atserver_ini_swapindir:
+
+swapInDir = swapin
+    Location of the history swap in directory, where read only archives may be placed. This setting may be specified as an absolute or relative path. A relative path is considered as relative to the *dataDir* directory.
+
+indexNodeIdServertime = false
+    If true, an additional index is created on the columns nodeid and servertime for new raw value archives.
+
+timeTolerance = 300
+    Time period (in seconds) which the system accepts for historizing data and events where the sourceTime is in the future. Timestamps being newer than the current time + timeTolerance will be rejected.
+
+.. _atserver_ini_max_sync_period:
+
+maxSyncPeriod = 24
+    The time period (in hours) that is looked into the past to determine if data has to be :ref:`synchronized <history_sync>`.
+
+.. _atserver_ini_querylimit:
+
+queryLimit = 10000
+    Defines the maximum number of results that any query of historical data should return for a single call of the query function. If more data is available, a continuation point is returned to be able to request additional results. A value of 0 means no limit. In the special case that :ref:`numrows <query_numrows>` is not used in :func:`webMI.data.queryFilter` or :func:`history.query`, no continuation point will be returned and values above this limit will be truncated.
+
+cacheProcessingInterval = 750
+    Time period (in milliseconds) that values are hold in the cache before they are written to the database.
+
+checkpointThreshold1 = 16777216, checkpointThreshold2 = 67108864
+    If the size (in bytes) of the journal file is above *checkpointThreshold1*, a *passive* checkpoint will be performed, if it is above *checkpointThreshold2*, a *restart* checkpoint. See the SQLite *write-ahead log (WAL)* for details.
+
+journalFileSize = 8388608
+    The minimum size (in bytes) of the journal file after a checkpoint was performed.
+
+The following configuration parameters apply to :ref:`aggregating_data`:
+
+aggregationCheckInterval = 30
+    Interval (in seconds) used to check whether aggregates have to be calculated. Lowest value allowed is 1 second.
+
+aggregationPeriodStartup = 7
+    Period (in days) for post-aggregation during start-up (up to and including first check according to the entry "aggregationCheckInterval"). A value of 0 means no limit, i.e. the post-aggregation will be done back to the last existing historized aggregate. Setting the value to -1 will deactivate this functionality, i.e. no post-aggregation will be done during start-up.
+
+reaggregationTolerance = 7
+    Limit (in days) in which a value change with a source time in the past will trigger a post-aggregation considering the setting for the entry "reaggregationDelay". If the value change is older than the specified limit, no post-aggregation will be done. A value of 0 means no limit, i.e. any value change with a source time in the past will trigger a post-aggregation. Setting the value to -1 will deactivate this functionality, i.e. a value change with a source time in the past will never trigger a post-aggregation.
+
+reaggregationDelay = 300
+    Time period (in seconds) that will be waited before triggering post-aggregation, in case a value change with a source time in the past was received. Additional older value changes that are received during this time period can thus be combined and reduce the number of aggregation requests.
+
+maxNrOfNodesPerAggregationRequest = 50
+    Number of different nodes which will be processed as part of an aggregation request. The entry is ignored for aggregation intervals smaller than 10 minutes. In case of huge amounts of data to be processed this setting can be decreased to lower memory utilization.
+
+maxAggregationDelay = 1440
+    Time period (in minutes) to wait for the next value change (= "future bound" for the previous interval) after an interval is elapsed, before an aggregate will be calculated in any case. If the specified value is larger than the aggregation interval, the aggregation interval will be used. If setting the value to 0, the aggregation interval will always be used. This entry only affects aggregates which are directly based on raw values - chained aggregates are therefore not affected; they will be calculated as soon as the interval is elapsed.
+
+maxAggregationThreads = 1
+    Number of threads available for the parallel execution of aggregation requests. Setting the value to 1 will result in a sequential calculation.
+
+.. _ini_certificates:
+
+.. rubric:: [certificates]
+
+store = PKI\\atserver
+    Defines the directory for the :ref:`server certificate store<cert_store>`. Default: <atvise_directory>\\PKI\\atserver (Windows) or /var/lib/atvise/PKI/atserver (Linux)
+
+own = atserver@[hostname].der
+    Defines the server certificate within the server certificate store (\\own\\certs). The corresponding private key (with file extension .pem) is automatically detected in \\own\\private.
+
+autotrust = true
+    Specifies whether all client certificates shall be automatically trusted without any verification.
+
+validate = false
+    Specifies whether the validity of client certificates shall be checked.
+
+enableUserCertificates = true
+    Enables or disables authentication via user certificates.
+
+autotrustUsers = false
+    Specifies whether all user certificates shall be automatically trusted without any verification.
+
+validateUsers = true
+    Specifies whether the validity of user certificates shall be checked.
+
+ignoreIssuerTime = true
+    If true, the validity period of root and intermediate certificates as well as CRLs (Certificate Revocation Lists) is **not** verified. This means, that the connection can be established even with expired CRLs or root and intermediate certificates, as long as the end certificate itself is valid. If false, the validity period will be checked for all certificates and CRLs. In this case, CRLs must be updated regularly (see :ref:`CRL directory<cert_store_dir>`).
+
+.. rubric:: [opcua]
+
+hostname =
+    Allows to set the OPC UA hostname to a specific IP address. Can be used when a certain network adapter wants to be used or in case of a faulty configured operating systems hostname.
+
+port = 4840
+    OPC UA port for the atvise server.
+
+enableTrace = false
+    If true, full OPC UA tracing is enabled, otherwise the settings from the OPC UA server configuration file are used.
+
+.. _atserver_ini_enableauditevents:
+
+enableAuditEvents = false
+    If true, OPC UA audit events will be triggered by the SDK. **Caution:** This may result in a great number of events.
+
+disableSecurityPolicyNone = false
+    If true, the server endpoint with security policy *None* is disabled.
+
+disableMessageSecurityModeSign = false
+    If true, the server endpoint with security policy *Sign* is disabled.
+
+.. _atserver_ini_pushedarraysize:
+
+pushedArraySize = 1000
+    Size of the project history's circular buffer.
+
+searchLimit = 1000
+    Maximum number of results for global search. Set to 0 for no limitation.
+
+serverConfig = ServerConfig.ini
+    Specifies the name of the OPC UA server configuration file. This setting may be specified as an absolute or relative path. A relative path is considered as relative to the directory where atserver.exe is located (Windows) resp. /usr/share/atvise (Linux).
+
+.. rubric:: [mirror]
+
+translateSingle = false
+    If true, resolve every single browse path in a separate call.
+
+callTimeout = 90000
+    The timeout (in milliseconds) for calling OPC UA methods in an OPC UA data source.
+
+historyReadTimeout = 20000
+    The timeout (in milliseconds) for reading historical data from an OPC UA data source.
+
+writeTimeout = 60000
+    The timeout (in milliseconds) for writing values to variables of a data source.
+
+.. _maxOutputRequestSessions:
+
+maxOutputRequestSessions = 0
+    The maximum number of OPC UA sessions used for write access to a data source. These sessions are established with the configured users of the respective data source (refer to :ref:`User mapping <user_mapping>` for further information). Before performing any action, it is checked if there already is an open OPC UA session that can be reused by the respective user. Otherwise, a new connection to the data source is established and an OPC UA session for the user is activated. 
+    
+    If the limit of *maxOutputRequestSessions* is reached, all further actions are added to a queue. As soon as any existing OPC UA session is available (after an action is completed), the session can either be reused or a new session can be activated and the respective user's action is performed. This means that commands are delayed if the limit of *maxOutputRequestSessions* is reached.
+
+    .. attention:: There is a system-wide technical limit of 250 connections to data sources that can be established at the same time. This includes all main connections, redundant connections as well as all active OPC UA output sessions.
+
+clientSessionTimeout = 0
+    Time period (in milliseconds) to wait at least before an established OPC UA session becomes inactive and is terminated. Too short timeouts (< 1000ms) may interfere with performance. 0 means that established OPC UA sessions are not terminated.
+    
+.. _ini_script:
+
+.. rubric:: [script]
+
+pluginDir = ./plugins/v8/
+    Location of the v8 plugins directory.
+
+maxScriptIdleTime = 1800
+    Time period (in seconds) to wait before the garbage collector removes an idle script.
+
+maxScriptTerminationWaitTime = 10
+    Time period (in seconds) to wait before scripts are terminated on shutdown. Scripts with trigger type *shutdown* will never by terminated, though.
+
+useSelfContainedDotnet = true
+    Defines if the .NET runtime provided by atvise (*true*) or installed on the system (*false*) shall be used.
+
+.. _atserver_ini_webaccess:
+
+.. rubric:: [webaccess]
+
+enableHttpParseDisplayGetValues = true
+    If true, pass all GET parameters of the HTTP request to the generator.
+
+fixedClients =
+    Comma (``,``) separated list of clients (IP addresses) that can subscribe to an unlimited number of nodes (no :ref:`CCD counting <ccd_licensing>`)
+
+httpPort = 80
+    Specifies the http port of the atvise web server named 'http1'. This value cannot be changed during runtime in the web server dialog. '0' disables the web server 'http1'.
+
+httpsPort = 443
+    Specifies the https port of the atvise web server named 'https1'. This value cannot be changed during runtime in the web server dialog. '0' disables the web server 'https1'.
+
+maxConnections = 2048
+    Specifies a limit for the maximum number of HTTP/HTTPS connections accepted by the web server of the webaccess module. If exceeded, the server returns HTTP error response code 503 for any new connection. 0 means no limit.
+    Please note that the limit applies to the total connections of all running web servers.
+
+maxConnectionsPerClient = 64
+    Specifies a limit for the maximum number of HTTP/HTTPS connections per client/IP address. 0 means no limit.
+
+allowInsecureHttps = false
+    TLS 1.2 and 1.3 are accepted by default. If true, insecure HTTPS protocols are also accepted by the server. This applies to the following protocols:
+
+        - SSL 2.0
+        - TLS 1.0
+        - TLS 1.1
+
+The webaccess parameters loginmethod, requirelogin, private_key_file und certificate_file are obsolete and are not supported anymore in the current version of atvise. The settings can now be changed in the :ref:`http_settings` dialog in the atvise builder.
+
+.. rubric:: [log]
+
+trace (debug, info, notice, warning, error, critical, fatal) =
+    Comma (``,``) separated list of module names to set the given log level for these modules. If the module name ends with a semi colon ';' the given log level will be set only for the module itself, otherwise for all it's sub modules as well. Possible values are the names (case insensitive) of all modules and submodules or the string 'all' which means that all modules will be set to this log level. The following modules can be selected: ALARM, CNM, CONSOLE, CORE, GENERATOR, HISTORY, LICENSE, MIRROR, RELMIRROR, SCRIPT, TASKMAN, THREAD, WEBACCESS.
+
+filterT (filterD, filterI, filterN, filterW, filterE, filterC, filterF) =
+    A PCRE regular expression to filter the appropriate log level.
+
+Example:
+
+The redu manager and the log task will be switched to 'trace' level. Log entries on the log level 'warning' that contain the expression 'Long frame time' or originating from the 'SWITCHOVER' manager will be not written into the log file. Log entries on the log level 'trace' and 'debug' from the 'REDU' manager will be only written into the log file if they contain the expression 'Send.\*status' or 'Got.\*status': e.g. 'Send internal status'
+
+.. code-block:: ini
+
+    [log]
+    trace = core.redu, core.logtask
+    filterW = ^(?:(?!Long frame time|SWITCHOVER).)*$
+    filterT = SYNC|REDU Send internal status|REDU Got internal status
+    filterD = SYNC
+
+.. rubric:: [license]
+
+address = 
+    IP address/hostname and port of the (primary) license server.
+
+addressSecondary = 
+    IP address/hostname and port of the secondary license server. 
+
+groupUUID = 00000000-0000-0000-0000-000000000001
+    UUID of the group from which a license shall be obtained. The client can only get licenses from this specific group. Default: UUID of the "Default" group.
+
+licenseType = 
+    Type of the requested license. The client can only get licenses of this specific type.
+
+.. rubric:: [UaServerConfig]
+
+Starting with atvise 3.11, the :file:`ServerConfig.ini` file is no longer supported. Entries previously contained in this file can be transferred to this section, if recommended by the atvise support.
+
+.. attention::
+    
+    Any further use is at your own risk, as functionality depends on the OPC UA SDK and cannot be guaranteed in atvise.

@@ -1,0 +1,13 @@
+Introduction
+############
+
+This page will guide you through the basic webMI procedure. A few steps are needed after you have added a webMI server. The procedure is explained in the following picture and table:
+
+.. figure:: images/webmi_procedure.png
+
+    Procedure for building a webMI visualization
+
+1. The first step is to :ref:`add a new webMI server <add_webmi_server>` in the atvise builder.
+2. In the second step, an XML file which includes your data structure can be :ref:`imported <webmi_import>`.
+3. Create your displays and object displays with the :ref:`graphical_editor` included and dynamize them using :ref:`simple_dynamics`.
+4. The last step is to :ref:`generate <webmi_generate>` the :ref:`visualization` to the root folder of your web server.

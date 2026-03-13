@@ -1,0 +1,18 @@
+Change Stroke by Node
+#####################
+
+This Quick Dynamic changes the stroke of the applied graphic element depending on whether or not the value of the node is within the defined range.
+
+.. rubric:: Parameters:
+
+- **nodeID** (*node triggering the change*) -- This node (value within or out of the defined range) triggers this Quick Dynamic.
+- **minRange** (*min of range*) -- Lower bound of the range in which the node's value should lie.
+- **maxRange** (*max of range*) -- Upper bound of the range in which the node's value should lie; if not specified, it will be set to "minRange", i.e. the quick dynamic will be triggered at a discrete value (minRange=maxRange=value) only, and not for a range.
+- **strokeStyleInRange** (*stroke style when inside range*) -- This stroke style of the graphical element will be set when the value of the node is within the defined range.
+- **strokeColorInRange** (*stroke color when inside range*) -- This stroke color of the graphical element will be set when the value of the node is within the defined range.
+- **strokeWidthInRange** (*stroke width when inside range*) -- This stroke width of the graphical element will be set when the value of the node is within the defined range.
+- **strokeOpacityInRange** (*stroke opacity when inside range*) -- This stroke opacity of the graphical element will be set when the value of the node is within the defined range.
+- **strokeStyleOutRange** (*stroke style when outside range*) -- This stroke style of the graphical element will be set when the value of the node is out of the defined range.
+- **strokeColorOutRange** (*stroke color when outside range*) -- This stroke color of the graphical element will be set when the value of the node is out of the defined range.
+- **strokeWidthOutRange** (*stroke width when outside range*) -- This stroke width of the graphical element will be set when the value of the node is out of the defined range.
+- **strokeOpacityOutRange** (*stroke opacity when outside range*) -- This stroke opacity of the graphical element will be set when the value of the node is out of the defined range.

@@ -1,0 +1,157 @@
+Chart Line Tile
+###############
+
+The display shows up to 15 process values in a line chart
+
+An additional border indicates the current value's negative state or an additionally defined alarm. The colors and blinking intervals are defined in global lists.
+
+.. rubric:: Parameters
+
+- **alarm address** -- Optional address used for alarm monitoring.
+
+View settings:
+
+- **title** -- Title of the tile displayed (default: T{Title})
+- **unit** -- This unit is displayed in addition to the value.
+- **font family title** -- Font family which will be applied to the title (Default: Arial)
+- **font size title** -- Font size which will be applied to the title (default: 12).
+
+Behavior on click:
+
+- **enable click event** -- Activation of processing a click on the tile (default: true)
+- **enable click on content** -- Additional recognization of a click on the tiles content (default: false)
+- **targetdisplay** -- Display to be opened when recognizing a click.
+- **linked element** -- Element to be monitored for external click events (ID of the element).
+
+Status:
+
+- **enable status monitoring** -- Switch monitoring of current value status on or off (default: Yes)
+- **fire status trigger** -- Instead of the status display a here defined trigger can be fired globally.
+
+Appearance:
+
+- **background color** -- Background color (default: global parameter atvFillColor)
+- **text color** -- Text color (default: global parameter atvFontColor)
+- **border color** -- Border color (default: global parameter atvBorderColor)
+- **deactivation color** -- Deactivation color (default: global parameter atvInactiveColor)
+- **status indication** -- Specify the status' display through a defined global list (default: global parameter atvStatusIndication)
+- **alarm indication** -- Specify the alarm's display through a defined global list (default: global parameter atvAlarmIndication)
+
+Options:
+
+- **tooltip** -- Displays a tooltip box with the entered text (standard HTML-Elements can be entered)
+
+Security:
+
+- **necessary right** -- The user must have this right to activate this element.
+- **activation address** -- If the value of this address equals to "activation value", then the element will be active.
+- **activation value** -- Value which activates the element.
+- **show access control notification** -- Defines if the icon for showing access control notifications shall be displayed (default: true)
+
+Chart settings:
+
+- **chart name** -- This is a unique name to identify the chart instance (default: trend1)
+- **chart group** -- Multiple chart instances can be grouped (default: group1)
+- **configuration node** -- Node (address) which contains the predefined configuration.
+- **configuration name** -- Name of the predefined configuration.
+- **chart mode** -- Defines the :ref:`data mode<datamode>`, possible values: mixed, live and history (default: mixed)
+- **data source** -- Name of the data source module which will be loaded for data handling (default: opcUA) It is possible to create additional user-specific modules.
+- **chart title** -- Title of the chart.
+- **animations** -- Turns animations off or on (default: false)
+- **measurement cursor 1** -- De-/activate measurement cursor 1 (default: false)
+- **measurement cursor 2** -- De-/activate measurement cursor 2 (default: false)
+- **tooltips** -- Enable or disable tooltips (default: false)
+- **local time** -- If true the chart uses the local time, if false it uses UTC (default: false)
+- **enable boost** -- Enable or disable boost. If enabled, the *enable downsampling* parameter is ignored. If either the defined threshold of data points (*boost points threshold*) or series (*boost series threshold*) is reached, the data is rendered by WebGL.
+- **enable downsampling** -- Enable or disable downsampling. This parameter is ignored if the *enable boost* parameter is activated. Downsampling can be used to get a performance boost, especially on low-end devices. It reduces the number of rendered data points depending on the currently displayed time range and the chart size. When using downsampling, only the min and max values of every sampling period (= displayed time range divided by chart width in pixels) are determined and displayed in the chart. The *downsample sampling factor* allows to increase the sampling period. Thus, fewer data points are rendered and shown in the chart. (default: true)
+
+Y-Axis <Number>:
+
+- **title** -- Title of the axis.
+- **title color** -- Color of the axis title.
+- **visibility** -- Defines the visibility of the axis (default: true)
+- **minimum** -- Lower threshold at which the data is displayed.
+- **maximum** -- Upper threshold to which the data is displayed.
+- **axis line width** -- Represented line weight of the axis (in pixels) (default: 0)
+- **axis color** -- Represented color of the axis (hex code) (default: #ccd6eb)
+- **axis position** -- Position of the axis (left / right) (default: left)
+- **axis label** -- Display of the axis label (true / false) (default: true)
+- **axis label alignment** -- Horizontal alignment of the axis label (left, center or right) (default: right)
+- **axis label format** -- Define a format string for the axis label (see highcharts API reference) (default: {value})
+- **axis label color** -- Color of the axis label.
+- **crosshair enabled** -- Enabling the display of the crosshair (true, false) (default: false)
+- **crosshair snap** -- Activate the snap of the crosshair (default: true)
+- **crosshair width** -- Line width of the crosshairs (in pixels).
+- **crosshair color** -- Color of the crosshair (hex code).
+- **crosshair type** -- Used line type of crosshair (default: Solid)
+- **tick interval** -- Interval of the main grid for orientation (default: 1)
+- **minor tick interval** -- Interval of the auxiliary grid for orientation aid (default: 1)
+- **grid width** -- Line weight of the main grid lines (in pixels) (default: 1)
+- **grid color** -- Color of the main grid lines (hex code) (default: #e6e6e6)
+- **minor grid width** -- Line width of the auxiliary grid lines (in pixels) (default: 1)
+- **minor grid color** -- Color of the auxiliary grid lines (hex code) (default: #f2f2f2)
+
+X-Axis:
+
+- **title** -- Title of the axis.
+- **title color** -- Color of the axis title.
+- **timespan** -- Value of the time span to be displayed (without unit) (default: 60)
+- **timespan unit** -- Unit of time to be displayed (default: second(s))
+- **axis line width** -- Represented line weight of the axis (in pixels) (default: 1)
+- **axis color** -- Represented color of the axis (hex code) (default: #ccd6eb)
+- **axis position** -- Position of the axis (top / bottom) (default: bottom)
+- **axis label** -- Display of the axis label (true / false) (default: true)
+- **axis label alignment** -- Horizontal alignment of the axis label (left, center or right).
+- **axis label color** -- Color of the axis label.
+- **crosshair enabled** -- Enabling the display of the crosshair (true, false) (default: false)
+- **crosshair snap** -- Activate the snap of the crosshair (default: false)
+- **crosshair width** -- Line width of the crosshairs (in pixels).
+- **crosshair color** -- Color of the crosshair (hex code).
+- **crosshair type** -- Used line type of crosshair (default: Solid)
+- **xAxis type** -- Type of axis scaling (default: datetime)
+- **date time format** -- Format of the date output (default: "% H:% M:% S")
+- **tick interval** -- Interval of the main grid (in milliseconds) for orientation. If not defined, the interval is automatically set to a quarter of the defined *timespan* above. The tick interval cannot be larger than the displayed time span. If the specified value is greater than the time span, the interval is internally set to the visible time span.
+- **minor tick interval** -- Interval of the auxiliary grid for orientation aid. The tick interval cannot be larger than the displayed time span. If the specified value is greater than the time span, the interval is internally set to the visible time span.
+- **grid line width** -- Line weight of the main grid lines (in pixels) (default: 1)
+- **grid line color** -- Color of the main grid lines (hex code) (default: #e6e6e6)
+- **minor grid width** -- Line width of the auxiliary grid lines (in pixels) (default: 1)
+- **minor grid color** -- Color of the auxiliary grid lines (hex code) (default: #f2f2f2)
+
+Series <Number>:
+
+- **address** -- Node address of the value to be displayed.
+- **interpolation** -- Interpolation of values (line, spline, step) (default: line)
+- **name** -- Name of the series.
+- **line width** -- Line width for displaying the values (in pixels) (default: 2)
+- **color** -- Color for the representation of the values (default: #ccd6eb (1), #7cb5ec (2), #434348 (3), #90ed7d (4), #f7a35c (5), #8085e9 (6), #f15c80 (7), #e4d354 (8), #2b908f (9), #90ed7d (10-15)).
+- **dash style** -- Linetype for the representation of the values (default: Solid)
+- **marker** -- Activate data point markers (default: true)
+- **visibility** -- Visibility of the presentation at the initialization of the chart (default: true)
+- **nonstop** -- Continuous presentation of missing values (default: true)
+- **aggregate** -- Filter for aggregates of the specified address. 
+- **aggregate interval** -- Interval of the aggregate.
+- **aggregate unit** -- Unit of aggregate.
+- **y-axis** -- ID of the assigned y-axis
+- **value prefix** -- Adds prefix at the beginning of the shown value in the tooltip and legend.
+- **value decimal places** -- Defines the displayed decimal places in the tooltip and legend.
+- **value suffix** -- Adds suffix at the end of the shown value in the tooltip and legend.
+
+Menu:
+
+- **menu positioning** -- The position the menu symbol is shown at (top-left, top-right, bottom-left, bottom-right).
+- **menu mouseover active** -- Symbol is only shown on *mouseover*.
+- **menu symbol offset x** -- Relative offset of the menu symbol to the anchor point on the x axis in pixel.
+- **menu symbol offset y** -- Relative offset of the menu symbol to the anchor point on the y axis in pixel.
+- **context menu click frame** -- Defines the size of the click frame for opening the context menu.
+
+Export menu:
+
+- **show export menu** -- Enable or disable export menu button (default: false)
+- **menu button line color** -- Color of the lines of the menu button (default: #676767)
+- **menu button background color** -- Background color of the menu button (default: #ffffff)
+- **menu button hover color** -- Background color of the menu button on mouseover (default: #e6e6e6)
+- **menu button selected color** -- Background color of the menu button when clicked (default: #e6e6e6)
+- **menu text color** -- Text color of the menu entries (default: #000000)
+- **menu background color** -- Background color of the context menu (default: #ffffff)
+- **menu hover text color** -- Text color of the menu entries on mouseover (default: #eeeeee)
+- **menu hover background color** -- Background color of the menu entries on mouseover (default: #676767)

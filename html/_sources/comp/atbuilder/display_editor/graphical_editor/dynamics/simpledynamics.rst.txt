@@ -1,0 +1,13 @@
+.. _simple_dynamics:
+
+Simple dynamics
+###############
+
+.. toctree::
+
+    simpledynamics/intro
+    simpledynamics/right
+    simpledynamics/event
+    simpledynamics/result
+    simpledynamics/action
+    simpledynamics/examples

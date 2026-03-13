@@ -1,0 +1,13 @@
+Introduction
+############
+
+The currently connected atvise server can be configured and managed via the :treeselection:`My server` node and its respective sub-elements. This page outlines the basic steps for engineering your project.
+
+.. figure:: images/scada_procedure.png
+
+    Procedure for engineering an atvise SCADA project
+
+1. You can create the complete data structure of your project (including your own individual object types for object-oriented engineering). Add any number of data sources (OPC UA and standard OPC) and connect your local data variables with the variables of these data sources via mirroring to establish communication.
+2. In the next step you can apply typical SCADA functions such as historizing and alarms.
+3. Create your own visualizations with the graphics editor included and dynamize them using simple dynamics.
+4. Open a web browser of your choice and view your visualization which is delivered by the web server included in the atvise SCADA server.

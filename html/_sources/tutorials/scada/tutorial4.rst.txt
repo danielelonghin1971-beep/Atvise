@@ -1,0 +1,9 @@
+4 Dynamics
+##########
+
+.. toctree::
+
+    tutorial4/tutorial4_1
+    tutorial4/tutorial4_2
+    tutorial4/tutorial4_3
+    tutorial4/tutorial4_4

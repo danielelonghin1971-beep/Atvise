@@ -1,0 +1,22 @@
+Report Viewer
+#############
+
+This object display allows to view generated PDF reports in the browser.
+
+.. hint::  This display uses the integrated PDF viewer of the respective browser, i.e. the browser must support opening and viewing PDFs. Please ensure that the appropriate option for opening PDFs is enabled in the browser settings.
+
+.. rubric:: Parameters
+
+- **report configuration name** -- Name of the :ref:`report configuration<report_configurations>` that is saved at OBJECTS.ATVISE.Report 
+- **maximum displayed items (0 = all)** -- Number of generated reports that shall be displayed in the list (default: 0)
+
+Font: 
+
+- **font family** -- Font which will be applied to the text (default: Arial)
+- **font color** -- Color which will be applied to the text (default: global parameter atvFontColor))
+
+Appearance: 
+
+- **border color** -- Color of the border (default: global parameter atvBorderColor)
+- **fill color** --  Fill color of background areas (default: global parameter atvFillColor)
+- **symbol color** -- Color of the symbol (default: global parameter atvSymbolColor)

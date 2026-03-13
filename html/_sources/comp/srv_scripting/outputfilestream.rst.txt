@@ -1,0 +1,105 @@
+OutputFileStream functions
+##########################
+
+.. class:: OutputFileStream(filename, format[, mode])
+
+    To use any of the functions below you first have to create an OutputFileStream object.
+
+    The constructor creates and opens the specified output file stream. Streams can be opened either in BINARY or UTF8 formats.
+
+    Parameters:
+        - **filename** (String) -- Specifies the name of the file to be opened. Can be specified as an absolute path or relative to the project directory.
+        - **format** (String) -- Specifies the format of the file to be opened: "utf8" or "binary"
+        - **mode** (String, optional, default: "output") -- Specifies the output mode of the file: "output" or "append"
+
+    See :ref:`OutputFileStream object properties <outputfilestream_properties>` below for how to check if the file could be opened.
+
+    Example::
+
+        var ofs = new OutputFileStream("TestUtf8.txt", "utf8", "append");
+
+.. !!v8!! OutputFileStream.open()
+.. function:: OutputFileStream.open()
+
+    Opens the output file.
+
+.. !!v8!! OutputFileStream.close()
+.. function:: OutputFileStream.close()
+
+    Closes the output file.
+
+.. !!v8!! OutputFileStream.write(content)
+.. function:: OutputFileStream.write(content)
+
+    Writing a BINARY stream will convert each CharCode of a JavaScript string into a byte. The CharCode must be in the range of 0-255. Writing UTF8 streams will save the Utf-8 value of the JavaScript String.
+
+    Parameters:
+        - **content** (String) -- Specifies the content string to write to the stream.
+
+    Returns:
+        The number of characters written to the stream.
+
+    Example::
+
+        ofs.write("Hello");
+
+.. !!v8!! OutputFileStream.writeLine(line)
+.. function:: OutputFileStream.writeLine(line)
+
+    Writes the given string into the opened stream and appends a newline. Writing a BINARY stream will convert each CharCode of a JavaScript string into a byte. The CharCode must be in the range of 0-255. Writing UTF8 streams will save the Utf-8 value of the JavaScript string. The platform dependent NEWLINE will be inserted into the stream after writing the string.
+
+    Parameters:
+        - **line** (String) -- Specifies the line without the ending newline to write to the stream.
+
+    Returns:
+        The number of characters written to the stream.
+
+    Example::
+
+        ofs.writeLine('This is a new line äüö');
+
+.. _outputfilestream_properties:
+
+.. rubric:: OutputFileStream properties
+
+name
+    Current file name
+
+format
+    Current file format:
+
+    - "utf8"
+    - "binary"
+
+mode
+    Current mode:
+
+    - "output" (default)
+    - "append"
+
+opened
+    File status:
+
+    - true -- The file is opened
+    - false -- The file is closed
+
+good
+    File status:
+
+    - true -- The stream is intact
+    - false -- No more operations available
+
+bad
+    File status:
+
+    - true -- No more operations available
+    - false -- The stream is intact
+
+eof
+    File status:
+
+    - true -- End of file reached
+    - false -- Not at the end of file
+
+path
+    Absolute path and file name

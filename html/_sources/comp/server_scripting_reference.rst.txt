@@ -1,0 +1,35 @@
+SCADA serverside scripting
+##########################
+
+.. toctree::
+
+    srv_scripting/intro
+    srv_scripting/conventions
+    srv_scripting/scheduling_rules
+    srv_scripting/access_control
+    srv_scripting/alarming
+    srv_scripting/archive_locking
+    srv_scripting/certificates
+    srv_scripting/childprocess
+    srv_scripting/control_and_diagnostics
+    srv_scripting/csvreader
+    srv_scripting/datasources
+    srv_scripting/filesystem
+    srv_scripting/globals_object
+    srv_scripting/history
+    srv_scripting/httpclient
+    srv_scripting/inputfilestream
+    srv_scripting/odbcclient
+    srv_scripting/opcua_object 
+    srv_scripting/outputfilestream
+    srv_scripting/report   
+    srv_scripting/script_object
+    srv_scripting/security
+    srv_scripting/server_object
+    srv_scripting/smtpclient
+    srv_scripting/tcpclient
+    srv_scripting/translations    
+    srv_scripting/ua
+    srv_scripting/version_control
+    srv_scripting/xmldoc
+    srv_scripting/xml_export_import

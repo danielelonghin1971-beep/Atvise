@@ -1,0 +1,14 @@
+Options
+#######
+
+.. rubric:: Log details
+
+Tick this menu item to get more detailed information in the log file in addition to the standard output. This option takes only effect when converting archives.
+
+.. rubric:: Progress details
+
+Tick/untick this menu item during the current operation to toggle additional progress information shown in the output window.
+
+.. rubric:: Show log file
+
+Select this menu item to open the log file of the last executed operation.

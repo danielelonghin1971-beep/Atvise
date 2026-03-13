@@ -1,0 +1,17 @@
+Dynamics
+########
+
+atvise provides the following two dynamics:
+
+.. rubric:: 1. Simple Dynamics
+
+Offer you many different ways to influence existing graphic elements or data variables. They enable you to add dynamizations to your display to create a fully functioning visualization with minimum effort.
+
+.. rubric:: 2. Quick Dynamics
+
+Are based on the atvise "simple dynamics" and are used to prepare common functionality that is often needed in your project so that the user doesn't have to create the functionality step by step with "simple dynamics".
+
+.. toctree::
+
+    dynamics/simpledynamics
+    dynamics/quick_dynamics_predefined

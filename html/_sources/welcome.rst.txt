@@ -1,0 +1,8 @@
+Welcome to atvise
+#################
+
+This manual will familiarize you with setting up and working with atvise webMI and scada.
+
+.. figure:: images/what_to_choose_smallv2.png
+
+atvise offers two different product options: atvise webMI and scada. While the engineering tool and the visualization features are the same for all two options,they differ in operational area as well as in functional range. They differ also in terms of engineering and how the resulting files are handled.

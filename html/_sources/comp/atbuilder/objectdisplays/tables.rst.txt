@@ -1,0 +1,10 @@
+Slickgrid
+#########
+
+.. toctree::
+
+    slickgrid/table
+    slickgrid/table_footer
+    slickgrid/table_keyboard
+    slickgrid/table_notification
+    slickgrid/table_panel

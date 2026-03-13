@@ -1,0 +1,4 @@
+Configuration - Pie
+###################
+
+The pie chart is not supported in this version.

@@ -1,0 +1,11 @@
+Background Area
+###############
+
+The area element is a simple control that can be used as a background graphic with a title text.
+
+.. rubric:: Parameters
+
+- **fill** -- Fill color for the background (default: global parameter atvFillColor (advanced), #3c3c3c (standard))
+- **stroke** -- Stroke color of the element (default: global parameter atvBorderColor (advanced), #c8c8c8 (standard))
+- **font color** -- Color for the font (default: global parameter atvFontColor (advanced), #c8c8c8 (standard))
+- **area description** -- Label of the element (Default: T{area description})

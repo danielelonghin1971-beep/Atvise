@@ -1,0 +1,132 @@
+Button Switch
+#############
+
+This button switches between two values and can be used in the following modes:
+
+#. **only "base" is specified**: 
+
+    In this case additionally the "on value", "value On to be set" and "value Off to be set" have to be set.
+    
+    .. hint:: “on value” must be equal to “value On to be set”
+
+    With this configuration, on each click, the button switches between 2 values for the address "base". It will be in On state if the value of the "base" equals the "value On"; otherwise it will be Off.
+#. **only "address to set" is specified**:
+    
+    With this configuration, on each click, the button switches between 2 values for the address "address to set". It will be in On state if the value of the "base" equals the "value On"; otherwise it will be Off.
+#. **"base" and "address to set" are specified**:
+
+    With this configuration, on each click, the following happens:
+    
+    - The button will be in On state if the value of the "base" equals the "value On"; otherwise it will be Off.
+    - Depending whether the button is On or Off,  on click "address to set" will be set "value Off to be set" or "value On to be set".
+    - The button itself will change the state only when the "base" is changed (feedback channel).
+
+#. **neither "base" nor “address to set” are specified**:
+
+    In this case, the trigger "valuechanged" with the value from "value Off to be set" or "value On to be set" will be fired. These triggers can be used to add a Simple Dynamic to this button which reacts on the triggers and fires a new trigger. This new trigger can then be used by other elements.      
+
+An additional border indicates the current value's negative state or an additionally defined alarm. The colors and blinking intervals are defined in global lists.
+
+.. rubric:: Triggers
+
+Following triggers can be used for this object display: 
+
+- **com.atvise.setActive** -- Can be used to enable or disable the object display.
+- **setValue** -- The object display connects to this trigger. Therefore, it is possible to set the value from the outside.
+- **valuechanged** -- Fired on value changes, e.g. by user input.
+
+::
+
+    //Disable the object display
+    webMI.trigger.fire("com.atvise.setActive", false, "myDisplayID");
+
+    //Set value of object display
+    webMI.trigger.fire("setValue", 100, "myDisplayID");
+
+    //Respond to value changes
+    webMI.trigger.connect("valuechanged", function(e) { console.log(e.value); }, "myDisplayID");
+
+.. hint:: Additional undocumented triggers are internally used by atvise. Their functionality may be changed in future atvise releases.
+
+.. rubric:: Parameters
+
+This control has the following generic parameters:
+
+- **base** -- Depending whether or not "address to set" is specified, the behavior is according to mode 1 and 3 above
+- **alarm address** -- Optional additional address of an alarm to be shown.
+- **label for on state** -- Label which will be show if button is in On state (e.g. switched on) (default: T{Switched on})
+- **label for off state** -- Label which will be show if button is in Off state (e.g. switched off) (default: T{Switched on})
+- **on value** -- Value which defines the On state of the button (default: 1)
+- **value On to be set** -- Depending on the configuration, "base" or "address to set" will be set to this value when switching from Off state to On state (default: 1)
+- **value Off to be set** -- Depending on the configuration, "base" or "address to set" will be set to this value when switching from On state to Off state (default: 0)
+- **enable status monitoring** -- Switch monitoring of current value status on or off.
+- **fire status trigger** -- Instead of the status display a here defined trigger can be fired globally.
+
+Font:
+
+- **family** -- Font family which will be applied to label (default: Arial)
+- **size** -- Font size which will be applied to the label (default: 12)
+- **color** -- Color which will be applied to the label (default: global parameter atvFontColor (advanced), #d0d0d0 (standard))
+
+Appearance:
+
+- **visibility label** -- If set to visible, the text as specified by "label" will be displayed as label; if this is set to visible, "visibility symbol'" should be set to hidden. (default: visible)
+- **visibility symbol** -- If set to visible, the symbol as specified by "symbol" will be displayed; if this is set to visible, "visibility label'" should be set to hidden. (default: hidden)
+- **symbol for on state** -- Symbol to be used if "visibility symbol" is set to visible; further symbols can be selected from "Object Displays (ATVISE)/Symbols/20x20 (default: lamp)
+- **symbol for off state** -- Symbol to be used if "visibility symbol" is set to visible; further symbols can be selected from "Object Displays (ATVISE)/Symbols/20x20 (default: lamp_off)
+- :advstyle:`Advanced` **symbol color off** -- Color of the symbol to be used in "off" state (default: global parameter atvSymbolColor)
+- :advstyle:`Advanced` **symbol color on** -- Color of the symbol to be used in "on" state (default: global parameter atvSymbolColor)
+- :stdstyle:`Standard` **symbol color** -- Color of the symbol to be used (default: #d0d0d0)
+- **fill color for on state** -- Button's fill color if button shows On state (default: global parameter atvFillColor (advanced), #000000 (standard))
+- **fill color for off state** -- Button's fill color if button shows Off state (default: #d5d5d5 (advanced), #000000 (standard))
+- **fill color when inactive** -- Button's fill color if not active (default: global parameter atvInactiveColor (advanced), #8c8c8c (standard))
+- **stroke color pressed** -- The color of the stroke which will be set when the button is pressed (default: #ffffff)
+- **focus stroke color** -- The color of the stroke which will be set when the button is focused (default: #ffffff)
+- :advstyle:`Advanced` **border color** -- The button's border color (default: global parameter atvBorderColor)
+- :advstyle:`Advanced` **extra border color** -- Entering a color value here results in an extra border around the button. (default: none)
+- **status indication** -- Specify the status' display through a defined global list (default: global parameter atvStatusIndication)
+- **alarm indication** -- Specify the alarm's display through a defined global list (default: global parameter atvAlarmIndication)
+
+Options:
+
+- **address to set** -- Depending whether or not "base" is specified, the behavior is according to mode 2 and 3 above
+- **tab index** -- Defines the order for changing between the object displays by using the tab key
+- **tooltip** -- Displays a tooltip box with the entered text (standard HTML-Elements can be entered)
+
+Security:
+
+- **necessary right** -- The user must have this right to activate this button, i.e. to press the button
+- **activation address** -- If the value of this address equals to "activation value", then the button will be active, i.e. can be pressed
+- **activation value** -- Value which activates the button
+
+    .. hint:: The activation of a button can be configured only by the necessary right, or only by the activation address and value or by both. In case both settings are made, the user must have the necessary right and the value of the "activation address" must equal the "activation value"; otherwise the button will not be activated.
+
+- **show access control notification** -- Defines if the icon for showing access control notifications shall be displayed (default: true)
+
+Menu:
+
+- **menu positioning** -- The position the menu symbol is shown at (top-left, top-right, bottom-left, bottom-right).
+- **menu mouseover active** -- Symbol is only shown on *mouseover*.
+- **menu symbol offset x** -- Relative offset of the menu symbol to the anchor point on the x axis in pixel.
+- **menu symbol offset y** -- Relative offset of the menu symbol to the anchor point on the y axis in pixel.
+- **context menu click frame** -- Defines the size of the click frame for opening the context menu.
+
+.. rubric:: Example
+
+For mode 3 as described above assume the following parameters:
+
+- **base**: node_feedback
+- **label for on state**: switched on
+- **label for off state**: switched off
+- **on value**: 1
+- **value On to be set**: 1
+- **value Off to be set**: 0
+- **address to set**: node_set
+
+Furthermore assume that the values of "base" and "address to set" are set to 0.
+
+#. With these setting the button's label will show "switched off".
+#. On click, "node_set" will be set to 1 (= "value On to be set"); the label will still show "switched off" (value of "base" is still different from "on value")
+#. As soon as "base" is set to 1 (feedback channel from PLC), the label will change to "switched on" (value of "base" is now equal to "on value")
+#. On click, "node_set" will be set to 0 (= "value Off to be set"); the label will still show "switched on" (value of "base" is still equal to "on value")
+#. As soon as "base" is set to 0 (feedback channel from PLC), the label will change to "switched off" (value of "base" is now different from "on value")

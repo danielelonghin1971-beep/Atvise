@@ -1,0 +1,248 @@
+ODBCClient functions
+####################
+
+.. class:: ODBCClient([connectionString])
+
+    To use any of the functions below you first have to create an ODBCClient object.
+
+    Parameters:
+        - **connectionString** (String, optional, default: "") -- Specifies the connection string to the ODBC server.
+
+    Example::
+
+        var o = new ODBCClient();
+
+.. !!v8!! ODBCClient.open()
+.. function:: ODBCClient.open()
+
+    Opens a connection to the specified OBDC server. The connectionString specifies the ODBC server.
+
+    Returns:
+        true if the ODBC server successfully connected. In case of an error an exception is thrown.
+
+    .. hint:: If the connectionString uses a DSN that is not configured correctly the ODBC server may block the atvise server.
+
+.. !!v8!! ODBCClient.close()
+.. function:: ODBCClient.close()
+
+    Closes the connection to the OBDC server.
+
+    Returns:
+        true if the connection successfully closed. In case of an error an exception is thrown.
+
+.. !!v8!! ODBCClient.query(queryString[, callback])
+.. function:: ODBCClient.query(queryString[, callback])
+
+    Executes the SQL query specified by the query string on the connected ODBC server.
+
+    Parameter:
+        - **queryString** (String) -- Specifies the SQL query.
+        - **callback** (Object, optional, default: {}) -- Specifies the optional event handler properties:
+
+            - **onError** (Function, optional, default: undefined) -- If defined, it will be called with following parameters, if an error occurred. Otherwise an exception is thrown:
+
+                - **msg** (String) -- The error message.
+
+            - **onHead** (Function, optional, default: undefined) -- If defined, it will be called before fetching any data of the query with column information:
+
+                - **columnInfo** (Object[]) -- Array of objects containing info about the columns:
+
+                    - **digits** (Integer) -- Number of decimal digits of the column.
+                    - **label** (String) -- Column label or title
+                    - **name** (String) -- Column name.
+                    - **size** (Integer) -- Size (in characters) of the column.
+                    - **table** (String) -- Name of the base table that contains the column.
+                    - **type** (Integer) -- SQL data type of the column.
+                    - **typename** (String) -- Data source dependent data type name.
+
+            - **onData** (Function, optional, default: undefined) -- If defined, it will be called on each row fetched and the return array will remain empty. Returning *ODBCClient.STOP* will stop processing of the query. Returning *ODBCClient.CONTINUE* or no return value means continue processing.
+
+                - **rowIndex** (Integer) -- Current zero based row index.
+                - **row** (Any[]) -- Current row as an array of columns of fetched data
+
+            - **onReady** (Function(numRows, msg)) -- If defined, it will be called if all data is fetched:
+
+                - **numRows** (Integer) -- Total number of rows fetched.
+                - **msg** (String) -- The last error message.
+
+    Returns:
+        An array containing the rows of the query. Each row contains an array containing the column elements of the corresponding row. If callback object with property onData() is defined, the return value is empty. The column description will be delivered to the onHead() callback.
+
+    Example with callback::
+
+        var o = new ODBCClient();
+        //siehe http://www.connectionstrings.com/
+        o.source = "DSN=ODBC Acron7";
+        if (o.open()) {
+            var from = "2010-10-21 10:36:34";
+            var callback = {
+                onData : function (rowIdx, row) { console.log("OnData: ", rowIdx, " ", row); },
+                onHead : function(columns) { console.log("OnHead: ", columns); },
+                onReady : function(num, msg) { console.log("OnReady: ", num, " ", msg); },
+                onError : function(msg) { console.log("OnError: ", msg); }
+            };
+            o.query("SELECT Timestamp, NumData, '' AS a1_psum, '' AS a1_pcount FROM FastProcess WHERE (Timestamp >= {ts '"+from+"'} AND Timestamp <= {ts '2012-11-21 14:38:34'})", callback);
+            o.close();
+        }
+
+    Example without callback::
+
+        var o = new ODBCClient();
+        //siehe http://www.connectionstrings.com/
+        o.source = "DSN=ODBC Acron7";
+        if (o.open()) {
+            var from = "2010-10-21 10:36:34";
+            var result = o.query("SELECT Timestamp,NumData, '' AS a1_psum, '' AS a1_pcount FROM FastProcess WHERE (Timestamp >= {ts '"+from+"'} AND Timestamp <= {ts '2012-11-21 14:38:34'})");
+            o.close();
+        }
+
+    Example using Excel::
+
+        var o = new ODBCClient();
+        var sources = o.sources();
+        for (var i in sources) console.log(sources[i]);
+        // Wie man Excel Odbc Treiber verwendet, siehe http://stackoverflow.com/questions/15844633/using-excel-as-an-odbc-database
+        // Wie man eine DSN für Excel erzeugt, siehe http://support.microsoft.com/kb/2721825/EN-US
+        o.source = 'DSN=Excel32Test';
+        if (o.open()) {
+           console.log("Opened:", o.info());
+           var types = o.types();
+           for (var t in types) console.log("TYPE:", types[t]);
+           var tables = o.tables();
+           for (var t in tables) {
+               console.log("TABLE:", tables[t]);
+               var columns = o.columns(tables[t].name);
+               for (var c in columns) console.log("COLUMN:", columns[c]);
+           }
+           var result = o.query("SELECT * FROM [Tabelle1$]");
+           console.log("RESULT:", result);
+           o.close();
+        }
+
+.. !!v8!! ODBCClient.info()
+.. function:: ODBCClient.info()
+
+    Gives general info about the connected data source.
+
+    Returns:
+        An object with following properties:
+
+            - **dbmsname** (String) -- The name of the DBMS product accessed by the driver.
+            - **dbmsversion** (String) -- The version of the DBMS product accessed by the driver.
+            - **maxconcurrentactivities** (Integer) -- Specifies the maximum number of active statements that the driver can support for a connection.
+            - **getdataanyorder** (Boolean) -- SQLGetData can be called for any unbound column.
+            - **getdataanycolumn** (Boolean) -- SQLGetData can be called for unbound columns in any order.
+
+    Example::
+
+        var o = new ODBCClient();
+        o.source = 'DSN=Excel32Test';
+        if (o.open()){
+            console.log("Opened:", o.info());
+            o.close();
+        }
+
+.. !!v8!! ODBCClient.sources()
+.. function:: ODBCClient.sources()
+
+    Returns
+        The available data sources as an array of objects with following properties:
+
+        - **name** (String) -- The data source name.
+        - **description** (String) -- The description of the driver associated with the data source.
+
+    Example::
+
+        var o = new ODBCClient();
+        var sources = o.sources();
+        for (var i in sources)
+            console.log(sources[i]);
+
+.. !!v8!! ODBCClient.types()
+.. function:: ODBCClient.types()
+
+    Returns:
+        The available data types of the connected data source as an array of objects with following properties:
+
+        - **typename** (String) -- Data source-dependent data-type name.
+        - **datatype** (Integer) -- SQL data type.
+        - **precision** (Integer) -- Maximum column size or maximum precision.
+        - **prefix** (String) -- Used to prefix a literal.
+        - **suffix** (String) -- Used to terminate a literal.
+        - **create** (String) -- A list of keywords, separated by commas.
+        - **nullable** (Integer) -- Whether the data type accepts a NULL value.
+        - **casesensitive** (Integer) -- Whether a character data type is case-sensitive in comparisons.
+        - **searchable** (Integer) -- How the data type is used in a WHERE clause.
+        - **unsigned** (Integer) -- Whether the data type is unsigned.
+        - **fixedprecscale** (Integer) -- Whether the data type has predefined fixed precision and scale.
+        - **autoincrement** (Integer) -- Whether the data type is autoincrementing.
+        - **localtype** (String) -- Localized version of the data source-dependent name of the data type.
+        - **minimumscale** (Integer) -- The minimum scale of the data type.
+        - **maximumscale** (Integer) -- The maximum scale of the data type.
+        - **sqldatatype** (Integer) -- The value of the SQL data type.
+        - **sqldatetimesub** (Integer) -- The datetime/interval subcode.
+        - **numprecradix** (Integer) -- If data type is an approximate numeric type, this has the value 2.
+        - **intervalprecision** (Integer) -- The value of the interval leading precision.
+
+.. !!v8!! ODBCClient.tables()
+.. function:: ODBCClient.tables()
+
+    Returns:
+        The available tables of the connected data source as an array of objects with following properties:
+
+        - **name** (String) -- Table name.
+        - **type** (String) -- Table type name.
+        - **description** (String) -- Description of the table.
+        - **catalog** (String) -- Catalog name.
+        - **schema** (String) -- Schema name.
+
+    Example::
+
+        var o = new ODBCClient();
+        o.source = 'DSN=Excel32Test';
+        if (o.open()) {
+            var tables = o.tables();
+            for (var t in tables)
+                console.log(tables[t]);
+            o.close();
+        }
+
+.. !!v8!! ODBCClient.columns(tablename)
+.. function:: ODBCClient.columns(tablename)
+
+    Parameters:
+        - **tablename** (String) -- Name of the table get the available columns for.
+
+    Returns:
+        The available columns of the given table as an array of objects with following properties:
+
+        - **catalog** (String) -- Catalot name.
+        - **schema** (String) -- Schema name.
+        - **table** (String) -- Table name.
+        - **column** (String) -- Column name.
+        - **datatype** (Integer) -- SQL data type.
+        - **typename** (String) -- Data source-dependent data type name.
+        - **columnsize** (Integer) -- Maximum length in characters of the column.
+        - **bufferlength** (Integer) -- Length in bytes of data transferred on an operation.
+        - **digits** (Integer) -- Total number of significant digits to the right of the decimal point.
+        - **radix** (Integer) -- For numeric data types, either 10 or 2.
+        - **nullable** (Integer) -- 0: if the column could not include NULL values, 1: if the column accepts NULL values, 2: if it is not known whether the column accepts NULL values.
+        - **remarks** (String) -- Description of the column.
+        - **default**  (String) -- Default value of the column.
+        - **sqldatatype** (Integer) -- SQL data type. Same as datatype, except for datetime and interval.
+        - **datetimesubtype** (Integer) -- Subtype code for datetime and interval.
+        - **charoctetlength** (Integer) -- Maximum length in bytes of character or binary type column.
+        - **ordinalposition** (Integer) -- 1-based ordinal position of the column in the table.
+        - **isnullable** (Boolean) -- True if the column could include NULLs.
+
+.. rubric:: ODBCClient object properties
+
+The ODBCClient object contains following properties:
+
+- **connectionString** (String) -- The ODBC connection string. See http://www.connectionstrings.com/
+- **source** (String) -- Synonym for connectionString.
+
+The ODBCClient class contains following constants:
+
+- CONTINUE
+- STOP

@@ -1,0 +1,43 @@
+.. _od_logger_dialog:
+
+Log View
+########
+
+Object display for showing log entries. Refer to :ref:`atvise visualization > log view <logger>` for a further description of the log view.
+
+.. rubric:: Parameters
+
+- **display title** -- Title for the opened display (default: T{Log display})
+- **display subtitle** -- Subtitle for the opened display (default: T{})
+- **display icon** -- Icon that is shown next to the title (default: SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Symbols.20x20.list)
+
+Font:
+
+- **font family** -- Font family applied to the table (default: Arial)
+- **font color** -- Color which will be applied to labels and values (default: global parameter atvFontColor (advanced), #ffffff (standard))
+- **table header font size** -- Font size applied to the table header (default:12)
+- **table row font size** -- Font size applied to the table rows (default: 12)
+- **table detail font size** -- Font size applied to the detail area (default: 12)
+- **table footer font size** -- Font size applied to the table footer (default: 12)
+
+Appearance:
+
+- **fill color** -- Fill color of the top background area (default: global parameter atvFillColor).
+- **border color** -- Color of borders (default: global parameter atvBorderColor).
+- **symbol color** -- Color of table header symbols (default: global parameter atvSymbolColor).
+- **table colors** -- Global color configuration (default: global list atvObjectDisplays.Tables.ColorConfig)
+- **custom theme** -- Name of the custom theme (default: atviseTheme). Refer to :ref:`customizing table appearance <html_table_customizing>` for further information.
+
+Options:
+
+- **data mode** -- Data mode for the standard filtering (default: continue)
+
+Indicator:
+
+- **strictly** -- Only messages of the specific group shall be shown (default: false)
+- **group** -- Only messages with this group are monitored 
+- **subgroup** -- Only messages with this subgroup are monitored
+- **label** -- Only messages with this label are monitored
+- **offset** -- Offset from the current time in seconds. Only messages in this defined time period are shown (default: 604800 = last 7 days) 
+- **small display** -- Defines if the small log view shall be opened (default: false)
+- **view known errors** -- Only changes or new errors are displayed (default: true)

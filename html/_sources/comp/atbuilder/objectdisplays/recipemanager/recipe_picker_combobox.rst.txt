@@ -1,0 +1,18 @@
+.. _od_recipe_picker_small:
+
+Recipe Picker (Small)
+#####################
+
+Display which allows selecting a recipe with a combobox and setting as active. See also chapter :ref:`atvise visualization > Recipe management - Activate recipes<recipe_activate>`.
+
+.. rubric:: Parameters
+    
+General:
+
+- **config node** -- Node for configuration of templates and recipes (Default: AGENT.OBJECTS.recipes)
+- **template name** -- Name of the template for a prefiltered view 
+
+Appearance:
+
+- **fill color** -- Fill color (Default: SYSTEM.GLOBALS.atvFillColor)
+

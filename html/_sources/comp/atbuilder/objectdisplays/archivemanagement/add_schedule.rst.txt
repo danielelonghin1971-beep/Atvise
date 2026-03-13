@@ -1,0 +1,14 @@
+Add Schedule
+############
+
+Allows to add a schedule to the auto-scheduler management.
+
+.. rubric:: Parameters
+
+Appearance:
+
+- **fill color** -- Background color of the display's control elements (default: global parameter atvFillColor)
+
+Font:
+
+- **color** -- Font color for the display (default: global parameter atvFontColor)

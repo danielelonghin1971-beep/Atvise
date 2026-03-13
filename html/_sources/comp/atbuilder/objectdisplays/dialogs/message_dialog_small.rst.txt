@@ -1,0 +1,50 @@
+Message Dialog (Small)
+######################
+
+This Display generates a dialog for showing messages, information or warnings. With the function openWindow the dialog can be called. The parameters can be used to adapt the text for the headline, the message line and the button.
+The action of the button is defined via the name of the corresponding trigger function. If no trigger name is defined the button will close the window without any additional effect. 
+
+.. rubric:: Parameters
+
+The following parameters are available:
+
+Headline:
+
+- **text of headline** -- Headline for the dialog. (default: headline)
+- **font family** -- Font family which will be applied to the headline. (default: Arial)
+- **font size** -- Font size of the headline in pixels. (default: 16)
+- **font weight** -- Font weight which will be applied to the headline. (default: bold)
+- **horizontal alignment** -- The headline's horizontal alignment. (default: left)
+- **vertical alignment** -- The headline's vertical alignment. (default: middle)
+
+Message:
+
+- **message** -- Message text. (default: Message)
+- **font family** -- Font family which will be applied to the message. (default: Arial)
+- **font size** -- Font size of the message in pixels. (default: 12)
+- **font weight** -- Font weight which will be applied to the message. (default: normal)
+- **horizontal alignment** -- The message's horizontal alignment. (default: left)
+- **vertical alignment** -- The message's vertical alignment. (default: middle)
+
+Button:
+
+- **text** -- Text of button (default: T{OK})
+- **action** -- Trigger function of button
+- **font size** -- The button's font size in pixels. (default: 16)
+
+Symbol:
+
+- **symbol** -- Address of the symbol. (default: SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Symbols.20x20.info)
+- **symbol color** -- Color of the symbol to be used (default: global parameter atvSymbolColor)
+
+Appearance:
+
+- **background color** -- Color of the display's background (default: #ffffff)
+
+.. rubric:: Example
+
+Call the message dialog with openWindow function:
+
+::
+
+    webMI.display.openWindow({display:"SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Advanced.dialogs.message_dialog_small", x:0, y:0, width:400, height:160, modal:true, resizable:false, movable:true, scrollbars:false, menubar:false, status:false, toolbar:false, query: {headline:"my headline", msg1:"my message in line 1"}}); 

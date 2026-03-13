@@ -1,0 +1,31 @@
+How to use this help
+####################
+
+.. hint:: If you open a help page in Firefox using a "deep link", fonts may not be rendered correctly. To fix the problem, open ``about:config`` and set the entry ``security.fileuri.strict_origin_policy`` to ``false``.
+
+.. hint:: If you use the search functionality of the atvise help with Chrome or Internet Explorer, you will only see the titles of chapters where matching help content is found. This is due to the security settings of the browsers. To see a snippet of the help content in addition to the title, please use a different browser. E.g. Firefox and Edge show the snippets correctly.
+
+Additional documentation, tips and useful examples can be found as a registered user in our knowledge base at https://support.atvise.com/.
+
+In the atvise builder library you can right-click each of our **Object Displays** and select :menuselection:`Help` to open their specific documentation.
+
+.. figure:: images/help_objectdisplays.png
+
+For each **Quick Dynamic** a documentation can be opened by the button :guilabel:`Help` on the bottom right corner:
+
+.. figure:: /common_images/quickdynamic_help.png
+
+.. rubric:: Symbols used in this manual
+
+|leftclick| Mouse left-click
+
+|doubleclick| Mouse double-click
+
+|drag| Clicking and holding of the left mouse button (dragging)
+
+|rightclick| Mouse right-click
+
+.. |doubleclick| image:: images/mouse_klick_double.png
+.. |drag| image:: images/mouse_klick_drag.png
+.. |leftclick| image:: images/mouse_klick_left.png
+.. |rightclick| image:: images/mouse_klick_right.png

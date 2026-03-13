@@ -1,0 +1,91 @@
+Main Display (800x900)
+################################
+
+This display combines the highcharts, toolbar and legend displays. It is an example, but can also be used in a project as is.
+
+The following parameters are distributed to the single object displays of the highcharts, toolbar and legend to ensure they address the same chart instance. Because of this, changes in one of these displays can trigger the correct chart instance.
+
+.. rubric:: Triggers
+
+Following triggers can be used for this object display: 
+
+- **com.atvise.highcharts.point.click** -- Allows to execute a function when clicking on a data point in the chart. In addition, the respective information of the data point is returned. 
+
+::
+
+    webMI.trigger.connect("com.atvise.highcharts.point.click", function (e) {
+
+        var value = e.value;
+
+        console.log(value);
+        console.log(value.x, value.y);
+
+    });
+
+.. hint:: Additional undocumented triggers are internally used by atvise. Their functionality may be changed in future atvise releases.
+
+.. rubric:: Parameters
+
+The following common parameters are available:
+
+- **chart name** -- This is a unique name to identify the chart instance (default: trend1)
+- **chart group** -- Multiple chart instances can be grouped (default: group1)
+- **skip default modules** -- De-/activates the loading of default highcharts modules (default: false)
+- **additional modules** -- Defines additional modules to be loaded. (Example: "highcharts/modules/exporting.js,highcharts/datasource/opcua.js,highcharts/atviseModules/datahandler.js,highcharts/atviseModules/measuringcursor.js,highcharts/atviseModules/utils.js,highcharts/atviseModules/downsample.js")
+- **configuration node** -- Node (address) which contains the predefined configuration. Visualization users need appropriate permissions for this node (see :ref:`configuration nodes for graphics elements<ac_config_nodes>`) (default: AGENT.OBJECTS.TrendCfg)
+- **configuration file (in filesystem)** -- File which updates a predefined configuration when saving, is set in the file system.
+- **config name** -- Name of the predefined configuration (Default: default)
+- **saving method** -- Determines whether configurations are stored in node(s) or the file system (default: Multiple nodes)
+- **compression** -- Determines whether the configuration data is compressed when it is saved (default: true)
+- **datasource** -- Name of the data source module which will be loaded for data handling. atvise provides the modules *opcUA* and *scope* (for the Bachmann M1 controller, see :ref:`Integrating Scope 3 into atvise<scope3_integration>` for further information) by default. It is possible to create additional user-specific modules. (default: opcUA)
+- **datasource options** -- Allows to defined additional options for the selected data source. If the *scope* module is selected, the IP address of the host must be defined as JSON string (e.g. {"host": "10.11.20.105"})
+- **path to data source implementation for tree view** -- Defines the path to the selected data source for the tree view (default: treeView/datasources/opcua.js)
+- **set caching behavior for tree view** -- Defines the caching behavior for the tree view. If true, node information will be preloaded and cached (default: true)
+- **node entry path** -- Defines the entry path for the tree view in the configuration dialog (default: AGENT.OBJECTS).
+- **back/fwd step in percent** -- Sets the step size for the previous/next page in historical data (default: 100)
+- **legend update interval (min. 100ms)** -- Defines the update interval for values displayed in the legend. Intervals under 1 second may affect the operability (default: 1000)
+
+Security: options menu
+
+- **necessary right** -- The user must have this right for the function to work.
+- **activation address** -- If the value of this address equals to "activation value", then the function will be active.
+- **activation value** -- Value which activates the function
+
+Security: load configuration: 
+
+- **necessary right** -- The user must have this right for the function to work.
+- **activation address** -- If the value of this address equals to "activation value", then the function will be active.
+- **activation value** -- Value which activates the function
+
+Security: save configuration:
+
+- **necessary right** -- The user must have this right for the function to work.
+- **activation address** -- If the value of this address equals to "activation value", then the function will be active.
+- **activation value** -- Value which activates the function
+- **change compression** -- Defines if the user is allowed to change the compression settings (default: false).
+
+Security: export menu:
+
+- **necessary right** -- The user must have this right for the function to work.
+- **activation address** -- If the value of this address equals to "activation value", then the function will be active.
+- **activation value** -- Value which activates the function
+
+Options:
+
+- **show full node address names** -- Defines if full address names or short address names shall be displayed in the legend (default: true)
+- **sort configurations by name** -- If true, configurations are sorted in alphabetical order. However, the *autosave* configuration is always first in the list (default: true)
+- **load configurations by selection** -- Defines if a configuration is loaded when selected in the combobox or a confirmation via |load| button is necessary (default: false)
+- **zoom type** -- The zoom behavior (*x axis*, *y axis* or *xy axis*) when an area in the highchart is selected via left mouse click (default: x axis)
+
+Export menu:
+
+- **menu button line color** -- Color of the lines of the menu button (default: #676767)
+- **menu button background color** -- Background color of the menu button (default: #ffffff)
+- **menu button hover color** -- Background color of the menu button on mouseover (default: #e6e6e6)
+- **menu button selected color** -- Background color of the menu button when clicked (default: #e6e6e6)
+- **menu text color** -- Text color of the menu entries (default: #000000)
+- **menu background color** -- Background color of the context menu (default: #ffffff)
+- **menu hover text color** -- Text color of the menu entries on mouseover (default: #eeeeee)
+- **menu hover background color** -- Background color of the menu entries on mouseover (default: #676767)
+
+.. |load| image:: ../../images/load_config.png

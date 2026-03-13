@@ -1,0 +1,121 @@
+.. _server_script_editor:
+
+Server script editor
+####################
+
+This section describes the functions of the server script editor. If you want to know how to use it, see the section :ref:`add_script_to_node`.
+
+.. figure:: /common_images/script_editor_bar.png
+
+    Script editor toolbar
+
+|icon_scripteditor_save| Save
+    After changing the source code, this button will save the changes and the code will be executed.
+
+|icon_scripteditor_print| Print
+    Opens the *Print* dialog.
+
+|icon_scripteditor_undo| Undo
+    Undo the last action.
+
+|icon_scripteditor_redo| Redo
+    Redo the last undone action.
+
+|icon_scripteditor_copy| Copy
+    Copy a marked text (and save it to the clipboard).
+
+|icon_scripteditor_cut| Cut
+    Cut a marked text (and save it to the clipboard).
+
+|icon_scripteditor_paste| Paste
+    Paste the text from the clipboard.
+
+|icon_scripteditor_findandreplace| Find and Replace
+    Opens the following window to find character strings and/or replace them with other character strings.
+
+    .. figure:: /common_images/window_scripteditor_findreplace.png
+
+|icon_scripteditor_gotoline| Go to line
+    Opens the following window to jump to a desired line in the source code:
+
+    .. figure:: /common_images/window_scripteditor_gotoline.png
+
+|icon_scripteditor_decrease| Decrease indent
+    Decreases the indent for a line.
+
+|icon_scripteditor_increase| Increase indent
+    Increases the indent for a line.
+
+|icon_scripteditor_wordwrap| Wrap words
+    Enables the automatic word wrap.
+
+|icon_scripteditor_linenumbers| Show line numbers
+    Shows the line numbers on the left side of the script.
+
+|icon_scripteditor_currentline| Highlight current line
+    Highlights the currently selected line.
+
+|icon_scripteditor_showtabs| Show blanks and tabs
+    Shows all blanks and tabs in the script.
+
+|icon_scripteditor_parentheses| Show matching parentheses.
+    Highlights matching parentheses.
+
+|icon_scripteditor_warnings| Show warnings
+    Opens a window at the bottom of the editor that shows script errors and warnings.
+
+.. _scripteditor_metadata:
+
+|icon_scripteditor_metadata| Edit metadata
+    Clicking this button will open the *edit medatata* dialog.
+
+    .. figure:: /common_images/window_editmetadata.png
+
+    - **Script priority** -- The priority of script execution from 1 (lowest priority) to 10 (highest priority). If *Default* is set, the priority depends on the script type:
+
+        - Alarming (prevention and modification scripts): 11 (highest priority)
+        - WebAccess (login and logout scripts): 11 (highest priority)
+        - Script library scripts: Priority is specified by the server
+
+    - **Script owner** -- The owner of the script, i.e. the user that created the script. If the script is created by an anonymous session, no owner is defined in the metadata. In this case, the system ("root") is considered as script owner. 
+    - **Script runcontext** -- Defines in which context, either "caller" (default) or "owner", the script is executed. 
+    - **Ignored by switchover** -- Only for redundant systems.
+    - **Trigger on passive server** -- Only for redundant systems.
+    - **Trigger event when called** -- Only for webMI method scripts. Defines if an :ref:`event<event_archive>` is triggered when executing the script. This option is enabled by default when creating a new script.
+
+    .. hint:: The <fireevent> tag can be used to determine which of the webMI method scripts provided by atvise trigger an event when executed. To override the default behavior of atvise scripts, a script with the same name, necessary script parameters and appropriate metadata can be created under :treeselection:`Library --> PROJECT --> webMI Method Scripts`. This script then calls the atvise script using *call("SYSTEM.LIBRARY.ATVISE.WEBMIMETHODS.<Script>"[, paramObject])*.
+
+    Refer to :ref:`access control - important notes<ac_scripting>` for further information on script owner and runcontext.
+
+|icon_scripteditor_save_and_term| Save and Terminate (all scripts except menu scripts)
+    Clicking this button will save the script and then terminate all script instances running the previous script code. This can be used to terminate a script that runs in an endless loop.
+
+|icon_scripteditor_save_and_run| Save and Run (menu scripts only)
+    The last button on the toolbar is different for menu scripts. Clicking this button will save the script if it has been changed and the run it.
+
+.. |icon_scripteditor_copy| image:: /common_images/icon_copy.png
+.. |icon_scripteditor_cut| image:: /common_images/icon_cut.png
+.. |icon_scripteditor_findandreplace| image:: /common_images/icon_scripteditor_findandreplace.png
+.. |icon_scripteditor_gotoline| image:: /common_images/icon_scripteditor_gotoline.png
+.. |icon_scripteditor_loadfromdisc| image:: /common_images/icon_scripteditor_loadfromdisc.png
+.. |icon_scripteditor_metadata| image:: /common_images/icon_scripteditor_metadata.png
+.. |icon_scripteditor_paste| image:: /common_images/icon_paste.png
+.. |icon_scripteditor_print| image:: /common_images/icon_print.png
+.. |icon_scripteditor_redo| image:: /common_images/icon_redo.png
+.. |icon_scripteditor_save_and_run| image:: /common_images/icon_scripteditor_save_and_run.png
+.. |icon_scripteditor_save_and_term| image:: /common_images/icon_scripteditor_save_and_term.png
+.. |icon_scripteditor_saveas| image:: /common_images/icon_scripteditor_saveas.png
+.. |icon_scripteditor_save| image:: /common_images/icon_savefile.png
+.. |icon_scripteditor_selectcolor| image:: /common_images/icon_scripteditor_selectcolor.png
+.. |icon_scripteditor_selectdisplay| image:: /common_images/icon_scripteditor_selectdisplay.png
+.. |icon_scripteditor_selectfont| image:: /common_images/icon_scripteditor_selectfont.png
+.. |icon_scripteditor_selectnode| image:: /common_images/icon_scripteditor_selectnode.png
+.. |icon_scripteditor_undo| image:: /common_images/icon_undo.png
+.. |icon_scripteditor_increase| image:: /common_images/icon_increase_indent.png
+.. |icon_scripteditor_decrease| image:: /common_images/icon_decrease_indent.png
+.. |icon_scripteditor_wordwrap| image:: /common_images/icon_scripteditor_linebreak.png
+.. |icon_scripteditor_linenumbers| image:: /common_images/icon_scripteditor_linenumbers.png
+.. |icon_scripteditor_currentline| image:: /common_images/icon_scripteditor_currentline.png
+.. |icon_scripteditor_showtabs| image:: /common_images/icon_scripteditor_showtabs.png
+.. |icon_scripteditor_parentheses| image:: /common_images/icon_scripteditor_parentheses.png
+.. |icon_scripteditor_warnings| image:: /common_images/icon_scripteditor_warnings.png

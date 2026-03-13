@@ -1,0 +1,17 @@
+Dialogs
+#######
+
+.. toctree::
+
+    dialogs/alarm_comment
+    dialogs/alarm_timeshelve
+    dialogs/datepicker_dialog
+    dialogs/email_dialog
+    dialogs/login_dialog
+    dialogs/login2FA_dialog
+    dialogs/message_board
+    dialogs/message_dialog
+    dialogs/message_dialog_small
+    dialogs/picker_color_dialog
+    dialogs/user_editor
+    dialogs/pw_editor

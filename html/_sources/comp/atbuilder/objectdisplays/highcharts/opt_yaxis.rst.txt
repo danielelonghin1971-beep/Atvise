@@ -1,0 +1,16 @@
+Configuration - Y-Axis
+######################
+
+This display provides the management of the y-axis for the chart.
+
+.. rubric:: Parameters
+
+This control has the following parameters:
+
+- :advstyle:`Advanced` **font color** -- Color which will be applied to the labels (default: global parameter atvFontColor)
+- :advstyle:`Advanced` **fill color** -- Left sidebar fill color (default: global parameter atvFillColor)
+- **minimum/maximum step** -- Value by which the value of the minimum and maximum value pickers will be incremented or decremented (default: 1)
+
+Subdisplay:
+
+- **display for message** -- Message display (default: "Message dialog" object display)

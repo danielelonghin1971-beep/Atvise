@@ -1,0 +1,20 @@
+Group Alarm
+###########
+
+This control is a group of buttons:
+
+stop horn: button that stops the alarm sound
+go to last alarm: opens the display of the last alarm that occurred in the system
+accept display: button that acknowledges all alarms that are located on the currently opened display
+open alarm list: opens the alarm list display
+
+.. rubric:: Parameters
+
+- **alarm list display** - the display that will be opened when pressing the "open alarm list" button (default: SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Advanced.hmi.alarmlist)
+- :advstyle:`Advanced` **small alarm list display** - the small variant of the display that will be opened when pressing the "open alarm list" button on devices with small displays (default: SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Advanced.hmi.alarmlist_small)
+- **target frame** - frame in which the alarm list will be opened (Default: content)
+- **enable sound** - if set to "true", an alarm sound will be played when an alarm and the button "stop horn" are active (Default: false)
+- :stdstyle:`Standard` **stroke color when pressed** -- Color of the border when pressing/hovering the buttons (default: #ffffff)
+- :advstyle:`Advanced` **fill color** - color of button and background (default: global Parameter atvFillColor)
+- :advstyle:`Advanced` **border color** - color of the control's border (default: global parameter atvBorderColor)
+- :advstyle:`Advanced` **symbol color** - fill color for the symbols (default: global parameter atvSymbolColor)

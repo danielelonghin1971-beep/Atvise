@@ -1,0 +1,12 @@
+.. _ref_atmonitor:
+
+atvise monitor
+##############
+
+.. figure:: /common_images/monitor.png
+
+.. toctree::
+
+    atmonitor/basics
+    atmonitor/licensing
+    atmonitor/projects

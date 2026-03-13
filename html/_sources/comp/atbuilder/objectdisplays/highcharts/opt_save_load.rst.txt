@@ -1,0 +1,30 @@
+Configuration - Save/Load
+#########################
+
+This display allows the user to load and save configurations to a node and also import and export configurations as json-files.
+
+A node address has to be selected before a configuration can be saved or loaded. If there are any configurations already saved on the node they can be now loaded.
+
+.. rubric:: Parameters
+
+Appearance:
+
+- :advstyle:`Advanced` **font color** -- Color which will be applied to the labels (default: global parameter atvFontColor)
+- :advstyle:`Advanced` **fill color** -- Left sidebar fill color (default: global parameter atvFillColor)
+
+Subdisplay:
+
+- **display for message** -- Message display (default: "Message dialog" object display)
+
+Security: load configuration:
+
+- **necessary right** -- The user must have this right for the function to work
+- **activation address** -- If the value of this address equals to "activation value", then the function will be active
+- **activation value** -- Value which activates the function
+
+Security: save configuration:
+
+- **necessary right** -- The user must have this right for the function to work
+- **activation address** -- If the value of this address equals to "activation value", then the function will be active
+- **activation value** -- Value which activates the function
+- **change compression** --  Defines if the user is allowed to change the compression settings (default: false)

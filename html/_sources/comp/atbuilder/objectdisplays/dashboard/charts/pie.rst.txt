@@ -1,0 +1,42 @@
+Pie and Doughnut
+################    
+
+The pie chart will be supported in a future atvise release. This display shows up to 25 process values in a pie or doughnut chart.
+
+.. rubric:: Parameters
+
+- **alarm address** -- Optional address used for alarm monitoring.
+- **enable status monitoring** -- Switch monitoring of current value status on or off (default: Yes).
+- **fire status trigger** -- Instead of the status display a here defined trigger can be fired globally.
+- **unit** -- This unit is displayed in addition to the value.
+- **decimal places** -- Number of decimal places for the value to be displayed (default: 0).
+- **sort order** -- Selection of the sort order (default: no sorting).
+- **minimum** -- Lower limits of the displayed values.
+- **maximum** -- Upper limit of the displayed values.
+- **outer size** -- Outside diameter of the chart.
+- **inner size** -- Inside diameter (0 = pie, no circle inside).
+- **displayed series (0 = all)** -- Number of maximum displayed series (default: 5).
+
+Appearance:
+
+- **deactivation color** -- Deactivation color (default: #b7b7b7)
+- **text color** -- Text color (default: global parameter atvFontColor)
+- **status indication** -- Specify the status' display through a defined global list (default: global parameter atvStatusIndication)
+- **alarm indication** -- Specify the alarm's display through a defined global list (default: global parameter atvAlarmIndication)
+
+Options:
+
+- **tooltip** -- Displays a tooltip box with the entered text (standard HTML-Elements can be entered)
+
+Security:
+
+- **necessary right** -- The user must have this right to activate this control.
+- **activation address** -- If the value of this address equals to "activation value", then the control will be active.
+- **activation value** -- Value which activates the control.
+- **show access control notification** -- Defines if the icon for showing access control notifications shall be displayed (default: true)
+
+Series <Number>:
+
+- **name** -- Defines the name of displayed series.
+- **address** -- The value of this address is displayed. 
+- **color** -- Defines the bar color. (default: #7cb5ec (series 1), #434348 (series 2), #90ed7d (series 3), #f7a35c (series 4), #8085e9 (series 5), #f15c80 (series 6), #e4d354 (series 7), #2b908f (series 8), #90ed7d (series 9), #ccd6eb (series 10), #7cb5ec (series 11), #434348 (series 12), #90ed7d (series 13), #f7a35c (series 14), #8085e9 (series 15), #f15c80 (series 16), #e4d354 (series 17), #2b908f (series 18), #90ed7d (series 19), #ccd6eb (series 20), #7cb5ec (series 21), #434348 (series 22), #90ed7d (series 23), #f7a35c (series 24), #8085e9 (series 25))

@@ -1,0 +1,109 @@
+Button
+######
+
+This control is a simple button which just fires the trigger "clicked". This trigger can be used to add a Simple Dynamic to this button which reacts on the trigger "clicked" and fires a new trigger. This new trigger can then be used by other elements.
+
+.. rubric:: Triggers
+
+Following triggers can be used for this object display: 
+
+- **com.atvise.setActive** -- Can be used to enable or disable the object display.
+
+::
+
+    //Disable the object display
+    webMI.trigger.fire("com.atvise.setActive", false, "myDisplayID");
+
+.. hint:: Additional undocumented triggers are internally used by atvise. Their functionality may be changed in future atvise releases.
+
+.. rubric:: Parameters
+
+This control has the following generic parameters:
+
+- **label line 1** -- Text of the button's first line if "visibility label" is set to visible. See matrix below. (default: T{Basic})
+- :advstyle:`Advanced` **label line 2** -- Text of the button's second line if "visibility label" is set to visible. See matrix below.
+
+Font:
+
+- **size line 1** -- Font size which will be applied to the button's first line (default: 12)
+- **size line 2** -- Font size which will be applied to the button's second line (default: 12)
+- **weight line 1** -- Font weight which will be applied to the button's first line (default: normal)
+- **weight line 2** -- Font weight which will be applied to the button's second line (default: normal)
+- **color** -- Color which will be applied to the label (default: global parameter atvFontColor (advanced), #d0d0d0 (standard))
+
+Appearance:
+
+- **visibility label** -- If set to visible, the text as specified by "label" will be displayed (default: visible)
+- **visibility symbol** -- If set to visible, the symbol as specified by "symbol" will be displayed (default: hidden)
+- **symbol** -- Symbol to be used if "visibility symbol" is set to visible; further scales can be selected from "Object Displays (ATVISE)/Symbols/20x20 (default: check)
+- **symbol color** -- Color of the symbol to be used (default: global parameter atvSymbolColor (advanced), #d0d0d0 (standard))
+- :advstyle:`Advanced` **symbol scaling** -- Scaling of symbol in percent (default: 100)
+- **fill color** -- Button's fill color (default: global parameter atvFillColor (advanced), #000000 (standard))
+- **fill color when inactive** -- Button's fill color if not active (default: global parameter atvInactiveColor (advanced), #8c8c8c (standard))
+- **stroke color pressed** -- The color of the stroke which will be set when the button is pressed (default: #ffffff)
+- **focus stroke color** -- The color of the stroke which will be set when the button is focused (default: #ffffff)
+- :advstyle:`Advanced` **border color** -- The button's border color (default: global parameter atvBorderColor)
+- :advstyle:`Advanced` **extra border color** -- The color of the extra border inside the button (default: none)
+
+Security:
+
+- **necessary right** -- The user must have this right to activate this button, i.e. to press the button
+- **activation address** -- If the value of this address equals to "activation value", then the button will be active, i.e. can be pressed
+- **activation value** -- Value which activates the button
+
+.. hint:: The activation of a button can be configured only by the necessary right, or only by the activation address and value or by both. In case both settings are made, the user must have the necessary right and the value of the "activation address" must equal the "activation value"; otherwise the button will not be activated.
+
+- **show access control notification** -- Defines if the icon for showing access control notifications shall be displayed (default: true)
+
+Consistency:
+
+- **group** -- Name of the consistency group
+- **function** -- Function to be executed on click when a consistency group is given (default: write)
+
+Options:
+
+- **tab index** -- Defines the order for changing between the object displays by using the tab key
+- **tooltip** -- Displays a tooltip box with the entered text (standard HTML-Elements can be entered)
+
+Menu:
+
+- **menu positioning** -- The position the menu symbol is shown at (top-left, top-right, bottom-left, bottom-right).
+- **menu mouseover active** -- Symbol is only shown on *mouseover*.
+- **menu symbol offset x** -- Relative offset of the menu symbol to the anchor point on the x axis in pixel.
+- **menu symbol offset y** -- Relative offset of the menu symbol to the anchor point on the y axis in pixel.
+- **context menu click frame** -- Defines the size of the click frame for opening the context menu.
+
+.. rubric:: Displaying text & symbol (only "Advanced" style)
+
+The following matrix illustrates the positioning of labels and symbol depending on the user's configuration. "No" for symbol can either mean symbol visibility "hidden" or a missing symbol definition.
+"No" for "label line 1" and "label line 2" can either mean that the text is missing for these parameters or that "visibility label" is set to "hidden".
+
+.. container:: tableinline
+
+    .. csv-table:: Configuration
+     :header: Label line 1 1, Label line 2, Symbol
+     :widths: auto
+
+     No, No, No
+     No, No, Yes
+     No, Yes, No
+     No, Yes, Yes
+     Yes, No, No
+     Yes, No, Yes
+     Yes, Yes, No
+     Yes, Yes, Yes
+
+    ==>
+
+    .. csv-table:: Positioning 
+     :header: Label line 1 1, Label line 2, Symbol
+     :widths: auto
+
+        --, --, --
+        --, --, Middle
+        --, Bottom, --
+        --, Bottom, Top
+        Middle, --, --
+        Top, --, Bottom
+        Top, Bottom, --
+        Top (foreground), Bottom (foreground), Middle (background)

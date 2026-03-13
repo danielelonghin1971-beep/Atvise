@@ -1,0 +1,20 @@
+Save As
+#######
+
+This Quick Dynamic can be used to trigger a file download in the browser.
+
+.. hint:: This only works with servers that support serverscripts. In case the serverscript is unavailable, a popup will be opened with the given content instead.
+
+The only required parameter for this Quick Dynamic is "content", all other parameters can be modified as needed.
+
+.. hint:: Since we can only use ecmascript strings as "content", the "type" parameter is limited to text-only. All other types (like binary data) are not supported.
+
+.. rubric:: Parameters:
+
+- **name** (*name of the file*) -- Name of the file (the default is "filename.txt")
+- **type** (*type of the file*) -- Mimetype of the file (the default is "text/plain")
+- **content** (*content of the file*) -- Content of the file
+- **action** (*URL action*) -- url action or serverscript that will be executed (the default is "/export")
+- **method** (*POST or GET method*) -- post or get method (the default is "post")
+- **enctype** (*encoding type*) -- Encoding type (the default is "application/x-www-form-urlencoded")
+- **useBOM** (*prepend ByteOrderMark to file*) -- Export with or without "byte-order-mark" (ensures that special characters are displayed correctly in MS Excel)

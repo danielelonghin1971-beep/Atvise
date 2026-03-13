@@ -1,0 +1,24 @@
+Color Picker Dialog
+###################
+
+This display can be used as a dialog to generate a color in hex format.
+
+The user can generate his color in different ways, by clicking on to the base colors on the top circle, by manually setting the RGB/HSV values or simply by entering a color in hex format. The current color will be displayed in the top inner circle. The default selected color can be set using the "color" parameter.
+
+To get the value of the color in the display that opened this dialog, it is necessary to connect the trigger "valuechanged\_" plus the name parameter (e.g. "valuechanged_myColorPicker"). Usually this display will be used as a dialog, see "picker_color" display for further information.
+
+.. rubric:: Parameters
+
+The following parameters are available:
+
+- **name** -- Unique name to identify this display (mandatory)
+- **color** -- Initial displayed color
+- :advstyle:`Advanced` **font color** -- Color which will be applied to the labels (default: global parameter atvFontColor)
+
+Appearance:
+
+- :advstyle:`Advanced` **border color** -- Color which will be applied to borders (default: global parameter atvBorderColor)
+
+.. rubric:: Example
+
+Create a display with a button that opens the display of this dialog with the name "myColorPicker" and connect the trigger "valuechanged_myColorPicker" for value changes.

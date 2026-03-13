@@ -1,0 +1,8 @@
+Logger
+######
+
+.. toctree::
+
+    logger/logger_button
+    logger/logger_dialog
+    logger/logger_dialog_small

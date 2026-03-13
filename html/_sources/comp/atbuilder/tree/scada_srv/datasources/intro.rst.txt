@@ -1,0 +1,28 @@
+Introduction
+############
+
+To establish communication between atvise and other OPC servers, you must first define these OPC servers as data sources in your project. This enables you to browse these data sources and to connect your local data structure with these data sources (see the section :ref:`mirroring`).
+
+.. rubric:: Browsing a data source
+
+Right-click a data source and select :menuselection:`Browse` to browse the data structure of the server:
+
+.. figure:: images/scada_browse_datasource.png
+
+    Browse a data source
+
+You can directly Copy&Paste data variables from a data source to your :ref:`local object structure <mirror_absolute>` or your :ref:`local object types <mirror_relative>`.
+
+.. hint:: If you have problems with the connection to a OPC DCOM server, please check out the OPC DCOM configuration page.
+
+    For webMI data sources a search function is not implemented yet.
+
+.. rubric:: Configure atvise OPC UA to S7
+
+Right-click the data source and select :menuselection:`Configure` to configure the data source:
+
+.. figure:: images/configs7.png
+
+    Configure a data source
+
+Further details are given in the opcua2s7 documentation which is part of the opcua2s7 installation.

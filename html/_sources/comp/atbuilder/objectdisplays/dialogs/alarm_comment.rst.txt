@@ -1,0 +1,4 @@
+Alarm Comment Dialog
+####################
+
+This control provides the possibility to acknowledge or confirm alarms and entering comment.

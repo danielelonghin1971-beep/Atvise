@@ -1,0 +1,19 @@
+.. _webmi_events:
+
+webMI events
+############
+
+The webMI library is triggering the following events, which can be handled with event listeners:
+
+.. csv-table::
+    :header: Event, Description
+    :widths: auto
+
+    clientvariableschange, "Language switch, user login, etc. are performed"
+    serverstatechange, "Returns the status of the servers in redundancy mode"
+    servertimeoffsetchanged, "Offset of server time has changed"
+    statechange, "Returns the connection status to the server"
+    requesttimeout, "Fired if a request was not responded"
+    permissionnotification, "Fired if the server receives a request from users with insufficient rights"
+
+The functionality of the event listeners is described in :func:`webMI.data.addEventListener`.

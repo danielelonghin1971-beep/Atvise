@@ -1,0 +1,175 @@
+.. _ac_functions:
+
+Access control functions
+############################
+
+.. rubric:: Introduction 
+
+Access control functions allow to set or query permissions for groups and specific nodes. They can be found in the atvise library (:treeselection:`Library --> ATVISE --> Script Library --> Access Control`).
+
+In case of errors (e.g. group or node does not exist, unknown system function or right), an exception is thrown. 
+
+::
+
+    var conf = call("AccessControl.Configuration");
+
+.. rubric:: Group permissions for system functions
+
+.. !!v8!! conf.setPermissionsForGroup(group, permissions)
+.. function:: conf.setPermissionsForGroup(group, permissions)
+
+    Sets the group permissions for the given system functions. 
+
+    Parameters:
+        - **group** (String) -- Group name
+        - **permissions** (Object) -- Object that contains pairs of :ref:`system functions<possible_systemfunctions>` and :ref:`rights<possible_rights>`.
+
+    Example::
+
+        conf.setPermissionsForGroup("GroupA", {"security":"engineer","types":["read","write"]});
+
+.. !!v8!! conf.getPermissionsForGroup(group)
+.. function:: conf.getPermissionsForGroup(group)
+
+    Returns the given group's permissions for system functions.
+
+    Parameters:
+        - **group** (String) -- Group name
+
+    Returns:
+        A JSON string that contains all group rights or *undefined*.
+
+    Example::
+
+        var ret = conf.getPermissionsForGroup("GroupA");
+        console.log(ret);
+
+.. !!v8!! conf.deletePermissionsFromGroup(group)
+.. function:: conf.deletePermissionsFromGroup(group)
+
+    Deletes the given group's permissions for system functions.
+
+    Parameters:
+        - **group** (String) -- Group name
+
+    Returns:
+        true, if no permissions were defined, or an object with the following properties:
+
+            - **result** -- The result of the operation.
+            - **error** -- Error code (UaStatusCode, refer to :ref:`Ua.Status constants<uastatus>`)
+            - **errorstring** -- Error text
+
+    Example::
+
+        conf.deletePermissionsFromGroup("GroupA");
+        
+.. rubric:: Group permissions for nodes
+
+.. !!v8!! conf.setPermissionsForNode(nodeId, permissions)
+.. function:: conf.setPermissionsForNode(nodeId, permissions)
+
+    Sets the group permissions for the given node. 
+
+    Parameters:
+        - **nodeId** (String) -- The ID of the node whose permissions are set.
+        - **permissions** (Object) -- Object that contains pairs of groups with rights to be set.
+
+    Example::
+
+        conf.setPermissionsForNode("AGENT.OBJECTS.folder1", {"GroupA":"engineer","GroupB":["read", "write"]});
+
+.. !!v8!! conf.getPermissionsForNode(nodeId)
+.. function:: conf.getPermissionsForNode(nodeId)
+
+    Returns the group permissions for the given node.
+
+    Parameters: 
+        - **nodeId** (String) -- The ID of the node whose permissions are returned.
+    
+    Returns:
+        A JSON string that contains all group rights for the given node or *undefined*.
+
+    Example::
+
+        var ret = conf.getPermissionsForNode("AGENT.OBJECTS.folder1");
+        console.log(ret);
+
+.. !!v8!! conf.deletePermissionsFromNode(nodeId)
+.. function:: conf.deletePermissionsFromNode(nodeId)
+
+    Deletes the group permissions defined for the given node. 
+
+    Parameter:
+        - **nodeId** (String) -- The ID of the node whose permissions are deleted.
+
+    Returns:
+        true, if no permissions were defined, or an object with the following properties:
+
+            - **result** -- The result of the operation.
+            - **error** -- Error code (UaStatusCode, refer to :ref:`Ua.Status constants<uastatus>`)
+            - **errorstring** -- Error text
+
+    Example::
+
+        conf.deletePermissionsFromNode("AGENT.OBJECTS.var1");
+
+.. !!v8!! conf.getRuntimePermissionsForNode(nodeId)
+.. function:: conf.getRuntimePermissionsForNode(nodeId)
+
+    Allows to check the rights of groups, users and the current session for the given node at runtime.
+
+    Parameters:
+        - **nodeId** (String) -- The ID of the node whose runtime permissions are returned.
+
+    Returns:
+        The :ref:`permissions object<ua_permissions>` that contains the defined rights for groups, users and the current session. 
+
+    Example::
+
+        console.log(conf.getRuntimePermissionsForNode("AGENT.OBJECTS.var1"));
+ 
+.. _possible_rights:
+
+.. rubric:: Possible rights
+
+- **"browse"** -- Visibility
+- **"read"**
+- **"write"**
+- **"engineer"**
+- **"execute"**
+- **"accessControl"**
+- **"scriptConfig"**
+- **"alarmAdmin"**
+- **"alarmAcknowledge"**
+- **"alarmConfirm"**
+- **"remoteBrowse"**
+- **"remoteAlarms"**
+- **"remoteEvents"**
+
+Refer to :ref:`access control rights<ac_rights>` for further information.
+
+.. _possible_systemfunctions:
+
+.. rubric:: Possible system functions
+
+- **"alarming"**
+- **"atviseLibrary"**
+- **"dataSources"**
+- **"displays"**
+- **"historyArchives"**
+- **"objects"**
+- **"projectLibrary"**
+- **"redundancy"**
+- **"security"**
+- **"SMTPServer"**
+- **"translations"**
+- **"types"**
+- **"versionControlExport"**
+- **"versionControlImport"**
+- **"views"**
+- **"webMIServer"**
+- **"webServer"**
+- **"XMLExport"**
+- **"XMLImport"**
+
+Refer to :ref:`access control system functions<ac_systemfunctions>` for further information.

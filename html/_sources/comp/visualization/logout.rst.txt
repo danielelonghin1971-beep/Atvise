@@ -1,0 +1,26 @@
+.. _visu_logout:
+
+Logout & auto reconnect
+#######################
+
+Logout
+******
+
+Click the |visu_logout| button to log out manually. The logout behavior of the visualization depends on the defined permissions for anonymous users (see chapter :ref:`Access Control<access_control_intro>` for more information). If there are sufficient rights for the last shown display, it is also displayed after logging out. Otherwise the main display is shown.
+
+.. hint:: The server-side function :ref:`server.webaccess.deleteSessions()<deleteSessions>` allows to log users out by deleting web sessions. In this case, the logout behavior corresponds to the auto reconnect described below.
+
+Auto reconnect
+**************
+
+If the connection to the server is lost, the following overlay is displayed in the visualization:
+
+.. figure:: images/visu_overlay.png 
+    
+The visualization automatically tries to reestablish the connection after a specific countdown (5 seconds by default, see Quick Dynamic :ref:`Auto Reconnect<autoreconnect>`). The countdown can be skipped by reloading the browser. 
+
+Users will be logged out after the connection loss, unless either :ref:`login method<authentication>` *ntlm* or *digest* is configured. In contrast to the manual logout described above, the main display is always opened after reestablishing the connection and refreshing the browser. 
+
+Using :ref:`cookies<use_cookies>` allows to store a session's user data. In this case, it is not necessary to log in again after the connection is reestablished (refer to :ref:`Security > atvise access control > Information & notes - Cookie support<ac_cookie>`).
+
+.. |visu_logout| image:: images/visu_logout.png

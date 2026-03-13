@@ -1,0 +1,14 @@
+Confirmation Dialog
+###################
+
+Dialog to confirm actions of the archive management (e.g. when moving or deleting archive files).
+
+.. rubric:: Parameters
+
+Appearance:
+
+- **fill color** -- Background color of the display's control elements (default: global parameter atvFillColor)
+
+Font:
+
+- **color** -- Font color for the display (default: global parameter atvFontColor)

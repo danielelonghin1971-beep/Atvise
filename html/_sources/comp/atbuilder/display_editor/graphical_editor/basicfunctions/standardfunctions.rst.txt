@@ -1,0 +1,83 @@
+Standard functions
+##################
+
+.. figure:: images/tools_display.png
+
+|icon_treesel| Select in project tree
+    The current display is selected in the project tree.
+
+|icon_savefile| Save File
+    Saves the current file (in the HMI database).
+
+.. figure:: images/file.png
+
+|icon_new| New Document
+    Creates a new empty document.
+
+|icon_openfile| Open
+    Opens the "Open File" dialog to open an existing SVG file.
+
+|icon_print| Print
+    Opens the 'Print' dialog to print the current document.
+
+|icon_saveas| Save As
+    Opens the 'Save File' dialog to save the current document as an SVG file.
+
+|icon_cleanupsvg| Cleanup SVG
+    Removes unused and unnecessary elements and attributes from the SVG file.
+
+|icon_settings| Settings
+    Opens the settings window to set dimensions, document title and to change the background of the current document.
+
+    .. figure:: images/window_settings_small.png
+
+|icon_editparameters| Parameters
+    Opens a window to add parameters for the object's base address to the display.
+
+    .. figure:: images/window_editparameters_small.png
+
+|add_static_preview| Create static preview (only for Object Displays)
+    Creates a preview image of the currently loaded editor content which will be used for rendering the preview of the current display in the library section of the display editor.
+
+    To enable this function, please create a **new profile** and activate the checkbox "Static Preview" in the builder settings dialogue:
+
+    .. figure:: images/add_static_preview_settings.png
+
+|delete| Delete static preview (only for Object Displays)
+    Removes a previously created static preview image.
+
+.. figure:: images/tools_clipboard.png
+
+|icon_undo| Undo
+    Undoes the last action and show information about that action.
+
+|icon_redo| Redo
+    Redoes the last action and show information about that action.
+
+|icon_copy| Copy
+    Copies a selected element (and save it to the clipboard).
+
+|icon_cut| Cut
+    Cuts a selected element (and save it to the clipboard).
+
+|icon_paste| Paste
+    Pastes the last-saved element from the clipboard.
+
+.. |add_static_preview| image:: images/add_static_preview.png
+.. |delete| image:: /common_images/delete.png
+.. |icon_cleanupsvg| image:: /common_images/icon_cleanupsvg.png
+.. |icon_copy| image:: /common_images/icon_copy.png
+.. |icon_cut| image:: /common_images/icon_cut.png
+.. |icon_editparameters| image:: /common_images/icon_editparameters.png
+.. |icon_new| image:: /common_images/icon_new.png
+.. |icon_openfile| image:: /common_images/icon_openfile.png
+.. |icon_paste| image:: /common_images/icon_paste.png
+.. |icon_print| image:: /common_images/icon_print.png
+.. |icon_redo| image:: /common_images/icon_redo.png
+.. |icon_saveas| image:: /common_images/icon_saveas.png
+.. |icon_savefile| image:: /common_images/icon_savefile.png
+.. |icon_settings| image:: /common_images/icon_settings.png
+.. |icon_showscripteditor| image:: /common_images/icon_showscripteditor.png
+.. |icon_showsource| image:: /common_images/icon_showsource.png
+.. |icon_undo| image:: /common_images/icon_undo.png
+.. |icon_treesel| image:: /common_images/icon_treeselect.png

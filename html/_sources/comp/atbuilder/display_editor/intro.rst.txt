@@ -1,0 +1,27 @@
+Introduction
+############
+
+The display editor allows to design and edit displays and corresponding scripts. 
+
+.. figure:: images/display_editor.png
+
+The display editor can be opened by double-clicking a display in the project tree. It consists of the graphics, code and XML editor.
+
+.. rubric:: 1. Graphics editor
+
+The graphics editor allows to create and edit displays as well as adding dynamizations to elements. Therefore, several tools, templates and functions are provided. Refer to chapter :ref:`graphics editor<graphical_editor>` for further information.
+
+.. figure:: images/graphics_editor.png
+
+.. rubric:: 2. Code editor
+
+The code editor shows all available scripts of a display and its elements and allows to create and edit scripts. All scripts are organized into script blocks, depending on the respective type. Refer to chapter :ref:`Code-Editor<code_editor>` for further information.
+
+.. figure:: images/code_editor.png
+
+.. rubric:: 3. XML Editor
+
+The XML editor shows the XML/SVG code of the respective display.
+
+.. figure:: images/xml_editor.png 
+ 

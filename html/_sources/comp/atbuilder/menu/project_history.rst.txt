@@ -1,0 +1,29 @@
+Project history and change log
+##############################
+
+The project history allows keeping track of single changes made during the engineering process
+
+The following events performed by the user are logged:
+
+- Project opened/closed
+- Server added/removed/modified
+- Display added/removed/modified
+
+For a webMI server additionally:
+
+- Acquired datapoints
+- Distributed visualization
+
+Calling :menuselection:`Show Project History` from the atvise builder displays the following information in a table:
+
+- Timestamp: time of action
+- User: the operating system user performing the action
+- Status: Status of the action (successful / failure)
+- Action: type of action
+- Additional text: additional text related to the action
+
+The top input field of the table allows entering a filter text which will be applied to all columns.
+
+.. figure:: images/project_history.png
+
+The logging is done in a configurable ring buffer. The size of this buffer (= number of rows) can be configured in :ref:`atserver.ini <atserver_ini_pushedarraysize>`.

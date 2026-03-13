@@ -1,0 +1,119 @@
+.. _login_handler:
+
+Login handler
+#############
+
+This Quick Dynamic helps to handle the response of the "clientvariableschange" event.  
+
+.. rubric:: Parameters
+
+- **message_display** -- The display that is opened to show messages, information or warnings.
+- **user_display** -- The displays that shows the user information of the currently logged in user.
+- **password_display** -- The display that is opened to change the user password and shows the defined password policy.
+
+Usage
++++++
+
+.. rubric:: Functions 
+
+The following functions are available for using the Quick Dynamic:
+
+- **getTextBlocks** -- Returns translated text blocks for login and authentication. E.g. to inform about necessary password change, locked users, successful logins etc.
+- **getResponseType** -- Gets the return value of "clientvariableschange" and returns the type as text.
+- **getResponseText** -- Gets the return value of "clientvariableschange" and returns the response as text.
+- **getErrorText** -- Transforms the error response of the :ref:`webMI.data.changepassword<webmi_changepassword>` function to a readable string and returns it.
+- **handleTwoFactorResponse** -- Transforms the two-factor response of "clientvariableschange" to a readable object and returns it.
+- **handlePolicy** -- Builds an enhanced password policy object with text blocks.
+- **getPasswordPolicy** -- Returns the enhanced password policy object with text blocks for a specific user.
+- **validateUserPassword** -- Returns a validated password policy object with text blocks.
+- **getMailPolicy** -- Returns the mail policy object with text blocks.
+- **validateUserMail** -- Returns a validated mail policy object with text blocks.
+- **showMessageDialog** -- Opens a popup for the server response of the "clientvariableschange" event.
+
+::
+
+    var loginHandler = webMI.callExtension("SYSTEM.LIBRARY.ATVISE.QUICKDYNAMICS.Login Handler");
+
+    webMI.addEvent(webMI.data, "clientvariableschange", function(e) {
+        console.log(loginHandler.handleTwoFactorResponse(e));
+        // Before entering authentication code:
+        // {
+        //      email:"myMail@test.at"
+        //      error:{}
+        //      state:{invalid: true, login: false, loginFailed: false, loginSucceded: false}
+        //      type:{deactivated: false, app: true, email: false}
+        // }
+        // After confirming authentication code:
+        //      success
+
+        console.log(loginHandler.getResponseText(e));
+        // After confirming authentication code:
+        //      User log in successful!
+
+        console.log(loginHandler.getResponseType(e));
+        // After entering correct credentials, but with pending two-factor authentication:  
+        //      twofactor
+        //
+        // After confirming authentication code:
+        //      success
+    }
+
+    webMI.data.changepassword("u1","MyOldPassword123", "MyNewPassword", function(e){
+            console.log(loginHandler.getErrorText(e));
+            // {
+            //    address: "19"
+            //    error: -1
+            //    errorstring: "Error changing password!"
+            // }
+    });
+
+    loginHandler.getPasswordPolicy("u1", function(e){
+        console.log(e); //see output of validateUserPassword below
+    )};
+
+    var policy = webMI.getPasswordPolicy();
+    console.log(loginHandler.handlePolicy(policy)); // see output of validateUserPassword below
+
+    loginHandler.validateUserPassword("u1","MyNewPassword123", function (e){
+        console.log(e);
+            // {
+            //    hasSurroundingWhiteSpace:{fulfilled: true, value: true, text: 'no leading or trailing spaces'}
+            //    maxAgeDays:{fulfilled: true, value: 0, text: 'Unlimited'}
+            //    minLength:{fulfilled: true, value: 3, text: 'Min. 3 characters'}
+            //    requireDigit:{fulfilled: true, value: true, text: 'digit(s)'}
+            //    requireFullnameExclusion:{fulfilled: true, value: false, text: 'Must not contain user name or part of full name'}
+            //    requireLowerCase:{fulfilled: true, value: true, text: 'lower case'}
+            //    requireNameExclusion:{fulfilled: true, value: false, text: 'Must not contain user name'}
+            //    requireNewPw:{fulfilled: true, value: false, text: 'New and old password must be different'}
+            //    requireOtherUnicode:{fulfilled: null, value: false, text: 'Other unicode character(s)'}
+            //    requireSpecialChar:{fulfilled: true, value: false, text: `Special character(s) ( .:',;"~!?@#$%^&*_-+=/|\\(){}[]<>)`}
+            //    requireUpperCase:{fulfilled: true, value: true, text: 'upper case'}
+            // }
+    });
+
+    console.log(loginHandler.getMailPolicy());
+        // {
+        //    whitelist: Array(2)
+        //        0: "test.at"
+        //        1: "test.de"
+        //        length: 2
+        //    allowCustomEmail: true
+        // }
+
+    loginHandler.validateUserMail("myMail@test.com", function(e){
+        console.log(e);
+        // {
+        //    allowCustomEmail:
+        //      {
+        //          fulfilled:true
+        //          text:""
+        //          value:true
+        //      }
+        //    domainWhitelist:    
+        //      {
+        //          fulfilled:false
+        //          text:"E-mail address has invalid domain"
+        //          value: (2) ['test.at', 'test.de']
+        //      }
+        // }
+    });

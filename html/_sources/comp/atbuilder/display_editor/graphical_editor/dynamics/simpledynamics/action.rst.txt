@@ -1,0 +1,177 @@
+3. ACTION
+#########
+
+The action specified in this part of the simple dynamics will be executed when the event defined in step 1 is triggered. The action types listed on the left side of the dialog will be executed. The properties for each type can be set right next to it.
+
+The different types of actions are explained in the following table.
+
+|button_dyn_rotate| Rotate element
+    Specify the min/max value and start/stop angle to rotate an element. In this case, changing the node value by 100 means rotating the element by 360° (see above).
+
+    The element rotates around the point of rotation on an element which is marked yellow. This point of rotation can be moved as desired, even outside of the element.
+
+    .. figure:: images/dynamics_action_rotate.png
+
+|button_dyn_scale| Scale element
+    Enter the min/max value and scale x/y (in %) to scale an element. Changing the node value will
+
+    - scale the element up/down (in percent)
+    - scale the element left/right (in percent)
+
+|button_dyn_color| Change Color
+    To change the color of an element, this action has to be called. Make a selection to change the color by
+
+    - discrete values
+    - discrete value ranges
+    - a value range
+
+    .. figure:: images/dynamics_action_color_discretevalueranges.png
+
+|button_dyn_visibility| Change Visibility
+    To change the visibility of an element, this action has to be called. Choose between visible, invisible or cycling flashing (in ms). Make a selection for changing visibility
+
+    - discrete
+    - discrete value ranges
+
+|button_dyn_window| Open / Close Window
+    Specify if a window should be opened, changed or closed.
+
+    - To open a window, specify its position and size.
+
+    There are several features which can be set for the new window.
+
+    - To open an information dialog, (alert) enter a desired text.
+    - To change the display, set the display URL.
+    - To close the current window, choose the last option.
+
+    .. figure:: images/dynamics_action_window_openwindow.png
+
+    Features:
+
+    If the feature **Extern** is activated, then the window to be opened will be opened as external window, i.e. a new tab will be opened in the browser. In case **Extern** is deactivated, the window to be opened will be opened internally in the existing tab.
+
+    The features **Modal**, **Resizeable** and **Moveable** shall only be used for internal windows.
+
+    The features **Scrollbars**, **Menubar**, **Statusbar** and **Toolbar** are browser specific, i.e. these elements will only be shown in the browser if they are supported by the browser.
+
+    .. figure:: images/dynamics_action_window_changedisplay.png
+
+    **Target:** This represents the parameter called "name" in the iframe Object Display. (If the iframe is named "myframe" the input field target should be filled with its name if it is desired to open the address in this frame).
+
+    .. hint:: These functions (e.g. also nesting of windows) are browser specific. Therefore, please test your parameterization with your devices and browser.
+
+|button_dyn_ackalarm| Acknowledge Alarm
+    Specify the address of the alarm condition to be acknowledged.
+
+    .. figure:: images/dynamics_action_ackalarm.png
+
+|button_dyn_text_value| Change Text
+    The "Change Text" action has the following useful functions:
+
+    - show enumerated values (discrete)
+    - show enumerated values (range)
+    - change font (discrete)
+    - change font (range)
+    - display value directly
+
+    .. figure:: images/dynamics_action_textvalue_formatoutput.png
+
+    Important for "Display value directly": the "Format Output" string has to be printf()-syntax conform!
+
+|button_dyn_setnode| Set address(es)
+    The following functions are useful to set a value to a node address:
+
+    - take the value directly from the event
+    - discrete values
+    - condition-based value, discrete
+    - condition-based value, range
+
+    .. figure:: images/dynamics_action_setnode_conditionrange.png
+
+|button_dyn_move| Move element
+    Enter the min/max value and position x/y (in %) to move an element. Changing the node value will
+
+    - move the element up/down (in pixels)
+    - move the element left/right (in pixels)
+
+|button_dyn_skew| Skew element
+    Enter the min/max value and skew x/y (in °) to skew an element. Changing the node value will
+
+    - skew the element up/down (in degrees)
+    - skew the element left/right (in degrees)
+
+|button_dyn_opacity| Change Opacity
+    To change the opacity of an element, this action has to be called. Just as for the "Change Color" event, a selection must be made:
+
+    - discrete values
+    - discrete value ranges
+    - a value range
+
+    .. figure:: images/dynamics_action_opacity.png
+
+|button_dyn_image| Set Image
+    To set a new image, a value (discrete value or discrete value ranges) and an image file address have to be entered.
+
+|button_dyn_enable_disable| Set active / inactive
+    To enable or disable an element, enter a value and set it to active or inactive.
+
+    .. hint:: Can be used for HTML elements only, not for object displays.
+
+|button_dyn_sound| Start / Stop Sound
+    To play a sound (once or continuously), enter an alarm-sound file address. To stop a playing sound (one specific or all playing sounds), deactivate it using the respective functions.
+
+    .. hint:: Apple forbids automatic playback of audio sequences without user interaction on its iOS devices:
+
+|button_dyn_script| Start Script
+    Use this action to start a script as an action within the simple dynamics.
+
+|button_dyn_trigger2| Fire Trigger
+    You can fire a trigger with any name. All dynamizations that have this trigger name defined in the :ref:`Event -> Trigger <sd_event_trigger>` part will be triggered.
+
+    You can also pass a value on to the trigger event:
+
+    - take the value directly from the event
+    - discrete values
+    - condition-based value, discrete
+    - condition-based value, range
+
+    Example:
+
+    .. figure:: images/dynamics_action_trigger.png
+
+.. hint:: If the actions move, skew and rotate wanted to be used at the same time on the same item or group, the dynamization has to be applied nested.
+
+    Example:
+
+    Rotating engine moving from left to right:
+
+    .. code-block:: none
+
+        <g> - Bewegung
+          <Motor/> - Rotation
+        </g>
+
+    Rotating pointer, that can get shorter and longer:
+
+    .. code-block:: none
+
+        <g> - Rotation
+          <Zeiger/> - Bewegung
+        </g>
+
+.. |button_dyn_ackalarm| image:: images/button_dyn_ackalarm.png
+.. |button_dyn_color| image:: images/button_dyn_color.png
+.. |button_dyn_enable_disable| image:: images/button_dyn_enable_disable.png
+.. |button_dyn_image| image:: images/button_dyn_image.png
+.. |button_dyn_move| image:: images/button_dyn_move.png
+.. |button_dyn_opacity| image:: images/button_dyn_opacity.png
+.. |button_dyn_rotate| image:: images/button_dyn_rotate.png
+.. |button_dyn_scale| image:: images/button_dyn_scale.png
+.. |button_dyn_script| image:: images/button_dyn_script.png
+.. |button_dyn_setnode| image:: images/button_dyn_setnode.png
+.. |button_dyn_skew| image:: images/button_dyn_skew.png
+.. |button_dyn_sound| image:: images/button_dyn_sound.png
+.. |button_dyn_text_value| image:: images/button_dyn_text_value.png
+.. |button_dyn_trigger2| image:: images/button_dyn_trigger2.png
+.. |button_dyn_visibility| image:: images/button_dyn_visibility.png
+.. |button_dyn_window| image:: images/button_dyn_window.png

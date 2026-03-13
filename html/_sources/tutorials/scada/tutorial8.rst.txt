@@ -1,0 +1,38 @@
+8 Adding historization
+######################
+
+In this section, we will add historization to the values of the data variables of the "Light" object.
+
+.. rubric:: 8.1 Configuring the historization of data variables
+
+1. Open the object types list by clicking on the "Object Types" tab on the left side of the atvise builder interface.
+
+2. Open the object structure of the "Light" type and right-click on "COMMANDS -> LightIntensity".
+
+3. Choose "Historize..." from the menu and select the entry "datavalues" in the :ref:`following dialog <historize_and_aggregate>` under "Raw Archive".
+
+4. Do the same with the "SIGNALS -> LightIntensity" data variable.
+
+.. figure:: images/add_historization.png
+
+    Adding historization to the "LightIntensity" data variables
+
+You can add "Smoothing" like absolute deadband to your data variables to reduce the amount of historized data - see chapter :ref:`smoothing`.
+
+.. rubric:: 8.2 Viewing the history in the visualization
+
+Now we can take a look at the history list in the visualization.
+
+1. Open the "Office_Light" display in the visualization.
+
+2. Change the "LightIntensity" for some rooms several times.
+
+3. Click on the history list symbol |histlist_symbol| in the control panel to see the value changes in the history list.
+
+You could also place this symbol in any display you like by using the display object "Historylist" in the "Standard -> hmi" folder.
+
+.. figure:: images/view_historylist.png
+
+    Viewing the history list in the visualization
+
+.. |histlist_symbol| image:: images/histlist_symbol.png

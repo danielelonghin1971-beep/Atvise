@@ -1,0 +1,21 @@
+Time Element
+############
+
+This display displays the current time.
+
+.. rubric:: Parameters
+
+This control has the following generic parameters:
+
+- **time format** -- Formating the time can by achieved by using placeholders (default: %H:%M) 
+
+    - **%H** -- Placeholder for the hour in 2-digit format
+    - **%M** -- Placeholder for the minutes in 2-digit format
+    - **%S** -- Placeholder for the seconds in 2-digit format
+
+
+Font:
+
+- **font family** -- Font family which will be applied to the text (default: Arial)
+- **font size** -- Font size which will be applied the text (default: 38)
+- **font color** -- Color which will be applied to the text (default: global parameter atvFontColor)

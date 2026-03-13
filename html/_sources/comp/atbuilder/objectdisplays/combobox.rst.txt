@@ -1,0 +1,161 @@
+Combobox
+########
+
+The combobox allows you to select elements from a list.
+
+It can be used in the following modes according to the parameter "mode":
+
+- **Text**: As soon as this mode is selected, the items in the group "Text Mode" need to be configured. Each shown item in the combobox consists of a "text element" and a "value element". The "text elements" are being displayed as items in the combobox, whereas the "value element" is being written to "base" or "alternative output address", if the related "text element" has been selected. With this mode up to 5 items can be configured. If you want to configure more than 5 items, please use the "Enum List" or "Script" mode.
+- **Boolean**: The combobox will provide the two items "true" and "false". The "base" will be set according to the selected item and must therefore be of type "Boolean".
+- **Enum List**: As soon as this mode is selected, the items in the group "Enum List Mode" need to be configured. Each shown item in the combobox consists of a "text" and a "value" according to the defined enum list. The "text" is being displayed as an item in the combobox, whereas the "value" is being written to "base" or "alternative output address", if the related "text" has been selected.
+- **Script**: This mode allows you to handle the items of the combobox with the following triggers in javascript: setItems, setSelectedItem, addItem, getSelectedItem, getItems (see description below for further information)
+
+An additional border indicates the current value's negative state or an additionally defined alarm. The colors and blinking intervals are defined in global lists.
+
+.. rubric:: Triggers
+
+Display-specific triggers:
+
+- **setItems** -- To set (initialize) the combobox with the predefined object containing all items (pairs of text and value).
+
+    ::
+
+        var entries = [
+            { text: "Entry 1", value: "1" },
+            { text: "Entry 2", value: "2" },
+            { text: "Entry 3", value: "3" }
+        ];
+        webMI.trigger.fire("setItems", entries, "myCombobox");
+
+- **setSelectedItem**-- To set one item (text only) in the combobox as selected .
+
+    ::
+
+        webMI.trigger.fire("setSelectedItem", "Entry 1", "myCombobox");
+
+- **addItem**-- To add one item (pair of text and value) to the combobox.
+
+    ::
+
+        webMI.trigger.fire("addItem", { text: "Entry 4", value: "4" }, "myCombobox");
+
+- **getSelectedItem** -- Fires the trigger "selectedItem" if parameter is string, or calls the callback function with the value of the currently selected item in the combobox.
+
+    ::
+
+        webMI.trigger.fire("getSelectedItem", function(e){alert(e.text+" "+e.value);},"myCombobox");
+
+    or
+
+    ::
+
+        webMI.trigger.connect("selectedItem", function(e) { alert(e.value); }, "myCombobox");
+        webMI.trigger.fire("getSelectedItem", "", "myCombobox");
+
+- **getItems** -- Fires the trigger "items" with an array containing all items (pairs of text and value) of the combobox.
+
+    ::
+
+        webMI.trigger.connect("items", function(e) { alert(e.value); }, "myCombobox");
+        webMI.trigger.fire("getItems", "", "myCombobox");
+
+General triggers:
+
+- **com.atvise.setActive** -- Can be used to enable or disable the object display.
+- **valuechanged** -- Fired on value changes, e.g. by user input.
+
+::
+
+    //Disable the object display
+    webMI.trigger.fire("com.atvise.setActive", false, "myDisplayID");
+
+    //Respond to value changes
+    webMI.trigger.connect("valuechanged", function(e) { console.log(e.value); }, "myDisplayID");
+
+.. hint:: Additional undocumented triggers are internally used by atvise. Their functionality may be changed in future atvise releases.
+
+.. rubric:: Parameters
+
+This control has the following generic parameters:
+
+- **base** -- Depending on the modes described above, the "base" will be set to the corresponding value of the selected item in the combobox
+- **alarm address** -- Optional additional address of an alarm to be shown.
+- **mode** -- Select one of the four modes as described above (default: Text)
+- **alternative output address** -- As soon as this address is configured, the value will be written to this address and not to "base"
+- **enable status monitoring** -- Switch monitoring of current value status on or off. (default: Yes)
+- **fire status trigger** -- Instead of the status display a here defined trigger can be fired globally.
+
+Text Mode:
+
+- **text element 1** -- First text element to be shown in the combobox
+- **value element 1** -- Value related to the first text element
+- **text element 2** -- Second text element to be shown in the combobox
+- **value element 2** -- Value related to the second text element
+- **text element 3** -- Third text element to be shown in the combobox
+- **value element 3** -- Value related to the third text element
+- **text element 4** -- Fourth text element to be shown in the combobox
+- **value element 4** -- Value related to the fourth text element
+- **text element 5** -- Fifth text element to be shown in the combobox
+- **value element 5** -- Value related to the fifth text element
+
+Enum List Mode:
+
+- **enum list** -- Global list which defines the pairs (text + value) for the combobox - see mode 3 above
+
+Font:
+
+- **family** -- Font family which will be applied to value (default: Arial)
+- **size** -- Font size which will be applied to the value (default: 12)
+- **color** -- Color which will be applied to the value (default: global parameter atvFontColor (advanced), #000000 (standard))
+
+Appearance:
+
+- **fill color** -- Fill color of background areas (default: global parameter atvFillColor (advanced), #d0d0d0 (standard))
+- :advstyle:`Advanced` **value field fill color** -- Fill color of the value field (default: #ffffff)
+- :advstyle:`Advanced` **value field fill color inactive** -- Fill color of the value when not active (default: #b7b7b7)
+- :stdstyle:`Standard` **button fill color** -- Fill color of drop down button (default: #000000)
+- :stdstyle:`Standard` **fill color when inactive** -- Fill color if not active (default: #8c8c8c)  
+- **symbol fill** -- Symbol's fill color (default: global parameter atvSymbolColor (advanced), #d0d0d0 (standard))
+- **stroke color pressed** -- The color of the stroke which will be set when the combobox is clicked (default: #ffffff)
+- **focus stroke color** -- The color of the stroke which will be set when the button is focused (default: #ffffff)
+- :advstyle:`Advanced` **border color** -- Color of the border around the control (default: global parameter atvBorderColor)
+- **status indication** -- Specify the status' display through a defined global list (default: global parameter atvStatusIndication)
+- **alarm indication** -- Specify the alarm's display through a defined global list (default: global parameter atvAlarmIndication)
+
+Security:
+
+- **necessary right** -- The user must have this right to activate the combobox i.e. to tick the checkbox
+- **activation address** -- If the value of this address equals to "activation value", then the combobox will be active, i.e. can be pressed
+- **activation value** -- Value which activates the combobox
+    
+    .. hint:: The activation of combobox can be configured only by the necessary right, or only by the activation address and value or by both. In case both settings are made, the user must have the necessary right and the value of the "activation address" must equal the "activation value"; otherwise the combobox will not be activated.
+
+- **show access control notification** -- Defines if the icon for showing access control notifications shall be displayed (default: true)
+
+Options:
+
+- :stdstyle:`Standard` **maximum displayed items (0 = all)** -- Maximum number of items displayed without scrolling (default: 0)
+- **consistency group** -- Name of the consistency group
+- **tab index** -- Defines the order for changing between the object displays by using the tab key
+- **tooltip** -- Displays a tooltip box with the entered text (standard HTML-Elements can be entered)
+
+Context menu:
+
+- :advstyle:`Advanced` **font family** -- Font family which will be applied to the context menu's text (default: Arial)
+- :advstyle:`Advanced` **font size** -- Font family which will be applied to the context menu's text (default: 12)
+- :advstyle:`Advanced` **font color** -- Font family which will be applied to the context menu's text (default: global parameter atvFontColor)
+- :advstyle:`Advanced` **symbol color hovered** -- Symbol color on mouseover (default: global parameter atvFontColor)
+- :advstyle:`Advanced` **background color** -- Background color of the context menu (default: global parameter atvFontColor2)
+- :advstyle:`Advanced` **hover color** -- Background color of the context menu on mouseover (default: global parameter atvFillColor)
+- :advstyle:`Advanced` **text alignment** -- Alignment of the context menu's text (left, center or right) (default: right)
+- :advstyle:`Advanced` **stroke color** -- Stroke color of the context menu (default: global parameter atvBorderColor)
+- :advstyle:`Advanced` **stroke width** -- Stroke width of the context menu (default: 1)
+- :advstyle:`Advanced` **maximum displayed items (0 = all)** -- Maximum number of items displayed without scrolling (default: 0)
+
+Menu:
+
+- **menu positioning** -- The position the menu symbol is shown at (top-left, top-right, bottom-left, bottom-right).
+- **menu mouseover active** -- Symbol is only shown on *mouseover*.
+- **menu symbol offset x** -- Relative offset of the menu symbol to the anchor point on the x axis in pixel.
+- **menu symbol offset y** -- Relative offset of the menu symbol to the anchor point on the y axis in pixel.
+- **context menu click frame** -- Defines the size of the click frame for opening the context menu.

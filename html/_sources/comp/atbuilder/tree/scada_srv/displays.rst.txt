@@ -1,0 +1,27 @@
+Manage displays
+###############
+
+The four folders (MAIN, USER, SYSTEM, REPORT) will be automatically generated in the main tree when you add a new server. Folders that contain displays are shown in the navigation bar of the visualization (browser) of your project. If you click on the respective folder in the navigation bar, the underlying displays are shown.
+
+.. figure:: images/displays.png
+
+To add a reference, right-click on a folder and choose :menuselection:`Add Reference`:
+
+.. figure:: images/display_tab.png
+
+    Adding a reference
+
+Add Folder
+    Adds a new folder for your displays.
+
+Add Display
+    Adds a new display to your server.
+
+Add Reference
+    - to single display from pool -- Adds a reference to a single display from the display pool.
+    - to display structure from pool -- Adds a reference to a whole folder from the display pool.
+    - to resource -- Adds a reference to a single resource (which can be selected from the resource folder).
+    - to other URL -- Adds a reference to a URL (similar to a hyperlink).
+
+Edit Display Order
+    Edits the order of your displays.

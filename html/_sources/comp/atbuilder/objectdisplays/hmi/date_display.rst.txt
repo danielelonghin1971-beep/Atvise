@@ -1,0 +1,20 @@
+Display Date
+############
+
+This control displays the current date.
+
+.. rubric:: Parameters
+
+- **base** -- The value of this address will be set
+- **separator** -- Specifies the separating character between the date parts for day/month/year (default: T{.})
+- :advstyle:`Advanced` **font color** -- Font color which will be applied to the values (default: global parameter atvFontColor)
+- :advstyle:`Advanced` **fill color** -- Background color of the control (default: global parameter atvFillColor)
+- :advstyle:`Advanced` **border color** -- Color of the control's border (default: global parameter atvBorderColor)
+
+Menu:
+
+- **menu positioning** -- The position the menu symbol is shown at (top-left, top-right, bottom-left, bottom-right).
+- **menu mouseover active** -- Symbol is only shown on *mouseover*.
+- **menu symbol offset x** -- Relative offset of the menu symbol to the anchor point on the x axis in pixel.
+- **menu symbol offset y** -- Relative offset of the menu symbol to the anchor point on the y axis in pixel.
+- **context menu click frame** -- Defines the size of the click frame for opening the context menu.

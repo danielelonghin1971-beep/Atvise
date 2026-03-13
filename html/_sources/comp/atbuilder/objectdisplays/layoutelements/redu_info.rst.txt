@@ -1,0 +1,25 @@
+Redundancy Info
+###############
+
+This display shows the redundancy status. Whether or not notifications are enabled, the background of the "i" symbol is colored yellow to indicate that the redundancy state has changed. The :ref:`Redundancy State <od_redundancy_status>` display can be opened by clicking the symbol.
+
+.. rubric:: Parameters
+
+- **background color** -- The form's background color (default: global parameter atvFillColor)
+
+Font: 
+
+- **font color** -- Color which will be applied to the text (default: global parameter atvFontColor)
+
+Appearance: 
+
+- **symbol color** -- Color which will be applied to the symbol (default: global parameter atvSymbolColor)
+- **fill color on mousedown** -- Color which will be applied to the background on mousedown (default: global parameter atvFillColor2)
+- **symbol color on mousedown** -- Color which will be applied to the symbol on mousedown (default: global parameter atvFontColor2)
+
+Notifications:
+
+- **redundancy warning dialog** -- Dialog that is shown in case of a SOP/SNOP switchover in split mode. (default: SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Advanced.redundancy.warning_dialog) 
+- **redundancy connection dialog** -- Dialog that is shown in case of connection switchovers and indicates a possible data loss in the visualization. (default: SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Advanced.dialogs.message_dialog)
+- **show SOP notification** -- Enables or disables the SOP/SNOP warning dialog. *false* means that the dialog is not shown if reloading the visualization was not necessary. (default: true) 
+- **show connection notification** -- Enables or disables the connection dialog. *false* means that the dialog is not shown if reloading the visualization was not necessary. The visualization is not reloaded when FQDNs are used. (default: true)

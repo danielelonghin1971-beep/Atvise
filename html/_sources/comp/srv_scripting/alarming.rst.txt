@@ -1,0 +1,276 @@
+.. _alarming:
+
+Alarming functions
+##################
+
+.. rubric:: Information about alarms, conditions and groups
+
+.. !!v8!! alarming.list
+.. attribute:: alarming.list
+
+    An array containing all current alarms. Each element in the array is an :ref:`alarm object <alarm_object_properties>`.
+
+    Example::
+
+        console.log("Number of current alarms: ", alarming.list.length);
+
+.. !!v8!! alarming.conditions
+.. attribute:: alarming.conditions
+
+    An array containing the nodeIds of all conditions, whether they have any current alarms or not.
+
+.. !!v8!! alarming.configuration(conditionId)
+.. function:: alarming.configuration(conditionId)
+
+    Returns configuration information for the given conditions.
+
+    Parameters:
+        - **conditionId** (UaNodeId or UaNodeId[]) -- The nodeIds of the conditions. A single conditionId or an array of conditionIds.
+
+    Returns:
+        The return value is always an array of objects where the elements in the array correspond to the given conditions. The properties of each object are all optional and only available if the respective configuration value is set:
+
+        - **acknowledgment** (Integer) -- The acknowledgment type: 1 - not acknowledgeable, 2 - acknowledged by inactive, 3 - inactive by acknowledge, 4 - acknowledge active or inactive, 5 - acknowledge active and inactive, 6 - acknowledge and confirm active or inactive, 7 - acknowledge and confirm active and inactive.
+        - **activeMessage** (String) -- Alarm text for the active alarm.
+        - **activeMessageLocale** (String) -- The locale of the text for the active alarm.
+        - **inactiveMessage** (String) -- Alarm text for the inactive alarm.
+        - **inactiveMessageLocale** (String) -- The locale of the text for the inactive alarm.
+        - **category** (UaNodeId) -- The nodeId of the alarm category.
+        - **type** (UaNodeId) -- The type definition of the condition.
+        - **base** (UaNodeId) -- The nodeId of the parent of the *configuration*.
+        - **condition** (UaNodeId) -- The nodeId of the - possibly virtual - condition. Virtual means that the condition may not be a real node in the address space if the alarm was parameterized at an object type and the function is called with the conditionId of an instance of this type.
+        - **configuration** (UaNodeId) -- The nodeId of the - possibly virtual - configuration. Virtual means that the configuration may not be a real node in the address space if the alarm was parameterized at an object type and the function is called with the conditionId of an instance of this type.
+        - **conditionNode** (UaNodeId) -- The nodeId of the actual condition in the address space.
+        - **configurationNode** (UaNodeId) -- The nodeId of the actual configuration in the address space.
+        - **input** (UaNodeId) -- The nodeId of the variable used as input for determinining if the alarm condition is true or false.
+        - **enabled** (Boolean) -- True, if the condition is enabled, otherwise false.
+        - **exclusive** (Boolean) -- Reserved for future use. true, if the conditions should be checked for overlapping ranges.
+        - **explicitAcknowledgment** (Boolean) -- If true, an alarm must always be acknowledged explicitely and will not be acknowledged if it as part of a sum alarm and the sum alarm is acknowledged.
+        - **maxTimeShelved** (Integer) -- The maximum time period in milliseconds an alarm can be shelved.
+        - **offDelay** (Double) -- The time period in milliseconds an alarm will stay active even if the condition is no longer true.
+        - **onDelay** (Double) -- The time period in milliseconds an alarm will stay inactive even if the condition is already true.
+        - **priority** (Integer) -- The priority of the alarm in the range 1 (low) to 1000 (high).
+
+        For limit alarms additionally:
+
+        - **lowerLimit** (Any) -- The lower limit of the alarm range. Can be a value of the same type as the *input* variable, a nodeId of a variable where the limit is to take from or a browse path relative to *base* pointing to a variable where the limit is to take from.
+        - **lowerLimitCompare** (String) -- The comparison operator for the lower limit. Either ``>`` or ``>=``.
+        - **upperLimit** (Any) -- Like *lowerLimit* but for the upper limit.
+        - **upperLimitCompare** (String) -- The comparison operator for the upper limit. Either ``<`` or ``<=``.
+
+        For discrete alarms additionally:
+
+        - **compare** (String) -- The comparison operator for the value. Either ``==`` or ``!=``.
+        - **value** (Any) -- The value to compare. Can be a value in the same type as the *input* variable, a nodeId of a variable where the value is to take from or a browse path relative to *base* pointing to a variable where the value is to take from.
+
+    Example::
+
+        var cond = alarming.conditions;
+        if (cond.length > 0)
+            console.log(alarming.configuration(cond[0]));
+
+.. _alarming_read:
+
+.. !!v8!! alarming.read(conditionId)
+.. function:: alarming.read(conditionId)
+
+    Reads all current alarms of the given conditions.
+
+    Parameters:
+        - **conditionId** (UaNodeId or UaNodeId[]) -- The nodeIds of the conditions. A single conditionId or an array of conditionIds.
+
+    Returns:
+        The return value is always an array where the elements in the array correspond to the given conditions. Each element contains all current alarms of the respective conditionId and is itself an array of :ref:`alarm objects <alarm_object_properties>`.
+
+.. !!v8!! alarming.conditionid(alarmId)
+.. function:: alarming.conditionid(alarmId)
+
+    Determines the conditionIds for the given alarms.
+
+    Parameters:
+        - **alarmId** (String or String[]) -- The ids of the alarms. A single alarmId or an array of alarmIds.
+
+    Returns:
+        The return value is always an array of conditionIds where the elements in the array correspond to the given alarms.
+
+.. !!v8!! alarming.groups
+.. attribute:: alarming.groups
+
+    An array containing the nodeIds of all alarm groups.
+
+.. !!v8!! alarming.group(nodeId)
+.. function:: alarming.group(nodeId)
+
+    Returns the members of the given alarm groups.
+
+    Parameters:
+        - **nodeId** (UaNodeId or UaNodeId[]) -- The nodeIds of the alarm groups.
+
+    Returns:
+        The return value is always an array of objects where the elements in the array correspond to the given groups. The properties of each object are:
+
+        - **children** (UaNodeId[]) -- The nodeIds of subordinate alarm groups.
+        - **conditions** (UaNodeId[]) -- The nodeIds of the conditions assigned to the alarm group.
+
+.. rubric:: Operations on alarms and conditions
+
+.. hint:: The :ref:`user context<scripteditor_metadata>` must be considered when setting the *user* parameter for these functions:
+    
+    - **The user in whose context the script is executed is a project administrator:** In this case, the user defined via *user* parameter is applied. If this user does not exist, executing the alarm function is aborted and an error message is written to the log file. 
+    - **The user in whose context the script is executed is no project administrator:** If the executing user is not the same as the one defined via *user* parameter, the executing user is used for the respective function. A corresponding message is written to the log file. 
+
+.. !!v8!! alarming.acknowledge(alarmOrConditionId[, options])
+.. function:: alarming.acknowledge(alarmOrConditionId[, options])
+
+    Acknowledges the given alarms, optionally setting a comment.
+
+    Parameters:
+        - **alarmOrConditionId** (String or String[]) -- The alarmIds or conditionIds of the alarms. A single id or an array of ids.
+        - **options** (Object, optional, default: {}) -- Object with options:
+
+            - **user** (String, optional, default: "") -- The name of the user requesting the action.
+            - **comment** (String, optional, default: "") -- The comment to set for the alarms.
+            - **commentlocale** (String, optional, default: "en") -- The locale of the comment to set for the alarms.
+
+    Returns:
+        The return value is always an array of objects where the elements in the array correspond to the given alarms. The properties of each object are:
+
+            - **error** (Integer) -- The error code, supplied only if an error occurred.
+            - **errorstring** (String) -- The error text, supplied only if an error occurred.
+
+    Example 1, acknowledge with an array of conditionIds::
+
+        var conditions = ["AGENT.OBJECTS.var1.AL.cond", "AGENT.OBJECTS.var2.AL.cond"];
+        alarming.acknowledge(conditions, { comment: "acknowledged by script" });
+
+    Example 2, acknowledge with a single alarmId::
+
+        var alarms = alarming.list;
+        if (alarms.length > 0)
+            alarming.acknowledge(alarms[0].AlarmId);
+
+.. !!v8!! alarming.confirm(alarmOrConditionId[, options])
+.. function:: alarming.confirm(alarmOrConditionId[, options])
+
+    Confirms the given alarms, optionally setting a comment.
+
+    Parameters:
+        - **alarmOrConditionId** (String or String[]) -- The alarmIds or conditionIds of the alarms. A single id or an array of ids.
+        - **options** (Object, optional, default: {}) -- Object with options:
+
+            - **user** (String, optional, optional, default: "") -- The name of the user requesting the action.
+            - **comment** (String, optional, default: "") -- The comment to set for the alarms.
+            - **commentlocale** (String, optional, default: "en") -- The locale of the comment to set for the alarms.
+
+    Returns:
+        The return value is always an array of objects where the elements in the array correspond to the given alarms. The properties of each object are:
+
+            - **error** (Integer) -- The error code, supplied only if an error occurred.
+            - **errorstring** (String) -- The error text, supplied only if an error occurred.
+
+    Example 1, confirm with an array of conditionIds::
+
+        var conditions = ["AGENT.OBJECTS.var1.AL.cond", "AGENT.OBJECTS.var2.AL.cond"];
+        alarming.confirm(conditions, { comment: "confirmed by script" });
+
+    Example 2, confirm with a single alarmId::
+
+        var alarms = alarming.list;
+        if (alarms.length > 0)
+            alarming.confirm(alarms[0].AlarmId);
+
+.. !!v8!! alarming.comment(alarmOrConditionId[, options])
+.. function:: alarming.comment(alarmOrConditionId[, options])
+
+    Sets the comment for the given alarms.
+
+    .. hint:: If you specify a conditionId, the comment will be set for all alarms of the condition but not for the condition itself. If no alarm exists for the conditionId, the function does nothing.
+
+    Parameters:
+        - **alarmOrConditionId** (String or String[]) -- The alarmIds or conditionIds of the alarms. A single id or an array of ids.
+        - **options** (Object, optional, default: {}) -- Object with options:
+
+            - **user** (String, optional, optional, default: "") -- The name of the user requesting the action.
+            - **comment** (String, optional, default: "") -- The comment to set for the alarms.
+            - **commentlocale** (String, optional, default: "en") -- The locale of the comment to set for the alarms.
+
+    Returns:
+        The return value is always an array of objects where the elements in the array correspond to the given alarms. The properties of each object are:
+
+            - **error** (Integer) -- The error code, supplied only if an error occurred.
+            - **errorstring** (String) -- The error text, supplied only if an error occurred.
+
+    Example 1, comment with an array of conditionIds::
+
+        var conditions = ["AGENT.OBJECTS.var1.AL.cond", "AGENT.OBJECTS.var2.AL.cond"];
+        alarming.comment(conditions, { comment: "commented by script" });
+
+    Example 2, comment with a single alarmId::
+
+        var alarms = alarming.list;
+        if (alarms.length > 0)
+            alarming.comment(alarms[0].AlarmId, { comment: "commented by script" });
+
+.. !!v8!! alarming.shelve(conditionId[, options])
+.. function:: alarming.shelve(conditionId[, options])
+.. !!v8!! alarming.unshelve(conditionId[, options])
+.. function:: alarming.unshelve(conditionId[, options])
+
+    Shelves or unshelves the given conditions. A condition may be shelved until is becomes inactive (OneShotShelve) or for a given time period (TimedShelve). A shelved alarm will not be shown in the normal alarm list. Disabled conditions cannot be shelved or unshelved.
+
+    Parameters:
+        - **conditionId** (UaNodeId or UaNodeId[]) -- The nodeIds of the conditions. A single conditionId or an array of conditionIds.
+        - **options** (Object, optional, default: {}) -- Object with options:
+
+            - **user** (String, optional, default: "") -- The name of the user requesting the action.
+            - **time** (Integer, optional, default: 0) -- The shelving time in milliseconds. The alarms of a condition will stay in the shelving state for the given time. If not set or 0, an alarm will be unshelved when it becomes inactive.
+
+    Returns:
+        The return value is always an array of objects where the elements in the array correspond to the given conditions. The properties of each object are:
+
+            - **error** (Integer) -- The error code, supplied only if an error occurred.
+            - **errorstring** (String) -- The error text, supplied only if an error occurred.
+
+    Example, shelve all conditions for 1 minute::
+
+        alarming.shelve(alarming.conditions, { time: 60000 });
+
+.. !!v8!! alarming.suppress(conditionId[, options])
+.. function:: alarming.suppress(conditionId[, options])
+
+.. !!v8!! alarming.unsuppress(conditionId[, options])
+.. function:: alarming.unsuppress(conditionId[, options])
+
+    Suppresses or unsuppresses the given conditions. A suppressed condition can still trigger alarms, but the alarms will not be shown in the normal alarm list. Disabled conditions cannot be suppressed or unsuppressed.
+
+    Parameters:
+        - **conditionId** (UaNodeId or UaNodeId[]) -- The nodeIds of the conditions. A single conditionId or an array of conditionIds.
+        - **options** (Object, optional, default: {}) -- Object with options:
+
+            - **user** (String, optional, default: "") -- The name of the user requesting the action.
+
+    Returns:
+        The return value is always an array of objects where the elements in the array correspond to the given conditions. The properties of each object are:
+
+            - **error** (Integer) -- The error code, supplied only if an error occurred.
+            - **errorstring** (String) -- The error text, supplied only if an error occurred.
+
+.. !!v8!! alarming.disable(conditionId[, options])
+.. function:: alarming.disable(conditionId[, options])
+
+.. !!v8!! alarming.enable(conditionId[, options])
+.. function:: alarming.enable(conditionId[, options])
+
+    Disables or enables the given conditions. A disabled condition will not trigger any alarms until it is enabled again.
+
+    Parameters:
+        - **conditionId** (UaNodeId or UaNodeId[]) -- The nodeIds of the conditions. A single conditionId or an array of conditionIds.
+        - **options** (Object, optional, default: {}) -- Object with options:
+
+            - **user** (String, optional, default: "") -- The name of the user requesting the action.
+
+    Returns:
+        The return value is always an array of objects where the elements in the array correspond to the given conditions. The properties of each object are:
+
+            - **error** (Integer) -- The error code, supplied only if an error occurred.
+            - **errorstring** (String) -- The error text, supplied only if an error occurred.

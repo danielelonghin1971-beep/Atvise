@@ -1,0 +1,14 @@
+Sound functions
+###############
+
+.. !!webMI!! webMI.sound.play(url, playCounter)
+.. function:: webMI.sound.play(url, playCounter)
+
+    Plays the sound file defined by url; playCounter defines the times the file is played (0 = play continuously). Supports every format that the browser supports natively.
+
+    .. hint:: Apple forbids automatic playback of audio sequences without user interaction on its iOS devices.
+
+.. !!webMI!! webMI.sound.stop([url])
+.. function:: webMI.sound.stop([url])
+
+    Stops the sound file defined by url (if started before by :func:`webMI.sound.play` with the same url) or all currently playing sound files, if no url is given.

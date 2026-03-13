@@ -1,0 +1,26 @@
+1 Starting atvise
+#################
+
+.. rubric:: Starting the atvise server
+
+If atvise has been activated successfully, the server will start automatically (green icon in the taskbar), otherwise follow these steps to start the server manually.
+
+1. Right-click on the atvise icon in the right corner of the task bar.
+
+2. Choose "Project Console" from the menu which appears.
+
+3. Start the server by clicking the button shown in the picture below.
+
+The icon in the task bar will change its background color to yellow when the server is booting. When the server has started, it will turn to green.
+
+.. figure:: /common_images/start_server.png
+
+    Starting atvise server
+
+.. attention:: The atvise server is up if the icon in the task bar is green |server_up| ("atserver" service is running). Otherwise, you won't be able to connect to the server. If the server doesn't come up after starting it, check out the "atserver_std.log" file in your atvise installation directory for potential error messages.
+
+.. hint:: The atvise server uses the standard OPC UA port 4840 to communicate with atvise builder. If you encounter any problems with starting the atvise server, please make sure that no other application uses this port.
+
+.. hint:: You can stop the atvise server by choosing "Stop Server" from the same menu or by stopping the "atserver" service.
+
+.. |server_up| image:: /common_images/server_up.png

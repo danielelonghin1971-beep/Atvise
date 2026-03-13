@@ -1,0 +1,12 @@
+How-tos
+#######
+
+These tutorials provide step-by-step instructions on different topics and features.
+
+.. rubric:: How-to
+
+.. toctree::
+    :maxdepth: 1
+
+    howtos/accesscontrol
+    howtos/mirroring

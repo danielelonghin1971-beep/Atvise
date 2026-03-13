@@ -1,0 +1,126 @@
+.. _historize:
+
+Add Archive Group
+#################
+
+To archive your data, it is necessary to add an archive group.
+
+Data
+****
+
+A Data Archive Group, also called raw archive, is used to save the raw values of a node directly to a database file. For example, any temperature values or sensor state values will be saved in the database file. The standard atvise archive group is named "datavalues".
+
+.. hint:: If you want to historize a node, you have to reference an archive group to this node.
+
+    For more information see the section :ref:`Historizing (and aggregating) a node <historize_and_aggregate>`.
+
+.. rubric:: Add Data archive group
+
+.. figure:: images/scada_historize_add_archive.png
+
+    Add Data archive group
+
+A data archive group has the following attributes:
+
+Name
+    Name of the archive group. Due to limitations of the file system, it is not possible to create multiple archive groups differing only in case (upper/lower).
+
+Activated
+    Once this option is disabled, no data will be historized in this archive. A typical use case for raw values is to permanently disable the archive and only write values with the server-side function :func:`history.write`.
+
+.. _interpolation:
+
+Interpolation
+    Sloped or Stepped. Only relevant when the archive group is used as source for an aggregate function other than "Sampled" (see :ref:`aggregating_data`) and for calculating values for specific timestamps (ReadAt functionality).
+
+Partition interval
+    New database files are created in this time interval for this archive group
+
+File limit
+    Defines the maximum number of database files for this archive group. Once this number is exceeded, the oldest database file will be deleted.
+
+    Example: To have historical data for the last 6 months available, define a partition interval of "Monthly" and a file limit of 7. When the eighth database file is created, the oldest database file will be deleted. Thus, the historical data of the last 6 months plus the current month are always available.
+
+.. hint:: You can open the configuration dialog at a later time by double-clicking again on the archive group
+
+.. rubric:: Database files
+
+The database files of the archive groups are stored in the database folder (another directory can be specified in the :ref:`atserver.ini <atserver_ini_database>` file).
+
+The .db-file is saved as "archivename_YYYYMMDD_hhmm.db"
+
+.. figure:: images/scada_historize_db.png
+
+    Database folder in atvise
+
+.. hint:: 
+    
+        - We recommend a maximum of 10 archive groups with a file limit of a maximum of 25, so that never more than 250 archive records are stored in the database directory. A greater number of archive groups / archive records leads to significant loss of performance in both the writing and reading of historical data. 
+        - Without a partition interval / file limit the database file of the archive group is increasing over time. Since the performance when querying historical data (trend, historical list, ...) depends on the size of the database file, it is strongly recommended to define appropriate parameters for each archive group.
+        - To reduce the amount of the original historically recorded data, you can use the :ref:`smoothing <smoothing>` properties.
+        - When you delete an archive group, all related archive files in the "database" and "swapin" folders are also deleted.
+
+Aggregate
+*********
+
+An aggregate archive group stores aggregates calculated according to the aggregate templates.
+
+.. rubric:: Add aggregate archive group
+
+.. figure:: images/scada_historize_add_agg.png
+
+    Add Aggregate archive group
+
+The checkbox "Activated" affects the aggregates as follows:
+
+- If an aggregate archive is deactivated then the aggregate will not be calculated, not be historized and can only be written by post-aggregation (e.g. with the server-side function :func:`history.aggregate`).
+- If chained aggregates exist, they will not automatically be deactivated.
+
+The remaining options are equal to the data archive group as described in the clause "Data" above.
+
+.. _event_archive:
+
+Event
+*****
+
+Event archive groups are used to store audit events and alarms. The following event types (:treeselection:`Server --> My Server --> History Archives --> Event types`) can be recorded:
+
+- **Alarms** -- Local and remote alarm state changes.
+- **AtviseOpcUaLoginDenied** -- Login via OPC UA (e.g. to the atvise builder) was denied.
+- **AtviseSecurityUserLocked** -- User is :ref:`locked<ac_password>`.
+- **Custom** -- Custom events that must be triggered via script (see :ref:`server.event.create()<custom_events>`). The access right *Write* for event type "custom" is necessary to trigger such events with server-side scripting (see :ref:`Assign Access Rights...<accesscontrol_editor>`).
+- **WebAccessLoginDenied** -- Login via http(s) was denied.
+- **WebAccessLogin** -- Login via http(s) was successful.
+- **WebAccessLogout** -- Logout via http(s) was successful.
+- **WebAccessWriteValue** -- Value of node was written via http(s).
+- **WebAccessCallScript** -- webMI Method script was called. Triggering these events can be enabled via the :ref:`metadata<scripteditor_metadata>` of the respective scripts.
+- **Other** -- All other audit events triggered by the OPC UA SDK. Can be enabled via :ref:`enableAuditEvents<atserver_ini_enableauditevents>` entry in the atserver.ini file.
+
+It is possible to store these events and alarms in joint or separate archive groups.
+
+.. rubric:: Add event archive group
+
+.. figure:: images/scada_historize_add_event.png
+
+    Add Event archive group
+
+The options are equal to the data archive group as described in the clause "Data" above.
+
+When the first event archive group is created, all of the above-mentioned event types are assigned to this group by default, i.e. it is ensured that all events will be recorded. If some event types shall be archived in different groups, it is possible to create several event archive groups.
+
+.. rubric:: Assign event archive groups
+
+The following configuration dialog allows to change or remove (if archiving shall be disabled) the default assignment. 
+
+.. figure:: images/scada_historize_add_event2.png
+
+    Assign event archive group
+
+Event archive group
+    Select an already created archive group in which events of the selected event types shall be saved. "*(None)*" means that archiving is disabled for the respective event types.
+
+.. hint:: 
+    
+    - To read events (live and historical), the *Read* right is necessary for the specific event type (except for "Alarms").
+    - To read alarms, the *Read* right is necessary for the node with the respective alarm configuration. Access rights defined for the event type "Alarms" only apply to the archive group assignment and have no effect on the visibility of alarms at runtime. 
+    - Except for alarms, all other event types are returned as type "event" by historical queries (e.g. in the :ref:`history list<historylist>`). It is not possible to filter for specific event archive groups.  

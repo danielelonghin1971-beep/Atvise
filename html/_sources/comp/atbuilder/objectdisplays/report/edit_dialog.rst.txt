@@ -1,0 +1,14 @@
+Report Editor
+#############
+
+Allows to add or edit configurations that are used to create :ref:`Reports<report_intro>`.
+
+.. rubric:: Parameters
+
+- **headline** -- The text of the object display's headline (default: Edit report)
+- **symbol** -- Symbol displayed in the headline (default: SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Symbols.20x20.folder_report)
+- **keyboard display** -- On-screen keyboard for input (default: alphanumerical keyboard)
+- **password display** -- On-screen keyboard for input (default: *Password Editor* object display)
+- **font color** -- Color applied to texts of the object display (default: global parameter atvFontColor)
+- **fill color** -- Fill color of background areas (default: global parameter atvFillColor)
+- **symbol color** -- Color of headline symbol (default: global parameter atvSymbolColor)

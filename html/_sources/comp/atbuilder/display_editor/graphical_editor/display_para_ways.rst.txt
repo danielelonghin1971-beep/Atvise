@@ -1,0 +1,36 @@
+Object-oriented parameterization
+################################
+
+There are three ways to create displays with object-oriented parameterizations:
+
+.. rubric:: 1. No clear data structure
+
+This option is used if there is no clear data structure available, or if the object display is not going to be reused again. Here a display is dragged into an object display and then every single parameter of the display must be entered manually.
+
+If you need the same object display a number of times, it is recommended that you go to Option 2 below. You will find an example of the individual atvise products in the tutorial.
+
+.. figure:: images/parameter_example1.png
+
+    Option 1: drag your display into another display and enter the addresses for each parameter
+
+.. rubric:: 2. Clear data structure but no object type
+
+As a first step, a new base parameter for a display has to be created. This parameter is the key to all the other data which is in the object. Instead of selecting all parameters, only the base parameter created must be selected and the desired attribute with the separator at the beginning must be entered. After dragging the display into the object display, only the desired object must be chosen as the value for the parameter. This way, not every single attribute has to be entered, only the base parameter created.
+
+If a clear data structure has been created on the server and the same display will be used several times it is recommended that this method be used. You will find an example of the individual atvise products in the tutorial.
+
+.. figure:: images/parameter_example2.png
+
+    Option 2: drag your display into another display and enter the address for the base parameter
+
+.. rubric:: 3. Clear data structure and an object type
+
+If structured data is available as well as an object type for the object, you are able to add a display to your object type.
+
+No new base parameter must be created as in option 2. Just select the existing base parameter and then the desired attribute must be entered with the separator at the front. Now every object can be dragged into the object display without entering any additional parameters.
+
+You will find an example of the individual atvise products in the tutorial.
+
+.. figure:: images/parameter_example3.png
+
+    Option 3: drag your objects directly into your object display

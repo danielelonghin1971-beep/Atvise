@@ -1,0 +1,10 @@
+Tab Handler
+###########
+
+This Quick Dynamic allows to switch between object displays (e.g. input-/output elements, buttons) in the visualization without having to use the mouse. 
+
+A description for using the Tab Handler can be found in the chapter :ref:`atvise visualization > Tab Handler <visu_tabhandler>`.
+
+.. rubric:: Parameters
+
+- **activate** (*activate tab handler*) -- Enables or disables the tab handler functionality. 

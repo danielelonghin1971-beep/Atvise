@@ -1,0 +1,123 @@
+Button Image Display
+####################
+
+The button_image_display is used to change images (png, jpg, gif, bmp, ico and svg are supported) depending on the value of an address.
+The referenced images must be located in one of the resources folders SYSTEM.LIBRARY.ATVISE.RESOURCES or SYSTEM.LIBRARY.PROJECT.RESOURCES.
+If there are two identically named files in both folders, the one in SYSTEM.LIBRARY.PROJECT.RESOURCES is used.
+Paths to files in subfolders must be specified as relative paths of the following format: [folder level 1]/[folder level 2]/[filename]
+
+It can be used in the following modes:
+
+#. **Limits specified**: 
+
+    For each button_image_display 0 to 4 limits (from “limit low low” up to “limit high high”) can be specified which results in 1 to 5 intervals. Depending in what interval the value of the "base" address lies, the related image (defined by "image low low" - "image high high") will be displayed.
+
+    The limits are defined as follows:
+
+        - limit low low >= value: image according to "image low low"
+        - limit low low < value <= limit low: image according to "image low"
+        - limit low < value < limit high: image according to "image normal"
+        - limit high <= value < limit high high: image according to "image high"
+        - limit high high <= value: image according to "image high high"
+
+#. **No limits specified**: 
+
+    If no limits are specified, the value of "base" will directly be used to change the images, i.e. if value=1 the image "image low low" will be shown, if value=2 the image "image low" will be shown and so on. If the value is greater than the last configured image, the last configure image is still being shown.
+
+#. **Enum list specified**: 
+
+    If an "enum list" is specified, the image change is triggered by the value of the column "key" of the global list. If the value of "base" equals the value of the column "key" the related image as defined in the global list will be displayed. This mode supersedes the two above mentioned modes.
+
+    Example:
+
+        - Add a Global List (e.g. mylist) to the Global Parameters
+        - enter "10" in column "key" of the first row and a related image (e.g. image1.png) in column "image" of the first row (NOTE: Before you can select the image, you have to add the image to "Library->PROJECT->Resources")
+        - enter "20" in column "key" of the second row and a related image (e.g. image2.png) in column "image" of the second row, etc.
+        - select your above defined Global List (e.g. mylist) as value of the parameter "enum list"
+        - This will cause the button_image_display to change the display to image1.png if the value of "base"=10 and change the display to image2.png if the value of "base"=20, etc.
+
+#. **Additional address specified**: 
+
+    Furthermore an additional address can be specified to change the stroke of the image; this will only work, if no enum list is specified, i.e. it will only work with mode 1 and 2 as described above.
+
+    Depending in what interval (defined by “limit low low” up to “limit high high”) the value of the parameter "address for stroke" lies, the stroke of the image will be changed according to the parameters "limit low low color" - "limit high high color".
+
+#. **Normal button**:
+
+    In any case, the button_image_display can be used as a normal button.
+
+For further details please refer to the group "Options" in the section below.
+
+.. rubric:: Triggers
+
+Following triggers can be used for this object display: 
+
+- **com.atvise.setActive** -- Can be used to enable or disable the object display.
+- **valuechanged** -- Fired on value changes, e.g. by user input.
+
+::
+
+    //Disable the object display
+    webMI.trigger.fire("com.atvise.setActive", false, "myDisplayID");
+
+    //Respond to value changes
+    webMI.trigger.connect("valuechanged", function(e) { console.log(e.value); }, "myDisplayID");
+
+.. hint:: Additional undocumented triggers are internally used by atvise. Their functionality may be changed in future atvise releases.
+
+.. rubric:: Parameters
+
+This control has the following generic parameters:
+
+- **base** -- Depending on this address' value, the image will be changed
+- **enum list** -- Global list which defines the images to be displayed - see item 3 above
+
+Appearance:
+
+- **limit low low (off=no limit)** -- Value for limit low low (default: off, which means no limit)
+- **limit low (off=no limit)** -- Value for limit low (default: off, which means no limit)
+- **limit high (off=no limit)** -- Value for limit high (default: off, which means no limit)
+- **limit high high (off=no limit)** -- Value for limit high high (default: off, which means no limit)
+- **limit low low color** -- Color of the stroke (see item 4 above) if "limit low low" >= value. The color is only set, if the *address for stroke* parameter is defined (default: #ff0000)
+- **limit low color** -- Color of the stroke (see item 4 above) if "limit low low" < value <= "limit low". The color is only set, if the *address for stroke* parameter is defined (default: #ffff00)
+- **limit high color** -- Color of stroke (see item 4 above) if "limit high" <= value < "limit high high". The color is only set, if the *address for stroke* parameter is defined (default: #ffff00)
+- **limit high high color** -- Color of stroke (see item 4 above) if "limit high high" <= value. The color is only set, if the *address for stroke* parameter is defined (default: #ff0000)
+- **image low low** -- Image to be displayed - see item 1 and 2 above
+- **image low** -- Image to be displayed - see item 1 and 2 above
+- **image normal** -- Image to be displayed - see item 1 and 2 above
+- **image high** -- Image to be displayed - see item 1 and 2 above
+- **image high high** -- Image to be displayed - see item 1 and 2 above
+- **stroke color** -- Standard stroke color of the image (default: #000000)
+- **fill color** -- Fill color of the image; does only affect if image is transparent (default: #ffffff)
+- **fill color when inactive** -- Fill color of the image in case it is not active (see also group "Security" below); does only affect if image is transparent (default: global parameter atvInactiveColor (advanced), #8c8c8c (standard))
+- **address for stroke** -- Depending on this address' value, the stroke of the image will be changed - see item 4 above
+- **focus stroke color** -- The color of the stroke which will be set when the button is focused (default: #ffffff)
+
+Options:
+
+- **address to set at mouseclick** -- The value of "value mouseclick" will be set to this address on a mouse click
+- **value mouseclick** -- Value to be set on *mouseclick*
+- **address to set at mousedown** -- The value of "value mousedown" will be set to this address if the mouse button is pressed down
+- **value mousedown** -- Value to be set on *mousedown*
+- **address to set at mouseup** -- The value of "value mouseup" will be set to this address if the mouse button is released
+- **value mouseup** -- Value to be set on *mouseup*
+- **tab index** -- Defines the order for changing between the object displays by using the tab key
+- **tooltip** -- Displays a tooltip box with the entered text (standard HTML-Elements can be entered)
+
+Security:
+
+- **necessary right** -- The user must have this right to activate this button, i.e. to press the button
+- **activation address** -- If the value of this address equals to "activation value", then the button will be active, i.e. can be pressed
+- **activation value** -- Value which activates the button
+
+    .. hint:: The activation of a button can be configured only by the necessary right, or only by the activation address and value or by both. In case both settings are made, the user must have the necessary right and the value of the "activation address" must equal the "activation value"; otherwise the button will not be activated.
+
+- **show access control notification** -- Defines if the icon for showing access control notifications shall be displayed (default: true)
+
+Menu:
+
+- **menu positioning** -- The position the menu symbol is shown at (top-left, top-right, bottom-left, bottom-right).
+- **menu mouseover active** -- Symbol is only shown on *mouseover*.
+- **menu symbol offset x** -- Relative offset of the menu symbol to the anchor point on the x axis in pixel.
+- **menu symbol offset y** -- Relative offset of the menu symbol to the anchor point on the y axis in pixel.
+- **context menu click frame** -- Defines the size of the click frame for opening the context menu.

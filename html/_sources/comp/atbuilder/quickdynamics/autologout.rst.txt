@@ -1,0 +1,15 @@
+Auto Logout
+############
+
+This Quick Dynamic enables the auto logout functionality.
+
+.. attention:: Auto Logout can be selected in the top menu from the Quick Dynamics. Ideally, this should be done on your default display. If you want to change some parameters afterwards, you can edit the Quick Dynamic displayed in the Dynamics section.
+
+.. rubric:: Parameters:
+
+- **action** (hidden) -- The action, that is performed. Internally used by atvise. 
+- **activated** (hidden) -- Defines if the Quick Dynamic is active. Internally used by atvise.
+- **autoLogoutTime** (*time span for logout in seconds*) -- This parameter defines the time span for auto logout in seconds.
+- **targetFrame** (*target frame*) -- This parameter defines the target frame, in which the logout display will be displayed.
+- **logoutDisplay** (*logout display*) -- This parameter defines the logout display. By default, this is the atvise scada specific display "AGENT.DISPLAYS.Main". If you use the Quick Dynamic with a webMI server, select an according display of this webMI server.
+- **popup** (hidden) -- Internally used by atvise to close open popups when logging out.

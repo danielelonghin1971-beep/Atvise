@@ -1,0 +1,30 @@
+.. _access_control_notifier:
+
+Access Control Element Notifier
+###############################
+
+This Quick Dynamic can be applied to a graphics element to define which nodes and rights are necessary to access the element. Insufficient rights are indicated by the defined symbol. If an :ref:`element menu<qd_elementmenu>` is configured, the notification is added to the menu.
+
+.. rubric:: Parameters
+
+- **id** (hidden) -- The ID of the element.
+- **node_<Nr>** (*address <Nr>*) -- Defines the node to access the element.
+- **right_<Nr>** (*address <Nr> right*) -- Defines the right necessary for the node.
+
+    - browse -- Visibility
+    - read
+    - write
+    - execute
+    - alarmAcknowledge
+    - alarmConfirm
+    - engineer
+
+- **alternate** (*alternate input method*) -- Input object to define further nodes and rights if necessary. The object contains pairs of nodes with corresponding rights, e.g.: AGENT.OBJECTS.int1,read;AGENT.OBJECTS.int2,write
+- **elementSymbol** (*element notification symbol*) -- The symbol that is shown in case of insufficient access rights. It is possible to use font awesome icons (HTML) or image files.
+- **elementId** (hidden) -- Custom ID to apply the Quick Dynamic from the outside.
+- **elementColor** (*element notification color*) -- The color of the shown symbol. 
+- **elementBackground** (*element notification background*) -- The background color of the shown symbol.
+- **elementBorderColor** (*element notification border color*) -- The border color of the shown symbol.
+- **elementMargin** (*element notification margin*) -- The margin of the shown symbol.
+- **elementErrorOnly** (*element notification error only*) -- Defines if notifications are only shown in case of an error.
+- **elementEventTarget** (*element event target*) -- Specifies an additional target (object ID) for the event listener on *mouseover*/*mouseout*.

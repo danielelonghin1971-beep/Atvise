@@ -1,0 +1,58 @@
+Key functions
+#############
+
+.. !!webMI!! webMI.keys.addCombinationListener(modifiers, keyCode, function(e){...})
+.. function:: webMI.keys.addCombinationListener(modifiers, keyCode, function(e){...})
+
+    Connects a callback function to keyboard input ("modifiers" : "ALT" = 1, "CTRL" = 2, "SHIFT" = 4, meta key = 8 - the modifiers can be added, so CTRL+ALT = 3).
+
+    The parameter "keyCode" contains the key code according to the JavaScript specification.
+
+    ::
+
+        webMI.keys.addCombinationListener(0, 13, function(e) {
+            alert("ENTER key was pressed!");
+        });
+
+.. !!webMI!! webMI.keys.addDownListener(function(e){...}, keyCode)
+.. function:: webMI.keys.addDownListener(function(e){...}, keyCode)
+
+    Connects a callback function to a key code "keyCode" and executes the function if the key is pressed.
+
+    The parameter "keyCode" contains the key code according to the JavaScript specification.
+
+    ::
+
+        webMI.keys.addDownListener(function(e) {
+            alert("ENTER key pressed!");
+        }, 13);
+
+.. !!webMI!! webMI.keys.addPressListener(function(e){...})
+.. function:: webMI.keys.addPressListener(function(e){...})
+
+    Connects a callback function to the keyboard - if any key is pressed the callback function will be executed. With "e.which" and "e.keyCode" the pressed key can be determined.
+
+    ::
+
+        webMI.keys.addPressListener(function(e) {
+            var key = e.which || e.keyCode;
+            // ...
+        });
+
+.. !!webMI!! webMI.keys.addUpListener(function(e){...}, keyCode)
+.. function:: webMI.keys.addUpListener(function(e){...}, keyCode)
+
+    Connects a callback function to a key code "keyCode" and executes the function if the key is released.
+
+    The parameter "keyCode" contains the key code according to the JavaScript specification.
+
+    ::
+
+        webMI.keys.addUpListener(function(e) {
+            alert("ENTER key released!");
+        }, 13);
+
+.. !!webMI!! webMI.keys.isDown(keyCode)
+.. function:: webMI.keys.isDown(keyCode)
+
+    Returns true if the specified key "keyCode" is pressed at the moment.

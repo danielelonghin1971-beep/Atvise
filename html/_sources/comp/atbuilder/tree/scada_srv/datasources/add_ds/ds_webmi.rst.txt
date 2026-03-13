@@ -1,0 +1,29 @@
+Add webMI data source
+#####################
+
+.. figure:: images/add_ds_webmi_1.png
+
+    Add webMI data source - General
+
+Name
+    webMI data source name
+
+Source URL
+    URL to connect to the webMI data source (e.g. ``http://localhost``)
+
+Connection status
+    Status information about the connectivity of the data source
+
+Connected
+    Indicator of data source, whether or not is connected
+
+Activated
+    Activates or deactivates the data source connection
+
+.. figure:: images/add_ds_webmi_2.png
+
+    Add webMI data source - Connection
+
+Browse path delimiter
+    Delimiter character for the browse path
+

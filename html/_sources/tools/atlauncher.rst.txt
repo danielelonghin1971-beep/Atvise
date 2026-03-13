@@ -1,0 +1,82 @@
+atvise builder launcher
+#######################
+
+The atvise builder launcher (atlauncher.exe) determines the version number of a running ativse server and automatically starts the corresponding atvise builder. 
+
+.. hint:: This application supports all atvise versions starting from 3.0.x.
+
+Requirements
+************
+
+- The following libraries are necessary in the same folder as the *atlauncher.exe* application:
+
+    - iconv.dll
+    - libxml2.dll
+    - Qt5Core.dll
+    - Qt5Gui.dll
+    - Qt5Widgets.dll
+    - plugins/platforms/qwindows.dll
+    - plugins/styles/qwindowsvistastyle.dll (optional for more modern Qt dialogs)
+
+- There must be a separate folder that contains the corresponding builder for every version (see *Configuration* section).
+
+.. hint:: Extract the respective atvise setup file to obtain the atbuilder.exe as well as all other necessary files.
+
+Configuration
+*************
+
+The configuration file *atlauncher.ini* must be created in the same folder as the *atlauncher.exe* application. The paths to the respective builder versions must be configured in this file. If no configuration file or no matching builder version can be found, the atvise builder launcher will be terminated. 
+
+Following sections and entries can be defined in the configuration file:
+
+.. rubric:: [paths]
+
+default = <path>
+    Defines a default directory, in which the matching builder version is searched for after determining the server version. In this folder, a specific folder named <major>.<minor>.<patch> must exist for every version.
+
+    E.g.: default = versions:
+
+    .. figure:: images/paths.png 
+
+<version number> = <path>
+    The path for the builder must be defined as follows: *<major>.<minor>.<patch> = <path>*. If there is an entry for a specific version, the *default* parameter is overridden for this version. 
+    
+.. hint:: 
+    - It is possible to use relative paths or environment variables, e.g. in order to start the atvise builder launcher from a thumb drive.
+
+.. rubric:: [builder]
+
+forwardLogin = true/false 
+    This entry defines if the checkbox for forwarding login data is set (refer to :ref:`forward login checkbox<forwardlogin>`) for further information.
+
+Example configuration file:
+
+.. code-block:: ini
+        
+    [paths]
+    default = .\versions
+    3.7.1 = %PROGRAMFILES%\atvise
+    
+    [builder]
+    forwardLogin = true
+
+Execution
+*********
+
+The atvise builder launcher determines the version number of the running atvise server (default address: opc.tcp://127.0.0.1:4840) and looks for a matching atvise builder at the defined paths. 
+
+.. hint:: 
+    - Use the start parameter "-serverURL <URL>" to define a specific server address. It is also possible to pass the username and password. In this case no additional login is necessary afterwards. E.g.: atlauncher.exe -serverURL opc.tcp://user:password@127.0.0.1:4840
+    - The parameter "-debug" displays status messages, determined version number, path, etc.
+
+.. figure:: images/atlauncher.png
+
+If projects of atvise versions < 3.6 are protected by node *requireLogin = true*, the user credentials must be entered in the following dialog. Otherwise, the server version cannot be read. 
+
+.. _forwardlogin:
+
+.. figure:: images/forwardlogin.png
+
+If the *forwardLogin* checkbox is set, the user credentials are forwarded to the builder. Thus, no additional login is necessary when starting the builder. This option can also be set by the *forwardLogin* entry in the configuration file. 
+
+.. attention:: When forwarding user credentials with "-serverURL" or *forwardLogin*, the data is transmitted in clear text with the server address (e.g. opc.tcp://root:passwort@127.0.0.1:4840) and can be inspected e.g. via task manager.

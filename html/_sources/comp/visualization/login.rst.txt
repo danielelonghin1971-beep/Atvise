@@ -1,0 +1,86 @@
+.. _visu_login:
+
+Login & authentication
+######################
+
+The login and authentication to the visualization depends on the configured :ref:`login method<authentication>`. This chapter describes the use of login method *form*.
+
+Using :ref:`cookies<use_cookies>` allows to store a session's user data. In this case, it is not necessary to log in again when refreshing the browser or opening another browser tab (refer to :ref:`Security > atvise access control > Information & notes - Cookie support<ac_cookie>`).
+
+Login
+*****
+
+Click the |visu_login| button to open the login dialog in order to log in to the visualization.
+
+.. figure:: images/visu_login_dialog.png
+
+The reason for a failed login attempt is shown in the upper part of the dialog: 
+
+- User/password wrong or missing permission for visualization
+- User account (temporarily) locked
+- Too many attempts within the defined login delay time
+
+Depending on the configured :ref:`password policy<ac_password>` (password validity, reminder), the following dialogs may be displayed after logging in:
+
+.. figure:: images/visu_login_expired.png
+
+    Password expired 
+
+.. figure:: images/visu_login_reminder.png
+
+    Reminder to change password in n days
+
+Two-factor authentication
+*************************
+
+If :ref:`two-factor authentication<ac_2fa>` is enabled, another step is necessary after entering the correct username and password. Depending on the configuration, a six-digit one-time password must be requested either per mail or per app:
+
+- **Only app authentication enabled** -- The user must use an authenticator app to scan the shown QR code after the first login. After that, the one-time password can be generated via this app. 
+
+ .. figure:: images/visu_2fa_app.png
+
+- **Only e-mail authentication enabled** -- The one-time password is automatically sent to the user, if a valid e-mail address is already defined. 
+
+ .. figure:: images/visu_2fa_mail.png
+    
+ If there is no e-mail address defined or the given address is not approved by the configured :ref:`whitelist<ac_mail>`, a correct e-mail address must be entered in the displayed input field. Clicking *Send code via e-mail* requests the one-time password.
+
+ .. figure:: images/visu_2fa_mail2.png
+
+- **App and e-mail authentication enabled** -- If the user attempts to log in for the first time after enabling two-factor authentication, the one-time password must be requested per e-mail as described above. Once the login procedure is completed by entering the one-time password, the user editor can be opened to scan the QR code with an authenticator app. After that, both authentication methods can be used for subsequent logins.
+
+The one-time password must be entered into the input field and confirmed via |visu_confirm|. If the entered code is correct, the login procedure is completed successfully. 
+
+.. hint:: 
+    
+    - If a user is not allowed to edit the e-mail address, a login is not possible and a project administrator must be contacted.
+    - Using two-factor authentication with :ref:`login method<authentication>` *ntlm* or *script* is only possible if the respective user also exists in atvise. Otherwise, the two-factor authentication is ignored for this login methods.
+
+.. _user_editor:
+
+User information
+****************
+
+If a user is logged in, the following user editor can be opened by clicking on the user name. The user editor allows to change the full name, password and language and shows user-specific settings.
+
+.. figure:: images/visu_user_editor.png
+
+- **Password** -- Clicking :guilabel:`Change` opens the password editor.
+- **Full name**
+- **Language** 
+- **Default display**  
+- **Content display**  
+- **E-mail** -- If allowed by the :ref:`e-mail policy<ac_mail>`, the user can edit the e-mail address. If a whitelist of allowed e-mail domains is defined and visible for users, only the local-part of the e-mail address can be entered in the text field. The domain must be selected via a combobox.
+- **Two-factor authentication** -- The QR code is displayed if app authentication is enabled. The user can scan this code with an authenticator app. The *Reset seed* button resets the seed that is used for generating one-time passwords. In this case, the user must scan a new QR code after the next login attempt to use app authentication.
+
+.. rubric:: Password editor
+
+.. figure:: images/visu_pw_editor.png
+
+- **Old password** -- The current user password.
+- **New password** -- The new user password. 
+- **Valid period** -- Shows how long the password will be valid.
+- **Requirements** -- Shows if the new password meets the requirements of the :ref:`password policy<ac_password>`. 
+
+.. |visu_login| image:: images/visu_login.png
+.. |visu_confirm| image:: images/visu_confirm.png 

@@ -1,0 +1,37 @@
+Add atvise OPC UA to S7 data source
+###################################
+
+General
+*******
+
+.. figure:: images/add_ds_opcua2s7_1.png
+
+    Add OPC UA to S7 data source - General
+
+.. include::  ds_opcua.rst
+        :start-after: .. start_general
+        :end-before: .. stop_general
+
+Connection
+**********
+
+.. figure:: images/add_ds_opcua2s7_2.png
+
+    Add OPC UA to S7 data source - Connection
+
+.. include::  ds_opcua.rst
+        :start-after: .. start_connection
+        :end-before: .. stop_connection
+
+Authentication
+**************
+
+.. figure:: images/add_ds_opcua2s7_3.png
+
+.. include::  ds_opcua.rst
+        :start-after: .. start_authentication1
+        :end-before: .. stop_authentication1
+
+.. include::  ds_opcua.rst
+        :start-after: .. start_authentication2
+        :end-before: .. stop_authentication2

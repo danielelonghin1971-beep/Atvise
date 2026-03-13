@@ -1,0 +1,14 @@
+Diagnostics
+###########
+
+.. rubric:: Variable on-change counters
+
+To measure how often a certain variable changes, add a UInt32 property with the name "ChangeCounter" to it. This property is incremented each time the status, timestamp or value changes.
+
+.. figure:: images/variable_onchange_counter1.png
+
+.. figure:: images/variable_onchange_counter2.png
+
+To reset the value of a certain change counter, you can use the JavaScript array changecounters of :attr:`server.statistics`.
+
+In :treeselection:`Library --> ATVISE --> ScriptLibrary --> Statistics --> ResetChangeCounters` you can find a script that resets all counters under a certain node.

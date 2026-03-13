@@ -1,0 +1,16 @@
+Quick Dynamics
+##############
+
+The quick dynamics button is located in the toolbar of the atvise builder:
+
+.. figure:: images/quick_dynamics_menu.png
+
+A "quick dynamic" (QD) is based on the atvise "simple dynamics" (SD) such as "On click, open a display" or "Change the color of the rectangle depending on the value of an address".
+
+A QD can be applied to any element (e.g. a simple rectangle, a button, ...).
+
+QDs are used to prepare common functionality that is often needed in your project so that the user doesn't have to create the functionality step by step with SDs each time (see also :ref:`Edit quick dynamics<edit_qd>`. In the folder :treeselection:`Library --> ATVISE --> Quick Dynamics`, you can find all :ref:`Quick Dynamics<quickdynamics>` that we have prepared for you and that are ready to use.
+
+The documentation for the respective quick dynamic can also be opened by clicking the button :guilabel:`Help` on the right bottom corner.
+
+.. figure:: /common_images/quickdynamic_help.png

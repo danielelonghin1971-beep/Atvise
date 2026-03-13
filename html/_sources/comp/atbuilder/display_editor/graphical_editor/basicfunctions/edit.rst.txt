@@ -1,0 +1,103 @@
+Edit items
+##########
+
+These icons let you edit elements, z-order, mirror, perform alignment and transformation.
+
+.. figure:: images/tools_edit.png
+
+|icon_groupitems| Group items
+    Groups two or more selected elements into a new one (with a new ID).
+
+|icon_ungroupitems| Ungroup items
+    Ungroups grouped items.
+
+.. figure:: images/arrange.png
+
+|icon_alignleft| Align left
+    Aligns two or more selected elements at the leftmost place of these elements.
+
+|icon_alignhorizontally| Align horizontally
+    Aligns two or more selected elements centered horizontally
+
+|icon_alignright| Align right
+    Aligns two or more selected elements at the rightmost place of these elements.
+
+|icon_distributehorizontally| Distribute horizontally
+    Distributes two or more selected elements horizontally
+
+|icon_aligntop| Align top
+    Aligns two or more selected elements with the top element
+
+|icon_alignvertically| Align vertically
+    Aligns two or more selected elements centered vertically.
+
+|icon_alignbottom| Align bottom
+    Aligns two or more selected elements with the bottom element
+
+|icon_distributevertically| Distribute vertically
+    Distributes two or more selected elements vertically
+
+|icon_bringforward| Bring forward
+    Brings an element forward in the z-order.
+
+|icon_sendbackward| Send backward
+    Sends an element backward in the z-order.
+
+|icon_bringtofront| Bring to front
+    Brings an element to the top layer of the z-order.
+
+|icon_sendtoback| Send to back
+    Sends an element to the bottom layer of the z-order.
+
+.. figure:: images/transform.png
+
+|icon_flipvertically| Flip vertically
+    Flips the currently selected element vertically.
+
+|icon_fliphorizontally| Flip horizontally
+    Flips the currently selected element horizontally.
+
+|icon_resettransformation| Reset Transformation
+    Resets the transformation of an element to its original representation.
+
+|icon_setasdefaulttransformation| Set as default transformation
+    Sets the current transformation as default.
+
+    Pick an element or a display from the library or the project tree and drag&drop it into the drawing area. Then you can transform the element as desired. Clicking "Set as default transformation" will set the transformation as a new default transformation. When the next element is dropped, it will have the newly set transformation.
+
+|icon_settodefaulttransformation| Set to default transformation
+    Sets the transformation of an element back to the default transformation or original representation, if no default transformation is set.
+
+|icon_editshape| Edit shape
+    Allows to edit shapes afterwards.
+
+|icon_clonestyle| Clone style
+    Clones the style of an element. For example: clone the color of an element to another element.
+
+|icon_showtemplates| Templates
+    Sets a predefined style to an object.
+
+    .. figure:: images/templates.png
+
+.. |icon_alignbottom| image:: /common_images/icon_alignbottom.png
+.. |icon_alignhorizontally| image:: /common_images/icon_alignhorizontally.png
+.. |icon_alignleft| image:: /common_images/icon_alignleft.png
+.. |icon_alignright| image:: /common_images/icon_alignright.png
+.. |icon_aligntop| image:: /common_images/icon_aligntop.png
+.. |icon_alignvertically| image:: /common_images/icon_alignvertically.png
+.. |icon_bringforward| image:: /common_images/icon_bringforward.png
+.. |icon_bringtofront| image:: /common_images/icon_bringtofront.png
+.. |icon_clonestyle| image:: /common_images/icon_clonestyle.png
+.. |icon_distributehorizontally| image:: /common_images/icon_distributehorizontally.png
+.. |icon_distributevertically| image:: /common_images/icon_distributevertically.png
+.. |icon_editshape| image:: /common_images/icon_editshape.png
+.. |icon_fliphorizontally| image:: /common_images/icon_fliphorizontally.png
+.. |icon_flipvertically| image:: /common_images/icon_flipvertically.png
+.. |icon_groupitems| image:: /common_images/icon_groupitems.png
+.. |icon_resettransformation| image:: /common_images/icon_resettransformation.png
+.. |icon_sendbackward| image:: /common_images/icon_sendbackward.png
+.. |icon_sendtoback| image:: /common_images/icon_sendtoback.png
+.. |icon_setasdefaulttransformation| image:: /common_images/icon_setasdefaulttransformation.png
+.. |icon_settodefaulttransformation| image:: /common_images/icon_settodefaulttransformation.png
+.. |icon_showtemplates| image:: /common_images/icon_showtemplates.png
+.. |icon_ungroupitems| image:: /common_images/icon_ungroupitems.png

@@ -1,0 +1,12 @@
+Historizing data
+################
+
+.. toctree::
+
+    historize/archive_groups
+    historize/historize_aggregate
+    historize/passthrough
+    historize/synchronize
+    historize/historical_query
+    historize/swapin_out
+    historize/history_settings

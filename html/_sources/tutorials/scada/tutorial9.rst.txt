@@ -1,0 +1,101 @@
+9 Adding alarms
+###############
+
+.. rubric:: 9.1 Adding an alarm configuration
+
+In this section, we will configure the internal malfunction alarm of our light object.
+
+1. Open the object types list by clicking on the "Object Types" tab on the left side of the atvise builder interface.
+
+2. Right-click on the "Light -> ALARMS" -> InternalMalfunction" data variable.
+
+3. Choose "Add AlarmConfiguration" from the menu which appears.
+
+4. Type in a name for the alarm configuration, for our example let's choose "LightMalfunction". Apply the name by clicking the "OK" button.
+
+5. The "LightMalfunction" node will be added under the data variable; double-click it to open the alarm configuration interface.
+
+6. At first, select the "OfficeLight" display using the |pointpointpoint| button.
+
+7. Now we must define a condition. Type in "light malfunction" as the "Condition Name" and "Warning: lights went down!" in the "To Active Text" field. Then enter "true" in the "Value" field and make sure "match" is chosen from the drop-down box.
+
+8. Accept the changes in the alarm configuration by clicking |save_button|. Now the alarm will be triggered when the value of "InternalMalfunction" is set to "true".
+
+.. figure:: images/alarm_config.png
+
+.. figure:: images/alarm_config2.png
+
+    Adding an alarm configuration to the "InternalMalfunction" data variable.
+
+.. hint:: After applying the dialog to the object type, the alarm is configured for all object instances.
+
+.. rubric:: 9.2 Displaying the alarm in the object display
+
+The alarm is already working. In this section, we also want to display the state of the alarm in the object display.
+
+.. rubric:: 9.2.1 Adding a border to the object display which signalizes the alarm
+
+1. Open the object display by double-clicking on the "Object Types - > Light -> MainDisplay" node.
+
+2. Draw a rectangle around the object display.
+
+3. Select "None" in the fill tab.
+
+4. Choose a bigger line width and a red color in the "Stroke" tab.
+
+.. figure:: /common_images/object_display_alarm.png
+
+    Drawing a red border around the object
+
+.. rubric:: 9.2.2 Add a dynamization to the border
+
+1. Make sure that the border is marked and start the "Simple Dynamics" dialog by right-clicking.
+
+2. Choose |single_node_button| from the possibilities on the left side of the EVENT part.
+
+3. Select the ".ALARMS.InternalMalfunction.Malfunction.light malfunction" condition relatively as described in section 7.3.1.
+
+4. The combobox should be automatically set to "alarmstate".
+
+5. We want to change the visibility of the border in dependence on the alarm state, so we choose |button_visibility| from the possibilities on the left side of the ACTION section.
+
+6. Basically, there are five alarm states:
+
+    - Off, Acknowledged (the red border should be invisible)
+    - On, Unacknowledged (the red border should blink quickly)
+    - On, Acknowledged (the red border should be visible)
+    - Off, Unacknowledged (the red border should blink slowly)
+    - On Off, Unacknowledged (the red border should blink very quickly)
+
+    Click the |add_after_button| button button four times and enter the values as determined in the list above.
+
+7. Apply the dialog by clicking "OK" and save the object display afterwards.
+
+.. figure:: images/alarm_dialog.png
+
+    The "Simple Dynamics" dialog to display the state of the InternalMalfunction alarm
+
+.. rubric:: 9.3 Viewing the alarm states in the visualization
+
+1. Browse to "My Server -> OBJECTS" in the left part of the atvise builder and activate an "InternalMalfunction" alarm for one of the five OfficeLight objects by changing the value of the data variable to "true".
+
+2. Load the "Office_Light" display in the visualization and see how the alarm state is displayed in the object.
+
+3. Deactivate the alarm by changing the value of the data variable to "false".
+
+4. Go back to the visualization and click on the alarm list symbol |alarm_list_symbol| in the control panel to view a list of all active and/or unacknowledged alarms.
+
+5. Acknowledge the inactive alarm in the list by clicking on "ACKNOWLEDGE".
+
+6. Activate, deactivate and acknowledge the alarm several times to become familiar with the five alarm states.
+
+.. figure:: images/alarm_list.png
+
+    Open the alarm list to acknowledge an alarm
+
+.. |add_after_button| image:: /common_images/add_after_button.png
+.. |alarm_list_symbol| image:: images/alarm_list_symbol.png
+.. |button_visibility| image:: /common_images/button_visibility.png
+.. |pointpointpoint| image:: /common_images/pointpointpoint.png
+.. |save_button| image:: /common_images/save_button.png
+.. |single_node_button| image:: /common_images/single_node_button.png

@@ -1,0 +1,368 @@
+.. _qd_elementmenu:
+
+Element menu 
+############
+
+Allows to create a menu for an element, indicated by a small icon. The menu can be opened by clicking the icon. 
+
+- **id** (hidden) -- ID of the graphics element.
+- **elementId** (hidden) -- Custom ID to apply the Quick Dynamic from the outside.
+- **elementPosition** (*menu positioning*) -- The position the menu symbol is shown at (top-left, top-right, bottom-left, bottom-right).
+- **fadeInAtHover** (*menu mouseover active*) -- Symbol is only shown on *mouseover*.
+- **fadeInAtHoverHide** (*menu mouseover delay (ms)*) -- Symbol is shown on *mouseover* after the given delay.
+- **fadeInAtHoverHide** (*menu mouseout delay (ms)*) -- Symbol is hidden on *mouseout* after the given delay.
+- **elementGroup** (*menu group*) -- Allows to group several menus and control them by a trigger.
+- **elementDefaultMenu** (*menu items set*) -- Name of a predefined menu. Default menus must be defined with the *Element Menu Default Items* Quick Dynamic. The default menus *example1* and *example2* are provided in the code.
+- **menue_<Nr>_text** (*menu item <Nr> text*) -- Text of the menu item
+- **menue_<Nr>_trigger** (*menu item <Nr> trigger*) -- Triggered on clicking the menu item (the element ID and the value of the menu item are passed). The trigger must be configured via script (see examples below or refer to :ref:`webMI.trigger.connect<triggerfunctions>`).
+- **menue_<Nr>_value** (*menu item <Nr> value*) -- Value that is passed when clicking the item
+- **elementSymbol** (*menu symbol*) -- The Symbol that indicates the menu. It is possible to use Font Awesome Icons or image files.
+- **elementSymbolScale** (*menu symbol scaling (0..100)*) -- Scaling factor for the menu symbol in percent.
+- **elementColor** (*menu symbol color*) -- Color of the menu symbol.
+- **elementBackground** (*menu symbol background*) -- Background color of the menu symbol.
+- **elementSizeX** (*menu symbol size x*) -- Symbol width in pixel.
+- **elementSizeY** (*menu symbol size y*) -- Symbol height in pixel.
+- **elementOffsetX** (*menu symbol offset x*) -- Relative offset of the menu symbol to the anchor point on the x axis in pixel.
+- **elementOffsetY** (*menu symbol offset y*) -- Relative offset of the menu symbol to the anchor point on the y axis in pixel.
+- **elementBorderColor** (*menu symbol border color*) -- Border color of the menu symbol.
+- **elementBorderRadius** (*menu symbol border radius*) -- Border radius of the menu symbol.
+- **elementBorderSize** (*menu symbol border width*) -- Border width of the menu symbol.
+- **contextOffsetX** (*context menu offset x*) -- Relative offset of the context menu to the anchor point on the x axis in pixel. 
+- **contextOffsetY** (*context menu offset y*) -- Relative offset of the context menu to the anchor point on the y axis in pixel.
+- **clickareaEnlargement** (*context menu click frame*) -- Defines the size of the click frame for opening the context menu.
+- **elementEventTarget** (*element event target*) -- Specifies an additional target (object ID) for the event listener on *mouseover*/*mouseout*.
+
+Usage
++++++
+
+.. rubric:: Functions and triggers 
+
+The following functions and triggers are available for using the Quick Dynamic.
+
+Functions:
+    
+    - **addMenu** -- Adds a menu structure to the existing menu
+    - **getStartOrder** -- Gets the predefined start order of menu types
+    - **getUniqueSymbolID** -- Gets unique symbol ID for foreign object container
+    - **removeMenu** --	Removes a menu structure from an existing menu
+    - **setMenu** -- Sets a new menu structure. This replaces all existing items
+    - **setSymbol** -- Sets a symbol for the menu 
+    - **setVisibility** -- Changes the visibility of the menu (symbol)
+
+Triggers:
+
+    - **com.atvise.elementMenu.addMenu** -- Adds a menu structure to the existing menu
+    - **com.atvise.elementMenu.addMenuForGroup** --	Adds a menu structure to the existing menu group
+    - **com.atvise.elementMenu.removeMenu** -- Removes a menu structure from an existing menu
+    - **com.atvise.elementMenu.removeMenuFromGroup** --	Removes a menu structure from an existing menu group
+    - **com.atvise.elementMenu.setMenu** -- Sets a new menu structure, this will also remove/replace all existing items
+    - **com.atvise.elementMenu.setMenuForGroup** --	Sets a new menu structure for groups, this will also remove/replace all existing items
+    - **com.atvise.elementMenu.setSymbol** -- Sets symbol for menu
+    - **com.atvise.elementMenu.setSymbolForGroup** -- Sets symbol for menu group
+    - **com.atvise.elementMenu.globalActive** -- Activates/deactivates menus globally
+
+.. rubric:: Simple use cases
+
+Assign element menu to object and configure menu elements
+    The easiest way is to add the menu to a graphics element via the Quick Dynamic in the graphics editor. The configuration dialog allows to define up to 5 menu items. A configured trigger with associated value is fired when selecting a menu item. The trigger passes the following data: {id: [id]*, value: [value]*}
+
+    - **id** -- ID of the object assigned to the menu.
+    - **value** -- Value assigned to *menu item <nr> value*.
+
+    Example - Apply Quick Dynamic to rectangle with ID "id_0"::
+
+         webMI.callExtension("SYSTEM.LIBRARY.ATVISE.QUICKDYNAMICS.Element Menu", {
+            "id": "id_0",
+            "menue_1_text": "Set red",
+            "menue_1_trigger": "atvise.demo.trigger",
+            "menue_1_value": "#ff0000",
+            "menue_2_text": "Set green",
+            "menue_2_trigger": "atvise.demo.trigger",
+            "menue_2_value": "#00ff00",
+            "menue_3_text": "Set blue",
+            "menue_3_trigger": "atvise.demo.trigger",
+            "menue_3_value": "#0000ff",
+        });        
+
+    Example of a trigger function::
+
+        webMI.trigger.connect("atvise.demo.trigger", function (e) {
+            var receivedObj = e.value;
+            webMI.gfx.setFill(receivedObj.id, receivedObj.value);
+        });
+
+Create menu by script and trigger
+    More complex menus can be declared with the code editor. In this case it is also possible to add functions to the menu items. The following example shows how to define an element menu for an graphics element with ID "id_0".
+
+    Example:: 
+        
+        var menu = webMI.callExtension("SYSTEM.LIBRARY.ATVISE.QUICKDYNAMICS.Element Menu", {
+            "id": "id_0",
+        });
+
+        menu.setMenu([
+            {mid: "color", text: "<b>T{Set Colors}</b>", order: 1000},
+            {mid: "color_1", text: "Set Red", value: "#ff0000", trigger: "atvise.demo.trigger", order: 1100},
+            {mid: "color_2", text: "Set Green", value: "#00ff00", trigger: "atvise.demo.trigger", order: 1200},
+            {mid: "color_3", text: "Set Blue", value: "#0000ff", trigger: "atvise.demo.trigger", order: 1300},
+            {
+                mid: "simple_alert", text: "With Function", value: function myFKT() {
+                    alert("Function was called!");
+                }, order: 1400
+            }
+        ]);
+
+        /* demo trigger */
+        webMI.trigger.connect("atvise.demo.trigger", function (e) {
+            var receivedObj = e.value;
+            alert(receivedObj.value);
+        });
+
+Control menus via triggers
+    Menu content can be controlled via triggers. The easiest way is to set the menu content via *com.atvise.elementMenu.setMenu* or *com.atvise.elementMenu.setMenu*. The following example requires two elements (e.g. rectangles with ID "id_0" and "id_1") as well as a button with ID "btn_set_group". 
+
+    Example::
+
+        webMI.callExtension("SYSTEM.LIBRARY.ATVISE.QUICKDYNAMICS.Element Menu", {
+            "id": "id_0",
+            "elementGroup": "group"
+        });
+
+        webMI.callExtension("SYSTEM.LIBRARY.ATVISE.QUICKDYNAMICS.Element Menu", {
+            "id": "id_1",
+            "elementGroup": "group"
+        });
+
+        /* single item settings */
+        var menuItems = {};
+        menuItems["id_0"] = [
+            {mid: "color", text: "<b>T{Set Colors}</b>", order: 1000},
+            {mid: "color_1", text: "Set Red", value: "#ff0000", trigger: "atvise.demo.trigger", order: 1100}
+        ];
+        menuItems["id_1"] = [
+            {mid: "color_2", text: "Set Green", value: "#00ff00", trigger: "atvise.demo.trigger", order: 1000},
+            {mid: "color_3", text: "Set Blue", value: "#0000ff", trigger: "atvise.demo.trigger", order: 1100},
+            {
+                mid: "simple_alert", text: "With Function", value: function myFKT() {
+                    alert("here")
+                }, order: 1200
+            }
+        ];
+
+        webMI.trigger.fire("com.atvise.elementMenu.setMenu", menuItems);
+
+    When setting group IDs, several menus can be controlled by triggers at the same time::
+
+        /* group item settings */
+        var groupItems = [
+            {mid: "color", text: "<b>T{Set Colors}</b>", order: 1000},
+            {mid: "color_1", text: "Set Red", value: "#ff0000", trigger: "atvise.demo.trigger", order: 1000},
+            {mid: "color_2", text: "Set Green", value: "#00ff00", trigger: "atvise.demo.trigger", order: 1100},
+            {mid: "color_3", text: "Set Blue", value: "#0000ff", trigger: "atvise.demo.trigger", order: 1200},
+            {
+                mid: "simple_alert", text: "With Function", value: function myFKT() {
+                    alert("here")
+                }, order: 1300
+            }
+        ];
+
+        webMI.trigger.connect("clicked", function (e) {
+            console.warn("click");
+            webMI.trigger.fire("com.atvise.elementMenu.setMenuForGroup", {"group": groupItems});
+        }, "btn_set_group");
+
+Sorting menu elements
+    The sorting of menu elements is managed via global lists (default: global list *ElementMenu*) and is internally used for all generated menu elements in atvise. Since these indices may be changed by further updates, it is recommended to use this index table for user-defined menus too or create a separate global list.  
+
+    .. hint:: If a key cannot be found within the list, the value returned for "start order at" is 1000 and 100 for "step".
+
+    The function getStartOrder(key) returns starting index („start order at“) and step size for menu entries. 
+
+    Example - implementing a menu structure::
+
+        var alarmOrder = menu.getStartOrder("alarming");
+        var order = alarmOrder["start"];
+        var steps = alarmOrder["steps"];
+
+        var alarmMenu = [
+        {
+            mid: "alarmMenu_1",
+            text: "<b>T{Alarm}</b>",
+            order: order
+        },
+        {
+            mid: "alarmMenu_2",
+            text: "Confirm",
+            value: "setActive",
+            trigger: "display.myMenu.trigger",
+            order: order += steps
+        },
+        {
+            mid: "alarmMenu_3",
+            text: "Shelve",
+            value: "setInactive",
+            trigger: "display.myMenu.trigger",
+            order: order += steps
+        }
+        ];
+ 
+Default menus
+    Default menus are managed via Quick Dynamic "Element Menu Default Items". To create a new default menu, proceed as follows: Copy the "Element Menu Default Items" Quick Dynamic to the project library. Implement the new default menu in the code of this Quick Dynamic. This menu can be assigned to an element menu with the *Default menu* parameter.
+
+    A default menu can be defined the following way::
+
+        var order = __getStartOrder("example1");
+        var orderStart = order["start"];
+        var orderSteps = order["steps"];
+        self.menuGroup["example1"] = [
+            {mid: "example_item_1", text: "<i class='fas fa-bars'></i> <b>T{About}</b>", order: orderStart},
+            {
+                mid: "example_item_2",
+                text: "About",
+                value: "sendByTrigger",
+                trigger: "example.trigger.definition",
+                order: orderStart += orderSteps
+            },
+            {
+                mid: "example_item_3", text: "Help", value: function () {
+                    alert("Help");
+                }, order: orderStart += orderSteps
+            }
+        ];
+
+.. rubric:: Complex use cases
+
+Using the element menu in Quick Dynamics
+    The element menu can be initialized and used in Quick Dynamics. For the following example, a user-defined Quick Dynamic "alarm menu" is created. 
+    
+    Example - Quick Dynamic "Alarmmenü"::
+
+        /**
+        * declarations
+        */
+        var address = base.alarm;
+        var id = base.id;
+
+
+    base.id is the ID to which the Quick Dynamic shall connect. This parameter must be considered on Quick Dynamic creation, since it is necessary for the menu.
+    
+    After declaring variables, the menu must be initialized::
+
+        /**
+        * step 1: load element menu
+        */
+        var Alarmmenu = webMI.callExtension("SYSTEM.LIBRARY.ATVISE.QUICKDYNAMICS.Element Menu", {
+            id: id,
+        });
+
+    base.id is the only mandatory parameter that must be passed to the element menu Quick Dynamic. All other parameters are optional.
+
+    Defining a specific menu symbol::
+
+        /**
+        * step 2.a.: define symbol for active / inactive
+        */
+        var symbol = {};
+
+        symbol["active"] = {
+            background: "#ffffff",
+            borderColor: "#ff0000",
+            color: "#ff0000",
+            icon: "<i class='fas fa-bell'></i>",
+            margin: 2,
+            visible: true    // <<< alarm icon always visible, important for hover mode
+        };
+
+        symbol["inactive"] = {};
+
+    After that, the menus must be created. In this case, there are menus for active and inactive::
+
+        /**
+        * step 2.b.: get order and steps
+        */
+        var alarmOrder = Alarmmenu.getStartOrder("alarming");
+        var order = alarmOrder["start"];
+        var steps = alarmOrder["steps"];
+
+
+        /**
+        * step 2.b.: define menu for active / inactive
+        */
+        var menu = {};
+
+        menu["active"] = [
+            {
+                mid: "alarmMenu_1",
+                text: "<b>T{Alarm}</b>",
+                order: order
+            },
+            {
+                mid: "alarmMenu_2",
+                text: "Confirm",
+                value: "demo_value",
+                trigger: "demo_trigger",
+                order: order += steps
+            },
+            {
+                mid: "alarmMenu_3",
+                text: "Shelve",
+                value: "demo_value",
+                trigger: "demo_trigger",
+                order: order += steps
+            }
+        ];
+
+        menu["inactive"] = [
+            {
+                mid: "alarmMenu_1"
+            },
+            {
+                mid: "alarmMenu_2"
+            },
+            {
+                mid: "alarmMenu_3"
+            }
+        ];
+
+    Setting menu according to alarm status::
+
+        /**
+        * step 3: subscribe alarm
+        */
+        webMI.alarm.subscribe(address, function (e) {
+            var value = e.state;
+
+            if (value == 1 || value == 2) {
+                Alarmmenu.setSymbol(symbol["active"]);
+                Alarmmenu.addMenu(menu["active"]);
+            } else {
+                Alarmmenu.setSymbol(symbol["inactive"]);
+                Alarmmenu.removeMenu(menu["inactive"]);
+            }
+        });
+
+Referencing a menu of an object display
+    To reference an object display's menu by a parent element, the ID of the parent element must be passed via "elementId" parameter. In this case, the menu is shown at the parent element. The "elementId" parameter cannot be defined via the configuration dialog and must be set in the script.
+
+    ::
+    
+        var elementId = document.getElementById("svg_input").parentNode.id;
+
+        var menu = webMI.callExtension("SYSTEM.LIBRARY.ATVISE.QUICKDYNAMICS.Element Menu", {
+            "elementId": elementId
+        });
+
+        menu.setMenu([
+            {mid: "active_1", text: " T{Actions}", index: 1000},
+            {mid: "active_2", text: "Set Aktiv", value: "setActive", trigger: "atvise.demo.trigger.2", index: 1100},
+            {mid: "active_3", text: "Set Inactive", value: "setInactive", trigger: "atvise.demo.trigger.2", index: 1200}
+        ]);
+
+        /* demo trigger */
+        webMI.trigger.connect("atvise.demo.trigger.2", function (e) {
+            var value = e.value.value == "setActive";
+            webMI.trigger.fire("com.atvise.setActive", false, document.getElementById(elementId));
+        });
+
+Combining several menus
+    It is possible to initialize menus for one element several times, e.g. via Quick Dynamics. Please note that in this case, using setMenu may reset menu entries.

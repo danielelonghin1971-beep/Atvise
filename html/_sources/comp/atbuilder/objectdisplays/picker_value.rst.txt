@@ -1,0 +1,96 @@
+Picker Value
+############
+
+This button increments or decrements the value of an address like the button increment/decrement.
+
+In addition the trigger "valuechanged" with the new value (=incremented or decremented value) will be fired.
+
+An additional border indicates the current value's negative state or an additionally defined alarm. The colors and blinking intervals are defined in global lists.
+
+.. rubric:: Triggers
+
+Following triggers can be used for this object display: 
+
+- **com.atvise.setActive** -- Can be used to enable or disable the object display.
+- **setValue** -- The object display connects to this trigger. Therefore, it is possible to set the value from the outside.
+- **valuechanged** -- Fired on value changes, e.g. by user input.
+
+::
+
+    //Disable the object display
+    webMI.trigger.fire("com.atvise.setActive", false, "myDisplayID");
+
+    //Set value of object display
+    webMI.trigger.fire("setValue", 100, "myDisplayID");
+
+    //Respond to value changes
+    webMI.trigger.connect("valuechanged", function(e) { console.log(e.value); }, "myDisplayID");
+
+.. hint:: Additional undocumented triggers are internally used by atvise. Their functionality may be changed in future atvise releases.
+
+.. rubric:: Parameters
+
+This control has the following generic parameters:
+
+- **base** -- The value of this address will either be incremented or decremented
+- **alarm address** -- Optional additional address of an alarm to be shown.
+- **enable status monitoring** -- Switch monitoring of current value status on or off. (default: Yes)
+- **fire status trigger** -- Instead of the status display a here defined trigger can be fired globally.
+- **step to increment** -- Value by which the value of "base" will be incremented (default: 1)
+- **step to decrement** -- Value by which the value of "base" will be decremented (default: 1)
+- **interval [ms] (0 = off)** -- Specifies how long (time span) the button must be pressed to automatically change the base's value (default: 150ms, which means that in case the button keeps pressed, every 150ms the value will be changed)
+- **keyboard display** -- On-screen keyboard for string input (default: alphanumerical keyboard)
+- **number keyboard display** -- On-screen keyboard for numerical input (default: numerical keyboard)
+- **message dialog small display** -- Dialog for showing messages, information or warnings (default: small message dialog object display)
+
+Number Format:
+
+- **displayed unit** -- Enter a unit which will be displayed in addition to the value.
+- **show sign** -- If "true", the sign will be displayed for number (default: false).
+- **leading zeros** -- Amount of places left to the decimal point (e.g. when set to 3, the value 11 will be displayed as 011). (default: 0)
+- **decimal places** -- Displayed values are rounded to the defined number of decimal places. If this parameter is not defined, the value is displayed as sent by the server.
+- **force decimal fraction position** -- Converts the value by dividing by 10 (e.g. when set to 2, the value 2000 will be displayed as 20.00).
+
+Font:
+
+- **family** -- Font family which will be applied to value (default: Arial)
+- **size** -- Font size which will be applied to the value (default: 12)
+- **color** -- Color which will be applied to the value (default: global parameter atvFontColor (advanced), #000000 (standard))
+
+Appearance:
+
+- **fill color** -- Fill color of background areas (default: global parameter atvFillColor (advanced), #d0d0d0 (standard))
+- :advstyle:`Advanced` **text field fill color** -- Fill color of the value field (default: #ffffff)
+- :advstyle:`Advanced` **text field fill color inactive** -- Fill color of the value field when not active (default: global parameter atvInactiveColor)
+- :stdstyle:`Standard` **fill color when inactive** -- Button's fill color if not active (default: #8c8c8c)
+- :stdstyle:`Standard` **button fill color** -- Fill color of the tqo buttons (default: #000000)
+- **arrow fill color** -- Arrow's fill color (default: global parameter atvSymbolColor (advanced), #d0d0d0 (standard))
+- **button stroke color pressed** -- The color of the stroke which will be set when one of the two buttons is pressed (default: #ffffff)
+- **focus stroke color** -- The color of the stroke which will be set when the button is focused (default: #ffffff)
+- :advstyle:`Advanced` **border color** -- Color of the border around the control (default: global parameter atvBorderColor)
+- **status indication** -- Specify the status' display through a defined global list (default: global parameter atvStatusIndication)
+- **alarm indication** -- Specify the alarm's display through a defined global list (default: global parameter atvAlarmIndication)
+
+Options:
+
+- **minimum** -- Specifies the lower limit for the value to be changed, i.e. if the current value equals to this minimum, the current value will not be further decremented  (default: no minimum specified)
+- **maximum** -- Specifies the upper limit for the value to be changed, i.e. if the current value equals to this maximum, the current value will not be further incremented (default: no maximum specified)
+- **consistency group** -- Name of the consistency group
+- **tab index** -- Defines the order for changing between the object displays by using the tab key
+- **tooltip** -- Displays a tooltip box with the entered text (standard HTML-Elements can be entered)
+
+Security:
+
+- **necessary right** -- The user must have this right to activate this button, i.e. to press one of the two buttons
+- **activation address** -- If the value of this address equals to "activation value", then the control will be active, i.e. can be pressed
+- **activation value** -- Value which activates the control
+
+    .. hint:: The activation of the control can be configured only by the necessary right, or only by the activation address and value or by both. In case both settings are made, the user must have the necessary right and the value of the "activation address" must equal the "activation value"; otherwise the control will not be activated.
+
+Menu:
+
+- **menu positioning** -- The position the menu symbol is shown at (top-left, top-right, bottom-left, bottom-right).
+- **menu mouseover active** -- Symbol is only shown on *mouseover*.
+- **menu symbol offset x** -- Relative offset of the menu symbol to the anchor point on the x axis in pixel.
+- **menu symbol offset y** -- Relative offset of the menu symbol to the anchor point on the y axis in pixel.
+- **context menu click frame** -- Defines the size of the click frame for opening the context menu.

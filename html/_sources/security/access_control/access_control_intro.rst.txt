@@ -1,0 +1,78 @@
+.. _access_control_intro:
+
+Introduction 
+############
+
+The access control allows to define which data shall be accessible for a user. It is possible to define rights specifically for single nodes (variables, displays, etc.) or entire subtrees. Thus, the access to atvise functions, engineering or visualization can also be controlled. 
+
+.. caution:: 
+    
+    - Old projects (atvise version < 3.6) must be :ref:`converted<update_projects>` properly. Otherwise they cannot be used anymore.
+    - The first login depends on the used project:
+
+        .. start_include
+
+        - If it is a new project or a converted project, where OPC UA authentication was not required, log in with user *root* and no password. For security purposes, it is recommended to set a password for *root* after the first login.
+        - If it is a converted project, where OPC UA authentication was required, logging in with *root* is not possible by default. In this case, an already existing user (created in the old project) must be used to log in. In order to prevent accidentally locking the project, the password for *root* shall be defined after the first login. 
+
+        .. stop_include
+
+    - If you want to use atvise **without access control** as before, proceed as follows:
+
+        - Define user *root* and all other users as project administrators (refer to :ref:`user editor<user_settings>` for more information).
+        - Enable option :ref:`Set anonymous and NTLM users as project administrator<menu_access_control>`.
+
+Basics
+******
+
+Access control rights are determined by: 
+
+- **Users** -- User-specific settings and rights like OPC UA or visualization access.
+- **Groups** -- atvise groups are regarded as OPC UA roles.
+- **Nodes** -- Rights for groups and assigned users are stored on nodes.
+  
+When connecting to the OPC UA server, the configured OPC UA roles are assigned to the user and stored in the session. The rights of all associated roles are retrieved when the user tries to perform an action on a node. The combination of these rights determine the user's access to the respective node. 
+
+Overview
+********
+
+.. rubric:: General settings
+
+General :ref:`settings<menu_access_control>` for the project can be configured via :menuselection:`Access Control --> Settings`. In addition, it is possible to define policies for using passwords or e-mail addresses and to enable two-factor authentication.   
+
+.. rubric:: Users
+
+The :ref:`user editor<user_settings>` allows to define if the user is 
+
+- project administrator.
+- allowed to log in via OPC UA or to the visualization.
+- allowed to use the node browser.
+- exempt from specific access control policies.
+
+.. rubric:: Groups
+
+The :ref:`group editor<group_settings>` allows to assign users to groups in order to define specific rights. In a new project, only the groups "Anonymous" and "AuthenticatedUser" are provided by default. It is not possible to delete these groups or manually assign users to them. Anonymous users are automatically assigned to the "Anonymous" group, identified (logged in) users to the "AuthenticatedUser" group. Users of group "AuthenticatedUser" automatically get the rights defined for group "Anonymous" as well. 
+
+.. rubric:: Node rights
+
+The :ref:`access control editor<accesscontrol_editor>` (:menuselection:`Access Control --> Assign rights...`) can be used to define rights for nodes, e.g. to manage access to displays or subtrees in the address space. This editor can be opened by all users, but it will only allow to see or change information for which according access rights are available.
+
+You can also use the :ref:`access control functions<ac_functions>` to set rights by a script.
+
+.. hint:: There are predefined default rights for some nodes and functions to ensure that atvise is working properly (see :ref:`system functions<ac_systemfunctions>` and :ref:`default rights<ac_defaultrights>`).
+
+.. rubric:: Visualization rights
+
+The Quick Dynamic :ref:`access control element notifier<access_control_notifier>` can be used to define access rights for specific visualization elements.
+
+.. rubric:: Use cases
+
+This chapter provides more information on :ref:`common use cases<ac_use_cases>`.
+
+.. rubric:: Informationen and notes
+
+This :ref:`chapter<ac_notes>` provides information on atvise default rights and important notes regarding several atvise functions or modules.
+
+.. rubric:: First configuration steps
+
+Refer to :ref:`Tutorials > How-tos > Configure access control for the first time<howtos_ac>`.

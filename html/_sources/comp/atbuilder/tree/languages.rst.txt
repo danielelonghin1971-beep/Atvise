@@ -1,0 +1,218 @@
+.. _languages:
+
+Languages
+#########
+
+atvise allows to display the visualization in different languages. The provided default languages for visualization elements like object displays are German and English. It is possible to add new texts and languages. The translation for each target language is derived from a meta language (English) that contains all texts defined within "T{}" as well as the "To Active" and "To Inactive" texts of alarm configurations.
+
+.. rubric:: Language nodes 
+    
+All texts and translations are stored on specific nodes. Project-specific texts must be stored on a language node under :treeselection:`Languages` (SYSTEM.TRANSLATION). For every language there must be a separate node that contains all relevant texts and translations.
+
+.. figure:: images/translation_node.png
+
+.. hint::
+
+   The default languages provided by atvise (English and German) in versions < 3.9 were stored directly under :treeselection:`Languages`. Starting with atvise version 3.9, only project-specific texts (as well as translations of atvise texts into languages other than German or English) are stored under :treeselection:`Languages`. All texts provided by atvise are stored on the following nodes:
+
+        - :treeselection:`Library --> ATVISE --> de/en` (SYSTEM.LIBRARY.ATVISE) -- Contains only translations for parameters of object displays. These texts are only used by the builder. Therefore, they are not included when generating or exporting a translation file.
+
+        - :treeselection:`Library --> ATVISE --> Languages --> de/en` (SYSTEM.LIBRARY.ATVISE.TRANSLATIONS) -- Contains all texts for object displays that are shown in the visualization, i.e. all texts marked with T{} in displays or display scripts as well as values of display parameters. These texts can also be translated into any other language. Custom translations for texts of the atvise library that are defined under *SYSTEM.TRANSLATIONS* take precedence over texts provided by atvise. Note: When texts of the atvise library are mentioned in this chapter, it refers only to texts of this node. 
+
+    Therefore, if a current atvise library is imported into a project < 3.9, texts of the default languages are duplicated and stored under *SYSTEM.TRANSLATIONS* as well as *SYSTEM.LIBRARY.ATVISE.TRANSLATIONS*. The :ref:`Update resources<atmaintenance_resources>` option of the Maintenance Tool removes those duplicates. 
+
+Translations stored on nodes can also be exported to an XML file to allow external translations as well as the transfer to other projects.
+
+.. _translation_files:
+
+.. rubric:: Translation files
+
+Generate translation file
+    Open the context menu with a right-click on :treeselection:`Languages` and generate a translation file with a left-click on :menuselection:`Generate Translation File`. 
+
+    .. figure:: images/translation_generate.png
+
+    This file contains all relevant atvise texts for the visualization, all "T{}" texts from all displays as well as the "To Active" and "To Inactive" texts from alarm configurations. It can be used to translate the texts into the respective language and import them into the appropriate node afterwards.
+
+Format of translation files 
+    Translation files are XML files in the TS format (Translation Source) used by Qt Linguist. Example of an XML translation file:
+
+    .. code-block:: xml
+
+        <?xml version="1.0" encoding="utf-8"?>
+        <!DOCTYPE TS>
+        <TS>
+            <context>
+                <message>
+                    <source>Example</source>
+                    <translation>Beispiel</translation>
+                </message>
+                <message>
+                    <source>Cancel</source>
+                    <translation type="unfinished">Cancel</translation>
+                    <comment>Caption for Cancel button</comment>
+                </message>
+            </context>
+        </TS>
+
+    - **<source>** -- Contains the collected source texts that shall be translated, e.g. from T{Example} or T{Cancel}.
+    - **<translation>** -- The translated text. The *type="unfinished"* property allows to show the translator that the translation is not correct or completed.
+    - **<comment>** -- Allows to add information to help with the translation.
+
+.. hint:: If you make changes to your translation file, be sure to distribute the files if a webMI server is used. On a scada server, the translation is applied at runtime.
+
+.. _languages_export:
+
+.. rubric:: Import and export of translations
+
+Export
+    Texts and translations of a node can be exported to an XML file via :ref:`translation editor<translation_editor>` or :ref:`GenerateTranslationsToFile<translation_function>` function. If a node under :treeselection:`Languages` is exported, all texts and translations from the atvise library are also exported to the XML file. Therefore, the XML file contains all texts provided by atvise as well.
+
+Import
+    Texts and translations of an XML file can be imported into a node via :ref:`translation editor<translation_editor>` or :ref:`MergeTranslationsFromFile<translation_function>` function. New items are added and existing items are updated if the translated text or the translation status of the items are different. This allows to import externally translated texts into a project or transfer translations from one project to another. 
+
+    The following rules apply to the import of translation files:
+
+    - Texts provided by atvise are not imported if there are identical items in the atvise library.
+
+        - Example: The node *SYSTEM.TRANSLATIONS.de* is exported to an XML file. The file contains all custom texts as well as texts provided by atvise (including the German translations). If this file is imported into *SYSTEM.TRANSLATIONS.de*, the texts that are existing in the atvise library are not imported into *SYSTEM.TRANSLATIONS.de*.
+
+    - Non-existent items on the node will be added.
+    - If an item already exists on the node it depends on the translation status:
+
+        - Text in file is translated -- The item on the node will be overwritten.
+        - Text in file is not translated (type="unfinished"), text on node is translated -- The item on the node will not be overwritten.
+        - The translation of neither the text in the file nor on the node is finished -- The item on the node will be overwritten.
+
+    - Comments will only be imported if there is no comment for the respective item on the node. Existing comments are not updated, regardless of the translation status.
+
+.. rubric:: Adding a language
+
+The atvise builder offers the possibility of adding several languages for the visualization. Right-click :treeselection:`Languages` to open the context menu and click :menuselection:`Add Translation`.
+
+.. figure:: images/translation.png
+
+    Adding a new language
+
+Enter the *Language Code* (= name of the node) and the *Language Description* (it will be displayed in the language drop-down menu in the visualization) in the "Add Translation" dialog. The :guilabel:`...` button next to *Translation file* allows to select an XML file. All source texts and comments of this file are imported as basis for the new language. 
+
+.. _translation_editor:
+
+Translation editor
+******************
+
+A double-click on the respective language node opens the translation editor that allows to add, import or export texts and translations.
+
+.. figure:: images/translation_editor.png
+
+.. rubric:: Toolbar:
+
+|save| Save
+    Saves all changes like adding, changing or deleting texts and translations.
+
+|reload| Reload
+    Reloads the table. Unsaved changes will be discarded.
+
+|editor_add| Add new translation
+    Adds a new text to the table. New texts are added with Source = *KEY_<number>* by default, since the source must always be unique.
+
+|editor_delete| Delete selected translation(s)
+    Deletes the selected items in the table.
+
+|editor_import| Import and merge translations from file
+    Imports translations from the selected XML file. New items are added and existing items will be updated depending on the translation status (see :ref:`Import<languages_export>` section above).
+
+|editor_export| Export translations
+    Exports texts, translations and comments to an XML file. Depending on the language node, additional texts may be exported as well (see :ref:`Export<languages_export>` section above).
+
+    .. hint:: Changes in the editor must be saved, otherwise they will not be included in the export.
+
+|editor_node| Add and merge translations from node
+    Allows to select a language node and import its texts and comments. The following rules apply:
+
+        - If an item is missing, source text and comment of the other node are added.
+        - If there is an item without a comment, only the comment of the other node is added.
+
+    .. figure:: images/translation_select.png
+
+    If project-specific texts as well as texts of the atvise library shall be added, both language nodes, the one under *Languages* and the one under *Language (ATVISE)*, must be imported.  
+
+|editor_detect| Add missing translations from project
+    Browses the project for new texts (T{}, alarm texts) and adds them to the table. The texts of the atvise library are also added for all languages but English and German. Added texts are marked as not translated.
+
+    .. hint:: If the translation editor is opened for a node under *SYSTEM.LIBRARY.ATVISE.TRANSLATIONS*, only texts from the atvise library are added by this button. Project-specific texts will be ignored.
+
+|editor_unused| Show unused translations
+    Only texts that are not used anywhere in the project are shown.
+
+|editor_lang| Select language for column "Translation 2"
+    The translation of the selected language is displayed in the "Translation 2" column for comparison purposes. 
+
+.. rubric:: Table:
+
+- **T** -- Shows the translation status. If it is checked, the translation of the item is marked as completed. 
+- **Source** -- The source text that shall be translated.
+- **Translation** -- The translated text.
+- **Translation 2** -- Allows to show the translation of another language. This column is only meant for comparison purposes and cannot be edited.
+- **Comment** -- Allows to add information to help with the translation.
+
+Using translations in builder
+*****************************
+
+Existing source texts can be used in input fields (e.g. columns of global lists with type *string*, the "To Active" or "To Inactive" text of an alarm configuration) or in text fields of displays. Focus the respective field with a left mouse click and open the following selection dialog with :kbd:`CTRL + K`:
+
+.. figure:: images/translation_selection.png
+
+This selection dialog contains all source texts that exist in the project as well as in the atvise library. |editor_lang| allows to show the translation of the respective language. Select the required text and confirm with :guilabel:`OK`. The selected text is inserted into the input or text field in the format *T{source text}*.
+
+.. hint:: Text fields in a display must be focused (i.e. the cursor must be placed in the text field), not only selected. Otherwise, the keyboard shortcut :kbd:`CTRL + K` does not work. 
+
+.. rubric:: builder preview 
+
+The translation of all T{} texts in displays can be shown with the preview function |editor_lang|. If there is no translation for the selected language, the source text (without T{}) is shown.
+
+.. figure:: images/translation_preview1.png
+    
+    No preview language
+
+.. figure:: images/translation_preview2.png
+
+    Preview - translation in selected language exists
+
+.. figure:: images/translation_preview3.png
+
+    Preview - no translation exists
+
+Displaying translations in the visualization
+********************************************
+
+The displayed language in the visualization can be changed via |visu_language|.
+
+.. figure:: images/translation_visu1.png
+
+    Translation in selected language exists
+
+.. figure:: images/translation_visu2.png
+
+    No translation exists
+
+.. rubric:: Language switch via script
+
+The trigger *com.atvise.changeLanguage* allows to switch the language in the visualization at runtime. The respective language code must be passed as parameter when firing the trigger. The visualization will be reloaded and updated with the corresponding translations. If the specified language is not available in the project, an error message is shown in the browser console and the currently displayed language remains in use.  
+
+Examples::
+
+    webMI.trigger.fire("com.atvise.changeLanguage", "de");
+    webMI.trigger.fire("com.atvise.changeLanguage", "en");
+
+.. |editor_add| image:: images/usergroups_add_property.png
+.. |editor_delete| image:: images/usergroups_delete_property.png
+.. |editor_export| image:: /common_images/icon_export.png
+.. |editor_import| image:: /common_images/icon_import.png
+.. |editor_node| image:: images/translation_nodeimport.png
+.. |editor_detect| image:: images/translation_detect.png
+.. |editor_lang| image:: images/translation_lang.png
+.. |editor_unused| image:: images/translation_unused.png    
+.. |visu_language| image:: ../../visualization/images/visu_language.png
+.. |reload| image:: /common_images/icon_refresh.png
+.. |save| image:: /common_images/icon_savefile.png    

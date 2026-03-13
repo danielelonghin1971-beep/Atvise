@@ -1,0 +1,21 @@
+.. _history_sync:
+
+Synchronization
+***************
+
+Sychronization allows you to periodically read historical values from **OPC UA data sources** and to write them into local archives. As the historical values are stored locally, historical requests for such values are also performed locally. The synchronization interval can be set with the setting *history sync interval* in the :ref:`data source configuration <add_datasource>`. atvise uses this interval to check the data source for new data. It will not look further in the past than specified with the setting *maxSyncPeriod* in :ref:`atserver.ini <atserver_ini_max_sync_period>`. The default is 24 hours.
+
+The functionality can be used for raw and aggregated values. It is not supported for alarms and events. The requirements for using synchronization are:
+
+Raw values
+    - the variable must be configured for synchronization of raw values (see above)
+    - a local raw archive group must be assigned (see above)
+    - a correctly configured *MirrorInput* or *MirrorInputOutput* must exist
+
+Aggregated values
+    - the variable must be configured for synchronization of aggregated values (see above)
+    - an aggregate template must be assigned (see above)
+    - the aggregate functions in the template must have an aggregate archive group assigned
+    - a correctly configured *MirrorInput* or *MirrorInputOutput* must exist
+
+.. hint:: To manually sychronize historical data, you can use the :ref:`data source functions <wrapper_history_read>` to directly read historical data from an OPC UA data source without the need to configure historization. Then you can use :func:`history.write` to write the values to a local archive.

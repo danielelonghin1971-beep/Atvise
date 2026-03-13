@@ -1,0 +1,63 @@
+4.2 Using predefined controls
+#############################
+
+In this section we will take a look at how to use predefined controls to create dynamic elements.
+
+.. rubric:: 4.2.1 Bar control
+
+1. Create and open a display "TestDisplay2"  as described in section 3.
+
+2. In the bottom area of the graphics editor you can see a selection of predefined controls. Drag & drop the "Bar vertical" control into your drawing area.
+
+3. On the right side, you can see a list of all parameters of the referenced control. Select the "testInt" data variable as the base address for this control by using the |pointpointpoint| selector.
+
+4. The control is now fully operative; you can also change the other parameters if you want to.
+
+.. figure:: images/predefined_controls_add_scale_scada.png
+
+    Adding a bar control
+
+.. rubric:: 4.2.2 Increment control
+
+1. Now drag & drop a "Button Increment/Decrement" control into your drawing area.
+
+2. Select the "testInt" data variable as the base address for this control by using the |pointpointpoint| selector.
+
+3. Enter "10" as the step. Now the value of the base will be increased by 10 every time you click on the button.
+
+.. figure:: /common_images/predefined_controls_add_increase.png
+
+    Adding an increment control
+
+.. hint:: You can also change other parameters if you want to. Mandatory parameters are highlighted in red, all other parameters are optional. For example, to adjust the font size of the control, change the value of the parameter "Font -> size".
+
+.. rubric:: 4.2.3 Decrement control
+
+1. Copy & paste the increment control.
+
+2. Choose -10 instead of 10 for the "step" parameter.
+
+.. figure:: /common_images/predefined_controls_add_decrease.png
+
+    Adding a decrement control
+
+.. rubric:: 4.2.4 Opening the browser and testing the controls
+
+Save the display, then open "TestDisplay2" in your browser and proceed as follows:
+
+1. Click the *Login* button in the visualization. 
+2. Log in with user *root* (no password).
+3. Confirm the given user data with the *OK* button.
+
+.. figure:: /common_images/visu_login.png
+    
+    Visualization login
+    
+.. hint:: 
+
+    - Anonymous users (i.e. users that are not logged in) have no write access to the visualization by default. You can change this setting via :ref:`access control<access_control_intro>`. 
+    - If you want to keep users logged in after a browser refresh, you can enable :ref:`cookies<use_cookies>`. Refer to :ref:`Security > atvise access control > Information & notes - Cookie support<ac_cookie>` for further information on enabling or disabling cookie support.
+
+Change the value of the "testInt" data variable using your increment and decrement buttons after logging in. Now the bar should change according to the value of "testInt".
+
+.. |pointpointpoint| image:: /common_images/pointpointpoint.png

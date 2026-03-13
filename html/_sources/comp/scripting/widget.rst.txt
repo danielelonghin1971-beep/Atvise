@@ -1,0 +1,20 @@
+Widget functions
+################
+
+.. !!webMI!! webMI.widget.getValue(elementID)
+.. function:: webMI.widget.getValue(elementID)
+
+    Returns the current value of the widget (e.g. textbox) defined by elementID.
+
+.. !!webMI!! webMI.widget.setDisabled(elementID, value)
+.. function:: webMI.widget.setDisabled(elementID, value)
+
+    Disables (value = true) or enables (value = false) the widget defined by elementID.
+
+.. !!webMI!! webMI.widget.setValue(elementID, value)
+.. function:: webMI.widget.setValue(elementID, value)
+
+    Sets the value of the widget defined by elementID to value.
+
+    
+.. hint:: Widget functions can be used for HTML elements only, not for object displays.

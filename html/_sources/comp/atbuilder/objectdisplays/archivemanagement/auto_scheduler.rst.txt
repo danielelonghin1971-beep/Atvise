@@ -1,0 +1,16 @@
+Auto-Scheduler Management
+#########################
+
+Display for managing schedules.
+
+.. rubric:: Parameters
+
+**config node** -- Node for the Auto-Scheduler configuration, see also :ref:`access control - visualization rights<ac_config_nodes>` (default: AGENT.OBJECTS.AutoSchedulerConfig)
+
+Appearance:
+
+- **fill color** -- Background color of the display's control elements (default: global parameter atvFillColor)
+
+Font:
+
+- **color** -- Font color for the display (default: global parameter atvFontColor)

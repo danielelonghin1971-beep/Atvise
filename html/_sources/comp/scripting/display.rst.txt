@@ -1,0 +1,69 @@
+Display functions
+#################
+
+.. !!webMI!! webMI.display.openWindow(parameters)
+.. function:: webMI.display.openWindow(parameters)
+
+    Used to open a display with the given parameters. parameters is a JavaScript object with the following properties:
+
+    - *url* is the URL of the display to open.
+    - *x*, *y*, *width* and *height* define the position and size of the window.
+    - The boolean property *remember* defines if the last position and size of the window is saved.
+    - The boolean properties *extern*, *modal*, *resizable* and *movable* define the behavior of the window.
+    - The boolean properties *scrollbars*, *menubar*, *status* and *toolbar* define the visibility of certain parts of the window.
+
+    Example: Open display "Test1" at the left corner of the screen in 800x600 in a new window, modal, not resizeable, moveable, last window position is remembered, with scollbars, without menu bar, without status bar and without toolbar::
+
+        webMI.display.openWindow({
+            url: "SYSTEM.DISPLAYS.MAIN.Test1",
+            x: 0, y: 0, height: 600, width: 800, remember: true,
+            modal: true, resizable: false, movable: true,
+            scrollbars: true, menubar: false, status: false, toolbar: false
+        });
+
+    .. attention:: Nested windows (opening a window within a window) are currently not supported.
+
+.. !!webMI!! webMI.display.openDisplay(url, parameters, iframe)
+.. function:: webMI.display.openDisplay(url, parameters, iframe)
+
+    Opens the defined display (url) in the defined iframe (iframe refers to the "name" parameter of the iframe object display) and passes the parameters (parameters) to the display as display parameters.
+
+    Example::
+
+        webMI.display.openDisplay("AGENT.DISPLAYS.myDisplay", webMI.query, "iframe1");
+
+.. !!webMI!! webMI.display.openUrl(url, parameters, frame)
+.. function:: webMI.display.openUrl(url, parameters, frame)
+
+    Opens the defined website (url) in the defined target frame (refers to the "name" parameter of the iframe object display) and passes the given parameters.
+
+    Example::
+
+        webMI.display.openUrl("http://www.atvise.com", {}, "iframe2");
+
+.. !!webMI!! webMI.display.closeWindow()
+.. function:: webMI.display.closeWindow()
+
+    Closes the window.
+
+.. !!webMI!! webMI.display.showPopup(x, y, menuObj)
+.. function:: webMI.display.showPopup(x, y, menuObj)
+
+    Opens a context menu "menuObj" at the specified coordinates "x" and "y".
+
+    Example::
+
+        function getMyFn(itemName) {
+            return function(e) {
+                alert(itemName);
+            };
+        }
+        var menuObj = {};
+        menuObj["item1"] = {text: "item1", value: getMyFn("item1")};
+        menuObj["item2"] = {text: "item2", value: getMyFn("item2")};
+        webMI.display.showPopup(100, 200, menuObj);
+
+.. !!webMI!! webMI.frame.getActiveFrames()
+.. function:: webMI.frame.getActiveFrames()
+
+    Returns the currently visible frames (displays) as an array of iframe objects. It can be used to get the containing frame and visibility of a display for example.

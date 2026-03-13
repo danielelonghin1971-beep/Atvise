@@ -1,0 +1,143 @@
+Example: Simple bar display
+###########################
+
+In this section you will learn how to create and use your own simple bar display.
+
+In order to do this, we have to add, design and parameterize a new object display.
+
+.. rubric:: 1 Adding a new object display
+
+First, we have to add a new object display in which we will design our own simple bar control.
+
+1. Right-click on the :treeselection:`Library --> PROJECT --> Object Displays` folder in the structure on the left side of the builder interface and choose :menuselection:`Add Display...`.
+
+    .. hint:: This folder is intended for your own object displays. Here you can create all of your desired displays.
+
+2. Enter "myBar" as the name and apply the dialog by clicking on :guilabel:`OK`.
+3. The "myBar" object display will appear in the structure on the left. Double-click on it to open the graphics editor.
+
+.. figure:: images/add_mybar.png
+
+    Adding the "myBar" object display
+
+.. rubric:: 2 Design the "myBar" object display
+
+Now we have to design our own simple bar control in the newly added object display.
+
+We will draw two rectangles to do so. One will act as the background, the other will represent the bar itself.
+
+1. Select the rectangle drawing tool in the symbol bar and draw a rectangle of the desired size.
+2. Change its color by clicking on the fill tab just below the drawing area and choosing a gray color.
+3. Draw a second rectangle. You don't have to change its color this time. Also make sure that this second rectangle is smaller than the first one.
+
+.. figure:: images/bar_add_2_rectangles.png
+
+    Add two rectangles
+
+4. Position the second rectangle in the middle of the first one.
+5. Make sure the smaller rectangle is selected. Then drag and drop its yellow reference point to the left border of the rectangle. This is important for the "scale" dynamization we will add later.
+
+    .. hint:: To position the reference point more precisely, zoom in with your mouse wheel.
+
+6. Choose :menuselection:`File --> Settings` from the symbol bar and click on the :guilabel:`Fit` button in the dialog which appears. Apply the dialog by clicking :guilabel:`OK`.
+
+.. figure:: images/bar_position_rectangles.png
+
+    Position the smaller rectangle and change its reference point
+
+.. rubric:: 3 Creating display parameters
+
+In this step we will define the parameters we want to use in our object display.
+
+There will be two parameters in total: one to define the color of the bar and a source parameter which will set the value of the bar.
+
+1. Choose :menuselection:`File --> Parameters` from the symbol bar.
+2. Add a new parameter named "barcolor".
+3. Enter "$barcolor$" in the "Substitute" field.
+
+    .. hint:: The "Substitute" text will be replaced by the value of the parameter.
+
+        We will use this in the next step to make the color of our bar parameterizable.
+
+4. Select "color" as "Value Type".
+5. Choose red as the default color in the "Default" field using the |pointpointpoint| selector.
+6. Add a second parameter named "source".
+7. Select "address" as "Value Type" for the source parameter.
+8. Apply the dialog by clicking on :guilabel:`OK`.
+
+.. figure:: images/bar_create_parameters.png
+
+    Adding parameters to the display
+
+.. rubric:: 4 Changing fill of rectangle to "Substitute" of barcolor parameter
+
+Now we are going to set the fill of the smaller rectangle to the "Substitute" text of the "barcolor" parameter. This substitute will be replaced by the value of the parameter and the rectangle will change its color to the respective value.
+
+1. Click on the smaller rectangle to mark it.
+2. Open the "SVG" tab in the Attributes window on the right side of the builder interface.
+3. Enter "$barcolor$" as the value in the "fill" field.
+
+    .. hint:: "$barcolor$" is the substitute text of our "barcolor" parameter which we created in section 3.
+
+        This substitute text will be replaced by the value of the "barcolor" parameter, as you will see in section 5, step 4.
+
+4. You will see that the color of the bar will change immediately to the default value of "barcolor" which we defined in section 3.
+
+.. figure:: images/bar_substitute_color.png
+
+    changing fill of rectangle to "Substitute" of parameter
+
+.. rubric:: 5 Adding Dynamization
+
+In this section we will add a simple dynamic to the bar rectangle to scale it according to the value of the "source" parameter.
+
+1. Click on the smaller rectangle to mark it, right-click it and select :menuselection:`Add Simple Dynamic` to open the "Simple Dynamics" dialog.
+2. We want to react to the change of a data variable, so we choose |single_node_button| from the possibilities on the left side.
+3. Click on the |relative_button| button to activate relative addressing.
+4. Use the drop-down list to choose "source".
+5. Choose "Number" as the value type.
+6. Now that we have an event to react to, we must define the action that is to be executed. We want to change the scale of our rectangle, so we choose |scale_button| from the possibilities on the left side.
+7. Enter 0 as the "Minimum value" and 100 as the "Maximum value".
+8. Check "Scale X". Enter 0 and 100 as the start and stop values. Make sure "Scale Y" is not checked.
+
+    .. hint:: Because we want to create a horizontal bar, the rectangle should only scale in x direction. If we wanted a vertical bar, we'd only check "Scale Y".
+
+9. Apply the "Simple Dynamics" dialog by clicking :guilabel:`OK`.
+
+.. figure:: images/bar_sd_scale.png
+
+    the "Simple Dynamics" dialog to add a "scale" dynamization
+
+.. hint:: Another way to add a "scale" dynamization would be by using the "scale" quick dynamic. To do so, you would have to mark the rectangle and choose :menuselection:`Dynamics --> Scale` from the symbol bar.
+
+.. rubric:: 6 Adding the "myBar" object to a display
+
+Now the "myBar" object display is finished, so let's save it by clicking on the |save_button| button in the symbol bar.
+
+In order to use your bar in another display, you simply have to drag & drop it in the drawing area of this display.
+
+1. Open a desired display to which you want to add your "myBar" object.
+2. Open the :treeselection:`Library --> PROJECT --> Object Displays` folder in the structure on the left side and drag & drop "myBar" into the drawing area.
+3. Make sure your "myBar" object is marked. On the right side you can see a list of all of its parameters in the Attributes window.
+4. If you like, you can change the "barcolor" parameter by using the |pointpointpoint| selector. For our example let us choose a green color.
+5. Set the "source" parameter by using the |pointpointpoint| selector. You can choose any desired number data variables.
+6. Add an input control to set the number data variables which you have assigned to the "source" parameter.
+7. Save the display.
+
+.. figure:: images/bar_add_object_to_display.png
+
+    Adding the "myBar" object to a display
+
+.. rubric:: 7 Viewing your "myBar" control in the visualization
+
+Open the display in the visualization and test your simple bar control by setting the value of the number data variable to between 0 and 100. The bar will change accordingly to the value of the number data variable.
+
+.. figure:: images/bar_view_visualization.png
+
+    Viewing and testing your "myBar" in the visualization
+
+.. |pointpointpoint| image:: /common_images/pointpointpoint.png
+.. |relative_button| image:: /common_images/relative_button.png
+.. |save_button| image:: /common_images/save_button.png
+.. |scale_button| image:: images/scale_button.png
+.. |single_node_button| image:: /common_images/single_node_button.png

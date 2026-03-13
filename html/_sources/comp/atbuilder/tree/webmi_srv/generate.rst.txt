@@ -1,0 +1,12 @@
+.. _webmi_generate:
+
+Generate visualization
+######################
+
+The last step in the webMI engineering process is to generate the visualization files and transfer them to the data root and config target of your webMI server:
+
+To generate and transfer the visualization files, right-click on your webMI server and choose :menuselection:`Distribute`.
+
+.. figure:: images/distribute_visu.png
+
+    Generating the visualization

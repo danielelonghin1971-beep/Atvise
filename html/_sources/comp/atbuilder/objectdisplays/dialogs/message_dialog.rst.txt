@@ -1,0 +1,57 @@
+Message Dialog
+##############
+
+This Display generates a dialog for showing messages, information or warnings. With the function openWindow the dialog can be called. The parameters can be used to adapt the text for the headline, the three message lines and the buttons.
+The actions of the buttons are defined via the name of the corresponding trigger functions. If no trigger name is defined both buttons will close the window without any additional effect. 
+
+.. rubric:: Parameters
+
+The following parameters are available:
+
+Headline:
+
+- **text of headline** -- Headline for the dialog. (default: headline)
+- **font family** -- Font family which will be applied to the headline. (default: Arial)
+- **font size** -- Font size of the headline in pixels. (default: 35)
+- **font weight** -- Font weight which will be applied to the headline. (default: bold)
+- **horizontal alignment** -- The headline's horizontal alignment. (default: left)
+- **vertical alignment** -- The headline's vertical alignment. (default: middle)
+
+Message:
+
+- **message line 1** -- Text in the first message line. (default: Message line 1)
+- **message line 2** -- Text in the second message line.
+- **message line 3** -- Text in the third message line.
+- **font family** -- Font family which will be applied to the message. (default: arial)
+- **font size** -- Font size of the message in pixels. (default: 25)
+- **font weight** -- Font weight which will be applied to the message. (default: normal)
+- **horizontal alignment** -- The message's horizontal alignment. (default: left)
+- **vertical alignment** -- The message's vertical alignment. (default: top)
+
+Buttons:
+
+- **text of button 1** -- Text of button 1 (default: T{OK})
+- **text of button 2** -- Text of button 2 (default: T{Cancel})
+- **action of button 1** -- Trigger function of button 1
+- **action of button 2** -- Trigger function of button 2
+
+Button:
+
+- **font size** -- The button's font size in pixels. (default: 36)
+
+Symbol:
+
+- **symbol** -- Address of the symbol. (default: SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Symbols.20x20.info)
+- **symbol color** -- Color of the symbol to be used (default: global parameter atvSymbolColor)
+
+Appearance:
+
+- **background color** -- Color of the display's background (default: #ffffff)
+
+.. rubric:: Example
+
+Call the message dialog with openWindow function:
+
+::
+
+    webMI.display.openWindow({display:"SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Advanced.dialogs.message_dialog", x:0, y:0, width:900, height:560, modal:true, resizable:false, movable:true, scrollbars:false, menubar:false, status:false, toolbar:false, query: {headline:"my headline", msg1:"my message in line 1"}}); 

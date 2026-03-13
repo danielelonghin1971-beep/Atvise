@@ -1,0 +1,24 @@
+Alarmlog Three Rows (Small)
+###########################
+
+The alarmlog_touch is a control that displays the last 3 alarm events that occurred in the system.
+All states of the alarm (on unacknowledged » on acknowleged » off acknowledged OR on unacknowledged » off unacknowledged) are displayed with different symbols.
+Additionally the address (source node) and alarmtext (from alarm configuration) are displayed.
+In comparison to the "normal" alarmlog display only the size was reduced to fit smaller screens too.
+
+.. rubric:: Parameters
+
+Font:
+
+- **family** -- Font family (Default: Arial (Advanced), Courier New (Standard))
+- **size** -- Font size (Default: 12 (Advanced), 11 (Standard))
+- **color** -- Font color (default: global parameter atvFontColor (advanced), #000000 (standard))
+
+Alarm:
+
+- **min alarm priority** -- Minimum alarm priority to be displayed (Default: 0)
+- **max alarm priority** -- Maximum alarm priority to be displayed (Default: 0)
+
+Appearance:
+
+- **symbol color** -- Fill color of the alarm symbols (default: global parameter atvSymbolColor (advanced), #000000 (standard))

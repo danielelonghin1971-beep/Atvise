@@ -1,0 +1,137 @@
+XML export and import functions
+###############################
+
+These functions allow to export nodes to XML and to import nodes from XML into the address space. The functions are wrapper scripts for the respective OPC UA methods and can be found in the atvise library (:treeselection:`Library --> ATVISE --> Script Library --> Methods`).
+
+For more information about XML in atvise see :ref:`xml_export_and_import` in the atvise builder documentation.
+
+.. rubric:: ExportNodes
+
+**call("Methods.ExportNodes", options)**
+
+Exports the specified nodes in XML format and returns the XML. *options* is an object with following properties:
+
+- **address** (String[]) -- Specifies the nodes to be exported.
+- **withouthierarchy** (Boolean, optional, default: false) -- If true, only the specified nodes are exported as a flat list. Otherwise the whole hierarchy of the nodes is exported.
+
+The result is an object with following properties:
+
+- **error** (Integer) -- The error code, supplied only if an error occurred when calling the script.
+- **errorstring** (String) -- The error text, supplied only if an error occurred when calling the script.
+- **result** (Object)
+
+    - **xmlnodeset** (String) -- The exported nodes in XML format.
+    - **errors** (Object[]) -- Array of objects containing information about errors that occurred during the export. Each element is an object with the following properties:
+
+      - **error** (Integer) -- Error code
+      - **errorstring** (String) -- Error text
+
+Example::
+
+    var res = call("Methods.ExportNodes", {
+       address: ["AGENT.OBJECTS.instance1", "AGENT.OBJECTS.instance2"],
+       withouthierarchy: true
+    });
+    if (res.error)
+       console.log("XML export error: " + res.errorstring);
+    else
+       console.log(res.result);
+
+.. rubric:: ExportNodesToFile
+
+**call("Methods.ExportNodesToFile", options)**
+
+Exports the specified nodes in XML format to a file. *options* is an object with following properties:
+
+- **address** (String[]) -- Specifies the nodes to be exported.
+- **withouthierarchy** (Boolean, optional, default: false) -- If true, only the specified nodes are exported as a flat list. Otherwise the whole hierarchy of the nodes is exported.
+- **file** (String) -- The name of the file to write the exported XML to. The name can be specified with an absolute path or relative to the current project directory. If the file already exists, it will be overwritten.
+
+The result is an object with following properties:
+
+- **error** (Integer) -- The error code, supplied only if an error occurred when calling the script.
+- **errorstring** (String) -- The error text, supplied only if an error occurred when calling the script.
+- **result** (Object)
+
+    - **success** (Boolean) -- Indicates success (true) or failure (false) of the export.
+    - **errors** (Object[]) -- Array of objects containing information about errors that occurred during the export. Each element is an object with the following properties:
+
+      - **error** (Integer) -- Error code
+      - **errorstring** (String) -- Error text
+
+Example::
+
+    var res = call("Methods.ExportNodesToFile", {
+       address: ["AGENT.OBJECTS.instance1", "AGENT.OBJECTS.instance2"],
+       withouthierarchy: true,
+       file: "C:/temp/mynodes.xml"
+    });
+    if (res.error)
+       console.log("XML export error: " + res.errorstring);
+    else
+       console.log(res.result);
+
+.. rubric:: ImportNodes
+
+**call("Methods.ImportNodes", options)**
+
+Imports the nodes from the specified XML. *options* is an object with following properties:
+
+- **address** (String, optional, default: "") -- If empty, then the import is absolute, otherwise the import is relative to the specified node.
+- **xmlnodeset** (String) -- The XML to import.
+
+The result is an object with following properties:
+
+- **error** (Integer) -- The error code, supplied only if an error occurred when calling the script.
+- **errorstring** (String) -- The error text, supplied only if an error occurred when calling the script.
+- **result** (Object)
+
+    - **success** (Boolean) -- Indicates success (true) or failure (false) of the import.
+    - **version_ok** (Boolean) -- True, if the version of the XML matches the atvise version, otherwise false. See :ref:`Version check <xml_version_check>` for details.
+    - **errors** (Object[]) -- Array of objects containing information about errors that occurred during the import. Each element is an object with the following properties:
+
+      - **error** (Integer) -- Error code
+      - **errorstring** (String) -- Error text
+
+Example::
+
+    var xml = "<?xml version=\"1.0\" encoding=\"UTF-8\" ?><UANodeSet ...";
+    var res = call("Methods.ImportNodes", {
+       xmlnodeset: xml
+    });
+    if (res.error)
+       console.log("XML import error: " + res.errorstring);
+    else
+       console.log(res.result);
+
+.. rubric:: ImportNodesFromFile
+
+**call("Methods.ImportNodesFromFile", options)**
+
+Imports the nodes from the specified XML file. *options* is an object with following properties:
+
+- **address** (String, optional, default: "") -- If empty, then the import is absolute, otherwise the import is relative to the specified node.
+- **file** (String) -- The name of the XML file to import. The name can be specified with an absolute path or relative to the current project directory.
+
+The result is an object with following properties:
+
+- **error** (Integer) -- The error code, supplied only if an error occurred when calling the script.
+- **errorstring** (String) -- The error text, supplied only if an error occurred when calling the script.
+- **result** (Object)
+
+    - **success** (Boolean) -- Indicates success (true) or failure (false) of the import.
+    - **version_ok** (Boolean) -- True, if the version of the XML file matches the atvise version, otherwise false. See :ref:`Version check <xml_version_check>` for details.
+    - **errors** (Object[]) -- Array of objects containing information about errors that occurred during the import. Each element is an object with the following properties:
+
+      - **error** (Integer) -- Error code
+      - **errorstring** (String) -- Error text
+
+Example::
+
+    var res = call("Methods.ImportNodesFromFile", {
+       file: "C:/temp/mynodes.xml"
+    });
+    if (res.error)
+       console.log("XML import error: " + res.errorstring);
+    else
+       console.log(res.result);

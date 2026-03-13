@@ -1,0 +1,19 @@
+Switch Templates/Recipes
+########################
+
+Navigation element to switch between templates and recipes.
+
+.. rubric:: Parameters 
+
+General:
+
+- **current display** -- Current display
+
+Appearance:
+
+- **fill color** -- Fill color (Default: SYSTEM.GLOBALS.atvFillColor) 
+- **button background** -- Color for background (default: #d7d7d7)
+
+Font:
+
+- **font color** -- Font color (Default: SYSTEM.GLOBALS.atvFontColor)

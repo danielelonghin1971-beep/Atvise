@@ -1,0 +1,18 @@
+Button Zoom-Out
+###############
+
+This button decreases the zoom level of the visualization.
+
+.. rubric:: Parameters
+
+- **target frame name** -- Name of the iframe display that shall be zoomed
+
+Appearance:
+
+- **symbol** -- The symbol of the button (Default: SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Symbols.zoom_out)
+- **symbol pressed** -- The symbol that will displayed when the button is pressed (Default: SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Symbols.zoom_out)
+- **symbol color** -- Color of the symbol (default: global parameter atvSymbolColor (advanced), #d0d0d0 (standard))
+- **symbol color pressed** -- Color of the symbol in pressed state (default: global parameter atvSymbolColor (advanced), #fdff0f (standard))
+- **fill color** -- Background color of the control (default: global parameter atvFillColor (advanced), #000000 (standard))
+- :advstyle:`Advanced` **border color** -- Color of the button's border (default: global parameter atvBorderColor)
+- **stroke color pressed** -- Color of the border when pressing the button (default: #fdff0f)

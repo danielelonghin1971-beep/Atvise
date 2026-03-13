@@ -1,0 +1,91 @@
+Picker Interval
+###############
+
+This control is meant for defining time intervals. The combobox allows to select the unit (days, hours, minutes, seconds, milliseconds) for the time range that is defined.
+
+In addition the trigger "valuechanged" with the new value will be fired.
+
+An additional border indicates the current value's negative state or an additionally defined alarm. The colors and blinking intervals are defined in global lists.
+
+.. rubric:: Triggers
+
+Following triggers can be used for this object display: 
+
+- **com.atvise.setActive** -- Can be used to enable or disable the object display.
+- **setValue** -- The object display connects to this trigger. Therefore, it is possible to set the value from the outside.
+- **valuechanged** -- Fired on value changes, e.g. by user input.
+
+::
+
+    //Disable the object display
+    webMI.trigger.fire("com.atvise.setActive", false, "myDisplayID");
+
+    //Set value of object display
+    webMI.trigger.fire("setValue", 10000, "myDisplayID");
+
+    //Respond to value changes
+    webMI.trigger.connect("valuechanged", function(e) { console.log(e.value); }, "myDisplayID");
+
+.. hint:: Additional undocumented triggers are internally used by atvise. Their functionality may be changed in future atvise releases.
+
+.. rubric:: Parameters
+
+This control has the following generic parameters:
+
+- **base** -- The value of this address will be displayed or changed.
+- **alarm address** -- Optional additional address of an alarm to be shown.
+- **time value (ms)** -- Value to be set in milliseconds (is only applied if no node is defined) (default: 60000)
+- **decimal places** -- Number of decimal places for the value to be displayed. (default: 3)
+- **time span** -- Unit for the defined timespan (auto, days, hours, minutes, seconds, milliseconds) (default: auto - best matching unit is automatically selected).
+- **allow direct input** -- Select "Yes" if you want to directly enter characters in the control without opening the SVG Keyboard (default: Yes).
+- **enable status monitoring** -- Switch monitoring of current value status on or off. (default: Yes)
+- **fire status trigger** -- Instead of the status display a here defined trigger can be fired globally.
+- **number keyboard display** -- On-screen keyboard for numerical input (default: numerical keyboard)
+
+Font:
+
+- **family** -- Font family which will be applied to value (default: Arial)
+- **size** -- Font size which will be applied to the value (default: 12)
+- **color** -- Color which will be applied to the value (default: global parameter atvFontColor)
+
+Appearance:
+
+- **fill color** -- Fill color of background areas (default: global parameter atvFillColor)
+- **value field fill color** -- Fill color of the value field (default: #ffffff)
+- **value field fill color not editable** -- Fill color of the value field when not editable (default: #f2f2f2)
+- **value field fill color inactive** -- Button's fill color if not active (default: global parameter atvInactiveColor)
+- **symbol color** -- Fill color of the combobox button (default: global parameter atvSymbolColor)
+- **focus stroke color** -- The color of the stroke which will be set when the control is focused (default: #ffffff)
+- **border color** -- The control's border color (default: global parameter atvBorderColor)
+- **status indication** -- Specify the status display through a defined global list (default: global parameter atvStatusIndication)
+- **alarm indication** -- Specify the alarm display through a defined global list (default: global parameter atvAlarmIndication)
+
+Security:
+
+- **editable** -- If set to "No" the values will only be displayed but it is not possible to enter a value (default: Yes). This only applies to direct user inputs, changes via script (setValue) or trigger are still possible.
+- **necessary right** -- The user must have this right to activate, i.e. press this button.
+- **activation address** -- If the value of this address equals to "activation value", then the control will be active, i.e. can be pressed.
+- **activation value** -- Value which activates the control.
+
+    .. hint:: The activation of the control can be configured only by the necessary right, or only by the activation address and value or by both. In case both settings are made, the user must have the necessary right and the value of the "activation address" must equal the "activation value"; otherwise the control will not be activated.
+
+- **show access control notification** -- Defines if the icon for showing access control notifications shall be displayed (default: true)
+
+Options:
+
+- **consistency group** -- Name of the consistency group
+- **tab index** -- Defines the order for changing between the object displays by using the tab key
+- **tooltip** -- Displays a tooltip box with the entered text (standard HTML-Elements can be entered)
+- **select text on focus** -- Selects the text if the direct input is allowed (default: false).
+
+Context menu:
+
+- **text alignment** -- Alignment of the context menu's text (left, center or right) (default: right)
+
+Menu:
+
+- **menu positioning** -- The position the menu symbol is shown at (top-left, top-right, bottom-left, bottom-right).
+- **menu mouseover active** -- Symbol is only shown on *mouseover*.
+- **menu symbol offset x** -- Relative offset of the menu symbol to the anchor point on the x axis in pixel.
+- **menu symbol offset y** -- Relative offset of the menu symbol to the anchor point on the y axis in pixel.
+- **context menu click frame** -- Defines the size of the click frame for opening the context menu.

@@ -1,0 +1,95 @@
+.. _smtp_settings:
+
+SMTP settings
+#############
+
+.. rubric:: Add and edit an SMTP server
+
+Add an SMTP Server to your project by right-clicking at :treeselection:`SMTP Server` and selecting :menuselection:`Add SMTP Server...`:
+
+.. figure:: images/add_smtp_server1.png
+
+    Adding a SMTP server
+
+.. figure:: images/add_smtp_server.png
+
+    SMTP server dialog
+
+Name
+    name of the SMTP server
+
+Server
+    address of the  SMTP server
+
+Port
+    port of the SMTP server
+
+Authentication
+    Authentication for the SMTP server (login, plain, md5)
+
+Security
+    For a description of the security options see :ref:`smtpclient_functions`
+
+User Name
+    User Name for the Connection to the SMTP server
+
+Password
+    Password for the Connection to the SMTP server
+
+.. rubric:: Calling the "SendMail" function
+
+To send an e-mail with a serverside script you need the "SendMail" function. To call the function add the following script to the desired serverside script::
+
+    var att = [
+    //Option 1: Filesystem
+    {
+        type: SMTPClient.A_FILE,
+        name: "report.pdf",
+        content_type: "application/pdf",
+        file_path: "C:/...",
+        inline: false
+    },
+    //Option 2: Resource with address
+    {
+        type: SMTPClient.A_DATA,
+        name: "prev.png",
+        content_type: "image/png",
+        data_address: "SYSTEM.LIBRARY.ATVISE.RESOURCES/prev.png",
+        inline: false,
+        is_encoded: false
+    },
+    //Option 3: Resource with content - caution: may result in performance problems in case of large files. 
+    {
+        type: SMTPClient.A_DATA,
+        name: "next.png",
+        content_type: "image/png",
+        data: Ua.findNode("SYSTEM.LIBRARY.ATVISE.RESOURCES/next.png").result.value,
+        inline: false,
+        is_encoded: false
+    }]
+
+    call("Mail.SendMail", {
+        smtpserver: "gmail",
+        from: "me",
+        to: "you",
+        cc: "cc",
+        bcc: "bcc",
+        reply_to: "reply_to",
+        content_type: "text/plain",
+        subject: "Hello",
+        body: "Hello again",
+        attachment: JSON.stringify(att)
+    });
+
+The scripts expects as parameter an object with following properties:
+
+- **smtpserver** (String) -- Name of the SMTP server (as defined in the "Add SMTP server" dialog).
+- **from** (String) -- Specifies the name of the sender.
+- **to** (String) -- Specifies the name of the recipient(s). Multiple recipients are separated with ';'.
+- **cc** (String, optional, default: "") -- Specifies the carbon copy recipient(s). Multiple recipients are separated with ';'.
+- **bcc** (String, optional, default: "") -- Specifies the blind carbon copy recipient(s). Multiple recipients are separated with ';'.
+- **reply_to** (String, optional, default: "") -- Specifies the "Reply-To" field of the e-mail header.
+- **content_type** (String, optional, default: "text/plain") -- Specifies the "Content-Type" field of the e-mail header.
+- **subject** (String, optional, default: "") -- Specifies the subject of the mail.
+- **body** (String, optional, default: "") -- Specifies the message of the mail.
+- **attachment** (String, optional, default: "") -- Specifies attachment(s) for the mail. Must be a stringified JSON of an attachment object array.

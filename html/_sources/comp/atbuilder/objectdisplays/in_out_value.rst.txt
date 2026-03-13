@@ -1,0 +1,168 @@
+In/Out Value
+############
+
+This control can be used as a combination of an input and output element as well as a simple output element only. An additional border indicates the current value's negative state or an additionally defined alarm. The colors and blinking intervals are defined in global lists.
+
+In addition the trigger "valuechanged" will be fired when a value changes.
+
+Basically the following parameter groups can be used independently of the input mode.
+
+- Font
+- Appearance
+- Security
+- Options
+
+The remaining parameter groups only work combined with a specific input mode.
+
+.. rubric:: Input modes
+
+#. **Number**: allows the input of "-", ",", "." "0-9" and supports the following parameter groups:
+    
+    - Number Format
+    - Limits
+    - Enum List Modus
+
+#. **Boolean**: allows the input of "true", "false", "1", "0" and supports the following parameter group:
+    
+    - Enum List Modus
+
+#. **String**: has no restrictions concerning the input and supports the following parameter group:
+    
+    - Enum List Modus
+
+#. **Password**: has no restrictions concerning the input and supports no specific parameter group:
+
+.. attention:: If a value is being entered which is not in conformity with the input mode then the value will not be set and a warning will be displayed in the console.
+
+.. rubric:: Triggers
+
+Following triggers can be used for this object display: 
+
+- **com.atvise.getValue** -- Allows to retrieve the currently set value of the object display. **Caution:** If input mode "Password" is defined, the value is passed in plain text to the callback function.
+- **com.atvise.setActive** -- Can be used to enable or disable the object display.
+- **setDecimal** -- The object display connects to this trigger. Therefore, it is possible to define the decimal places from the outside (only if input mode *Number* is set).  
+- **setValue** -- The object display connects to this trigger. Therefore, it is possible to set the value from the outside.
+- **valuechanged** -- Fired on value changes, e.g. by user input.
+
+::
+
+    //Get current value of object display
+    webMI.trigger.fire("com.atvise.getValue", function(value) { console.log(value); }, "myDisplayID");
+
+    //Disable the object display
+    webMI.trigger.fire("com.atvise.setActive", false, "myDisplayID");
+
+    //Define decimal places for object display
+    webMI.trigger.fire("setDecimal", 3, "myDisplayID");
+
+    //Set value of object display
+    webMI.trigger.fire("setValue", 100, "myDisplayID");
+
+    //Respond to value changes
+    webMI.trigger.connect("valuechanged", function(e) { console.log(e.value); }, "myDisplayID");
+
+.. hint:: Additional undocumented triggers are internally used by atvise. Their functionality may be changed in future atvise releases.
+
+.. rubric:: Parameters
+
+.. hint:: If there is an opportunity to set a value directly by a parameter and additionally by the address of a node and both are being set, then the value from the address will be taken.
+
+This control has the following generic parameters:
+
+- **base** -- This address will be set.
+- **alarm address** -- Optional additional address of an alarm to be shown.
+- **input mode** -- Defines the input mode (described above). (default: Number)
+- **allow direct input** -- Select "Yes" if you want to directly enter characters in the control without opening the SVG Keyboard (default: Yes)
+- **enable status monitoring** -- Switch monitoring of current value status on or off. (default: Yes)
+- **fire status trigger** -- Instead of the status display a here defined trigger can be fired globally.
+- **keyboard display** -- On-screen keyboard for string input (default: alphanumerical keyboard)
+- **number keyboard display** -- On-screen keyboard for numerical input (default: numerical keyboard)
+- **small message dialog display** -- Dialog for showing messages, information or warnings (default: small message dialog object display)
+
+Number Format:
+
+- **displayed unit** -- Enter a unit which will be displayed in addition to the value.
+- **show sign** -- If "true", the sign will be displayed for number (default: false).
+- **leading zeros** -- Amount of places left to the decimal point (e.g. when set to 3, the value 11 will be displayed as 011). (default: 0)
+- **decimal places** -- Displayed values are rounded to the defined number of decimal places. If this parameter is not defined, the value is displayed as sent by the server.
+- **force decimal fraction position** -- Converts the value by dividing by 10 (e.g. when set to 2, the value 2000 will be displayed as 20.00).
+
+Enum List Mode:
+
+- **enum list** -- Global list which defines the value to be displayed. If an "enum list" is specified, the value will be taken from the global list in case that it is defined there.
+    
+    Example:
+
+        - Add a Global List (e.g. mylist) to the Global Parameters.
+        - enter "1" in column "key" of the first row and a related value (e.g. 10) in column "value" of the first row.
+        - enter "2" in column "key" of the second row and a related value (e.g. 20) in column "value" of the second row, etc.
+        - select your above defined Global List (e.g. mylist) as value of the parameter "enum list".
+        - This will cause the in_out_value to change the value to 10 if the value of "base"=1 and change the value to 20 if the value of "base"=2, etc.
+
+Font:
+
+- **family** -- Font family which will be applied to the value (default: Arial)
+- **size** -- Font size which will be applied to the value (default: 12)
+- **color** -- Color which will be applied to the value (default: global parameter atvFontColor (advanced), #000000 (standard))
+
+Appearance:
+
+- **fill color** -- Fill color of background areas (default: global parameter atvFillColor (advanced), #d0d0d0 (standard))
+- :stdstyle:`Standard` **fill color not editable** -- Fill color if checkbox is not editable (default: #ffffff)
+- :stdstyle:`Standard` **fill color when inactive** -- Fill color if not active (default: #8c8c8c)
+- :advstyle:`Advanced` **value field fill color** -- Fill color of the value field (default: #ffffff)
+- :advstyle:`Advanced` **value field fill color not editable** -- Fill color of the value field when not editable (default: #f2f2f2)
+- :advstyle:`Advanced` **value field fill color inactive** -- Fill color of the text field when not active (default: global parameter atvInactiveColor)
+- :advstyle:`Advanced` **symbol color** -- Symbol's fill color (default: global parameter atvSymbolColor)
+- **focus stroke color** -- Stroke color on focus (default: #ffffff)
+- :advstyle:`Advanced` **border color** -- Color of the border around the control (default: global parameter atvBorderColor)
+- **status indication** -- Specify the status' display through a defined global list (default: global parameter atvStatusIndication)
+- **alarm indication** -- Specify the alarm's display through a defined global list (default: global parameter atvAlarmIndication)
+
+Limits:
+
+- **limit low low (off=no limit)** -- Value for limit low low (default: off, which means no limit).
+- **limit low (off=no limit)** -- Value for limit low (default: off, which means no limit).
+- **limit high (off=no limit)** -- Value for limit high (default: off, which means no limit).
+- **limit high high (off=no limit)** -- Value for limit high high (default: off, which means no limit).
+- **limit low low color** -- Fill color if "limit low low" >= value (default: ##ff0000).
+- **limit low color** -- Fill color if "limit low low" < value <= "limit low" (default: #ffff00).
+- **limit high color** -- Fill color if "limit high" <= value < "limit high high" (default: #ffff00).
+- **limit high high color** -- Fill color if "limit high high" <= value (default: #ff0000).
+- **minimum** -- Lowest border of the value (default: off, which means no limit).
+- **maximum** -- Highest border of the value (default: off, which means no limit).
+- **address for minimum** -- Address from which the minimum will be taken; this supersedes the parameter "minimum".
+- **address for maximum** -- Address from which the maximum will be taken; this supersedes the parameter "maximum".
+- **address for limit low low** -- Address from which the "limit low low" will be taken; this supersedes the parameter "limit low low".
+- **address for limit low** -- Address from which the "limit low" will be taken; this supersedes the parameter "limit low"
+- **address for limit high** -- Address from which the "limit high" will be taken; this supersedes the parameter "limit high"
+- **address for limit high high** -- Address from which the "limit high high" will be taken; this supersedes the parameter "limit high high"
+
+Security:
+
+- **editable** -- If set to "No" the values will only be displayed but it is not possible to enter a value (default: Yes). This only applies to direct user inputs, changes via script (setValue) or trigger are still possible.
+- **necessary right** -- The user must have this right to activate this control, i.e. to enter values.
+- **activation address** -- If the value of this address equals to "activation value", then the control will be active, i.e. can be used as input field.
+- **activation value** -- Value which activates the control. (default: off)
+
+.. hint:: If only the activation address or the activation value is being entered then the input field will be active, as these both parameters only work together.
+
+- **show access control notification** -- Defines if the icon for showing access control notifications shall be displayed (default: true)
+
+Options:
+
+- **alternative output address** -- If specified, only this address will be set ("base" will not be set).
+- **consistency group** -- Name of the consistency group.
+- **tab index** -- Defines the order for changing between the object displays by using the tab key.
+- **tooltip** -- Displays a tooltip box with the entered text (standard HTML-Elements can be entered).
+- **select text on focus** -- Selects the text in if the direct input is allowed (default: false).
+
+.. attention:: The alternative output address does not work in combination with the consistency group.
+
+Menu:
+
+- **menu positioning** -- The position the menu symbol is shown at (top-left, top-right, bottom-left, bottom-right).
+- **menu mouseover active** -- Symbol is only shown on *mouseover*.
+- **menu symbol offset x** -- Relative offset of the menu symbol to the anchor point on the x axis in pixel.
+- **menu symbol offset y** -- Relative offset of the menu symbol to the anchor point on the y axis in pixel.
+- **context menu click frame** -- Defines the size of the click frame for opening the context menu.

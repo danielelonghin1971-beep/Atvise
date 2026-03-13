@@ -1,0 +1,30 @@
+.. _visu_consistency_handler:
+
+Consistency handler
+###################
+
+The Quick Dynamic "Consistency Handler" allows to define a group of object displays when creating a display, whose variables will be consistently read from or written to the PLC. The object displays (related variables) can be grouped by the display parameter "consistency group" (in the group "Options"). Afterwards the Object Display "Button" can be used to consistently write these Object Displays (related variables) to or read them from the PLC.
+
+Therefore the following parameter of the Object Display "Button" in the parameter group "Consistency" has to be set:
+
+- group: name of the consistency group (according to the group of the Object Displays)
+- function: Function (read/write), which will be executed on click, as far as a group is specified (standard: write)
+
+At the first display load, the parameterized group of Object Displays (related variables) are consistently read.
+
+The following Object Displays support the consistently read and write of variables:
+
+- Checkbox
+- Combobox
+- In/Out Date
+- In/Out Date-Time
+- In/Out Time
+- In/Out Value
+- Picker Address
+- Picker Color
+- Picker Date
+- Picker Value
+- Radiobutton
+- Rocker Switch
+- Rocker Switch (Small)
+- Rocker Switch horizontal

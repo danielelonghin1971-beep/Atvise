@@ -1,0 +1,21 @@
+Group Display
+#############
+
+This control is a group of buttons that shows all displays from the main display structure on mouseover:
+
+- MAIN: All displays that are located in the "DISPLAYS.MAIN" folder.
+- USER: All displays that are located in the "DISPLAYS.USER" folder.
+- SYSTEM: All displays that are located in the "DISPLAYS.SYSTEM" folder.
+- REPORT: All displays that are located in the "DISPLAYS.REPORT" folder.
+
+.. rubric:: Parameters
+
+- **target frame** -- Name of the iframe in which the display will be opened  (Default: content)
+
+Appearance:
+
+- :stdstyle:`Standard` **stroke color when pressed** -- Color of the border when pressing/hovering the buttons (default: #ffffff)
+- :advstyle:`Advanced` **fill color** -- Color of button and background (default: global Parameter atvFillColor)
+- :advstyle:`Advanced` **border color** -- Color of the control's border (default: global parameter atvBorderColor)
+- :advstyle:`Advanced` **symbol color** -- Fill color for the symbols (default: global parameter atvSymbolColor)
+- :advstyle:`Advanced` **font color** -- Font color, applied to main menus which open on button click (default: global parameter atvFontColor)

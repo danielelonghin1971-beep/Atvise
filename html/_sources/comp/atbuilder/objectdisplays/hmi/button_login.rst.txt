@@ -1,0 +1,25 @@
+Button Login
+############
+
+This control opens the login dialog.
+The "logged in" / "not logged in" states are displayed by different symbols too.
+
+.. rubric:: Parameters
+
+Appearance:
+
+- **symbol login** -- Symbol that will be used for the login state (Default: SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Symbols.20x20.login)
+- **symbol color login** -- Fill color for the login symbol (default: global parameter atvSymbolColor (advanced), #ffffff (standard))
+- **symbol logout** -- Symbol that will be used for the logout state (Default: SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Symbols.20x20.logout)
+- **symbol color logout** -- Fill color for the logout symbol (default: global parameter atvSymbolColor (advanced), #ffffff (standard)))
+- :advstyle:`Advanced` **symbol scaling (%)** -- Scaling of the symbols in percent (Default: 100)
+- **fill color** -- Background color of the control (default: global parameter atvFillColor (advanced), #000000 (standard)))
+- **fill color when inactive** -- Button's fill color if not active (default: global parameter atvInactiveColor (advanced), #8c8c8c (standard)))
+- :advstyle:`Advanced` **border color** -- Color of the button's border (default: global parameter atvBorderColor)
+- **stroke color when pressed** -- Color of the border when pressing the button (default: #ffffff)
+
+Login dialog:
+
+- **display address** -- Login dialog that is opened (Default: SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Advanced.dialogs.login)
+- **width** -- Width of the login dialog (Default: 430)
+- **height** -- Height of the login dialog (Default: 300)

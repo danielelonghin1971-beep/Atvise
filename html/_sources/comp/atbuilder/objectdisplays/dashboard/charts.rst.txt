@@ -1,0 +1,9 @@
+Charts
+######
+
+.. toctree::
+
+    charts/bar
+    charts/gauge
+    charts/pie
+    charts/progress

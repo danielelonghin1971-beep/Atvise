@@ -1,0 +1,57 @@
+Context menu functions
+######################
+
+.. csv-table:: Context menu
+    :widths: auto
+
+    Add Simple Dynamic, Adds a Simple Dynamic to the selected item
+    Center Referencepoint, Sets the referencepoint of the selected item to it's center
+    Clone style, Clones the appearance of the selected item to another
+    Copy, Copies the item to the clipboard
+    Cut, Cuts out the item an copy it to the clipboard
+    Delete Item(s), Deletes the selected items
+    Edit hyperlink ..., Edits the item's hyperlink or creates a new one
+    Edit referenced Display ..., Lets you edit the referenced display in a new tab
+    Edit Shape, Edits the shape of the selected item
+    Edit text, Lets you edit the selected textitem
+    Edit Widget, Opens the source editor to edit the widget
+    Paste, Pastes an item from the clipboard
+    Reset Transformation, Resets an item's transformation to it's default transformation
+    Select alternative Symbol, Allows to select an alternative symbol for an instance
+    Set as default Transformation, Sets the item's current transformation to default
+    Set Binding, see below
+    Set to default Transformation, Sets an item's transformation to default
+    Transform, see below
+    Visibility, see below
+    Z-Order, see below
+
+.. csv-table:: Set Binding
+    :widths: auto
+
+    Bind to Bottom Left Corner, Binds the object to the bottom left corner of the display
+    Bind to Bottom Right Corner, Binds the object to the bottom right corner of the display
+    Bind to Center, Binds the object to the center of the display
+    Bind to SVG, Binds the object proportional to the display
+    Bind to Top Left Corner, Binds the object to the top left corner of the display
+    Bind to Top Right Corner, Binds the object to the top right corner of the display
+    No Binding, Disables the binding of the selected object
+
+.. csv-table:: Visibility
+    :widths: auto
+
+    Hidden, Hides the item in the visualization
+    Visible, Shows the item in the visualization
+
+.. csv-table:: Transform:
+    :widths: auto
+
+    Flip horizontally, Flips the item around it's horizontal axis
+    Flip vertically, Flips the item around it's vertical axis
+
+.. csv-table:: Z-Order:
+    :widths: auto
+
+    Bring forward, Brings the selected item above the item over it
+    Bring to front, Brings the item in front of all other items
+    Send backward, Brings the selected item behind the item under it
+    Send to back, Brings the item behind all other items

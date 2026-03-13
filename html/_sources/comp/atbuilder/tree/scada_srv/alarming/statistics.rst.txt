@@ -1,0 +1,30 @@
+.. _alarm_statistics:
+
+Alarm statistics
+################
+
+atvise provides statistics for alarm conditions and alarm groups. The statistics for alarm conditions can be found below the folder :treeselection:`Information --> ModuleStatistics --> ALARM --> CONDITIONS`, for alarm groups below the folder :treeselection:`Information --> ModuleStatistics --> ALARM --> GROUPS`. All values are calculated since server startup or last reset (see below).
+
+For each condition and group following statistical values are available:
+
+- **AlarmCount** -- The total number of alarms.
+- **CurrentAlarmRate** -- The current alarm rate.
+- **MaximumAlarmRate** -- The maximum alarm rate.
+- **MaximumActiveState** -- Maximum time in milliseconds an alarm was active.
+- **MaximumUnAck** -- Maximum time in milliseconds an alarm was unacknowledged.
+- **StartTime** -- Server startup time or time of last reset.
+
+The time period for the current and maximum alarm rate can be defined with the setting :ref:`alarmRatePeriod in atserver.ini <atserver_ini_alarmrate>`.
+
+The statistics for a *condition* can be reset by right-clicking the condition and choosing :menuselection:`Reset Condition Statistics`.
+
+The statistics for a *group* can be reset by right-clicking the group and choosing one of the following menu commands:
+
+- :menuselection:`Reset Group Statistics` -- Resets the statistics of the group itself and doesn't affect the members of the group.
+- :menuselection:`Reset Condition Statistics` -- Resets the statistics of the direct members of the group and doesn't affect the group itself.
+- :menuselection:`Reset Group and Condition Statistics` -- Resets the statistics of the group and and of its direct members.
+
+.. hint:: 
+    
+    - Multiple conditions or groups can be selected to reset the statistics for all selected conditions or groups at once.
+    - The user needs the *Manage alarms* right for AGENT.ALARMING.GROUPS in order to use the reset commands. Refer to :ref:`access control editor - system functions<accesscontrol_editor>` for further information.

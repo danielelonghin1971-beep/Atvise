@@ -1,0 +1,183 @@
+server object
+#############
+
+.. attribute:: server.database
+
+    server.database is a predefined object with following properties:
+
+        - **directory** (String) -- Contains the current project directory including the trailing directory separator.
+        - **name** (String) -- Contains the name of the current project database.
+
+    The directory with historical data can be determined with :attr:`history.directory`.
+
+.. !!v8!! server.database.backup([options])
+.. function:: server.database.backup([options])
+
+    Starts the live backup of the nodes.db of the currently running project, but doesn't wait until the backup is finished.
+
+    The backup functions of SQLite (sqlite3_backup_*) are used to perform the backup. The nodes.db will be copied in multiple iterations, in each iteration multiple database pages will be copied. The name of the backup file can be specified as an absolute path or relative to the project directory.
+
+    Parameters:
+        - **options** (Object, optional, default: {}) -- An object with following properties:
+
+            - **filename** (String, optional, default: "nodes_YYYYMMDD_hhmmss.db") -- Specifies the name of the backup file. The timestamp in the default file name is given in UTC.
+            - **pages** (Integer, optional, default: 10000) -- Specifies the number of database pages that are copied in one iteration.
+            - **sleep** (Integer, optional, default: 40) -- Specifies the time in milliseconds between two iterations.
+            - **timeout** (Integer, optional, default: 300) -- Specifies the number of seconds, after which the backup must be completed.
+
+    Returns:
+        true if the backup can be started. The backup may e.g. not be started if a previously started backup is still in progress.
+
+    To monitor the status of the backup, open the following variables in the folder :treeselection:`Information --> ModuleStatistics --> DATABASE`:
+
+    - *BackupStatus* shows the status of the backup as text.
+    - *BackupProgress* shows the progress of the backup in percent.
+
+    Example 1, backup with default options::
+
+        server.database.backup();
+
+    Example 2, Backup with options::
+
+        server.database.backup({
+           filename: "C:/backups/newbackup.db",
+           timeout: 600,
+           sleep: 20
+        });
+
+.. _custom_events:
+.. !!v8!! server.event.create(message[, options])
+.. function:: server.event.create(message[, options])
+
+    Allows to trigger :ref:`custom events<event_archive>`.
+
+    Parameters:
+        - **message** (String) -- The event message.
+        - **options** (Object, optional, default: {}) -- An object with following optional properties: 
+
+            - **severity** (Integer, default: 500) - The event severity.
+            - **time** (Date, default: now) - The time when the event was triggered.
+            - **user** (String, default: <session user>) - Name of the user that triggered the event. If a user is specified, the same rules as specified for "alarming.acknowledge" are applied:
+
+                    - **The user in whose context the script is executed is a project administrator:** In this case, the user defined via *user* parameter is applied. If this user does not exist, executing the alarm function is aborted and an error message is written to the log file. 
+                    - **The user in whose context the script is executed is no project administrator:** If the executing user is not the same as the one defined via *user* parameter, the executing user is used for the respective function. A corresponding message is written to the log file. 
+
+    Returns:
+        true, if the event was successfully triggered. Otherwise false.
+
+    Example::
+
+        server.event.create("my event text", {severity: 50});
+
+.. attribute:: server.script.origin
+
+    server.script.origin is a string property holding the NodeId of the script code of the currently running script.
+
+.. attribute:: server.shared.directory
+
+    server.shared.directory is a predefined object with following properties:
+
+    - **atvise** (String) -- Contains the directory with commonly used files of the atvise installation.
+    - **user** (String) -- Contains the directory with the commonly used, user defined files (e.g. own XML files for the defaultimport).
+
+    Both directories contain the trailing directory separator.
+
+.. attribute:: server.statistics
+
+    server.statistics is a predefined object with following properties:
+
+    - **changecounters** (Ua.Node[]) -- Contains all variables for which a ChangeCounter property is defined. Each element in the array is a :ref:`Ua<ua_functions>` object.
+
+.. _deleteSessions:
+.. !!v8!! server.webaccess.deleteSessions([options])
+.. function:: server.webaccess.deleteSessions([options])
+
+    Allows to delete web sessions across all web servers. The *Engineer* right for system function "Web server" is necessary to use this function.
+
+    After deleting a web session, an :ref:`overlay<visu_logout>` in the visualization shows that the connection to the server is lost. The connection is reestablished after a specific countdown (5 seconds by default, see :ref:`Auto Reconnect<autoreconnect>`) and the main display is shown. 
+
+    .. hint:: When using :ref:`cookies<use_cookies>` or the :ref:`login methods<authentication>` *Digest* or *NTLM*, the respective user is automatically logged in again after deleting the web session and reestablishing the connection.
+
+    Parameters:
+        - **options** (Object, optional, Default: {}) -- This object allows to delete specific web sessions for particular users. If the function is called without any parameters, all web sessions (including *Anonymous*) will be deleted. Following options are available:
+
+            - **username** (String, optional, default: Undefined) -- Defines for which user the session(s) shall be deleted. An empty string ("") means *Anonymous*, "*" applies to all signed in users. If the parameter is not defined, all web sessions of all users (including *Anonymous*) are considered.
+            - **sessionId** (Integer, optional, default: Undefined) -- ID of the web session that shall be deleted. If not defined, all sessions of the given user are deleted.
+            - **delay** (Integer, optional, default: 0) -- Time in seconds before the web session is deleted. 0 means that the web session shall be deleted immediately.
+
+         The following table shows the possible combinations of *username* and *sessionId*:
+
+        .. list-table::
+            :header-rows: 1
+            :widths: auto
+
+            * - username
+              - sessionId
+              - Description
+            * - Undefined
+              - Undefined
+              - Deletes all web sessions (including *Anonymous*). 
+            * - "<user>"
+              - Undefined
+              - Deletes all web sessions of the given user.
+            * - "" 
+              - Undefined
+              - Deletes all web sessions of *anonymous* users (i.e. no signed in users).
+            * - "*"
+              - Undefined
+              - Deletes all web sessions of signed in users.
+            * - Undefined
+              - <sessionId>
+              - Deletes the given web session regardless of any user or *Anonymous*.
+            * - "<user>"
+              - <sessionId>
+              - Deletes the given web session if it exists for this specific user. 
+            * - ""
+              - <sessionId>
+              - Deletes the given web session if it exists for *Anonymous*.
+            * - "*"
+              - <sessionId>
+              - Deletes the given web session if it exists for any signed in user.
+
+    Returns:
+        An object with following properties:
+
+            - **result** -- true, if the web session was deleted
+            - **error** -- Error code 
+            - **errorstring** -- Error text
+
+    Example::
+
+        // Deletes web session "12" of user "root" after a delay of 5 seconds
+        server.webaccess.deleteSessions({username: "root", sessionId: 12, delay: 5});
+
+        //Deletes all web sessions immediately
+        server.webaccess.deleteSessions();
+
+        //Deletes all *anonymous* web sessions
+        server.webaccess.deleteSessions({username: ""});
+
+.. !!v8!! server.webaccess.getSessionInfos([username])
+.. function:: server.webaccess.getSessionInfos([username])
+
+    Returns web session information for the given user. The *Read* right for system function "Web server" is necessary to use this function. 
+
+    Parameters:
+        - **username** (String, optional, default: Undefined) -- The name of the user whose web session information shall be returned. An empty string ("") means *Anonymous*, "*" queries information for all signed in users. If the parameter is not defined, information on all web sessions of all users (including *Anonymous*) is returned.
+
+    Returns:
+        - An object with following properties:
+
+            - **result** (Object[]) -- An array of objects with following properties:
+
+                - clientIp -- IP address of the client
+                - sessionId -- ID of the web session
+                - startTime -- Start time of the web session (number of milliseconds since 1.1.1970 00:00 UTC)
+                - usedCcds -- Number of CCDs used by this web session
+                - userAgent -- User agent string that contains information on name and version of browser and OS
+                - userName -- Username ("" in case of *Anonymous*)
+
+    Example::
+
+        //Returns information on web sessions of all signed in users
+        server.webaccess.getSessionInfos("*");

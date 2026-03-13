@@ -1,0 +1,75 @@
+.. _od_archivemanagement:
+
+Archive Management
+##################
+
+This object display allows to manage archive data. Refer to :ref:`atvise visualization > Archive management <archivemanagement>` for a detailed description.
+
+.. rubric:: Parameters
+
+- **mode for backup operation** -- Defines if data is moved or copied to the backup directory (default: move)
+- **node for auto-scheduler config** -- Node for the auto-scheduler configuration, see also :ref:`access control - visualization rights<ac_config_nodes>` (default: AGENT.OBJECTS.ATVISE.AutoSchedulerConfig)
+
+Appearance: 
+
+- **fill color** -- Background color of the display (default: global parameter atvFillColor)
+- **section background color** -- Background color of section headers (default: global parameter atvFillColor2)
+- **history info color** -- Bar color of the history directory if no threshold is reached (default: #32cd32)
+- **history warning color** -- Bar color of the history directory when reaching threshold *Warning* (default: #ffa500)
+- **history critical color** -- Bar color of the history directory when reaching threshold *Critical* (default: #ff0000)
+- **swapin info color** -- Bar color of the swapin directory if no threshold is reached (default: #32cd32)
+- **swapin warning color** -- Bar color of the swapin directory when reaching threshold *Warning* (default: #ffa500)
+- **swapin critical color** -- Bar color of the swapin directory when reaching threshold *Critical* (default: #ff0000)
+- **backup info color** -- Bar color of the backup directory if no threshold is reached (default: #32cd32)
+- **backup warning color** -- Bar color of the backup directory when reaching threshold *Warning* (default: #ffa500)
+- **backup critical color** -- Bar color of the backup directory when reaching threshold *Critical* (default: #ff0000)
+- **restore info color** -- Bar color of the restore directory if no threshold is reached (default: #32cd32)
+- **restore warning color** -- Bar color of the restore directory when reaching threshold *Warning* (default: #ffa500)
+- **restore critical color** -- Bar color of the restore directory when reaching threshold *Critical* (default: #ff0000)
+- **color for free space** -- Defines the background color of the bar for the disk space (default: #b7b7b7)
+
+Font:
+
+- **color** -- Defines the font color for the display (default: global parameter atvFontColor)
+- **section color** -- Defines the font color for section headers (default: global parameter atvFillColor)
+
+Thresholds:
+
+- **history warning from (%)** -- Used disk space in % (of the drive the history directory is located on) when *Warning* threshold is reached (default: 70)
+- **history critical from (%)** -- Used disk space in % (of the drive the history directory is located on) when *Critical* threshold is reached (default: 90)
+- **swapin warning from (%)** -- Used disk space in % (of the drive the swapin directory is located on) when *Warning* threshold is reached  (default: 70) 
+- **swapin critical from (%)** -- Used disk space in % (of the drive the swapin directory is located on) when *Critical* threshold is reached (default: 90)
+- **backup warning from (%)** -- Used disk space in % (of the drive the backup directory is located on) when *Warning* threshold is reached (default: 70)
+- **backup critical from (%)** -- Used disk space in % (of the drive the backup directory is located on) when *Critical* threshold is reached (default: 90) 
+- **restore warning from (%)** -- Used disk space in % (of the drive the restore directory is located on) when *Warning* threshold is reached (default: 70)
+- **restore critical from (%)** -- Used disk space in % (of the drive the restore directory is located on) when *Critical* threshold is reached (default: 90)
+
+Default filter:
+
+- **show data archives** -- Defines if the filter *Data archive* is set on loading (default: true)
+- **show aggregated archives** -- Defines if the filter *Aggregate archive* is set on loading (default: true)
+- **show event archives** -- Defines if the filter *Event archive* is set on loading (default: true)
+- **show system database** -- Defines if the filter *System database* is set on loading (default: true)
+- **show history data directory** -- Defines if the filter *History directory* is set on loading (default: true)
+- **show swapin directory** -- Defines if the filter *Swapin directory* is set on loading (default: true)
+- **show backup directory** -- Defines if the filter *Backup directory* is set on loading (default: true)
+- **show restore directory** -- Defines if the filter *Restore directory* is set on loading (default: true)
+- **show conflict only** -- Defines if the filter *Conflict only* is set on loading (default: false)
+- **keep archives together** -- Defines if the option *Keep archives together* is set on loading (default: false)
+
+Security: 
+
+The following parameters allow to assign the required rights for auto-scheduler, delete, system database and actions:
+
+- **necessary right** -- The user must have this right for the function to work
+- **activation address** -- If the value of this address equals to "activation value", the function will be active
+- **activation value** -- Value that activates the function
+
+Logger:
+
+- **group if error** -- Group for error messages (default: atvise)
+- **subgroup if error** -- Subgroup for error messages (default: error)
+- **label if error** -- Label for error messages (default: Archive Management)
+- **group if info** -- Group for messages of type info (default: atvise)
+- **subgroup if info** -- Subgroup for messages of type info (default: info)
+- **label if info** -- Label for messages of type info (default: Archive Management)

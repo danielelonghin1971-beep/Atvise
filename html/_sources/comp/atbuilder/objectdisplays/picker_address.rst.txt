@@ -1,0 +1,108 @@
+Picker Address
+##############
+
+This control allows you to select a node.
+
+In addition the trigger "valuechanged" will be fired.
+
+An additional border indicates the current value's negative state or an additionally defined alarm. The colors and blinking intervals are defined in global lists.
+
+.. rubric:: Triggers
+
+Following triggers can be used for this object display: 
+
+- **com.atvise.setActive** -- Can be used to enable or disable the object display.
+- **setValue** -- The object display connects to this trigger. Therefore, it is possible to set the value from the outside.
+- **valuechanged** -- Fired on value changes, e.g. by user input.
+
+::
+
+    //Disable the object display
+    webMI.trigger.fire("com.atvise.setActive", false, "myDisplayID");
+
+    //Set node address
+    webMI.trigger.fire("setValue", "AGENT.OBJECTS.int", "myDisplayID");
+
+    //Respond to value changes
+    webMI.trigger.connect("valuechanged", function(e) { console.log(e.value); }, "myDisplayID");
+
+.. hint:: Additional undocumented triggers are internally used by atvise. Their functionality may be changed in future atvise releases.
+
+.. rubric:: Parameters
+
+This control has the following generic parameters:
+
+- **start address** -- Defines the entry point of the address space (default: AGENT.OBJECTS)
+- **base** -- This address will be set
+- **alarm address** -- Optional additional address of an alarm to be shown.
+- **enable status monitoring** -- Switch monitoring of current value status on or off. (default: Yes)
+- **fire status trigger** -- Instead of the status display a here defined trigger can be fired globally.
+- **keyboard display** -- On-screen keyboard for string input (default: alphanumerical keyboard)
+
+Font:
+
+- **family** -- Font family which will be applied to value (default: Arial)
+- **size** -- Font size which will be applied to the value (default: 12)
+- **color** -- Color which will be applied to the value (default: global parameter atvFontColor (advanced), #000000 (standard))
+
+Appearance:
+
+- **fill color** -- Fill color of background areas (default: global parameter atvFillColor (advanced), #d0d0d0 (standard))
+- :advstyle:`Advanced` **value field fill color** -- Fill color of the value field (default: #ffffff)
+- :advstyle:`Advanced` **value field fill color inactive** -- Fill color of the value field when not active (default: #b7b7b7)
+- :stdstyle:`Standard` **fill color when inactive** -- Fill color if not active (default: #8c8c8c)
+- :stdstyle:`Standard` **button fill color** -- Button's fill color (default: #000000)
+- **symbol fill color** -- Symbol's fill color (default: global parameter atvSymbolColor (advanced), #d0d0d0 (standard))
+- **stroke color pressed** -- The color of the stroke which will be set when the button is pressed (default: #ffffff)
+- :stdstyle:`Standard` **color for context font** -- Color for the text in the context menu (default: #000000)
+- :stdstyle:`Standard` **fill color for context menu** -- Fill color for the context menu (default: #ffffff)
+- :stdstyle:`Standard` **stroke color for context menu** -- Color for the the context menu's border (default: #000000)
+- :stdstyle:`Standard` **stroke width for context menu** -- Width of the the context menu's border (default: 2)
+- :stdstyle:`Standard` **hover color for context menu** -- Color for the selected item in the context menu (default: #efefef)
+- :advstyle:`Advanced` **border color** -- Color of the border around the control (default: global parameter atvBorderColor)
+- **focus stroke color** -- The color of the stroke which will be set when the button is focused (default: #ffffff)
+- **status indication** -- Specify the status' display through a defined global list (default: global parameter atvStatusIndication)
+- **alarm indication** -- Specify the alarm's display through a defined global list (default: global parameter atvAlarmIndication)
+
+Options
+
+- **on demand** -- If on demand is set, sub level entries will be loaded when required, otherwise all entries will be loaded at once (default: Yes)
+- **show base variables** -- Whether or not base variables shall be available to pick (default: Yes)
+- **show objects** -- Whether or not objects shall be available to pick (default: Yes)
+- **show displays** -- Whether or not displays shall be available to pick (default: Yes)
+- **show archives** -- Whether or not archives shall be available to pick (default: Yes)
+- **show alarms** -- Whether or not alarms shall be available to pick (default: Yes)
+- **show variable types** -- Whether or not variable types shall be available to pick (default: Yes)
+- **consistency group** -- Name of the consistency group
+- **tab index** -- Defines the order for changing between the object displays by using the tab key
+- **tooltip** -- Displays a tooltip box with the entered text (standard HTML-Elements can be entered)
+
+Security:
+
+- **necessary right** -- The user must have this right to activate this control, i.e. to enter values
+- **activation address** -- If the value of this address equals to "activation value", then the control will be active, i.e. can be used as input field
+- **activation value** -- Value which activates the control
+
+    .. hint:: The activation of the control can be configured only by the necessary right, or only by the activation address and value or by both. In case both settings are made, the user must have the necessary right and the value of the "activation address" must equal the "activation value"; otherwise the control will not be activated.
+
+Context menu:
+
+- :advstyle:`Advanced` **font family** -- Font family which will be applied to the context menu's text (default: Arial)
+- :advstyle:`Advanced` **font size** -- Font family which will be applied to the context menu's text (default: 12)
+- :advstyle:`Advanced` **font color** -- Font family which will be applied to the context menu's text (default: #000000)
+- :advstyle:`Advanced` **font color hovered** -- Font color applied to texts of the context menu on mouseover (default: global parameter atvFontColor)
+- :advstyle:`Advanced` **background color** -- Background color of the context menu (default: #ffffff)
+- :advstyle:`Advanced` **hover color** -- Background color of the context menu on mouseover (default: #efefef)
+- :advstyle:`Advanced` **text alignment** -- Alignment of the context menu's text (left, center or right) (default: right)
+- :advstyle:`Advanced` **submenu positioning** -- Defines if submenus are always opened to the right or alternating to right and left (default: right)
+- :advstyle:`Advanced` **stroke color** -- Stroke color of the context menu (default: #d7d7d7)
+- :advstyle:`Advanced` **stroke width** -- Stroke width of the context menu (default: 1)
+- :advstyle:`Advanced` **maximum displayed items (0 = all)** -- Maximum number of items displayed without scrolling (default: 0)
+
+Menu:
+
+- **menu positioning** -- The position the menu symbol is shown at (top-left, top-right, bottom-left, bottom-right).
+- **menu mouseover active** -- Symbol is only shown on *mouseover*.
+- **menu symbol offset x** -- Relative offset of the menu symbol to the anchor point on the x axis in pixel.
+- **menu symbol offset y** -- Relative offset of the menu symbol to the anchor point on the y axis in pixel.
+- **context menu click frame** -- Defines the size of the click frame for opening the context menu.

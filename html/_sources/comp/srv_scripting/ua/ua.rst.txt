@@ -1,0 +1,1051 @@
+.. _ua_functions:
+
+Ua functions
+#################
+
+.. !!v8!! Ua.findNode(nodeId)
+.. function:: Ua.findNode(nodeId)
+
+    Parameters:
+        - **nodeId** (UaNodeId)
+    
+    Returns:
+        Object with the following properties:
+        
+            - **result** -- Object, depending on the respective node type (Ua.Folder, Ua.Object, Ua.Variable, ...) or *undefined* in case of an error
+            - **error** -- UaStatusCode, refer to :ref:`Ua.Status constants<uastatus>`
+            - **errorstring** -- Error text
+
+    Example::
+
+        var node = Ua.findNode("ns=1;s=AGENT.OBJECTS.var1");
+        var node2 = Ua.findNode("AGENT.OBJECTS.var2");
+
+    Example - Copying nodes considering the :ref:`Access Control<ac_scripting>`::
+
+        //system triggered script by node, timer, interval, startup, shutdown, alarm
+        var nodeA = Ua.findNode("AGENT.OBJECTS.A");
+        var nodeB = Ua.findNode("AGENT.OBJECTS.B");
+
+        if(nodeA.result && nodeB.result){ // check if nodes exist
+            nodeB.result.value = nodeA.result.value;
+        } else {
+            console.warn("At least one or both nodes do not exist");
+        }
+
+    ::
+
+        // user triggered script and detection of missing rights for current runcontext
+        var nodeA = Ua.findNode("AGENT.OBJECTS.A");
+        var nodeB = Ua.findNode("AGENT.OBJECTS.B");
+
+        if(nodeA.result && nodeB.result){ // check if nodes exist
+            if(nodeA.result.permissions.session.read && nodeB.result.permissions.session.write){ //check if runcontext user has necessary rights
+                nodeB.result.value = nodeA.result.value;
+            } else {
+                console.warn("At least one or both necessary rights are missing");1
+            }
+        } else {
+            console.warn("At least one or both nodes do not exist");
+        }
+
+.. _ua_createnode:
+
+.. !!v8!! Ua.createNode(nodeId, obj)
+.. function:: Ua.createNode(nodeId, obj)
+
+    Parameters:
+        - **nodeId** (UaNodeId)
+        - **obj** (Object) -- Input parameter object:
+
+            - **nodeClass** (Integer) -- Specifies the node class:
+
+                - :ref:`Ua.NodeClass constants<uanodeclass>`
+                
+            - **parent** (UaNodeId) -- Specifies the parent node
+            - **typeDefinition** (UaNodeId) -- Specifies the type definition for the node:
+
+                - :ref:`Ua.VariableType constants<uavariabletype>`
+                - :ref:`Ua.ObjectType constants<uaobjectype>`
+
+            - **reference** (UaNodeId, optional, default: Ua.Node.HASCOMPONENT) -- Defines the type for the reference from the parent to the new node.
+            
+                - :ref:`Ua.Reference constants<uareference>`
+                
+            - **modellingRule** (UaNodeId, optional, default: no modelling rule) -- Defines the modelling rule for the node:
+
+                - Ua.NodeId.MODELLINGRULE_MANDATORY
+                - Ua.NodeId.MODELLINGRULE_MANDATORYSHARED
+
+            - **browseName** (String, optional, default: string after the last dot of the NodeId)
+            - **displayName** (String, optional, default: string after the last dot of the NodeId)
+            - **description** (String, optional, default: string after the last dot of the NodeId)
+
+        If *nodeClass* is Ua.NodeClass.VARIABLE or Ua.NodeClass.VARIABLETYPE, the following additional attributes are defined:
+
+            - **dataType** (UaNodeId) -- Specifies the data type of the node variable.
+
+                - :ref:`Ua.DataType constants<uadatatype>`
+
+            - **valueRank** (Integer, optional, default: Ua.ValueRank.SCALAR)
+
+                - :ref:`Ua.ValueRank constants<uavaluerank>`
+
+            - **value** (Any) -- The value of the variable or variable type.
+
+        If *nodeClass* is Ua.NodeClass.OBJECT, the following attribute is defined:
+
+            - **eventNotifier** (Integer, optional, default: Ua.Node.EVENTNOTIFIERS_NONE) -- Specifies the event notifier setting for the node:
+
+                - :ref:`Ua.Node.EVENTNOTIFIER constants<uanode>`
+
+                Use ``Ua.Node.EVENTNOTIFIERS_SUBSCRIBETOEVENTS | Ua.Node.EVENTNOTIFIERS_HISTORYREAD`` if both flags shall be set.
+
+    Returns:
+        Object with the following properties:
+
+            - **result** -- Result of the operation
+            - **error** -- Error code (UaStatusCode, 0 wenn erfolgreich)
+            - **errorstring** -- Error text
+
+    Example::
+
+        var status = Ua.createNode("AGENT.OBJECTS.var1", {
+            nodeClass: Ua.NodeClass.VARIABLE,
+            parent: "AGENT.OBJECTS",
+            typeDefinition: Ua.VariableType.BASEVARIABLETYPE,
+            reference: Ua.Reference.HASCOMPONENT,
+            dataType: Ua.DataType.INT32,
+            valueRank: Ua.ValueRank.SCALAR,
+            value: 1
+        });
+        console.log("status of \"create node\" = " + status.error);
+
+        status = Ua.createNode("AGENT.OBJECTS.folder1", {
+            nodeClass: Ua.NodeClass.OBJECT,
+            parent: "AGENT.OBJECTS",
+            typeDefinition: Ua.ObjectType.FOLDERTYPE
+        });
+        console.log("status of \"create folder\" = " + status.error);
+
+.. !!v8!! Ua.readFilter(filter)
+.. function:: Ua.readFilter(filter)
+
+    Parameters:
+        - **filter** (Object) -- Input parameter object to constrain the requested data. Only the filter properties *address*, *aggregate*, *interval* and *unit* from the :ref:`filter object <query_filter_format>` are used, the other properties will be ignored.
+    
+    Returns:
+        Object with the following properties:
+
+            - **result** -- The requested data. Refer to :ref:`query result <query_result>` for further details.
+            - **error** -- Error code (UaStatusCode, refer to :ref:`Ua.Status constants<uastatus>`)
+            - **errorstring** -- Error text
+
+.. !!v8!! Ua.Status(result)
+.. function:: Ua.Status(result)
+
+    Allows to check the status of the returned object.
+
+    Parameters:
+        - **result** -- Returned object from Ua.findNode()
+    
+    Returns:
+        - :ref:`Status object<status_object>` 
+    
+    Example::
+
+        var nodeobj = Ua.findNode("AGENT.OBJECTS.folder1");
+
+        if (Ua.Status(nodeobj) == Ua.Status.BADNODEIDUNKNOWN) {
+            
+            Ua.createNode("AGENT.OBJECTS.folder1", {
+            nodeClass: Ua.NodeClass.OBJECT,
+            parent: "AGENT.OBJECTS",
+            typeDefinition: Ua.ObjectType.FOLDERTYPE
+        });
+
+Class specific functions
+************************
+
+The functions can be called using the *result* property of the returned object from Ua.findNode()::
+
+    var nodeobj = Ua.findNode("AGENT.OBJECTS.var1");
+
+.. !!v8!! Ua.<Class> functions
+.. rubric:: Ua.<Class> functions
+
+The following functions are available for the classes listed below:
+
+- Node
+- Folder
+- Object
+- Variable
+- ObjectType
+- VariableType
+- View
+- Method 
+
+.. _ua_remove:
+
+.. !!v8!! Ua.<Class>.remove()
+.. function:: Ua.<Class>.remove()
+
+    Deletes the node from the OPC UA address space.
+
+    Returns:
+        Object with the following properties:
+
+            - **result** -- The result of the operation
+            - **error** -- Error code (UaStatusCode, refer to :ref:`Ua.Status constants<uastatus>`)
+            - **errorstring** -- Error text
+
+    Example::
+
+        var nodeobj = Ua.findNode("AGENT.OBJECTS.var1");
+        var status = nodeobj.result.remove();
+
+.. _ua_browse:
+
+.. !!v8!! Ua.<Class>.browse(obj)
+.. function:: Ua.<Class>.browse(obj)
+
+    Browses the node with the settings specified by the input object.
+    
+    Parameters:
+        - **obj** (Object) -- Input parameter object:
+  
+            - **direction** (Integer, optional, default: Ua.Node.BROWSEDIRECTION_FORWARD)
+    
+                - :ref:`Ua.Node.BROWSEDIRECTION constants<uanode>`
+    
+            - **reference** (UaNodeId, optional, default: Ua.Reference.HIERARCHICALREFERENCES)
+    
+                - :ref:`Ua.Reference-Konstanten<uareference>`
+    
+            - **subType** (Boolean, optional, default: true) -- Specifies if subtypes of the reference type are included when browsing.
+            - **nodeClass** (Integer, optional, default: Ua.NodeClass.UNSPECIFIED)
+    
+                - :ref:`Ua.NodeClass-Konstanten<uanodeclass>`
+    
+            - **maxResult** (Integer, optional, default: 0) -- Specifies the maximum number of returned results. If *recursive* is true, maxResult is set to 0 (= no limit).
+            - **typeDefinition** (UaNodeId, optional, default: no typeDefinition) -- If defined, only nodes of this specific type will be returned.
+    
+                - :ref:`Ua.VariableType constants<uavariabletype>`
+                - :ref:`Ua.ObjectType constants<uaobjectype>`
+            
+            - **recursive** (Boolean, optional, default: false) -- Used in conjunction with typeDefinition and nodeClass. If true, all reachable nodes are browsed. Otherwise, only directly referenced nodes are browsed.
+            - **exclude** (UaNodeId[], optional, default: []) -- If *recursive* is true, branches of objects and variables with the specified type will not be browsed.
+    
+    Returns:
+    
+        Object with the following properties:
+
+            - **result** -- The requested data. Refer to :ref:`query result <query_result>` for further details.
+            - **error** -- UaStatusCode, refer to :ref:`Ua.Status constants<uastatus>`
+            - **errorstring** -- Error text
+    
+    Example::
+    
+        var nodeobj = Ua.findNode("AGENT.OBJECTS.var1");
+        var ret = nodeobj.result.browse({
+            direction: Ua.Node.BROWSEDIRECTION_FORWARD,
+            reference: Ua.Reference.HIERARCHICALREFERENCES,
+            subType: true,
+            nodeClass: Ua.NodeClass.UNSPECIFIED,
+            maxResult: 0
+        });
+    
+        for (var i = 0; i < ret.result.length; ++i)
+            console.log(ret.result[i].node.browseName.toString(),
+                ",", ret.result[i]["isForward"],
+                ",",ret.result[i]["node"]["nodeId"]["address"]);
+    
+
+.. _ua_addreference:
+
+.. !!v8!! Ua.<Class>.addReference(referenceTypeId, targetNodeId)
+.. function:: Ua.<Class>.addReference(referenceTypeId, targetNodeId)
+
+    Adds a reference to the node.
+                
+    Parameters:
+        - **referenceTypeId** (UaNodeId) -- Specifies the reference that shall be added.
+        - **targetNodeId** (UaNodeId) -- Specifies the target node.
+                
+    Returns:
+        Object with the following properties:
+    
+            - **result** -- The result of the operation
+            - **error** -- UaStatusCode, refer to :ref:`Ua.Status constants<uastatus>`
+            - **errorstring** -- Error text 
+                
+        Example::
+            
+            var nodeobj = Ua.findNode("AGENT.OBJECTS.var1");
+            var target = Ua.findNode("AGENT.OBJECTS.condition");
+            var status = nodeobj.result.addReference(Ua.Reference.HASCONDITION,target.result.nodeId);
+
+.. _ua_deletereference:
+
+.. !!v8!! Ua.<Class>.deleteReference(referenceTypeId, targetNodeId)
+.. function:: Ua.<Class>.deleteReference(referenceTypeId, targetNodeId)
+                
+    Deletes reference to a node.
+                
+    Parameters:
+        - **referenceTypeId** (UaNodeId) -- Specifies the reference that shall be deleted.
+        - **targetNodeId** (UaNodeId) -- Specifies the target node.
+                
+    Returns:
+        Object with the following properties:
+
+        - **result** -- The result of the operation
+        - **error** -- UaStatusCode, refer to :ref:`Ua.Status constants<uastatus>`
+        - **errorstring** -- Error text 
+                
+.. _ua_equal:
+
+.. !!v8!! Ua.<Class>.equal(node1)
+.. function:: Ua.<Class>.equal(node1)
+
+    Test equivalence of nodes.
+        
+    Parameters:
+        - **node1** (UaNodeId) -- Defines the node to compare.
+        
+    Returns:
+        Object with the following properties:
+
+        - **result** -- True, if the NodeId matches, otherwise false.
+        - **error** -- UaStatusCode, refer to :ref:`Ua.Status constants<uastatus>`
+        - **errorstring** -- Error text
+        
+    Example::
+        
+        var nodeobj = Ua.findNode("AGENT.OBJECTS.var1");
+        var node2 = Ua.findNode("AGENT.OBJECTS.var2");
+
+        if (nodeobj.result.equal("AGENT.OBJECTS.var1"))
+            console.log("Equals to var1");
+        if (!nodeobj.result.equal(node2.result.nodeId.address).result)
+            console.log("Nodes are different");
+
+.. !!v8!! Ua.<Class>.valueOf()
+.. function:: Ua.<Class>.valueOf()
+
+    Returns the NodeId in XML format. 
+
+    Returns:
+        NodeId in XML format (string). In case of an error an exception is thrown.
+
+    Example::
+        
+        var nodeobj = Ua.findNode("AGENT.OBJECTS.var1");
+        console.log(nodeobj.result.valueOf());
+
+.. _ua_assign:
+
+.. rubric:: *Ua.Variable* class functions
+
+.. !!v8!! Ua.Variable.assign([obj])
+.. function:: Ua.Variable.assign([obj])
+
+    Assigns value/status/sourcetime properties to a node. The node must be of node class Ua.NodeClass.VARIABLE.
+    
+    Parameters:
+        - **obj** (Object, optional, default: {}) -- Input parameter object:
+    
+            - **value** (Any, optional, default: current value) -- The value that shall be assigned to the node.
+            - **status** (Integer, optional, default: current status) -- The status that shall be assigned to the node.
+            - **sourceTime** (Date, optional, default: current time) -- The source time that shall be assigned to the node.
+    
+    Returns:
+        Object with the following properties:  
+      
+            - **result** -- The result of the operation
+            - **error** -- UaStatusCode, refer to :ref:`Ua.Status constants<uastatus>`
+            - **errorstring** -- Error text
+    
+    Example::
+    
+        var nodeobj = Ua.findNode("AGENT.OBJECTS.var1");
+        var status = nodeobj.result.assign({value: nodeobj.result.value + 1, status: Ua.Status.BADINTERNALERROR}); // source time automatically set
+        nodeobj.result.assign({value: nodeobj.result.value + 1, status: 0, sourceTime: new Date(2013, 08, 20, 13)});
+        nodeobj.result.assign();
+
+.. _ua_datahistory:
+
+.. !!v8!! Ua.Variable.dataHistory(obj_or_array)
+.. function:: Ua.Variable.dataHistory(obj_or_array)
+        
+    Reads historical data at specific timestamps (ReadAt) or for a specific interval. The data in the interval can be raw data (ReadRaw) or aggregated values (ReadProcessed).
+        
+    Parameters for ReadAt:
+        - **array** (Date[]) -- Defines the timestamps to be queried.
+        
+        .. hint:: The :ref:`interpolation <interpolation>` setting of the data archive group is used for calculating the values of the given timestamps. 
+        
+    Parameters for ReadRaw:
+        - **obj** (Object) -- Input parameter object:
+        
+            - **startTime** (Date, optional, default: undefined) -- Specifies the start time of the interval.
+            - **endTime** (Date, optional, default: undefined) -- Specifies the end time of the interval.
+            - **numValues** (Integer, optional, default: 0) -- Specifies the maximum number of values that shall be returned at each call. 0 means no limit.
+            - **returnBounds** (Boolean, optional, default: false) -- If true, the first value before and after the given time rang is also returned. If only *startTime* or *endTime* is given, only the boundary value of the given timestamp is included. 
+            - **continuationPoint** (Integer, optional, default: 0) -- The continuation point to be used.
+            - **timeout** (Integer, optional, default: 0) -- The timeout (in seconds) defines how long the script waits for the requested data. If 0, the internal default of 3600 seconds (1 hour) is used.
+        
+    .. hint:: At least two of the three parameters *startTime*, *endTime* and *numValues* (greater than 0) must be specified. The different combinations have the following meaning:
+        
+        - *startTime*, *endTime*, optional *numValues* -- Returns all values in the time range from *startTime* to *endTime*. If *numValues* is greater than 0, at most the defined number of values and the continuation point are returned.
+        - *startTime*, *numValues* -- Returns the defined number of values in ascending timestamp order (beginning with *startTime*) at most.
+        - *endTime*, *numValues* -- Returns the defined number of values in descending timestamp order (beginning with *endTime*) at most.
+        
+        Refer to OPC UA specification part 11 for more details on using the parameters.
+        
+    Parameters for ReadProcessed:
+        - **obj** (Object) -- Input parameter object:
+        
+            - **startTime** (Date) -- Specifies the start time of the interval.
+            - **endTime** (Date) -- Specifies the end time of the interval.
+            - **aggregate** (UaNodeId) or **aggregates** (UaNodeId[]) -- Either "aggregate" or "aggregates" must be defined, not both. Specifies the aggregate function(s). A list of supported aggregate functions can be found :ref:`here <aggregate_functions>`. Aggregate functions can be defined in format Ua.NodeId.AGGREGATEFUNCTION_NAME, where NAME must be replaced by the respective aggregate function in uppercase letters. E.g.: Ua.NodeId.AGGREGATEFUNCTION_AVERAGE.
+            - **samplingInterval** (Integer) -- Specifies the interval of the aggregate function(s) in milliseconds.
+            - **continuationPoint** (Integer or Integer[], optional, default: 0 or []) -- THe continuation point to be used.
+            - **timeout** (Integer, optional, default: 0) -- The timeout (in seconds) defines how long the script waits for the requested data. If 0, the internal default of 3600 seconds (1 hour) is used.
+        
+        .. hint:: Please note that these queries only return pre-aggregated data (see :ref:`aggregating_data`).
+        
+    Returns:
+        An object with the following properties:
+
+        - **result** -- Contains:
+            - **status** (Integer) -- The OPC UA status of the call. Is set to Ua.Node.BADTIMEOUT if the timeout expires.
+            - **continuationPoint** (Integer) -- The continuation point of the request.
+            - **values** (Object[]) -- An array of objects containing the requested data:
+            
+                    - **status** (Integer)
+                    - **serverTime** (Date)
+                    - **sourceTime** (Date)
+                    - **value** (Any)
+                    
+        - **error** -- UaStatusCode, refer to :ref:`Ua.Status constants<uastatus>`
+        - **errorstring** -- Error text
+        
+        
+            If multiple aggregate functions are requested, the return value is an array of objects.
+        
+            .. hint:: 
+                
+                - In order to enable the user to retrieve big amounts of data, *ReadRaw* and *ReadProcessed* can return a continuation point to call the function repeatedly. If the returned data contains a continuation point (a value greater than 0), the same function can be called again with the returned continuation point as additional parameter to retrieve additional data. The query is complete when the returned continuation point is 0. Use :func:`Ua.Variable.dataHistoryRelease` to stop the query before all data is retrieved and to free the resources used by the continuation point.
+                - Locked archives cannot be queried.
+        
+    Example::
+        
+        var nodeobj = Ua.findNode("AGENT.OBJECTS.var1");
+        var t1 = new Date(2011, 05, 12, 13, 0, 0);
+        var t2 = new Date(2011, 05, 12, 13, 30, 0);  
+        var resultAt = nodeobj.result.dataHistory([t1, t2]);
+        console.log(resultAt);
+        
+        var resultRaw = nodeobj.result.dataHistory({startTime: t1, endTime: t2});
+        console.log(resultRaw);
+        
+        var resultMinuteAvg = nodeobj.result.dataHistory({
+            startTime: t1,
+            endTime: t2,
+            aggregate: Ua.NodeId.AGGREGATEFUNCTION_AVERAGE,
+            samplingInterval: 60000
+        });
+        console.log(resultMinuteAvg);
+        
+        var resultMinMax = nodeobj.result.dataHistory({
+            startTime: t1,
+            endTime: t2,
+            aggregates: [Ua.NodeId.AGGREGATEFUNCTION_MINIMUM, Ua.NodeId.AGGREGATEFUNCTION_MAXIMUM],
+            samplingInterval: 60000
+        });
+        console.log(resultMinMax);
+        
+.. _ua_datahistrelease:
+
+.. !!v8!! Ua.Variable.dataHistoryRelease(continuationpoint)
+.. function:: Ua.Variable.dataHistoryRelease(continuationpoint)
+        
+    This function releases the passed continuation point(s).
+        
+    Parameters:
+        - **continuationPoint** (Integer or Integer[]) -- The continuation point(s) to be released. Can be a single value or an array. 
+        
+    Returns:
+        Object with the following properties:  
+      
+            - **result** -- The result of the operation
+            - **error** -- UaStatusCode, refer to :ref:`Ua.Status constants<uastatus>`
+            - **errorstring** -- Error text
+
+.. _ua_tostring:
+
+.. rubric:: String conversion functions
+
+The following functions are available for the classes listed below:
+
+- Folder
+- Object
+- Variable
+- ObjectType
+- VariableType
+- View
+- Method
+- Status
+- NodeClass
+- TypeDefinition
+- ValueRank
+- NodeId
+- BrowseName
+- DateTime
+- DataType
+- Permission
+
+.. !!v8!! Ua.<Class>.toString()
+.. function:: Ua.<Class>.toString()
+
+    Returns:
+        A representation of the returned object as (JSON formatted) string. In case of an error an exception is thrown.
+
+    Example::
+
+        var nodeobj = Ua.findNode("AGENT.OBJECTS.var1");
+        console.log(nodeobj.result.toString());
+
+.. _ua_call:
+
+.. rubric:: Calling OPC UA methods (Ua.Method class)
+
+.. !!v8!! Ua.Method.call(object, input)
+.. function:: Ua.Method.call(object, input)
+        
+    This function allows to call any OPC UA method of the atvise server. The node is the method itself, the object of the method call and the input arguments are passed. 
+        
+    Parameters:
+        - **object** (UaNodeId) -- NodeId of the object that is passed to the OPC UA method.
+        - **input** (Object[]) -- The array of input arguments that is passed to the OPC UA method. Each element is an object with following properties:
+        
+            - **type** (Integer) -- The data type of the value (Ua.DataType.BOOLEAN, Ua.DataType.INT32, Ua.DataType.STRING, ...).
+            - **value** (Any) -- The value of the variable with the given data type.
+        
+    Returns:
+        An object with the following properties:
+        
+            - **error** (Integer) -- Error code, only supplied if the OPC UA method call returned an error.
+            - **errorstring** (String) -- Error text 
+            - **argumentError** (Integer[]) -- The status code for each input argument, supplied only if the OPC UA method call returned an error.
+            - **result** (Object[]) -- The array of output arguments of the OPC UA method.
+        
+    Example, set the log level of the alarm module to "debug"::
+        
+        var method = Ua.findNode("AGENT.OPCUA.METHODS.serverCommand");
+        var res = method.result.call({
+            object: "AGENT.OPCUA.METHODS",
+            input: [{type: Ua.DataType.STRING, value: "log d alarm"}]
+            });
+        
+        if (res.error)
+            console.log("call error: " + Ua.Status(res.error).toString());
+        else
+            console.log(res.result[0]);
+
+.. _object_properties:
+
+Object properties
+*****************
+
+.. rubric:: Properties of Ua.<Class> objects
+
+The following properties are available for the classes listed below:
+
+- Node
+- Folder
+- Object
+- Variable
+- ObjectType
+- VariableType
+- View
+- Method
+
+browseName
+    :ref:`BrowseName object<browsename_object>` that contains BrowseName and namespace index.
+
+displayName
+    Text part of the display name
+
+    - Get: Returns the display name or *undefined* in case of an error.
+
+    - Set: Sets the display name. In case of an error an exception is thrown.
+
+description
+    Description text
+
+    - Get: Returns the description or *undefined* in case of an error.
+
+    - Set: Sets the description text. In case of an error an exception is thrown.
+
+nodeClass
+    See :ref:`Ua.NodeClass constants<uanodeclass>`. In case of an error, *undefined* is returned. 
+
+nodeId
+    Returns a :ref:`nodeId object<nodeid_object>` that contains the ID of the node. In case of an error, *undefined* is returned.
+
+.. _ua_permissions:
+
+permissions
+    Returns the currently defined rights for the node. It consists of:
+    
+    - **groups** -- Contains a :ref:`Permission object<permission_object>` for every group with configured rights for the given node.
+    - **users** -- Contains a Permission object for every user with configured rights for the given node.
+    - **session** -- Contains a Permission object for the current session, i.e. the user in whose context the script is executed (see :ref:`metadata of scripts<scripteditor_metadata>`).
+
+Example::
+
+    var nodeobj = Ua.findNode("AGENT.OBJECTS.myNewNode"); 
+    nodeobj.result.description = "newDescriptionText";
+    
+    console.log("displayName: " + nodeobj.result.displayName + ","
+                " description: " + nodeobj.result.description + ","
+                " nodeClass: " + nodeobj.result.nodeClass)
+    
+    console.log("permissions:", nodeobj.result.permissions);  
+
+
+.. rubric:: Properties of the Ua.Object class
+
+typeDefinition
+    Returns the NodeId of the TypeDefinition (:ref:`Ua.TypeDefinition object<typedefinition_object>`) or *undefined* in case of an error. 
+
+eventNotifier 
+    Returns the eventNotifier settings of the node. See :ref:`Properties of the EventNotifier class<eventnotifier_object>` 
+
+.. rubric:: Properties of the Ua.Variable class
+
+value
+    Current value of a variable
+
+    - Get: Returns the current value or *undefined* in case of an error.
+
+    - Set: Sets the current value of the variable. In case of an error an exception is thrown.
+
+.. _ua_status:
+
+status
+    :ref:`Ua.Status object<status_object>` that contains the current status of variable (good, bad, uncertain, value)
+
+    - Get: Returns the current status or *undefined* in case of an error.
+
+    - Set: Sets the current status of the variable. In case of an error an exception is thrown.
+        
+serverTime
+    Returns the server time (Ua.DateTime object) of the variable, i.e. the timestamp of the last value or status change known to the server. In case of an error, *undefined* is returned.
+        
+    .. hint:: This time may differ from the server time displayed by atvise builder or other UA clients. It is possible that the current time is shown as server time, if the value is queried for the first time (e.g. via subscriptions).
+        
+sourceTime
+    Source time (Ua.DateTime object) of a variable. 
+
+    - Get: Returns the timestamp of the last value or status change that was applied to the variable by the data source. In case of an error, *undefined* is returned.
+        
+    - Set: Sets the timestamp of the last change. In case of an error an exception is thrown.
+                 
+dataType
+    Returns the data type (:ref:`Ua.DataType object<datatype_object>`) of the variable or *undefined* in case of an error.
+
+typeDefinition
+    Returns the NodeID of the typeDefinition (:ref:`Ua.TypeDefinition object<typedefinition_object>`) or *undefined* in case of an error.
+
+valueRank
+    Returns the value rank of the variable (:ref:`Ua.ValueRank object<uavaluerank>`) or *undefined* in case of an error. 
+    
+Example::
+    
+    var nodeobj = Ua.findNode("AGENT.OBJECTS.var1");
+    console.log("Value: ", nodeobj.result.value, " valueRank: ", nodeobj.result.valueRank);
+    nodeobj.result.status = Ua.Status.BADDISCONNECT;
+    console.log(nodeobj.result.status.toString());
+    console.log(nodeobj.result.status.good); 
+
+.. rubric:: Properties of the Ua.VariableType class
+
+value
+    Current value
+
+    - Get: Returns the current value or *undefined* in case of an error.
+
+    - Set: Sets the current value. In case of an error an exception is thrown.
+
+dataType
+    Returns the data type (:ref:`Ua.DataType object<datatype_object>`) of the variable type or *undefined* in case of an error.
+
+valueRank
+    Returns the value rank of the variable (:ref:`Ua.ValueRank object<uavaluerank>`) or *undefined* in case of an error. 
+
+.. _status_object:
+
+.. rubric:: Properties of the Ua.Status class
+
+good
+    Returns true if the status code is good.
+
+bad
+    Returns true if the status code is bad.
+
+uncertain
+    Returns true if the status code is uncertain.
+
+value
+    Returns the current OPC UA status code or *undefined* in case of an error.
+
+.. _nodeid_object:
+
+.. rubric:: Properties of the Ua.NodeId class
+
+idx
+    The namespace index. 
+
+address
+    The string part of the NodeId. Example: 'AGENT.OBJECTS.a'
+
+xml
+    The ID of the node as XML string, e.g.: 'ns=1;s=AGENT.OBJECTS.a'.
+
+.. _browsename_object:
+
+.. rubric:: Properties of the Ua.BrowseName class
+
+idx
+    The namespace index.
+
+name
+    The BrowseName of the node
+
+.. _typedefinition_object:
+
+.. rubric:: Properties of the Ua.TypeDefinition class
+
+xml
+    The NodeId of the typeDefinition as XML string.
+
+.. _datatype_object:
+
+.. rubric:: Properties of the Ua.DataType class
+
+xml
+    The NodeId of the dataType as XML string.
+
+.. _eventnotifier_object:
+
+.. rubric:: Properties of the Ua.EventNotifier class
+
+- **subscribeToEvents**
+- **historyRead**
+- **historyWrite**
+
+.. _permission_object:
+
+.. rubric:: Properties of the Ua.Permission class
+
+- **none**
+- **browse**
+- **read**
+- **write**
+- **engineer**
+- **execute**
+- **accessControl**
+- **scriptConfig**
+- **alarmAdmin**
+- **alarmAcknowledge**
+- **alarmConfirm**
+- **remoteBrowse**
+- **remoteAlarms**
+- **remoteEvents**
+- **all**
+
+Constants
+**********
+
+.. !!v8!! Ua.DataType.BOOLEAN
+.. !!v8!! Ua.DataType.SBYTE
+.. !!v8!! Ua.DataType.BYTE
+.. !!v8!! Ua.DataType.INT16
+.. !!v8!! Ua.DataType.UINT16
+.. !!v8!! Ua.DataType.INT32
+.. !!v8!! Ua.DataType.UINT32
+.. !!v8!! Ua.DataType.INT64
+.. !!v8!! Ua.DataType.UINT64
+.. !!v8!! Ua.DataType.FLOAT
+.. !!v8!! Ua.DataType.DOUBLE
+.. !!v8!! Ua.DataType.STRING
+.. !!v8!! Ua.DataType.DATETIME
+.. !!v8!! Ua.DataType.BYTESTRING
+.. !!v8!! Ua.DataType.XMLELEMENT
+.. !!v8!! Ua.DataType.NODEID
+.. !!v8!! Ua.DataType.LOCALIZEDTEXT
+.. !!v8!! Ua.DataType.BASEDATATYPE
+.. !!v8!! Ua.DataType.QUALIFIEDNAME
+.. !!v8!! Ua.DataType.DATAVALUE
+
+.. !!v8!! Ua.Node.BROWSEDIRECTION_FORWARD
+.. !!v8!! Ua.Node.BROWSEDIRECTION_INVERSE
+.. !!v8!! Ua.Node.BROWSEDIRECTION_BOTH
+.. !!v8!! Ua.Node.EVENTNOTIFIERS_NONE
+.. !!v8!! Ua.Node.EVENTNOTIFIERS_SUBSCRIBETOEVENTS
+.. !!v8!! Ua.Node.EVENTNOTIFIERS_HISTORYREAD
+.. !!v8!! Ua.Node.EVENTNOTIFIERS_HISTORYWRITE
+
+.. !!v8!! Ua.NodeClass.UNSPECIFIED
+.. !!v8!! Ua.NodeClass.OBJECT
+.. !!v8!! Ua.NodeClass.VARIABLE
+.. !!v8!! Ua.NodeClass.METHOD
+.. !!v8!! Ua.NodeClass.OBJECTTYPE
+.. !!v8!! Ua.NodeClass.VARIABLETYPE
+.. !!v8!! Ua.NodeClass.REFERENCETYPE
+.. !!v8!! Ua.NodeClass.DATATYPE
+.. !!v8!! Ua.NodeClass.VIEW
+ 
+.. !!v8!! Ua.NodeId.ROOTFOLDER
+.. !!v8!! Ua.NodeId.OBJECTSFOLDER
+.. !!v8!! Ua.NodeId.TYPESFOLDER
+.. !!v8!! Ua.NodeId.VIEWSFOLDER
+.. !!v8!! Ua.NodeId.SERVER
+.. !!v8!! Ua.NodeId.MODELLINGRULE_MANDATORY
+.. !!v8!! Ua.NodeId.MODELLINGRULE_MANDATORYSHARED
+.. !!v8!! Ua.NodeId.MODELLINGRULE_MANDATORYSHARED_EXCLUSIVE
+.. !!v8!! Ua.NodeId.MODELLINGRULE_OPTIONAL
+.. !!v8!! Ua.NodeId.MODELLINGRULE_OPTIONALSHARED_EXCLUSIVE
+.. !!v8!! Ua.NodeId.AGGREGATEFUNCTION_SAMPLED
+.. !!v8!! Ua.NodeId.AGGREGATEFUNCTION_INTERPOLATIVE
+.. !!v8!! Ua.NodeId.AGGREGATEFUNCTION_AVERAGE
+.. !!v8!! Ua.NodeId.AGGREGATEFUNCTION_TIMEAVERAGE
+.. !!v8!! Ua.NodeId.AGGREGATEFUNCTION_TIMEAVERAGE2
+.. !!v8!! Ua.NodeId.AGGREGATEFUNCTION_TOTAL
+.. !!v8!! Ua.NodeId.AGGREGATEFUNCTION_TOTAL2
+.. !!v8!! Ua.NodeId.AGGREGATEFUNCTION_MINIMUM
+.. !!v8!! Ua.NodeId.AGGREGATEFUNCTION_MAXIMUM
+.. !!v8!! Ua.NodeId.AGGREGATEFUNCTION_MINIMUMACTUALTIME
+.. !!v8!! Ua.NodeId.AGGREGATEFUNCTION_MAXIMUMACTUALTIME
+.. !!v8!! Ua.NodeId.AGGREGATEFUNCTION_RANGE
+.. !!v8!! Ua.NodeId.AGGREGATEFUNCTION_MINIMUM2
+.. !!v8!! Ua.NodeId.AGGREGATEFUNCTION_MAXIMUM2
+.. !!v8!! Ua.NodeId.AGGREGATEFUNCTION_MINIMUMACTUALTIME2
+.. !!v8!! Ua.NodeId.AGGREGATEFUNCTION_MAXIMUMACTUALTIME2
+.. !!v8!! Ua.NodeId.AGGREGATEFUNCTION_RANGE2
+.. !!v8!! Ua.NodeId.AGGREGATEFUNCTION_ANNOTATIONCOUNT
+.. !!v8!! Ua.NodeId.AGGREGATEFUNCTION_COUNT
+.. !!v8!! Ua.NodeId.AGGREGATEFUNCTION_DURATIONINSTATEZERO
+.. !!v8!! Ua.NodeId.AGGREGATEFUNCTION_DURATIONINSTATENONZERO
+.. !!v8!! Ua.NodeId.AGGREGATEFUNCTION_NUMBEROFTRANSITIONS
+.. !!v8!! Ua.NodeId.AGGREGATEFUNCTION_START
+.. !!v8!! Ua.NodeId.AGGREGATEFUNCTION_END
+.. !!v8!! Ua.NodeId.AGGREGATEFUNCTION_DELTA
+.. !!v8!! Ua.NodeId.AGGREGATEFUNCTION_STARTBOUND
+.. !!v8!! Ua.NodeId.AGGREGATEFUNCTION_ENDBOUND
+.. !!v8!! Ua.NodeId.AGGREGATEFUNCTION_DELTABOUNDS
+.. !!v8!! Ua.NodeId.AGGREGATEFUNCTION_DURATIONGOOD
+.. !!v8!! Ua.NodeId.AGGREGATEFUNCTION_DURATIONBAD
+.. !!v8!! Ua.NodeId.AGGREGATEFUNCTION_PERCENTGOOD
+.. !!v8!! Ua.NodeId.AGGREGATEFUNCTION_PERCENTBAD
+.. !!v8!! Ua.NodeId.AGGREGATEFUNCTION_WORSTQUALITY
+.. !!v8!! Ua.NodeId.AGGREGATEFUNCTION_WORSTQUALITY2
+.. !!v8!! Ua.NodeId.AGGREGATEFUNCTION_STANDARDDEVIATIONSAMPLE
+.. !!v8!! Ua.NodeId.AGGREGATEFUNCTION_STANDARDDEVIATIONPOPULATION
+.. !!v8!! Ua.NodeId.AGGREGATEFUNCTION_VARIANCESAMPLE
+.. !!v8!! Ua.NodeId.AGGREGATEFUNCTION_VARIANCEPOPULATION
+  
+.. !!v8!! Ua.ObjectType.BASEOBJECTTYPE
+.. !!v8!! Ua.ObjectType.FOLDERTYPE  
+  
+.. !!v8!! Ua.Reference.REFERENCES
+.. !!v8!! Ua.Reference.NONHIERARCHICALREFERENCES
+.. !!v8!! Ua.Reference.HIERARCHICALREFERENCES
+.. !!v8!! Ua.Reference.ORGANIZES
+.. !!v8!! Ua.Reference.HASEVENTSOURCE
+.. !!v8!! Ua.Reference.HASMODELLINGRULE
+.. !!v8!! Ua.Reference.HASMODELPARENT
+.. !!v8!! Ua.Reference.HASTYPEDEFINITION
+.. !!v8!! Ua.Reference.HASSUBTYPE
+.. !!v8!! Ua.Reference.HASPROPERTY
+.. !!v8!! Ua.Reference.HASCOMPONENT
+.. !!v8!! Ua.Reference.HASNOTIFIER
+.. !!v8!! Ua.Reference.HASHISTORICALCONFIGURATION
+.. !!v8!! Ua.Reference.HASCONDITION
+   
+.. !!v8!! Ua.Status.GOOD
+.. !!v8!! Ua.Status.BAD
+.. !!v8!! Ua.Status.BADUNEXPECTEDERROR
+.. !!v8!! Ua.Status.BADINTERNALERROR
+.. !!v8!! Ua.Status.BADSERVERNOTCONNECTED
+.. !!v8!! Ua.Status.BADUSERACCESSDENIED
+.. !!v8!! Ua.Status.BADNODEIDUNKNOWN
+.. !!v8!! Ua.Status.BADNODEIDEXISTS
+.. !!v8!! Ua.Status.BADSOURCENODEIDINVALID
+.. !!v8!! Ua.Status.BADTARGETNODEIDINVALID
+.. !!v8!! Ua.Status.BADTYPEMISMATCH
+.. !!v8!! Ua.Status.BADAGGREGATENOTSUPPORTED
+.. !!v8!! Ua.Status.BADINVALIDARGUMENT
+ 
+.. !!v8!! Ua.ValueRank.NONE
+.. !!v8!! Ua.ValueRank.SCALAR
+.. !!v8!! Ua.ValueRank.ONEDIMENSION
+
+.. !!v8!! Ua.VariableType.BASEVARIABLETYPE
+.. !!v8!! Ua.VariableType.BASEDATAVARIABLETYPE
+.. !!v8!! Ua.VariableType.PROPERTYTYPE
+
+.. csv-table:: Constants
+    :header: Class, Constant
+    :widths: auto
+    :stub-columns: 1
+    
+    ".. _uadatatype:
+    
+    Ua.DataType", 
+    , Ua.DataType.BOOLEAN
+    , Ua.DataType.SBYTE
+    , Ua.DataType.BYTE
+    , Ua.DataType.INT16
+    , Ua.DataType.UINT16
+    , Ua.DataType.INT32
+    , Ua.DataType.UINT32
+    , Ua.DataType.INT64
+    , Ua.DataType.UINT64
+    , Ua.DataType.FLOAT
+    , Ua.DataType.DOUBLE
+    , Ua.DataType.STRING
+    , Ua.DataType.DATETIME
+    , Ua.DataType.BYTESTRING
+    , Ua.DataType.XMLELEMENT
+    , Ua.DataType.NODEID
+    , Ua.DataType.LOCALIZEDTEXT
+    , Ua.DataType.BASEDATATYPE
+    , Ua.DataType.QUALIFIEDNAME
+    , Ua.DataType.DATAVALUE
+    ".. _uanode:
+    
+    Ua.Node",
+    , Ua.Node.BROWSEDIRECTION_FORWARD
+    , Ua.Node.BROWSEDIRECTION_INVERSE
+    , Ua.Node.BROWSEDIRECTION_BOTH
+    , Ua.Node.EVENTNOTIFIERS_NONE
+    , Ua.Node.EVENTNOTIFIERS_SUBSCRIBETOEVENTS
+    , Ua.Node.EVENTNOTIFIERS_HISTORYREAD
+    , Ua.Node.EVENTNOTIFIERS_HISTORYWRITE
+    ".. _uanodeclass:
+
+    Ua.NodeClass", 
+    , Ua.NodeClass.UNSPECIFIED
+    , Ua.NodeClass.OBJECT
+    , Ua.NodeClass.VARIABLE
+    , Ua.NodeClass.METHOD
+    , Ua.NodeClass.OBJECTTYPE
+    , Ua.NodeClass.VARIABLETYPE
+    , Ua.NodeClass.REFERENCETYPE
+    , Ua.NodeClass.DATATYPE
+    , Ua.NodeClass.VIEW
+    ".. _uanodeid:
+
+    Ua.NodeId",
+    , Ua.NodeId.ROOTFOLDER
+    , Ua.NodeId.OBJECTSFOLDER
+    , Ua.NodeId.TYPESFOLDER
+    , Ua.NodeId.VIEWSFOLDER
+    , Ua.NodeId.SERVER
+    , Ua.NodeId.MODELLINGRULE_MANDATORY
+    , Ua.NodeId.MODELLINGRULE_MANDATORYSHARED
+    , Ua.NodeId.MODELLINGRULE_MANDATORYSHARED_EXCLUSIVE
+    , Ua.NodeId.MODELLINGRULE_OPTIONAL
+    , Ua.NodeId.MODELLINGRULE_OPTIONALSHARED_EXCLUSIVE
+    , Ua.NodeId.AGGREGATEFUNCTION_SAMPLED
+    , Ua.NodeId.AGGREGATEFUNCTION_INTERPOLATIVE
+    , Ua.NodeId.AGGREGATEFUNCTION_AVERAGE
+    , Ua.NodeId.AGGREGATEFUNCTION_TIMEAVERAGE
+    , Ua.NodeId.AGGREGATEFUNCTION_TIMEAVERAGE2
+    , Ua.NodeId.AGGREGATEFUNCTION_TOTAL
+    , Ua.NodeId.AGGREGATEFUNCTION_TOTAL2
+    , Ua.NodeId.AGGREGATEFUNCTION_MINIMUM
+    , Ua.NodeId.AGGREGATEFUNCTION_MAXIMUM
+    , Ua.NodeId.AGGREGATEFUNCTION_MINIMUMACTUALTIME
+    , Ua.NodeId.AGGREGATEFUNCTION_MAXIMUMACTUALTIME
+    , Ua.NodeId.AGGREGATEFUNCTION_RANGE
+    , Ua.NodeId.AGGREGATEFUNCTION_MINIMUM2
+    , Ua.NodeId.AGGREGATEFUNCTION_MAXIMUM2
+    , Ua.NodeId.AGGREGATEFUNCTION_MINIMUMACTUALTIME2
+    , Ua.NodeId.AGGREGATEFUNCTION_MAXIMUMACTUALTIME2
+    , Ua.NodeId.AGGREGATEFUNCTION_RANGE2
+    , Ua.NodeId.AGGREGATEFUNCTION_ANNOTATIONCOUNT
+    , Ua.NodeId.AGGREGATEFUNCTION_COUNT
+    , Ua.NodeId.AGGREGATEFUNCTION_DURATIONINSTATEZERO
+    , Ua.NodeId.AGGREGATEFUNCTION_DURATIONINSTATENONZERO
+    , Ua.NodeId.AGGREGATEFUNCTION_NUMBEROFTRANSITIONS
+    , Ua.NodeId.AGGREGATEFUNCTION_START
+    , Ua.NodeId.AGGREGATEFUNCTION_END
+    , Ua.NodeId.AGGREGATEFUNCTION_DELTA
+    , Ua.NodeId.AGGREGATEFUNCTION_STARTBOUND
+    , Ua.NodeId.AGGREGATEFUNCTION_ENDBOUND
+    , Ua.NodeId.AGGREGATEFUNCTION_DELTABOUNDS
+    , Ua.NodeId.AGGREGATEFUNCTION_DURATIONGOOD
+    , Ua.NodeId.AGGREGATEFUNCTION_DURATIONBAD
+    , Ua.NodeId.AGGREGATEFUNCTION_PERCENTGOOD
+    , Ua.NodeId.AGGREGATEFUNCTION_PERCENTBAD
+    , Ua.NodeId.AGGREGATEFUNCTION_WORSTQUALITY
+    , Ua.NodeId.AGGREGATEFUNCTION_WORSTQUALITY2
+    , Ua.NodeId.AGGREGATEFUNCTION_STANDARDDEVIATIONSAMPLE
+    , Ua.NodeId.AGGREGATEFUNCTION_STANDARDDEVIATIONPOPULATION
+    , Ua.NodeId.AGGREGATEFUNCTION_VARIANCESAMPLE
+    , Ua.NodeId.AGGREGATEFUNCTION_VARIANCEPOPULATION
+    ".. _uaobjectype:
+
+    Ua.ObjectType",
+    , Ua.ObjectType.BASEOBJECTTYPE
+    , Ua.ObjectType.FOLDERTYPE
+    ".. _uareference:
+    
+    Ua.Reference",    
+    , Ua.Reference.REFERENCES
+    , Ua.Reference.NONHIERARCHICALREFERENCES
+    , Ua.Reference.HIERARCHICALREFERENCES
+    , Ua.Reference.ORGANIZES
+    , Ua.Reference.HASEVENTSOURCE
+    , Ua.Reference.HASMODELLINGRULE
+    , Ua.Reference.HASMODELPARENT
+    , Ua.Reference.HASTYPEDEFINITION
+    , Ua.Reference.HASSUBTYPE
+    , Ua.Reference.HASPROPERTY
+    , Ua.Reference.HASCOMPONENT
+    , Ua.Reference.HASNOTIFIER
+    , Ua.Reference.HASHISTORICALCONFIGURATION
+    , Ua.Reference.HASCONDITION
+    ".. _uastatus:
+    
+    Ua.Status",
+    , Ua.Status.GOOD
+    , Ua.Status.BAD
+    , Ua.Status.BADUNEXPECTEDERROR
+    , Ua.Status.BADINTERNALERROR
+    , Ua.Status.BADSERVERNOTCONNECTED
+    , Ua.Status.BADUSERACCESSDENIED
+    , Ua.Status.BADNODEIDUNKNOWN
+    , Ua.Status.BADNODEIDEXISTS
+    , Ua.Status.BADSOURCENODEIDINVALID
+    , Ua.Status.BADTARGETNODEIDINVALID
+    , Ua.Status.BADTYPEMISMATCH
+    , Ua.Status.BADAGGREGATENOTSUPPORTED
+    , Ua.Status.BADINVALIDARGUMENT
+    ".. _uavaluerank:
+    
+    Ua.ValueRank", 
+    , Ua.ValueRank.NONE
+    , Ua.ValueRank.SCALAR
+    , Ua.ValueRank.ONEDIMENSION
+    ".. _uavariabletype:
+    
+    Ua.VariableType",
+    , Ua.VariableType.BASEVARIABLETYPE
+    , Ua.VariableType.BASEDATAVARIABLETYPE
+    , Ua.VariableType.PROPERTYTYPE

@@ -1,0 +1,40 @@
+4 The visualization
+###################
+
+In this section, we will take a look at the output of the engineering process in the atvise builder - the visualization.
+
+.. rubric:: 4.1 Navigation - viewing the new display
+
+1. Choose :menuselection:`Guided Actions --> Open Web Browser For Server --> DemoServer` from the menu bar.
+
+2. This will open your standard browser with the URL of the "DemoServer".
+
+3. Choose "TestDisplay1" from the MAIN folder in the navigation bar to view the display you have drawn in section 3.
+
+.. figure:: images/open_browser.png
+
+    Open the visualization
+
+.. figure:: images/view_in_browser.png
+
+    Viewing the new display in a web browser
+
+.. hint:: You could also open the visualization of the DemoServer manually by entering ``http://127.0.0.1:81/`` in the address bar of any browser you'd like to use.
+
+.. attention:: If you encounter any problems with viewing the visualization, please clear your browser cache and reload the page (especially if you have used previous atvise versions before).
+
+.. rubric:: 4.2 Zooming
+
+After you have opened a display, you can try using the zooming functionality. To do this, use the |visu_zoom_in|, |visu_zoom_out| and |visu_zoom_area| buttons in the middle of the control panel. To show the display in its original size, click on the |visu_zoom_origin| button.
+
+Try out the zooming feature to become familiar with it. For example, you could try to zoom into the circle using area zooming.
+
+.. figure:: images/zoom_display.png
+
+    Using the zooming functionality
+
+.. |visu_folder| image:: images/visu_folder.png
+.. |visu_zoom_area| image:: /common_images/visu_zoom_area.png
+.. |visu_zoom_in| image:: /common_images/visu_zoom_in.png
+.. |visu_zoom_origin| image:: /common_images/visu_zoom_origin.png
+.. |visu_zoom_out| image:: /common_images/visu_zoom_out.png

@@ -1,0 +1,28 @@
+Button Switch Language
+######################
+
+This control switches the different languages that are defined in the system.
+
+.. rubric:: Parameters
+
+Appearance:
+
+- **symbol** -- The symbol of the button (Default: SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Symbols.language)
+- **symbol pressed** -- The symbol that will displayed when the button is pressed (Default: SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Symbols.language)
+- **symbol color** -- Color of the symbol (default: global parameter atvSymbolColor (advanced), #d0d0d0 (standard)))
+- **symbol color pressed** -- Color of the symbol in pressed state (default: global parameter atvSymbolColor (advanced), #ffffff (standard)))
+- :advstyle:`Advanced` **symbol scaling (%)** -- Scaling of the symbols in percent (default: 100)
+- **fill color** -- Background color of the control (default: global parameter atvFillColor (advanced), #000000 (standard)))
+- :advstyle:`Advanced` **border color** -- Color of the button's border (default: global parameter atvBorderColor)
+- **stroke color pressed** -- Color of the border when pressing the button (default: #ffffff)
+- :advstyle:`Advanced` **context menu style** -- Style settings for the context menu in JSON format
+
+Context menu:
+
+- :advstyle:`Advanced` **font family** -- Font family which will be applied to the context menu's text (default: Arial)
+- :advstyle:`Advanced` **font size** -- Font family which will be applied to the context menu's text (default: 12)
+- :advstyle:`Advanced` **font color** -- Font family which will be applied to the context menu's text (default: global parameter atvFontColor)
+- :advstyle:`Advanced` **background color** -- Background color of the context menu (default: global parameter atvFontColor2)
+- :advstyle:`Advanced` **hover color** -- Background color of the context menu on mouseover (default: global parameter atvFillColor)
+- :advstyle:`Advanced` **text alignment** -- Alignment of the context menu's text (default: center)
+- :advstyle:`Advanced` **maximum displayed items (0 = all)** -- Maximum number of items displayed without scrolling (default: 5)

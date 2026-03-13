@@ -1,0 +1,4 @@
+Set Slider Vertical
+#####################
+
+Internally used by atvise component :ref:`slider vertical <od_slider_vertical>` (advanced style).

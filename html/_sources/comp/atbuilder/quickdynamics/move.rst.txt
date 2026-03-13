@@ -1,0 +1,22 @@
+Move
+####
+
+This Quick Dynamic moves the applied graphic element in the X and/or Y direction depending on the value of the defined node and the range defined by "minValue" and "maxValue", i.e. the
+range defined by "minValue" and "maxValue" will be translated to the range defined by "startPositionX" and "stopPositionX" and/or to the range defined by "startPositionY" and
+"stopPositionY".
+
+.. hint:: The movement in the X direction will only be done if both "startPositionX" and "stopPositionX" are defined. The movement in the Y direction will only be done if both "startPositionY" and "stopPositionY" are defined.
+
+.. rubric:: Example:
+
+The defined range of the value from 0 (=minValue) to 100 (=maxValue) will be translated to 0 (=startPositionX) to 10 (=stopPositionX) pixels in the X direction
+
+.. rubric:: Parameters:
+
+- **nodeID** (*node triggering the change*) -- This node triggers this Quick Dynamic
+- **minValue** (*min value*) -- Lower bound of the range in which the node's value should lie
+- **maxValue** (*max value*) -- Upper bound of the range in which the node's value should lie
+- **startPositionX** (*start position for X-direction*) -- Start position for the X direction where "minValue" will be translated to
+- **stopPositionX** (*stop position for X-direction*) -- Stop position for the X direction where "maxValue" will be translated to
+- **startPositionY** (*start position for Y-direction*) -- Start position for the Y direction where "minValue" will be translated to
+- **stopPositionY** (*stop position for Y-direction*) -- Stop position for the Y direction where "maxValue" will be translated to

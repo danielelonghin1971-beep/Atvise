@@ -1,0 +1,17 @@
+M1 webMI pro
+############
+
+.. rubric:: Configuration of the alarm list
+
+*M1 webMI pro* alarms use a reduced number of parameters. Configure the :ref:`global parameters <global_parameters_alarmlist>` under :treeselection:`Global Parameters --> atvObjectDisplays --> Alarmlist --> Columns --> Alarm / Alarmlog` to show only the attributes that are provided by *webMI pro*. It is not necessary to configure any other list (like All, Disabled, Shelved or Suppressed), since they are not used by *webMI pro*. The following fields are supported and can be displayed by setting the *visibleMain* column to *true*:
+
+- priority
+- timestamp
+- display
+- displayedAddress
+- eventtext
+- ackn_state
+- value
+- ackn_conf
+
+Every other attribute can be hidden (*visibleMain = false*) or deleted if necessary. To remove an entry completely, delete the *key* in the respective row and confirm with :guilabel:`OK`.

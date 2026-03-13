@@ -1,0 +1,25 @@
+Change Color by Alarm
+#####################
+
+This Quick Dynamic changes the color and stroke of the applied graphic element depending on the different alarm states.
+
+.. rubric:: Parameters:
+
+- **alarm** (*alarm condition triggering the change*) -- Alarm (node) which will trigger this Quick Dynamic
+- **alarmOnFill** (*fill color in case an alarm occurs*) -- Color to fill the graphic element if an alarm occurs
+- **alarmOnStroke** (*stroke color in case an alarm occurs*) -- Color for the stroke of the graphic element if an alarm occurs
+- **alarmOffFill** (*fill color when the alarm is off acknowledged*) -- Fill color of the graphic element to set it back to the original state when the alarm is off or acknowledged
+- **alarmOffStroke** (*stroke color when the alarm is off acknowledged*) -- Stroke color of the graphic element to set it back to the original state when the alarm is off or acknowledged
+- **blinkOnUnacknowledged** (*flash interval for alarm state "on unacknowledged"*) -- Flash interval for alarm state "on, unacknowledged"
+- **blinkOnAcknowledged** (*flash interval for alarm state "on acknowledged"*) -- Flash interval for alarm state "on, acknowledged"
+- **blinkOffUnacknowledged** (*flash interval for alarm state "off unacknowledged"*) -- Flash interval for alarm state "off, unacknowledged"
+- **blinkOnOffUnacknowledged** (*flash interval for alarm state "on off unacknowledged"*) -- Flash interval for alarm state "on off, unacknowledged"
+
+Flash interval of the stroke color (alarmOnStroke) for alarm state:
+
+- visible
+- invisible
+- Flash every 250ms
+- Flash every 500ms
+- Flash every 750ms
+- Flash every 1500ms

@@ -1,0 +1,140 @@
+.. _alarm_mirroring:
+
+Mirroring
+#########
+
+Mirroring of alarms makes it possible to visualize and operate alarms of an OPC UA data source.
+
+The data sources with mirrored alarms can be found in the project tree below :treeselection:`Servers --> My Server --> Alarming --> Mirroring --> Sources`:
+
+.. figure:: images/mirroring_tree.png
+
+    Data sources with alarm mirroring
+
+Alarm mirroring works with your existing data sources. To utilize alarm mirroring you first have to :ref:`create an OPC UA data source <add_datasource>`.
+
+To add alarm mirroring to an existing datasource, right-click :treeselection:`Servers --> My Server --> Alarming --> Mirroring --> Sources`, select :menuselection:`Add Alarm Mirroring Source...` and pick the desired data source. Double-click the data source to configure alarm mirroring.
+
+.. hint:: To be able to complete the configuration, ensure that the data source is connected.
+
+The first buttons at the top have the same meaning for each tab:
+
+.. csv-table::
+    :widths: auto
+
+    |icon_select_projtree|, Select the data source in the project tree
+    |save_button|, Save changes
+    |icon_refresh|, Reload
+
+General
+*******
+
+.. figure:: images/mirroring_general.png
+
+Enable mirrored alarms
+    Globally enable or disable mirrored alarms for this data source.
+
+.. hint:: The maximum number of alarms, that can be received from the data source at the same time, depends on the respective data source. If this limit is exceeded by simultaneously pending alarms, the exceeding alarms are transmitted at the next status change. This limit also applies to the maximum number of conditions, that can be adapted at once (see *adaptive learning* below).
+
+Historize mirrored alarms
+    If activated, mirrored alarms are historized locally. You have to create an :ref:`event archive group <event_archive>` for events to be historized.
+
+.. _adaptive_learning:
+
+Adaptive learning
+    If activated, all conditions received from the data source are automatically added to the :ref:`list of conditions <alarm_mirroring_conditions>`.
+
+Mirror all alarms
+    If activated, the condition list will be ignored and all alarms of the data source will be passed through automatically.
+
+Enable local suppress
+    If activated, alarms of this data source can be suppressed locally.
+
+    .. attention:: Shall not be activated if the data source also suppresses alarms. Using suppress functionality in both the data source and atvise will lead to undefined behavior.
+
+Enable local shelving
+    If activated, alarms of this data source can be shelved locally.
+
+    .. attention:: Shall not be activated if the data source also shelves alarms. Using shelve functionality in both the data source and atvise will lead to undefined behavior.
+
+Notifier
+    As alarms are delivered as OPC UA events, you have to specify the notifier(s) that should be used for this purpose. The *server* notifier is always available and is able to deliver all alarms of the data source. A data source may have an arbitrary big hierarchy of notifiers. You can browse the notifier hierarchy by clicking the |icon_browse| button. Then select the notifier(s) to use by activating the corresponding checkbox. You can also export the notifiers to a CSV file with the |icon_export| button and import them from a CSV file with the |icon_import| button.
+
+.. _alarm_mirroring_conditions:
+
+Conditions
+**********
+
+.. figure:: images/mirroring_conditions.png
+
+This tab contains the list of known conditions, whether they are used to mirror alarms and where they come from. The conditions are persisted in the project database and therefore still available after a restart of the atvise server. Conditions can be added to the list in following ways:
+
+- Automatically by using :ref:`adaptive learning <adaptive_learning>`
+- By clicking on the |icon_browse| button to browse conditions in the data source
+- By clicking on the |icon_import| button to import conditions from a CSV file
+
+.. hint:: Adding conditions by browsing will only work if the data source is atvise version 3.3 or higher or the data source exposes conditions in the address space. For all other cases enable adaptive learning or add conditions manually.
+
+Conditions will never be automatically deleted from the list. To delete conditions, select them and click the |icon_edit_delete| button.
+
+You can also export the conditions to a CSV file with the |icon_export| button.
+
+Mirrored
+    If activated, alarms of this condition will be mirrored.
+
+Alarm condition
+    The nodeId of the condition.
+
+Source
+    The source of the condition. This can be one of the following:
+
+    - Browse -- Added through browsing the data source
+    - User -- Manually added from the user
+    - Import -- Added through import from a CSV file
+    - Remote -- Added through adaptive learning
+    - Deleted from data source -- The condition no longer exists in the data source
+
+Field mapping
+*************
+
+.. figure:: images/mirroring_fields.png
+
+This tab is used to map alarm fields of the data source to alarm fields (including replacements) of atvise.
+
+By default, the standard OPC UA alarm fields used by atvise are always mapped. To map additional fields (if any), click on the |icon_browse| button. If the data source is an atvise server, additional atvise alarm fields will automatically be mapped. All automatically mapped fields are greyed out and cannot be changed. You can map the other fields by activating the checkbox to the left of the desired field. You can also change the name of the replacement or select an unmapped atvise alarm field to complete the mapping.
+
+Name
+    Name of the alarm field in the data source.
+
+atvise replacement
+    The name of the replacement field, if you want to map the alarm field of the data source but no corresponding atvise alarm field is available. The field will only be mapped if the alarm field exists in an alarm of the data source and is *not null*. Double-click the entry for editing.
+
+Mapped atvise alarm field
+    The name of the atvise alarm field, if you directly want to map the alarm field of the data source to the corresponding atvise alarm field. Double-click the entry for editing, click the |pointpointpoint| button to the right of the input field to select an atvise alarm field.
+
+Colors and flash intervals
+**************************
+
+.. figure:: images/mirroring_indicator.png
+
+Colors and flash intervals for mirrored alarms are defined with indicators. Indicators are very similiar to :ref:`alarm_categories` but as the acknowledgement type is controlled by the data source, only settings regarding the visual representation of an alarm are available.
+
+To add an indicator, right-click :treeselection:`Servers --> My Server --> Alarming --> Mirroring --> Indication` and select :menuselection:`Add Alarm Indicator...`. Double-click the indicator to edit it.
+
+The most important setting of an indicator is the **priority range**. When the priority of a mirrored alarm is within the range of an indicator, the settings of the indicator are used to specify the colors and flash intervals for the alarm. Overlapping ranges are not allowed and the atvise builder will issue an error message if you want to save such an indicator.
+
+The priority range of a new indicator is always *0 to 0* and you can reset the range to *0 to 0* to always be able to save the indicator. As the priority of an alarm can only be in the range *1 to 1000*, an indicator with a range of *0 to 0* will never be used. If the priority of an alarm is not within the range of any of the indicators, the global defaults for colors and flash intervals will be used.
+
+.. hint:: If you change the range of an indicator directly (XML import, server side script, ...) in a way that you get overlapping ranges, it is undefined which indicator will be used if the priority is within multiple ranges.
+
+The settings for color and flash interval are identical to the settings of an :ref:`alarm category <alarm_category_color>`.
+
+.. |icon_browse| image:: /common_images/icon_browse.png
+.. |icon_edit_add| image:: /common_images/icon_edit_add.png
+.. |icon_edit_delete| image:: /common_images/icon_edit_delete.png
+.. |icon_export| image:: /common_images/icon_export.png
+.. |icon_import| image:: /common_images/icon_import.png
+.. |icon_refresh| image:: /common_images/icon_refresh.png
+.. |icon_select_projtree| image:: /common_images/icon_select_projtree.png
+.. |pointpointpoint| image:: /common_images/pointpointpoint.png
+.. |save_button| image:: /common_images/save_button.png

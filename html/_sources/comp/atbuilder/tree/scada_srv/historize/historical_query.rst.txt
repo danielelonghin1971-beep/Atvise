@@ -1,0 +1,79 @@
+.. _builder_query_history:
+
+Query history
+*************
+
+The query of historized values can be carried out as follows:
+
+- Using the standard atvise resource :ref:`history list <historylist>` in the visualization.
+- In the visualization using the function :func:`webMI.data.queryFilter`.
+- In the server-side scripting using the functions :func:`history.query` and :func:`Ua.Variable.dataHistory`.
+- Via the atvise builder as described below.
+
+Use this functionality to query historized raw values and aggregated values in the atvise builder.
+
+Right-clicking on the desired node and selecting :menuselection:`Query History...` will open a tab. This tab contains the following three tabs:
+
+- Raw Values: to query raw values for a specific period.
+- Aggregated Values: to query aggregated values for a specific period.
+- At Time: to query raw values for a specific point in time.
+
+.. rubric:: Raw Values
+
+.. figure:: images/scada_historize_query.png
+
+    Querying raw values of a node
+
+The time period and detailed options can be defined as follows:
+
+Start Time
+    Start time (in local time) of the query period
+
+End Time
+    End time (in local time) of the query period
+
+Number of values to return
+    Limits the number of the returned values to the given value. A value of 0 means that all values within the query period will be returned.
+
+Return bounds
+    Activate this option to additionally get one value before the start time and one value after the end time.
+
+Clicking on :guilabel:`Read History` will retrieve the data and will show the source and server time (in local time), the status and value of the historized raw values in a table. If the start time is before the end time, the raw values will be sorted ascending by the source time and newer raw values will be truncated if applicable. If the end time is before the start time, raw values will be sorted descending and older raw values will be truncated if applicable.
+
+.. rubric:: Aggregated Values
+
+.. figure:: images/scada_historize_query2.png
+
+    Querying aggregated values of a node
+
+The time period and detailed options can be defined as follows:
+
+Start Time
+    Start time (in local time) of the query period
+
+End Time
+    End time (in local time) of the query period
+
+Function
+    Aggregate function for which the historized values will be queried. Must be contained in the aggregate template assigned to the node.
+
+Interval
+    Must conform to a parametrized interval in an aggregate template. If setting the value to 0, the interval will be calculated from the start time and end time.
+
+Clicking on :guilabel:`Read History` will retrieve the data and will show the source and server time (in local time), the status and value of the historized aggregate in a table. The source time represents - depending on the aggregate function - the start time of the interval or the source time of a node, the server time represents the end of the interval (when reaggregating the end of the current interval for all reaggregated values) respectively the original source time for "Sampled" aggregates.
+
+.. rubric:: At Time
+
+.. figure:: images/scada_historize_query3.png
+
+    Querying the value of a node for a specific time
+
+Here you can add several timestamps to a list for which the query of historized raw values will be done. If there exists no raw value for the given time stamp, then - depending on the setting "Use simple bounds" - the raw value will be calculated from its adjacent values.
+
+Activate "Use simple bounds" to calculate in the above mentioned case the value according to "Simple Bounding Values"; otherwise they will be calculate according to "Interpolated Bounding Values" (see Aggregating data).
+
+As shown in the figure in the section "Raw Values", no raw value exists at 8:32:00.
+
+Therefore the value (7.78713) at 8:32:00 was calculated based on the value 7 (at 8:31:23) and 8 (at 8:32:09).
+
+.. hint:: When calculating values "At Time", the setting :ref:`Interpolation <interpolation>` of the data archive group is used.

@@ -1,0 +1,76 @@
+Time Formats
+############
+
+The given time difference (time elapsed in milliseconds since 00:00:00 UTC on 1 January 1970) can be formatted and split into temporal components.
+
+.. rubric:: Functions
+
+.. function:: splitTime(offset, weeks)
+
+    Splits the time difference into temporal components and returns them as object.
+
+    Parameters:
+        - **offset** -- The time difference in milliseconds that shall be split.
+        - **weeks** -- Defines if the returned object shall also contain weeks (true) or not (false).
+
+    Returns:
+        - **object** -- An object that contains the temporal components (year, month, week, day, hour, minute, second) and the given timestamp (time).
+
+.. function:: splitTimeToString(offset, options)
+
+    Splits the time difference into temporal components and returns them as string. 
+
+    Parameter:
+        - **offset** -- The time difference in milliseconds that shall be split.
+        - **options** -- An object with following properties:
+
+            - filter -- Allows to specify which temporal components shall be returned (must be part of "YYMMDDhhmmss").
+            - limit -- Defines the number of temporal components that are returned. E.g. a limit of 2 means that only "YYMM" is returned.
+            - format -- Object that allows to define custom labels for the temporal components. E.g. {"YY": "my year label", "MM": "my month label"}
+
+    Returns:
+        - Temporal components as string, depending on the *options* parameter.
+
+::
+
+    var TF = webMI.callExtension("SYSTEM.LIBRARY.ATVISE.QUICKDYNAMICS.Time Formats");
+
+    /* Return values as object */
+
+    var exampleDiff = 
+    365 * 24 * 60 * 60 * 1000 + // one year
+    99 * 24 * 60 * 60 * 1000 +  // 99 days
+    5 * 60 * 60 * 1000 + // 5 hours
+    22 * 60 * 1000 + // 22 min
+    53 * 1000 // 53 sec
+
+    var demo11 = TF.splitTime(exampleDiff, true); // calc with weeks
+    var demo12 = TF.splitTime(exampleDiff, false); // calc without weeks
+
+    console.log(demo11);
+    console.log(demo12);
+
+    /* Return values as string (formatted) */
+
+    var demo21 = TF.splitTimeToString(exampleDiff); // without filter
+    var demo22 = TF.splitTimeToString(exampleDiff, { filter:"YYMMDD"}); // with filter
+    var demo23 = TF.splitTimeToString(exampleDiff, { filter:"YYMMDDhhmmss", limit:2}); // filter and limit of values
+    
+    var demo24 = TF.splitTimeToString(exampleDiff, {
+        format: {
+            "YY": "my year label",
+            "MM": "my month label",
+            "WW": "my week label",
+            "DD": "my day label",
+            "hh": "my hour label",
+            "mm": "my minute label",
+            "ss": "my second label"
+        }
+
+    });
+
+    console.log(demo21);
+    console.log(demo22);
+    console.log(demo23);
+    console.log("--- format ---");
+    console.log(demo24);

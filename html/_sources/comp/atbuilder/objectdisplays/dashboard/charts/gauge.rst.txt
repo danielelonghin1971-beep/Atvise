@@ -1,0 +1,38 @@
+Gauge
+#####
+
+The display shows a process value in the form of a gauge display.
+
+.. rubric:: Parameters
+
+- **base** -- Address used for output and status monitoring.
+- **alarm address** -- Optional address used for alarm monitoring.
+- **enable status monitoring** -- Switch monitoring of current value status on or off (default: Yes).
+- **fire status trigger** -- Instead of the status display a here defined trigger can be fired globally.
+- **unit** -- This unit is displayed in addition to the value.
+- **decimal places** -- Number of decimal places for the value to be displayed (default: 0).
+- **minimum** -- Lower limits of the displayed values (default: 0).
+- **maximum** -- Upper limit of the displayed values (default: 100).
+
+Appearance:
+
+- **deactivation color** -- Deactivation color (default: #b7b7b7)
+- **text color** -- Text color (default: global parameter atvFontColor)
+- **status indication** -- Specify the status' display through a defined global list (default: global parameter atvStatusIndication)
+- **alarm indication** -- Specify the alarm's display through a defined global list (default: global parameter atvAlarmIndication)
+- **bar color** -- Defines the bar color of the progress bar (default: #7cb5ec)
+- **bar background color** -- Defines the bar background color of the progress bar (default: #eeeeee).
+- **bar border color** -- Defines the bar contour color of the progress bar (default: #d7d7d7).
+- **bar border width** -- Defines the bar contour size of the progress bar (default: 1).
+
+Options:
+
+- **address for minimum** -- Optional address for defining the lower limit.
+- **address for maximum** -- Optional address for defining the upper limit.
+
+Security:
+
+- **necessary right** -- The user must have this right to activate this control.
+- **activation address** -- If the value of this address equals to "activation value", then the control will be active.
+- **activation value** -- Value which activates the control.
+- **show access control notification** -- Defines if the icon for showing access control notifications shall be displayed (default: true)

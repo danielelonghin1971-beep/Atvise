@@ -1,0 +1,20 @@
+.. _add_datasource:
+
+Add data source
+###############
+
+Right-click :treeselection:`Servers --> My Server --> Data Sources` and select :menuselection:`Add Data Source...` to add a new data source.
+
+.. figure:: images/add_datasource.png
+
+.. toctree::
+    :titlesonly:
+
+    add_ds/ds_opcua
+    add_ds/add_redundant_datasource
+    add_ds/ds_opccom
+    add_ds/ds_webmi
+    add_ds/ds_snmp
+    add_ds/ds_opcua_s7
+    add_ds/ds_connect
+    add_ds/ds_connect_x

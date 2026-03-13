@@ -1,0 +1,43 @@
+.. _script_object:
+
+script object
+##############
+
+The *script* object is available for every script and contains the respective meta data (refer to :ref:`server script editor - edit metadata <scripteditor_metadata>` and :ref:`Access control - scripting<ac_scripting>`). The meta data can be queried with the following properties:
+
+.. attribute:: script.owner
+
+    A string that contains the owner of the script, as stated in the metadata.
+    
+.. attribute:: script.caller
+    
+	A string that contains the user that calls the script (may differ from the user that executes the script).
+
+.. attribute:: script.executor
+        
+    A string that contains the user that executes the script (depending on the runcontext, either "owner" or "caller").
+        
+.. attribute:: script.runContext
+        
+    A string that contains the runcontext of the script ("caller" or "owner"), as stated in the metadata.
+    
+.. attribute:: script.trigger
+    
+    An object that contains the parameter that triggered the script. The object has the following properties:
+
+        - **trigger.type** (string) -- Type of the parameter
+        - **trigger.name** (string) -- Name of the parameter
+
+.. attribute:: script.priority
+    
+    A string that shows the priority of execution. 1 (lowest priority) ... 10 (highest priority)
+
+.. hint:: The properties *base.trigger* and *base.scriptPriority* are deprecated and replaced by *script.trigger* and *script.priority*.
+
+Examples::
+
+    console.log("owner: ", script.owner);
+    console.log("caller: ", script.caller);
+    console.log("executor: ", script.executor);
+    console.log("runcontext: ", script.runContext);
+    console.log("trigger: " + script.trigger.name + " type: " + script.trigger.type);

@@ -1,0 +1,28 @@
+Adding displays to variable types
+#################################
+
+atvise webMI allows creation of custom displays for variable types. After having imported variables and data types, follow these steps:
+
+.. rubric:: Add a display
+
+Right-click on :treeselection:`Variable Types --> Type` and choose :menuselection:`Add Display...`.
+
+.. figure:: images/variabletype_adddisplay.png
+
+    Adding a variable type display
+
+.. rubric:: Design the newly-created display
+
+Create the desired display for the specific variable type.
+
+.. figure:: images/variabletype_designdisplay.png
+
+    Designing a variable type display
+
+.. rubric:: Use the display in the visualization
+
+Now you can use the created display when designing the server's visualization. Just drag and drop objects of the variable type to one of the server´s displays and the newly designed display will appear.
+
+.. figure:: images/variabletype_usedisplay.png
+
+    Using the new display

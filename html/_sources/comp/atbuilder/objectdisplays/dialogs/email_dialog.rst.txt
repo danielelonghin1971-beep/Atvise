@@ -1,0 +1,155 @@
+E-mail configurator
+###################
+
+Generic e-mail configuration dialog.
+
+.. rubric:: Parameters
+
+- **name** -- Name used for trigger assignment
+
+Appearance: 
+
+- **headline** -- Headline for the dialog (default: T{E-mail settings})
+- **confirm text** -- Text for the button to confirm the settings (default: T{Confirm})
+- **cancel text** -- Text for the button to close the dialog without applying the changes (default: T{Cancel})
+- **font color** -- Font color for the display  (default: Globaler Parameter atvFontColor)
+- **fill color** -- Fill color of background areas (default: Globaler Parameter atvFillColor)
+
+Options:
+
+- **info text** -- Allows to define a text for the display's information field (default: T{Info})
+- **active** -- Defines if e-mails shall be sent or not (default: true)
+- **SMTP server** --  Allows to select any already created :ref:`SMTP server<smtp_settings>`
+- **from** -- The e-mail address of the sender
+- **to** -- The e-mail address of the recipient(s) 
+- **cc** -- The carbon copy recipient(s)
+- **bcc** -- The blind carbon copy recipient(s)
+- **subject** -- Subject of the e-mail
+- **message** -- Message of the e-mail
+- **attachment** -- Attachment(s) of the e-mail
+- **reply address** -- Specifies the reply-to address
+- **content type** -- The MIME type that specifies the type of the sent data
+- **encoding** -- Encoding of the e-mail
+- **custom** -- Allows to define and pass custom information, e.g. to implement custom attachment handling, pass parameters to server scripts, add user information etc. Further processing is up to the user.
+
+Editable:
+
+Allows to define the fields that shall be editable in the dialog: 
+
+- **active** (default: Yes)
+- **SMTP server**  (default: Yes)
+- **from** (default: Yes)
+- **to** (default: Yes)
+- **cc** (default: Yes)
+- **bcc** (default: Yes)
+- **subject** (default: Yes)
+- **message** (default: Yes)
+- **attachment** (default: Yes)
+- **reply address** (default: Yes)
+- **content type** (default: Yes)
+- **encoding** (default: Yes)
+- **custom** (default: Yes)
+
+.. rubric:: Usage
+
+The dialog can be used to define e-mail settings. The configuration must be returned via a trigger -- defined per parameter *name*. All other parameters are optional. Attachments can be defined as array of :ref:`SMTP objects<smtpclient_functions>` and are selectable via a combobox in the dialog. The user is responsible for saving the settings, defining the separator for multiple addresses (semicolon, comma, etc.) as well as further data processing.
+
+Example for calling the dialog:: 
+
+    webMI.display.openWindow({
+
+        display: "SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Advanced.dialogs.email_dialog",
+        extern: false,
+        width: 1200,
+        height: 600 + 20,
+        menubar: false,
+        modal: true,
+        movable: true,
+        resizable: true,
+        scrollbars: false,
+        status: false,
+        title: "T{E-mail settings}",
+        toolbar: false,
+        query: {
+            name: "com.atvise.email_demo",
+            info: "T{Available placeholders for subject, message and attachment inputs}:\n\n{YYYY},{YY},{MM},{DD},{hh},{mm},{ss}",
+            active: true,
+            smtp: "SMTP1",
+            from: "sender@ba.at",
+            to: ["receiver1@ba.at","receiver2@ba.at"],
+            cc: "cc@ba.at",
+            bcc: ["bcc1@ba.at","bcc2@ba.at"],
+            subject: "Test Report Mail",
+            body: "This is a demo mail from the report.",
+            attachment: JSON.stringify([{
+                    type: "SMTPClient.A_FILE",
+                    name: "image.png",
+                    content_type: "image/png",
+                    file_path: "C:/.....",
+                    inline: false,
+                    is_encoded: false 
+            }]),
+            contenttype: "",
+            editable_reply: "No",
+            editable_contenttype: "No",
+            editable_encoding: "No", 
+        }
+    });
+
+Processing the changes::
+
+    webMI.trigger.connect("valuechanged_" + "com.atvise.email_demo", function (e) {
+
+        var newdata = e.value;
+
+    });
+
+It is also possible to pass the parameters as e-mail configuration object. In this case, the only required query parameters when calling the dialog are *name* and *emailSettings*. The object must be passed to *emailSettings* as JSON. All object properties must be defined -- empty strings can be used.
+
+Example for e-mail configuration object::
+
+    var settings = {
+        "active": true,
+        "smtp": "smtp.example.com",
+        "from": "sender@example.com",
+        "to": "recipient@example.com",
+        "cc": "",
+        "bcc": "",
+        "subject": "Example Subject",
+        "body": "Example Body Content",
+        "attachment": [
+            {
+                "type": "SMTPClient.A_DATA",
+                "name": "example_file.txt",
+                "content_type": "text/plain",
+                "inline": false,
+                "encoded": false,
+                "data_address": "example_file_address"
+            }
+        ],
+        "reply": "reply@example.com",
+        "contenttype": "text/plain",
+        "encoding": "UTF-8",
+        "custom": "custom_value",
+        "name": "ExampleName"
+    }
+    
+    webMI.display.openWindow({
+
+        display: "SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Advanced.dialogs.email_dialog",
+        extern: false,
+        width: 1200,
+        height: 600 + 20,
+        menubar: false,
+        modal: true,
+        movable: true,
+        resizable: true,
+        scrollbars: false,
+        status: false,
+        title: "T{E-mail settings}",
+        toolbar: false,
+        query: {
+            name: settings.name,
+            emailSettings: JSON.stringify(settings)
+        }
+    });

@@ -1,0 +1,10 @@
+Tooltip
+#######
+
+This Quick Dynamic displays a tooltip text at the selected element.
+
+Standard HTML elements (e.g. <br>, <ul>, <li> etc.) can be entered.
+
+.. rubric:: Parameters
+
+- **activate** (*text to be displayed*) -- The tooltip text that shall be displayed.

@@ -1,0 +1,12 @@
+Button Forward (Small)
+######################
+
+This display is a button initiating steps forward on the x-axis.
+
+.. rubric:: Parameters
+
+The following common parameters are available:
+
+- **chart name** -- This is a unique name to identify the chart instance (default: trend1)
+- **x-axis index** -- Index of the x-axis to be addressed (default: 0)
+- **step in percent** -- The size of the steps initiated by the button is this percentage of the visible left to right interval on the x-axis (default: 100)

@@ -1,0 +1,21 @@
+First steps: atvise scada
+#########################
+
+The main goal of this tutorial is to familiarize you with the engineering process of a web visualization using atvise with a scada license. In small steps and using specific examples, you will learn how essential tools and interfaces work.
+
+In the first step you will learn how to import data variables, how to draw a simple display and how to generate and view the visualization.
+
+After this we will take a look at the dynamization of elements, including the four ways of addressing a data variable.
+
+.. toctree::
+
+    scada/tutorial1
+    scada/tutorial2
+    scada/tutorial3
+    scada/tutorial4
+    scada/tutorial5
+    scada/tutorial6
+    scada/tutorial7
+    scada/tutorial8
+    scada/tutorial9
+    scada/tutorial10

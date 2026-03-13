@@ -1,0 +1,64 @@
+.. _historize_and_aggregate:
+
+Historizing (and aggregating) a node
+************************************
+
+To historize the data values of a node, you have to create a reference to a data archive group. Same applies if you want to calculate aggregates according to a previously defined aggregate template.
+
+Right-click on a node, select :menuselection:`Historize...` and the dialog "Configure Historization" will be opened:
+
+.. figure:: images/scada_historize_context.png
+
+    Historizing a node
+
+In the dialog "Configure Historization" following assignments have to be made:
+
+Raw Archive
+    Select one of the existing raw archives where the raw values of the node shall be written to or "(None)" for no raw archive.
+
+    See note below for additional information when you may need a raw archive even if you do not plan to keep an archive of raw values.
+
+Aggregate Template
+    Select one of the existing :ref:`aggregate templates <aggregate_template>` and the aggregates defined in the aggregate template will be calculated for this node or used for :ref:`pass-through queries <history_pass_through>` or :ref:`synchronization <history_sync>`.
+
+    Set the selection to "(None)" if only historization of raw values shall be done.
+
+    See note below for additional information when a raw archive is also needed.
+
+.. attention:: If you use aggregate functions other than "Sampled" in the first level of the selected aggregate template, you also have to select a raw archive! The aggregate functions use the values from the raw archive to calculate the respective aggregated values.
+
+    If you have only "Sampled" in the first level of the selected aggregate template, selection of a raw archive is optional. "Sampled" will always take the values directly from the variables through sampling.
+
+Raw Value Source
+    Specifies the source of raw values. Can be one of the following:
+
+    - *Local* -- The raw values will be historized and queried locally.
+    - *Pass Through* -- Queries for raw values will be passed-through to the data source (see hint below). No local raw archive is required.
+    - *Synchronize* -- Raw values will be read from the data source (see hint below) and written to the local raw archive periodically.
+
+Aggregate Value Source
+    Specifies the source of aggregated values. Can be one of the following:
+
+    - *(Same as Raw Value Source)* -- The setting for *Raw Value Source* will be used also for aggregated values.
+    - *Local* -- The aggregated values will be historized and queryied locally.
+    - *Pass Through* -- Queries for aggregated values will be passed-through to the data source (see hint below). An aggregate template is still required, but the aggregate functions in the template may be created with without an aggregate archive group.
+    - *Synchronize* -- Aggregated values will be read from the data source (see hint below) and written to the local aggregate archive group(s) periodically.
+
+.. hint:: For pass-through and synchronization to work properly, the nodeId of the variable in the data source must be known. Therefore you need a correctly configured *MirrorInput* or *MirrorInputOutput* for every variable where pass-through or synchronization should be used.
+
+For easier parametrization, multiple nodes (even included folders) can be selected as shown in the figure below. Though folders can be selected, they will be ignored for the assignments. Therefore they cannot be used to automatically historize all nodes of selected folders:
+
+.. figure:: images/scada_historize_multiselect.png
+
+In case multiple nodes are selected, it might happen that the entries in the dialog "Configure Historization" are set to "(Different archives assigned)", "(Different templates assigned)" or "(Different sources assigned)":
+
+.. figure:: images/scada_historize_multiselect2.png
+
+This will happen when due to the multiple selection of nodes assignments to different raw archives and/or aggregate templates or different source settings exist. In the example above, the nodes of the first two folders are assigned to the raw archive "datavalues" and to the aggregate template "AT1". The nodes of the third folder are assigned to the raw archive "datavalues2" and to the aggregate template "AT2". In addition, different sources were configured.
+
+In such a case, you can the change the configuration of all selected nodes by selecting a specific setting or reduce the number of selected nodes to avoid different assignments.
+
+.. attention:: 
+    If you configure the historization for a node of an object type, the historization will also change at all instances.
+
+    Historization configuration (archive group, aggregate template, raw value source, aggregate value source) must be set **only** for the object type or **only** for the instances. It is not possible to override the object type's historization settings for the instances and vice versa. 

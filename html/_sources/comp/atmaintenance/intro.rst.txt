@@ -1,0 +1,23 @@
+Introduction
+############
+
+The atvise maintenance tool (:program:`atmaintenance`) allows converting the atvise project database (nodes.db) and/or (historical) archives in order to use projects of older atvise versions (supported as of version 2.5.0 up to version 3.x) with atvise |release|. In addition, :program:`atmaintenance` can be used to perform various other maintenance tasks. Following functions are provided:
+
+- Project database operations
+    - Convert project database
+    - Analyze project database 
+    - Clean up project database
+    - Check resource versions
+    - Update resources
+- Archive operations
+    - Convert archive
+    - Add optional index
+- Options
+    - Log details
+    - Progress details
+    - Show log file
+- Log files 
+    - General information
+    - Log entry details
+
+.. hint:: The maintenance tool is only available in English.

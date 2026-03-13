@@ -1,0 +1,24 @@
+Licensing
+#########
+
+How to get or activate an atvise license:
+
+1. Right-click on the atvise icon in the right corner of the task bar.
+
+2. Choose "Get License" from the menu which appears.
+
+3. Enter your atvise.com username and password in the "Online Activation" dialog which appears in order to continue. Please note that Internet access is required. You can also go to https://www.atvise.com to view or download your recent licenses and statements.
+
+    Enter manually: Click on the bottom left button, "Enter manually". Copy your hardware code from the dialog which appears, paste it on https://www.atvise.com and generate a license. Copy the complete license code into the text field below.
+
+    If you have any problems or need more licenses, please contact visutec@bachmann.info.
+
+4. Choose your scada license from the "Online Activation" dialog and generate it by clicking "OK".
+
+.. figure:: /common_images/license_server.png
+
+    Enter atvise.com username and password
+
+.. figure:: /common_images/license_webmi.png
+
+    Get a webMI license

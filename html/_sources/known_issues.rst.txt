@@ -1,0 +1,85 @@
+Known issues
+############
+
+.. hint:: Some functions of the help don't work correctly with some browsers or need special settings. See :doc:`how_to_use_this_help` for more information.
+
+.. rubric:: General
+
+- We recommend not to use special characters in node names (e.g. displays, alarms, scripts) and for parameters. In no case the characters "?" (question mark), "." (dot) and "/" (slash) shall be used. This also applies to configuration names (e.g. for highcharts configurations).
+- Historization doesn't support writing values with a source time before 1980-01-01 00:00 GMT. Such values will be silently ignored.
+- When writing a value with a source time in the past, only the intervals including the value change will be reaggregated and not all possibly affected intervals.
+- For operational reasons (offline calculation), interpolating aggregate functions may not fully conform to the OPC UA specification.
+- Swap in of archive files can only take place when there is currently no active query of historical data.
+- When an event archive in redundancy mode is replicated, the error message "UNIQUE constraint failed: data.uaeventid" can occur in the log file of the passive server. As there is no negative impact on the archive, the message can be safely ignored.
+- Changing the time zone of your PC requires a restart of the atvise server. However, a restart is not required for time changes due to daylight saving time or adjusting the system time.
+- Please note that using a reverse proxy is not supported by atvise and solely at your own risk. You have to ensure a correct configuration and operation. 
+- Under Windows, NTFS symbolic links and NTFS junction points must not be used in the program or project path.
+- The functionality of atvise has not been tested on network drives. Therefore, the use of network drives is not recommended and proper operation cannot be guaranteed.
+
+.. rubric:: Installation 
+
+- To use atvise on 64-bit ARM platforms, the following 32-bit libraries for ARMhf must be installed::
+
+    dpkg --add-architecture armhf
+    sudo apt-get update
+    sudo apt-get install -y unixodbc:armhf libc6:armhf libncurses5:armhf libstdc++6:armhf libudev-dev:armhf
+    
+.. rubric:: atvise builder
+
+- Editing a display in the atvise builder can be very slow if the display contains an element (e.g. a simple text) with a "font-family" SVG attribute not matching an existing font exactly (e.g. "courier" is used instead of the correct "Courier").
+- When opening a display in the atvise builder rendering of foreign objects will be aborted in some circumstances. See :ref:`here <render_foreign_objects>` for details.
+- The atvise builder may not work in a remote desktop session depending on the version of OpenGL the display driver of the host supports. This is an issue of the remote desktop protocol, not the atvise builder. In this case set the environment variable ``QT_OPENGL`` to ``angle`` before starting the atvise builder.
+- The code completion shows the entire JavaScript Standard in server-side scripts, however, not all of it is supported by atvise.
+
+.. rubric:: Visualization
+
+- The result of queryFilter is only sorted chronologically and no longer chronologically and then sorted by NodeId.
+- Apple forbids automatic playback of audio sequences without user interaction on its iOS devices.
+- When *Boost* is enabled in the :ref:`performance settings<datamode>` of highcharts, CSV and XLSX export is not supported.
+- The appearance and behavior of the slickgrid table's scrollbar in Firefox may differ from previous versions (e.g., the alarm or history list's burger menu |burger| is obscured by the scrollbar). Depending on the browser and operating system used, either the native operating-system scrollbar or browser-specific overlay scrollbars will be applied. Firefox provides the about\:config options *widget.windows.overlay-scrollbars.enabled* (Windows 11) or *widget.gtk.overlay-scrollbars.enabled* (Ubuntu). Setting the respective option to *false* and restarting the browser allows to use the native operating-system scrollbar as in previous versions.
+- Some browser extensions (e.g., ad or script blockers) may interfere with the appearance or functionality of the visualization. Please check your installed browser extensions in case of unexpected behavior.
+
+**Performance:**
+
+- The accessibility services of Firefox may have a negative impact on the performance of the visualization. To disable the services, open the menu, go to Options -> Privacy & Security -> Permissions and check the *Prevent accessibility services from accessing your browser* checkbox.
+- Google Chrome and Microsoft Edge introduced features to improve the resource consumption when a window is not visible (86.x) and when a tab is in the background (87.x). If active, rendering and continuous data processing are throttled to reduce CPU and battery usage. The features are enabled if the browser window (or tab) is considered as inactive. This applies to the following cases:
+    
+    - switching to another browser tab
+    - minimizing the browser 
+    - the browser window is not visible (i.e. completely covered by another application)
+    - disconnection from a remote desktop session
+
+ This feature may result in an undesired behavior of the atvise visualization (e.g. increased memory consumption in continuous operation) and should be disabled via Windows registry. Registry locations and entries:
+    
+    - Chrome: 
+
+        - [HKEY_LOCAL_MACHINE\\Software\\Policies\\Google\\Chrome] "IntensiveWakeUpThrottlingEnabled"=dword:0
+        - [HKEY_CURRENT_USER\\Software\\Policies\\Google\\Chrome] "IntensiveWakeUpThrottlingEnabled"=dword:0
+        - [HKEY_LOCAL_MACHINE\\Software\\Policies\\Google\\Chrome] "WindowOcclusionEnabled"=dword:0
+        - [HKEY_CURRENT_USER\\Software\\Policies\\Google\\Chrome] "WindowOcclusionEnabled"=dword:0
+
+    - Edge:
+
+        - [HKEY_LOCAL_MACHINE\\Software\\Policies\\Microsoft\\Edge] "IntensiveWakeUpThrottlingEnabled"=dword:0
+        - [HKEY_CURRENT_USER\\Software\\Policies\\Microsoft\\Edge] "IntensiveWakeUpThrottlingEnabled"=dword:0
+        - [HKEY_LOCAL_MACHINE\\Software\\Policies\\Microsoft\\Edge] "WindowOcclusionEnabled"=dword:0
+        - [HKEY_CURRENT_USER\\Software\\Policies\\Microsoft\\Edge] "WindowOcclusionEnabled"=dword:0
+
+ See also:
+
+    - https://chromeenterprise.google/policies/?policy=IntensiveWakeUpThrottlingEnabled
+    - https://chromeenterprise.google/policies/?policy=WindowOcclusionEnabled
+    - https://docs.microsoft.com/en-us/deployedge/microsoft-edge-policies#intensivewakeupthrottlingenabled
+    - https://docs.microsoft.com/en-us/deployedge/microsoft-edge-policies#windowocclusionenabled
+
+**Authentication:**
+
+- When using "digest" authentication, Firefox only supports ASCII characters in the user name. If you use e.g. German umlauts, the login will fail and the visualization will only show an empty page.
+- Depending on the used browser (e.g. Edge, Chrome (only on mobile devices) or Safari (iOS)), a manual login is necessary when using NTLM authentication. This means that username and password must be entered up to 4 times in redundancy mode. In addition, for some browsers (e.g. Edge), each server address must be entered in the address bar of the browser once.
+- NTLM authentication can be used in Chrome and Firefox without restrictions, if configured accordingly (see :ref:`using_ntlm`).
+- Depending on the used browser (e.g. Chrome (Desktop and Android), Firefox or Safari (iOS)), username and password must be entered up to 4 times in redundancy mode. Additionally, for some browsers (e.g. Edge), each server address must be entered in the address bar of the browser once.
+- "digest" authentication for Edge (depending on the version) connected locally via loopback adapter to the atvise server only works when you add ``/?`` to the URL. E.g. instead of ``http://localhost`` enter ``http://localhost/?`` when you start your visualization.
+- The password handling in atvise 3.7 was improved by using a more secure encryption method. Existing passwords in the database are automatically converted to the new format on the first login. **Caution:** This does not apply to "digest" authentication, since most browsers do not fully support RC 7616. The MD5 algorithm is still used for "digest" and the passwords cannot be updated by the new method.
+- When using "script" authentication, the login or logout process must not exceed 30 seconds. Otherwise, ensuing HTTP request timeouts and repeated requests will result in unwanted behavior of the visualization.
+
+.. |burger| image:: comp/visualization/images/burger.png

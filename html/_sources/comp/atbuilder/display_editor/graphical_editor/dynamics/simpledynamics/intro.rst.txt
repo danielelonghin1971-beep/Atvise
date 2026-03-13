@@ -1,0 +1,68 @@
+Introduction
+############
+
+The simple dynamics dialog enables you to add dynamizations to your display to create a fully functioning visualization with minimum effort. It offers you many different ways to influence existing graphic elements or data variables.
+
+.. rubric:: Dynamics toolbox
+
+The dynamics toolbox is located at the bottom right of the graphics editor interface. It shows a list of all simple dynamics of the currently-selected element and enables you to add, edit and manage dynamics.
+
+.. figure:: images/sidebar_dynamics.png
+
+    Dynamics toolbox
+
+Right-click to see the following functions:
+
+- |icon_dynamicsadd| Add a dynamization - The simple dynamics dialog will be opened for the new dynamization automatically.
+- |icon_dynamicsedit| Edit the dynamization which is selected in the list. You can also double-click a dynamization in the list.
+- |icon_dynamicscopy| Copy a dynamization.
+- |icon_dynamicsdelete| Delete a dynamization.
+
+.. hint:: Double-click on the whitespace in this area to add a dynamization.
+
+    Double-click on an existing dynamization to edit it.
+
+.. rubric:: Standard method
+
+The following describes the standard method for simple dynamics and the related steps in the simple dynamics dialog.
+
+:doc:`event`: First, an event has to be fired (for example a specific interaction of the user in the visualization, change of a data variable, ...).
+
+.. figure:: images/dynamics_1.png
+
+:doc:`action`: When this event is fired, an action will be executed which has an influence on elements in the display or data variables.
+
+.. figure:: images/dynamics_3.png
+
+**Optional steps:**
+
+:doc:`right`: A certain user right can be defined as a requirement to execute the action of the event.
+
+.. figure:: images/dynamics_0.png
+
+:doc:`result`: The result of the event can be defined (for example modify the value of the event, start a timer, ...).
+
+.. figure:: images/dynamics_2.png
+
+.. rubric:: Address selector
+
+In the "Simple Dynamics" dialog, the address selector is used quite often. For example, to choose a display or to set a node address. The address selector is split up into three categories.
+
+.. figure:: images/window_addressselector_displays.png
+
+    Displays
+
+.. figure:: images/window_addressselector_objects.png
+
+    Objects
+
+.. figure:: images/window_addressselector_types.png
+
+    Object types
+
+.. attention:: If you choose "Object Types" in your Object Selector, note that you have to select the Object Type in the left column first and then select the data variable of the chosen type in the right column (as shown in the screenshot above) to create a correct relative addressing.
+
+.. |icon_dynamicsadd| image:: /common_images/icon_edit_add.png
+.. |icon_dynamicscopy| image:: /common_images/icon_copy.png
+.. |icon_dynamicsdelete| image:: /common_images/icon_edit_delete.png
+.. |icon_dynamicsedit| image:: /common_images/icon_settings.png

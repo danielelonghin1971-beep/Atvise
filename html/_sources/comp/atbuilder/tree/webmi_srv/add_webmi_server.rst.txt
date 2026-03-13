@@ -1,0 +1,148 @@
+.. _add_webmi_server:
+
+Add and edit server
+###################
+
+To add a new webMI server to your project, right-click on :treeselection:`Servers` and choose :menuselection:`Add Server... --> webMI`. Alternatively you can also click on :menuselection:`Guided Actions` in the menu bar and select :menuselection:`Add atvise webMI Compliant Webserver`.
+
+.. rubric:: Editing a webMI server
+
+To edit an existing webMI server, double-click it in the server list or right-click on it and choose :menuselection:`Edit server...`. 
+
+General
+*******
+
+In this section, the connection settings for the webMI server must be defined. In addition, you can specify the protocol the webMI server uses to retrieve and distribute all required files and where these files shall be stored.
+
+.. figure:: images/edit_server.png
+
+.. rubric:: Connection
+
+Server name
+    Name of the webMI server within the atvise project.
+
+Host 
+    Hostname or IP address of the webMI server.
+
+URL
+    URL of the visualization (including leading ``http(s)://``).
+
+Type 
+    Type of the webMI server to add. Clicking "Use defaults" will automatically apply the default settings for the selected type.
+
+.. rubric:: Config source
+
+The XML file that contains the data structure of the webMI server must be defined here.
+
+Protocol 
+    The protocol for downloading the source file. 
+
+        - **file** -- Direct access to the local file system.
+        - **http** -- Download via HTTP from the specified host. 
+        - **https** -- Download via HTTPS from the specified host. The **Validate certificate** checkbox is displayed on the right side. If enabled, the validity date of the certificate is checked and the connection is aborted if the certificate is invalid.
+        - **ftp** -- Download via FTP from the specified host. 
+        - **sftp** -- Download via SFTP from the specified host. The **Allow host automatically** is displayed on the right side. If enabled, the host key of the SFTP server is accepted automatically when establishing the connection. Otherwise, the host key must already exist in the *known_host* file (Windows: *%USERPROFILE%/.ssh/known_hosts*, Linux: *~/.ssh/known_hosts*) or the connection will be aborted. The entry :ref:`knownHosts<knownhosts>` allows to specify another path for the *known_hosts* file.
+
+    The required service (e.g., an FTP server) must be running and properly configured on the defined host.
+
+Test
+    Allows to validate the configured settings.
+
+Host
+    Hostname or IP address of the server that hosts the XML file. 
+
+Port 
+    TCP port of the selected protocol. 
+
+Username
+    Username for webMI server authentication.
+
+Password
+    Password of the specified user. 
+
+Source
+    Path + XML filename, depending on the selected protocol:
+
+        - *ftp*/*sftp*/*http*/*https* -- The path can be specified as follows:
+        
+            - **Without** a leading slash "/" (e.g., *config/variables.xml*) -- The path is interpreted relative to the server's configured starting directory for the authenticated user.
+            - **With** a leading slash "/" (e.g., */config/variables.xml*) -- The path is interpreted as absolute, beginning at the server's defined root directory.
+
+        - *file* -- Absolute path on the file system **with** a leading slash "/" (e.g., */C:/atvise_install_dir/webmi/variables.xml* or */var/lib/atvise/webmi/variables.xml*). 
+
+.. rubric:: Config target
+
+Defines where the webMI server stores new or modified configuration files (e.g., license.cfg).
+
+Protocol 
+    The protocol to transfer the configuration files. 
+
+        - **file** -- Write files directly to the local file system.
+        - **ftp** -- Upload via FTP to the specified host. 
+        - **sftp** -- Upload via SFTP to the specified host. The **Allow host automatically** is displayed on the right side. If enabled, the host key of the SFTP server is accepted automatically when establishing the connection. Otherwise, the host key must already exist in the *known_host* file (Windows: *%USERPROFILE%/.ssh/known_hosts*, Linux: *~/.ssh/known_hosts*) or the connection will be aborted. The entry :ref:`knownHosts<knownhosts>` allows to specify another path for the *known_hosts* file.
+
+        The required service (e.g., an FTP server) must be running and properly configured on the defined host.
+
+Test
+    Allows to validate the configured settings.
+
+Host
+    Hostname or IP address of the server where the configuration files shall be stored. 
+
+Port 
+    TCP port of the selected protocol. 
+
+Username
+    Username with write permissions for the server's target directory.
+
+Password
+    Password of the specified user. 
+
+Directory
+    Target directory on the server where new or modified configurations files will be stored. The path syntax depends on the selected protocol:
+
+        - *ftp*/*sftp* -- The path can be specified as follows:
+        
+            - **Without** a leading slash "/" (e.g., *config/target*) -- The path is interpreted relative to the server's configured starting directory for the authenticated user.
+            - **With** a leading slash "/" (e.g., */config/target*) -- The path is interpreted as absolute, beginning at the server's defined root directory.
+
+        - *file* -- Absolute path on the file system **with** a leading slash "/" (e.g., */C:/atvise_install_dir/webmi/config* or */var/lib/atvise/webmi/config*). 
+
+.. rubric:: Data target
+
+Defines where the webMi server stores visualization files (displays, resources, etc.) when distributing the server. The parameters correspond to those of the "Config target" above. Clicking *Same as configuration target* allows to copy the configured settings.
+
+Distribution
+************
+
+.. figure:: images/edit_server_distribution.png
+
+Compress files
+    If checked, the data will be compressed in a gzip format.
+
+Cleanup dataroot
+    If checked, the entire contents of the Data Root Target will be deleted before every generation of a visualization.
+
+Write only changed files
+    Write only files that have been changed since the last distribution.
+
+Case sensitive
+    Defines the behavior when uploading files and directories to the FTP server's target directory. If enabled, files and directories are uploaded with their exact names (case-sensitive). However, it may result in errors on some Linux FTP servers if multiple files exist that differ only by letter case. Disabling this option converts all filenames to lowercase before the upload to avoid any compatibility issues with case-sensitive FTP servers. 
+
+Files
+*****
+
+Select additional files to upload from disk.
+
+.. figure:: images/edit_server_files.png
+
+Layout
+******
+
+Layouts define the basic structure of the visualization for the webMI server. The appearance of the "Default" display depends on the default layout that is selected here. There is a list of predefined layouts available.
+
+.. figure:: images/edit_server_layout.png
+
+.. include::  ../scada_srv/layouts.rst
+        :start-after: .. start_include
+        :end-before: .. stop_include

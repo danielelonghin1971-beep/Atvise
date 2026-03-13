@@ -1,0 +1,21 @@
+Performance functions
+#####################
+
+The webMI.performance methods provide an interface for managing performance measurements that are persisted via the browser's *localStorage*.
+
+.. hint:: Performance measurements must be :ref:`enabled in the webmicfg.js<performance_webmicfg>` in order to use these functions.
+
+.. !!webMI!! webMI.performance.setMarker(display, name[, timestamp])
+.. function:: webMI.performance.setMarker(display, name[, timestamp])
+
+    Saves a performance measurement with a custom name and adds it to the last set of measurements for the specified display. If a measurement with the same name for the specified display already exists, it will be replaced with the new value. If no timestamp is explicitly passed, the current timestamp (performance.now) will be used.
+
+.. !!webMI!! webMI.performance.getMarkers()
+.. function:: webMI.performance.getMarkers()
+
+    Returns all markers that are currently present in the browser's *localStorage*.
+
+.. !!webMI!! webMI.performance.clearMarkers()
+.. function:: webMI.performance.clearMarkers()
+    
+    Clears all recorded performance markers from the browser's *localStorage*.

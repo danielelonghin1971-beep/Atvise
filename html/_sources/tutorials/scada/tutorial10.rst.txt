@@ -1,0 +1,114 @@
+10 Adding user rights
+#####################
+
+In this section, we will create a user right which will be required to change the "LightIntensity" value in the visualization. For this purpose we will:
+
+- add a user-defined right to the project
+- add a new group for this right
+- add a user to this group
+- and, finally, check this right in the visualization.
+
+.. rubric:: 10.1 Adding a right to the project
+
+1. Open the users & groups view by clicking on the "Users&Groups" tab on the left if the atvise builder interface.
+
+2. Open the "Rights" folder and right-click on "Userdefined rights".
+
+3. Choose "Add right" from the menu which appears.
+
+4. In the dialog which appears, you can type in a name for the right; for our example we will choose "change_light_intensity".
+
+5. Add the right by clicking "OK".
+
+.. figure:: images/add_right.png
+
+    Add a right to the project
+
+.. rubric:: 10.2 Adding a group to the project
+
+1. Right-click on the "Groups" folder.
+
+2. Choose "Add group" from the menu which appears.
+
+3. Name the group "Administrator" in the dialog which appears.
+
+.. figure:: images/add_group.png
+
+    Adding a group to the project
+
+4. An entry for the new group is added under the top group folder; double-click on it to open the "Group Editor".
+
+5. Type in a description, for example "Group of Administrators".
+
+6. Check the "USER - change_light_intensity" entry in the "Rights" list.
+
+7. Save the changes.
+
+.. figure:: images/add_group2.png
+
+.. rubric:: 10.3 Adding a user to a group
+
+1. You can add users directly to a group. To do this, right-click on the "Administrator" group entry.
+
+2. Choose "Add new user" from the dialog which appears.
+
+3. Name the user "admin1".
+
+.. figure:: images/add_user.png
+
+    Creating a new user, "admin1"
+
+4. An entry for the user is added under the "Administrator" group folder. Double-click on this entry to open the user editor.
+
+5. Type in a name, description and language.
+
+6. Click on the "Set Password" button and type in a password of your choice.
+
+7. Enable the "Project administrator" and "Visualization" options for the user (see :ref:`access control<access_control_intro>` for further information).
+
+8. Save the information by clicking |savebutton|.
+
+.. figure:: images/add_user_1.png
+
+    Setting user access rights
+
+9.  After this, double-click on the "Administrator" group again. You will see the new user in the users list.
+
+.. figure:: images/group_interface.png
+
+    Group editor for the "Administrator" group
+
+.. rubric:: 10.4 Adding right checking to the buttons of the light object
+
+Finally, we want to check our new right in the visualization.
+
+1. Go back to the objects view by clicking on the "Objects Types" tab on the left side of the atvise builder interface.
+
+2. Open the structure of the "Light" object and double-click on the "MainDisplay".
+
+3. Click on one of the buttons to mark it. On the right of the atvise builder, you can see the "Attributes" window belonging to this button. 
+4. Open the "Security" tab and choose "change_light_intensity" as the necessary right by using the |pointpointpoint| selector.
+
+5. Add the same right checking to the other two buttons.
+
+.. figure:: images/add_right_button.png
+
+    Adding right checking to the three buttons
+
+.. rubric:: 10.5 Checking the right in the visualization
+
+1. Load the "Office_Light" display in the visualization.
+
+2. Try to change the light intensity by clicking on the buttons of one of the objects. You will notice that the buttons are inactive now because you don't have the necessary user right.
+
+3. To gain the necessary right, you have to log in as "admin1". Click the *Login* button in the control panel and type in "admin1" and your password in the dialog.
+
+4. After the login, you will finally be able to change the light intensity by using the buttons.
+
+.. figure:: /common_images/logg_in.png
+
+    Logging in with the new user
+
+.. |icon_lock| image:: images/icon_lock.png
+.. |pointpointpoint| image:: /common_images/pointpointpoint.png
+.. |savebutton| image:: /common_images/icon_savefile.png    

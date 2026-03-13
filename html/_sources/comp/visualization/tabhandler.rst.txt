@@ -1,0 +1,73 @@
+.. _visu_tabhandler:
+
+Tab Handler
+###########
+
+The Tab Handler Quick Dynamic enables to switch between object displays (e.g. input-/output elements, buttons) in the visualization without having to use the mouse.
+
+Like in other applications this works with the tab key to switch to the next object display. With the Shift-Tab combination the previous object display can be selected.
+
+To define a certain order, the tab index parameter in the "Option" group of the atvise standard object displays has to be set. This parameter is an integer number. If no tab index parameter was set, switching between the object displays happens according to the order the object displays were put on the display in the atbuilder. The same order applies, if the tab index parameter of several object displays was set to the same value.
+
+The return key is used to confirm input values or to perform typical functions related to the return key like pressing a button.
+
+.. hint:: Usually, the button "Button" fires a trigger called "click". When using a button with a dynamic the trigger name has to be set to "clicked" at the item "1. Event" in the simple dynamics dialog. After this an action can be defined which will be called when the enter key is pressed. I.e., using a button which calls an action when pressing the enter key can only be used with the event "Trigger" and when the trigger name is set to "clicked".
+
+The following list shows how the object displays can be used with the keyboard:
+
+- Button: return key
+- Button Image Display: return key
+- Button Increment/Decrement: return key
+- Button Open Display: return key
+- Button Set Address: return key
+- Button Switch: return key
+- Checkbox: return key, space
+- Clickarea: return key
+- Combobox: open the dropdown list (return key, space bar), close the dropdown list (escape key)
+- In/Out Value:
+
+    - Parameter - allow direct input set to "yes":  typical use of return key to confirm and space bar to insert spaces.
+    - Parameter - allow direct input set to "no": return key und space bar open input dialog.
+- Picker Address: return key opens the input dialog and space bar opens the context menu.
+- Picker Color: return key and space bar open the Color picker dialog.
+- Picker Date: return key and space bar open the Date picker dialog.
+- Picker Value: return key and space bar open the input dialog; cursor up and cursor down keys change the value.
+- Radiobutton: return key, space bar
+- Rocker Switch (small & large): return key and space bar open the input dialog; cursor up and cursor down keys change the value.
+- In/Out Date: tab key and Shift-Tab switch between the single rocker switches; cursor up and cursor down keys change the value (the same applies to In/Out Date-Time and In/Out Time).
+
+.. hint:: The context menu of the combobox and of the button "Picker Address" cannot be operated with the keyboard.
+
+.. rubric:: Disable Tabhandler
+
+In case that you want to use foreignobject and svg input elements combined on a display you will have to deactivate the tab handler functionality as the tab handler only supports svg elements. (e.g. if you do not deactivate the tab handler functionality, pressing "return" in a foreignobject element will not work.)
+
+Deactivation: Simply open your default display and then select the "Tab Handler" from the Quick Dynamics dropdown menu located in the toolbar. There the opportunity is given to deactivate the tab handler.
+
+.. rubric:: Foreignobjects specifics
+
+The functionality of defined keys has been deactivated by default. Otherwise an undesired behaviour could be caused. (e.g.: backspace key - if pressed, while an SVG element is focused it would cause a step backwards in the browser history). There are two opportunities given to handle foreignobjects specifics:
+
+- Tab Handler is not required: simply deactivate the tab handler on the default display. Afterwards all defined keys will work perfectly in combination with html input elements.
+
+- Tab Handler and html Input elements are required: in this case the method setAcceptKeys() can be used. Via a boolean parameter the function can be instructed to activate/deactivate the following keys:
+
+    - KeyCode 9 - Tabulator
+    - KeyCode 13 - Enter
+    - KeyCode 27 - Escape
+    - Keycode 8 - Backspace
+
+**Explanation**: In case that a html input element is being clicked, e.g. the backspace key should be activated and when it loses the focus the backspace key has to be deactivated immediately.
+
+Example for a html input element with the ID: "myInput":
+
+.. code-block:: javascript
+
+    var tabHandler = webMI.callExtension("SYSTEM.LIBRARY.ATVISE.QUICKDYNAMICS.Tab Handler");
+    var myInput = document.getElementById("myInput");
+    myInput.onclick = function() {
+        tabHandler.setAcceptKeys(false);
+    }
+    myInput.onblur = function() {
+        tabHandler.setAcceptKeys(true);
+    }

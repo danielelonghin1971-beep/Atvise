@@ -1,0 +1,55 @@
+Project Database Operations
+###########################
+
+.. attention:: 
+    - It is recommended to back up your project database (nodes.db) before starting any operation!
+    - Please ensure that you have write access to the directory where the project database is located, to the file itself and that it is not in use (the atvise server has to be stopped).
+
+.. rubric:: Convert project database
+
+Select this menu item to convert any project created with atvise version 2.5.0 up to 3.2.x so that it becomes compatible with atvise version |release|. Depending on the size and content of your project database, it might take several minutes until the conversion has been completed. Any changes are directly done in the project database. 
+
+Converting the project database also updates the atvise default resources. See :ref:`Update resources<atmaintenance_resources>` below for details. 
+
+Select *Convert project database...* from the *Database* menu and select your project database (nodes.db) to start the conversion process. The result of the conversion is shown in a log file which opens automatically in the web browser after the operation has finished.
+
+.. rubric:: Analyze project database
+
+Select this menu item to check the project database for unused nodes and invalid references, which can occur because of system crashes in old atvise versions. No changes will be made to the project database.
+
+.. rubric:: Clean up project database
+
+Select this menu item to delete unused nodes and invalid references, found by "Analyze project database" in the project database.
+
+.. rubric:: Check resource versions
+
+Select this menu item to open a dialog which shows version information about the atvise default resources in the selected project database.
+
+.. hint:: **atvise default resources** include all resources in Library.ATVISE: Quick Dynamics, Object Displays, Resources, Script Library, translations, webMI Method Scripts, Menu Scripts
+
+.. _atmaintenance_resources:
+
+.. rubric:: Update resources
+
+Select this menu item to update all atvise default resources of the selected project database to the current version. 
+
+.. hint:: 
+    
+    - For updating translations -- If you have added project-specific texts for display parameters under *SYSTEM.LIBRARY.PROJECT.<Language>*, follow these steps to merge your changes:
+
+        #. Before updating the resources, use the atvise builder to export your translation files. 
+        #. Update the resources.
+        #. Import the translation files via atvise builder. See :ref:`Import and export of translations<languages_export>` for further details.
+    
+    - Duplicated translations -- Starting with atvise version 3.9, the default languages provided by atvise (English and German) are not stored under *SYSTEM.TRANSLATIONS* anymore. Texts provided by atvise are now stored under *SYSTEM.LIBRARY.ATVISE.TRANSLATIONS*. Therefore, if a current atvise library is imported into a project < 3.9, texts or translation may be duplicated (see :ref:`Language nodes<languages>`). Updating the atvise default resources deletes every duplicated item from the respective language node under *SYSTEM.TRANSLATION* if it also exists under *SYSTEM.LIBRARY.ATVISE.TRANSLATIONS*. After the update, the language node under *SYSTEM.TRANSLATION* contains only project-specific texts and translations. However, some texts cannot be removed automatically and you have to check if they are still needed for the project:
+
+        - Deleted translations that are not used in the atvise library anymore.
+        - If there is a translation in the atvise library as well as a different translation in SYSTEM.TRANSLATIONS.de:
+
+            - Abort
+            - Aborting
+            - Advanced Option
+            - Label alignment
+            - Load or delete existing configuration from node
+            - seconds
+            - spline

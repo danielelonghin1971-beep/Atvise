@@ -1,0 +1,35 @@
+Scheduling rules
+################
+
+The scheduling rules in atvise - e.g. timer/interval triggered scripts - are based either on local time or standard time. Which one is used, is explicitly stated at the corresponding documentation part.
+
+.. rubric:: Local Time Scheduling
+
+The scheduling rules using local time are similar to the rules of crontab: Based on the supplied parameters a daily list of triggering times will be composed. Since days with daylight saving time changes do not have 24 hours they have either 23 or 25 hours which leads to duplicated or nonexistent triggering times:
+
+- If a triggering time in the list does not exist on a day then it will be ignored.
+- If a triggering time in the list exists twice on a day then it will trigger on both times.
+
+**Example:**
+
+The list of triggering times contains one element - 2:30, time zone is UTC +1.
+
+- On 26.10.2013 it triggers at 2:30 (2:30 exists only once)
+- On 27.10.2013 it triggers at 2:30 (UTC 0:30) and at 2:30 (UTC 1:30) (due to daylight saving time changes 2:30 exists twice)
+- On 30.03.2014 it does not trigger at all. (2:30 doesn't exist)
+
+.. rubric:: Standard Time Scheduling
+
+In case of standard time scheduling - as before - based on the supplied parameters a daily list of triggering times will be composed. However triggering times are not influenced by daylight saving time changes. This is possible, because the standard time is shifted by one hour if daylight saving time is switched on. The interval between the daily triggering times is always 24 hours.
+
+**Example:**
+
+The list of triggering times contains one element - 2:30, time zone is UTC +1.
+
+- On 26.10.2013 it triggers at local time 3:30 (standard time 2:30, UTC 1:30)
+- On 27.10.2013 it triggers at local time 2:30 (standard time 2:30, UTC 1:30)
+- On 30.03.2014 it triggers at local time 3:30 (standard time 2:30, UTC 1:30)
+
+The mapping between UTC, standard and local time is shown on the next diagram.
+
+.. figure:: images/scheduling_rules_diagram.png

@@ -1,0 +1,61 @@
+SVG attributes
+##############
+
+In this area attributes' values like color or height can be changed. Following you find a list of all possible attributes and their description.
+
+.. figure:: images/svg_attributes.png
+
+    Examples with a selected circle
+
+.. csv-table::
+    :header: name, description
+    :widths: 120, 600
+
+    atv:bindtl, bind top left coordinate
+    atv:bindbr, bind bottom right coordinate
+    atv:refpx, x position of referencepoint
+    atv:refpy, y position of referencepoint
+    cx, center of a circle (x-coordinate)
+    cy, center of a circle (y-coordinate)
+    d, definition of a polygon
+    fill, fill color in HEX
+    font-family, font family
+    font-size, font size
+    height, height
+    id, unique identification of an object on the display (can be changed in the SimpleDynamics area)
+    points, point of a polyline
+    r, radius
+    rx, rounding x
+    ry, rounding y
+    stroke, stroke color in HEX
+    stroke-width, stroke width
+    transform, transformationmatrix (Scale+Skew+Rotate at once)
+    width, width
+    x, x position of an object (upper left corner)
+    x1, x position of a line's startpoint
+    x2, x position of a line's endpoint
+    xlink:href, path to a referenced display or a link to another display
+    y, y position of an object (upper left corner)
+    y1, y position of a line's startpoint
+    y2, y position of a line's endpoint
+
+.. rubric:: Binding of graphic elements to displays
+
+By setting these attributes, objects can be bound to different positions on their parent display.
+
+If the parent display will be referenced and transformed on another display, the objects in the parent display will behave as their binding was set.
+
+The numbers are the percentage of width or height (of the parent display):
+
+e.g.:
+
+1 = 100 %
+
+0.5 = 50 %
+
+**Attributes:**
+
+- bind top left coordinate: atv:bindtl="x,y"
+- bind bottom right coordinate: atv:bindbr="x,y"
+
+.. figure:: images/bindings.png

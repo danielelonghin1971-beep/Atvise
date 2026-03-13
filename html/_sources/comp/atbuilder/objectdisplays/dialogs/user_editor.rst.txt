@@ -1,0 +1,16 @@
+User Editor
+###########
+
+This display is meant for displaying and editing user information.
+
+.. rubric:: Parameters
+
+This control has the following appearance parameters:
+
+- **headline** -- The text of the object display's headline (default: T{Edit user})
+- **symbol** -- Symbol displayed in the headline (default: SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Symbols.20x20.user)
+- **keyboard display** -- On-screen keyboard for input (default: alphanumerical keyboard)
+- **password display** -- On-screen keyboard for input (default: *Password Editor* object display)
+- **font color** -- Color applied to texts of the object display (default: global parameter atvFontColor (advanced)), #ffffff (standard))
+- **fill color** -- Fill color of background areas (default: global parameter atvFillColor (advanced), #1e1e1e (standard))
+- **symbol color** -- Symbol color (default: global parameter atvSymbolColor (advanced), #444444 (standard))

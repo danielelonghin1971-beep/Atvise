@@ -1,0 +1,14 @@
+Favorites Name Input
+####################
+
+This display enables the input of favorite names.
+
+.. rubric:: Parameters
+
+- **background color** -- The form's background color (default: global parameter atvFillColor)
+
+Font: 
+
+- **font family** -- Font family which will be applied to the text (default: Arial)
+- **font size** -- Font size which will be applied the text (default: 14)
+- **font color** -- Color which will be applied to the text (default: global parameter atvFontColor)

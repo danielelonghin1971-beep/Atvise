@@ -1,0 +1,57 @@
+Introduction
+############
+
+The atvise server is automatically registered as a service by the atvise setup.
+
+.. rubric:: Configuring atvise service
+
+To configure the atvise server service behavior (manual/automatic startup, log on, auto recovery, ...), go to the Windows service center (Control Panel -> Administrative Tool -> Services) and right-click the "atvise server" entry -> Properties.
+
+.. rubric:: Starting the atvise server in console mode
+
+You can start the atvise server console manually using the :ref:`atmonitor_advanced` of the project console or by directly launching ``atserver.exe``.
+
+.. rubric:: atvise server console commands
+
+Type in a ``?`` character followed by the enter key to list all atvise server console commands.
+
+.. figure:: images/server_console_help.png
+
+    atvise server console commands
+
+.. _atserver_commandline:
+
+.. rubric:: Commandline parameters
+
+.. csv-table:: Standard parameters
+    :widths: auto
+
+    /registerService, Registers the application as a service
+    /unregisterService, Unregisters the application as a service
+    /displayName=name, Specifies a display name for the service (only with /registerService)
+    /description=text, Specifies a description for the service (only with /registerService)
+    /startup=auto|manual, Specifies the startup mode for the service (only with /registerService)
+    /help, Displays help information
+    /port=portnr, OPC UA port number
+    /http=portnr, HTTP port number
+    /https=portnr, HTTPS port number
+    /log=level, "Log level (trace, debug, info, notice, warning, error, critical, fatal)"
+    /boot, Boots (starts) the project
+    /proj=dir, Project directory
+    /hardwarecode, Displays hardwarcode
+    /checklicense, Checks if there is a valid license file
+    /version, Shows the atvise server's version
+    /licensefile=file, Specifies the license file for the server
+    /msg="message", Writes a user-specific text to the server log on server startup (User message: <User specific text>)
+
+Example:
+
+:command:`atserver /boot /proj=C:/projects/demoproj`
+
+.. csv-table:: Additional parameters for redundant projects
+    :widths: auto
+
+    /primary=url, The address (IP address/host name + port) of the primary server
+    /role=Primary|Secondary, Defines the role of the respective server
+    /preferred=Primary|Secondary, Specifies which server shall be preferred when both servers have the same vitality status
+    /splitmode=on|off, Activates or deactivates the split mode

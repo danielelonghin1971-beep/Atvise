@@ -1,0 +1,186 @@
+.. _mirror_relative:
+
+Object oriented - relative mirroring
+####################################
+
+.. rubric:: Concept
+
+The basic concept of relative mirroring is that the complete mirroring property (MirrorInput/MirrorOutput) of a data variable is generated using
+
+1. Relative mirroring properties at the object type (one for each mirrored data variable)
+2. A mirror base (and, optionally, path fragments) at the object instances (one per instance)
+
+A complete mirroring address is the result of an individual mirror base (for each object instance) and a relativ mirroring property (for each variable - referenced from the object type).
+
+Example:
+
+.. figure:: images/scada_mirror_rel_basic.png
+
+.. rubric:: Procedures
+
+There is an automatic and a manual procedure of relative mirroring.
+
+.. hint:: The automatic procedure will be used  if you choose either "structure from data source types" or "structure from data source instances" from the menu to copy the structure.
+
+The procedure of automatically creating relative mirrored nodes consist of two basic steps:
+
+- Define the prefix and trim of object/variable types as described in the section :ref:`add_datasource`.
+- Mirror the specified objects/variables from the data source by the menu option "structure from data source types" or "structure from data source instances". The missing object/variable types will be created automatically. The location of mirrored types is given by the trim and prefix parameters of the data source. See :ref:`add_datasource`.
+
+The procedure of manually creating relative mirroring consists of two basic steps:
+
+- Adding relative mirror properties to the variables of an object type.
+- Adding a base (possibly also path fragments) to an object instance(s) to complete the mirror address.
+
+.. rubric:: Mirroring structure from data source instances
+
+The examples below uses the opcuatestserver of atvise.
+
+1. Browse the data source from which you want to copy a variable (as described in the section :ref:`datasources`).
+2. Right-click on a desired data variable and click on :menuselection:`Copy` in the menu which appears.
+
+.. figure:: images/scada_mirror_rel_struct_inst_create.png
+
+3. Right-click on the node in your local object structure where you want to paste the variable.
+4. Choose :menuselection:`Paste & mirror --> Input  --> structure from data source instances` from the menu. You can type in a new name for the base of the structure in the dialog which appears.
+
+.. figure:: images/scada_mirror_rel_struct_inst_create2.png
+
+After successful mirroring the Object Types folder will contain the object types of the mirrored objects if they were not defined yet. The missing object types will be created from the data source instances, and are possibly not the same as the corresponding object types in the data source, as shown on the next picture. Mirroring another object of the same type by any other structure mirroring method will use the already created types and will not update the mirrored types. It is assumed, that the OPC UA server exposes objects in the same manner: If they have the same type definition, they have the same structure. If this condition is not fulfilled, the mirrored objects or types must be corrected manually.
+
+.. figure:: images/scada_mirror_rel_struct_inst_result.png
+
+Since the type information is taken from the instance "WeatherStation001" which is an instance of the "WeatherStationType" object type, only the object type "WeatherStationType" is created. Super types are not explicitly created but their nodes are inherited and therefore part of the "WeatherStationType" object type.
+
+If the mirrored types will be changed in atvise, then the next mirroring will use the changed types, and will not update the type from the data source. An example can be seen on the next figure.
+
+.. figure:: images/scada_mirror_rel_struct_inst_update.png
+
+In the example the "Controller" variable was deleted from the object type "WeatherStationAnemometerType" in atvise.
+
+All objects in atvise are updated and the "Controller" variable is removed from the object type "WeatherStationType" and from the object "WeatherStation001" in atvise.
+
+After that the object "WeatherStation002" in the data source was mirrored by "structure form data source instance".
+
+The mirrored object "WeatherStation002" in atvise does not contain the variable "Controller", as the object type "WeatherStationType" and "WeatherStationAnemometerType" in atvise did not contain it.
+
+The mirroring does not update existing types in atvise.
+
+.. hint:: Object instances in the data source may have different structures as the object types in the data source. E.g. if the type contains elements with Optional HasModellingRule or the data source is not a standard UA server.  Mirroring with "structure form data source instances" is in this case the best method to choose. However this method will flatten the type hierarchy and may duplicate elements.
+
+.. rubric:: Mirroring structure from data source types
+
+1. Browse the data source from which you want to copy a variable (as described in the section Handling data sources).
+2. Right-click on a desired data variable and click on :menuselection:`Copy` in the menu which appears.
+
+.. figure:: images/scada_mirror_rel_struct_inst_create.png
+
+3. Right-click on the node in your local object structure where you want to paste the variable.
+4. Choose :menuselection:`Paste & mirror --> Input  --> structure from data source types` from the menu. You can type in a new name for the base of the structure in the dialog which appears.
+
+.. figure:: images/scada_mirror_rel_struct_type_create.png
+
+After successful mirroring the Object Types folder will contain the object types of the mirrored objects if they were not defined yet. These missing object types will be created from the data source types with the full type hierarchy as seen on the next figure.
+
+.. figure:: images/scada_mirror_rel_struct_type_result.png
+
+Since the type information is taken from the object type "WeatherStationType" the same object type hierarchy (including the referenced object type "WeatherStationAnemometerType" with its "AnemometerType" super type) is created in atvise.
+
+.. hint:: If the object/variable of the data source references a type that is undefined or empty in the address space of the data source, then a type will be automatically created in the local address space of atvise from the object/variable of the data source. Empty means that all supertypes are empty as well. If the type already exists in the local address space of atvise, this type will be used for creating the object/variable to mirror.
+
+The other mirroring rules are the same as for "structure from data source instances".
+
+.. rubric:: Manually adding relative mirrored variables to an object type
+
+1. Browse the data source from which you want to copy a variable (as described in the section :ref:`datasources`).
+2. Right-click on a desired data variable and click on :menuselection:`Copy` in the menu which appears.
+
+.. figure:: images/scada_mirror_rel_copy.png
+
+3. Right-click on the node in your local object type where you want to paste the variable.
+4. Choose :menuselection:`Paste & mirror --> Input --> node` from the menu.
+5. Select the base node of the copied variable. The mirror address will be taken from this point. The individual base addresses for the object instances will be set in the next section. You can type in a new name for the variable in the dialog which appears.
+
+.. figure:: images/scada_mirror_rel_copy2.png
+
+    Copy & paste a variable relative to its object base into an object type
+
+.. hint:: You can also copy & paste a whole structure of variables, or the mirror address or you can create the relative mirror properties manually the same way as described in the section :ref:`mirror_absolute`.
+
+.. rubric:: Manually adding a base to an object instance(s)
+
+.. rubric:: When creating a single instance
+
+1. Right-click on the node where you want to add a new object.
+2. Choose :menuselection:`Add Node --> Object --> [Objecttype]` from the menu which appears.
+3. Type in a name for the new object instance.
+4. Check "Add RelMirrorBase".
+5. Click the :guilabel:`Select...` button and select the base node of the new object instance (the data source must be connected to use this dialog). This base will be added to the object instance to complete the mirroring address.
+
+    .. hint:: You can optionally also add path fragments to the object instance ("RelMirrorBase" = OPC Node ID, "PathFragment" = OPC Browse Path).
+
+        -> "RelMirrorBase" + [PathFragment(s)] + "RelMirrorInput/Output" = complete address
+
+6. Confirm the dialog to create the object instance.
+
+.. figure:: images/scada_mirror_rel_add_single.png
+
+    Creating a single object instance with a RelMirrorBase
+
+.. rubric:: When creating numbered instances
+
+1. Right-click on the node where you want to add a new object.
+2. Choose :menuselection:`Add Node --> Object --> [Objecttype]` from the menu which appears.
+3. Select "Numbered" to the left in the dialog.
+4. Type in a name for the new instances. Use the wild card ``%1`` to give the instances a numbered name.
+
+    .. hint:: You can use the wild card ``%1`` in the object name, in the mirror base and in path fragments to create fully functioning numbered object instances. The substituted numbers will be defined in the next step.
+
+5. Select the start index and the number of object instances you want to create (this number can be substituted in the name and the base of the instance using the ``%1`` wild card ).
+6. Check "Add RelMirrorBase".
+7. Select any base node of one of the new object instances. The base will be added to the object instance to complete the mirroring address.
+8. Use the wild card ``%1`` to create numbered mirror bases.
+9. Confirm the dialog to create the object instances.
+
+.. figure:: images/scada_mirror_rel_add_numbered.png
+
+    Creating numbered object instances with RelMirrorBases
+
+.. rubric:: When creating a list of instances
+
+1. Right-click on the node where you want to add a new object.
+2. Choose :menuselection:`Add Node --> Object --> [Objecttype]` from the menu which appears.
+3. Select "List" to the left in the dialog.
+4. Select a CSV file with the list of the objects.
+
+    Format:
+
+    [Object Name];[Path Fragment(Namespace:BrowsePath)]
+
+    Example:
+
+    .. code-block:: none
+
+        Light_1;2:L010
+        Light_3;2:L003
+        Light_5;2:L005
+        Light_10;2:L010
+
+5. Check "Add RelMirrorBase".
+6. Select the mirror base of the object.
+
+    .. hint:: You can also select the top node of your data source as the mirror base.
+
+        -> RelMirrorBase + [PathFragment(s)] + RelMirrorInput/Output = Complete address
+
+7. Confirm the dialog to create the object instances.
+
+.. figure:: images/scada_mirror_rel_add_list.png
+
+    Creating a list of object instances with RelMirrorBases
+
+.. rubric:: Copying & pasting to an existing object instance
+
+1. Browse the data source from which you want to copy the base (as described in the section :ref:`datasources`).
+2. Right-click on the desired base node and click on "Copy" in the menu which appears.
+3. Right-click on the object instance where you want to paste the "RelMirrorBase" and choose :menuselection:`Paste & mirror --> Mirror Base`.
