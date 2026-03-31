@@ -1,0 +1,3873 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<UANodeSet xmlns="http://opcfoundation.org/UA/2011/03/UANodeSet.xsd" xmlns:uax="http://opcfoundation.org/UA/2008/02/Types.xsd">
+	<Extensions>
+		<atvise Version="3.13"></atvise>
+	</Extensions>
+	<NamespaceUris>
+		<Uri>http://www.atvise.com/atServer/UA/</Uri>
+	</NamespaceUris>
+	<Aliases>
+		<Alias Alias="DisplayScriptType">ns=1;s=VariableTypes.ATVISE.DisplayScript</Alias>
+		<Alias Alias="DisplayType">ns=1;s=VariableTypes.ATVISE.Display</Alias>
+		<Alias Alias="FolderType">i=61</Alias>
+		<Alias Alias="HasComponent">i=47</Alias>
+		<Alias Alias="HasTypeDefinition">i=40</Alias>
+		<Alias Alias="QuickDynamicType">ns=1;s=VariableTypes.ATVISE.QuickDynamic</Alias>
+		<Alias Alias="ScriptCodeType">ns=1;s=VariableTypes.ATVISE.ScriptCode</Alias>
+		<Alias Alias="XmlElement">i=16</Alias>
+	</Aliases>
+	<UAObject NodeId="ns=1;s=SYSTEM" BrowseName="1:SYSTEM">
+		<DisplayName Locale="en">SYSTEM</DisplayName>
+		<Description Locale="en">SYSTEM</Description>
+		<References>
+			<Reference ReferenceType="HasComponent" IsForward="false">i=85</Reference>
+			<Reference ReferenceType="HasTypeDefinition">FolderType</Reference>
+		</References>
+		<Extensions>
+			<atvise Upstream="true" ExportedNodeId="ns=1;s=SYSTEM.LIBRARY.ATVISE.DISPLAYSCRIPTS" ExportedBrowseName="1:DISPLAYSCRIPTS"></atvise>
+		</Extensions>
+	</UAObject>
+	<UAObject NodeId="ns=1;s=SYSTEM.LIBRARY" BrowseName="1:LIBRARY">
+		<DisplayName Locale="en">LIBRARY</DisplayName>
+		<Description Locale="en">LIBRARY</Description>
+		<References>
+			<Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=SYSTEM</Reference>
+			<Reference ReferenceType="HasTypeDefinition">FolderType</Reference>
+		</References>
+		<Extensions>
+			<atvise Upstream="true"></atvise>
+		</Extensions>
+	</UAObject>
+	<UAObject NodeId="ns=1;s=SYSTEM.LIBRARY.ATVISE" BrowseName="1:ATVISE">
+		<DisplayName Locale="en">ATVISE</DisplayName>
+		<Description Locale="en">ATVISE</Description>
+		<References>
+			<Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=SYSTEM.LIBRARY</Reference>
+			<Reference ReferenceType="HasTypeDefinition">FolderType</Reference>
+		</References>
+		<Extensions>
+			<atvise Upstream="true"></atvise>
+		</Extensions>
+	</UAObject>
+	<UAObject NodeId="ns=1;s=SYSTEM.LIBRARY.ATVISE.DISPLAYSCRIPTS" BrowseName="1:DISPLAYSCRIPTS">
+		<DisplayName Locale="en">DISPLAYSCRIPTS</DisplayName>
+		<Description Locale="en">DISPLAYSCRIPTS</Description>
+		<References>
+			<Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=SYSTEM.LIBRARY.ATVISE</Reference>
+			<Reference ReferenceType="HasTypeDefinition">FolderType</Reference>
+		</References>
+	</UAObject>
+	<UAObject NodeId="ns=1;s=SYSTEM.LIBRARY.ATVISE.DISPLAYSCRIPTS.admin" BrowseName="1:admin">
+		<DisplayName Locale="en">admin</DisplayName>
+		<Description Locale="en">admin</Description>
+		<References>
+			<Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=SYSTEM.LIBRARY.ATVISE.DISPLAYSCRIPTS</Reference>
+			<Reference ReferenceType="HasTypeDefinition">FolderType</Reference>
+		</References>
+	</UAObject>
+	<UAObject NodeId="ns=1;s=SYSTEM.LIBRARY.ATVISE.DISPLAYSCRIPTS.admin.dialogs" BrowseName="1:dialogs">
+		<DisplayName Locale="en">dialogs</DisplayName>
+		<Description Locale="en">dialogs</Description>
+		<References>
+			<Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=SYSTEM.LIBRARY.ATVISE.DISPLAYSCRIPTS.admin</Reference>
+			<Reference ReferenceType="HasTypeDefinition">FolderType</Reference>
+		</References>
+	</UAObject>
+	<UAVariable NodeId="ns=1;s=SYSTEM.LIBRARY.ATVISE.DISPLAYSCRIPTS.admin.dialogs.certificate_details_viewer" BrowseName="1:certificate_details_viewer" DataType="XmlElement" AccessLevel="7" UserAccessLevel="7" Historizing="true">
+		<DisplayName Locale="en">certificate_details_viewer</DisplayName>
+		<Description Locale="en">certificate_details_viewer</Description>
+		<References>
+			<Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=SYSTEM.LIBRARY.ATVISE.DISPLAYSCRIPTS.admin.dialogs</Reference>
+			<Reference ReferenceType="HasTypeDefinition">DisplayScriptType</Reference>
+		</References>
+		<Value>
+			<uax:XmlElement><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+<script>
+  <metadata>
+    <priority>0</priority>
+    <help/>
+  </metadata>
+  <code><![CDATA[const certificateData = JSON.parse(webMI.query.certificateData);
+
+function loadValueDetails(details) {
+	const rootElement = document.getElementById("value_details");
+	const background = document.getElementById("value_details_background");
+	const preTag = webMI.rootWindow.document.createElement("pre"); // Change to const
+	rootElement.style.height = "260px";
+	rootElement.style.width = "415px";
+	background.classList.remove("highlight");
+
+	preTag.textContent = details;
+	rootElement.innerHTML = "";
+	rootElement.appendChild(preTag);
+
+	setTimeout(() => {
+		background.classList.add("highlight");
+	});
+}
+
+class CertificateDetailsTableRenderer {
+	constructor() {
+		const rootElement = document.getElementById("table");
+
+		function createTable(data) {
+			rootElement.innerHTML = "";
+
+			const table = webMI.rootWindow.document.createElement("table");
+			table.style.width = "100%";
+			table.style.borderCollapse = "collapse";
+			table.style.fontFamily = "Arial";
+			table.style.color = "#575757";
+
+			const headerRow = webMI.rootWindow.document.createElement("tr");
+			headerRow.innerHTML = `<th style="border: 1px solid #575757; padding: 5px; background-color: #f2f2f2;">T{Key}</th>
+                               <th style="border: 1px solid #575757; padding: 5px; background-color: #f2f2f2;">T{Value}</th>`;
+			table.appendChild(headerRow);
+
+			data.forEach(([key, value]) => {
+				const row = webMI.rootWindow.document.createElement("tr");
+
+				const keyCell = webMI.rootWindow.document.createElement("td");
+				keyCell.style.border = "1px solid #575757";
+				keyCell.style.padding = "5px";
+				keyCell.style.whiteSpace = "nowrap";
+				keyCell.style.overflow = "hidden";
+				keyCell.style.textOverflow = "ellipsis";
+				keyCell.style.maxWidth = "150px";
+				keyCell.textContent = key;
+				keyCell.style.cursor = "pointer";
+				keyCell.style.textDecoration = "underline";
+
+				// Hover styles for keyCell
+				const originalColor = "#575757";
+				const hoverColor = "#000";
+				keyCell.addEventListener("mouseenter", () => {
+					keyCell.style.color = hoverColor;
+					keyCell.style.background = "#f2d600";
+				});
+
+				keyCell.addEventListener("mouseleave", () => {
+					keyCell.style.color = originalColor;
+					keyCell.style.background = null;
+				});
+
+				keyCell.addEventListener("click", () => {
+					const readableValue = typeof value === "object" ? JSON.stringify(value, null, 2) : value;
+					loadValueDetails(readableValue);
+				});
+
+				const valueCell = webMI.rootWindow.document.createElement("td");
+				valueCell.style.border = "1px solid #000";
+				valueCell.style.padding = "5px";
+				valueCell.style.whiteSpace = "nowrap";
+				valueCell.style.overflow = "hidden";
+				valueCell.style.textOverflow = "ellipsis";
+				valueCell.style.maxWidth = "250px";
+				valueCell.textContent = typeof value === "object" ? JSON.stringify(value, null, 2) : value;
+
+				row.appendChild(keyCell);
+				row.appendChild(valueCell);
+				table.appendChild(row);
+			});
+
+			rootElement.appendChild(table);
+		}
+
+		this.update = function (data) {
+			createTable(data);
+		};
+	}
+}
+
+webMI.trigger.connect(
+	"clicked",
+	function () {
+		webMI.display.closeWindow();
+	},
+	"close_button"
+);
+
+loadValueDetails("T{Click on a key to show detail information}.")
+
+const certificateDetailsTableRenderer = new CertificateDetailsTableRenderer();
+certificateDetailsTableRenderer.update(certificateData);
+]]]]><![CDATA[></code>
+</script>
+]]></uax:XmlElement>
+		</Value>
+	</UAVariable>
+	<UAVariable NodeId="ns=1;s=SYSTEM.LIBRARY.ATVISE.DISPLAYSCRIPTS.admin.dialogs.certificate_upload" BrowseName="1:certificate_upload" DataType="XmlElement" AccessLevel="7" UserAccessLevel="7" Historizing="true">
+		<DisplayName Locale="en">certificate_upload</DisplayName>
+		<Description Locale="en">certificate_upload</Description>
+		<References>
+			<Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=SYSTEM.LIBRARY.ATVISE.DISPLAYSCRIPTS.admin.dialogs</Reference>
+			<Reference ReferenceType="HasTypeDefinition">DisplayScriptType</Reference>
+		</References>
+		<Value>
+			<uax:XmlElement><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+<script>
+  <metadata>
+    <priority>0</priority>
+    <help/>
+  </metadata>
+  <code><![CDATA[const { certificate_description, fileType1, fileType2, file1Label, file2Label, fileNameLabel } = webMI.query;
+
+// File element arrays
+const group_file1 = ["file1_background", "file1_btn_file", "file1_fo_file_field", "file1_label"];
+const group_file2 = ["file2_background", "file2_btn_file", "file2_fo_file_field", "file2_label"];
+const group_filename = ["label_saved_as", "saved_as_filename"];
+const BUTTON_FILE_1 = "file1_btn_file";
+const BUTTON_FILE_2 = "file2_btn_file";
+const BUTTON_UPLOAD = "btn_upload";
+const BUTTON_CANCEL = "btn_cancel";
+const ELLIPSIS = "...";
+
+const files = {};
+
+function hideElements(group) {
+	group.forEach((element) => {
+		document.getElementById(element).style.opacity = 0.5;
+	});
+}
+
+function showElements(group) {
+	group.forEach((element) => {
+		document.getElementById(element).style.opacity = 1;
+	});
+}
+
+function validateRequiredFields() {
+	const missingFields = [];
+
+	if (!files.file1) {
+		missingFields.push(file1Label);
+	}
+
+	if (fileType2 && !files.file2) {
+		missingFields.push(file2Label);
+	}
+
+	if (fileNameLabel && !files.sharedName) {
+		missingFields.push("Filename");
+	}
+
+	return missingFields.length > 0 ? missingFields : true;
+}
+
+function showErrorMessage(missingFields) {
+	const errorMessage = `Required: ${missingFields.join(", ")}!`;
+	webMI.gfx.setText("error_message", errorMessage);
+	webMI.gfx.setVisible("error_message", true);
+}
+
+function clearErrorMessage() {
+	webMI.gfx.setText("error_message", "");
+	webMI.gfx.setVisible("error_message", false);
+}
+
+webMI.addOnload(() => {
+	webMI.addEvent(BUTTON_FILE_1, "click", () => triggerFileInput(fileInput1));
+	if (fileType2 === "") {
+		showElements(group_file1);
+		hideElements(group_file2);
+		webMI.trigger.fire("com.atvise.setActive", false, "file2_btn_file");
+	} else {
+		showElements(group_file1);
+		showElements(group_file2);
+		webMI.addEvent(BUTTON_FILE_2, "click", () => triggerFileInput(fileInput2));
+	}
+
+	if (fileNameLabel === "") {
+		hideElements(group_filename);
+		webMI.trigger.fire("com.atvise.setActive", false, "in_out_filename");
+	} else {
+		showElements(group_filename);
+	}
+
+	const fileInput1 = webMI.rootWindow.document.getElementById("fileInput1");
+	const fileInput2 = webMI.rootWindow.document.getElementById("fileInput2");
+
+	if (!fileInput1 || !fileInput2) {
+		console.error("File inputs not found");
+		return;
+	}
+
+	const triggerFileInput = (fileInput) => {
+		fileInput.click();
+	};
+
+	const handleFileSelectionChange = (fileInput, labelId, fileKey, hook) => {
+		fileInput.addEventListener("change", (event) => {
+			files[fileKey] = event.target.files[0];
+			const selectedFileLabel = webMI.rootWindow.document.getElementById(labelId);
+			selectedFileLabel.textContent = files[fileKey].name;
+
+			if (selectedFileLabel.scrollWidth > selectedFileLabel.offsetWidth) {
+				let text = selectedFileLabel.innerHTML;
+
+				while (selectedFileLabel.scrollWidth > selectedFileLabel.offsetWidth) {
+					const midIndex = Math.floor(text.length / 2);
+					text = `${text.slice(0, midIndex)}${ELLIPSIS}${text.slice(midIndex + 1)}`;
+					selectedFileLabel.innerHTML = text;
+					text = text.slice(0, midIndex) + text.slice(midIndex + ELLIPSIS.length);
+				}
+			}
+
+			// Optional hook function
+			if (hook && typeof hook === "function") {
+				setTimeout(() => {
+					hook(fileInput, labelId);
+				});
+			}
+		});
+	};
+
+	handleFileSelectionChange(fileInput1, "selectedFile1", "file1", updateFilename);
+	handleFileSelectionChange(fileInput2, "selectedFile2", "file2", showSavedAs);
+
+	webMI.addEvent(BUTTON_UPLOAD, "click", () => {
+		const validationResult = validateRequiredFields();
+		if (validationResult === true) {
+			clearErrorMessage();
+			webMI.trigger.fire("com.atvise.upload_certificate", files);
+			this.close();
+		} else {
+			showErrorMessage(validationResult);
+		}
+	});
+
+	function updateFilename(fileInput) {
+		if (Object.prototype.toString.call(fileInput.files) === "[object FileList]" && fileInput.files.length > 0) {
+			files.sharedName = removeFileExtension(fileInput.files[0].name);
+			webMI.trigger.fire("setValue", files.sharedName, "in_out_filename");
+			truncateSvgText(files.sharedName + ".pem", document.getElementById("saved_as_filename"), 380);
+		}
+		showSavedAs();
+	}
+
+	function showSavedAs() {
+		if (files.file1 && files.file2) {
+			group_filename.forEach((element) => {
+				webMI.gfx.setVisible(element, null);
+			});
+		}
+	}
+
+	webMI.trigger.connect(
+		"clicked",
+		function () {
+			webMI.display.closeWindow();
+		},
+		BUTTON_CANCEL
+	);
+});
+
+// Utility function to remove file extension
+function removeFileExtension(filename) {
+	return filename.substring(0, filename.lastIndexOf(".")) || filename;
+}
+
+function truncateSvgText(text, svgTextElement, maxWidth) {
+	let visibility = svgTextElement.getAttribute("visibility");
+	svgTextElement.setAttribute("visibility", null);
+	svgTextElement.textContent = text;
+
+	if (svgTextElement.getComputedTextLength() <= maxWidth) {
+		// Text fits within maxWidth, no truncation needed
+		return;
+	}
+
+	// Add ellipsis and truncate iteratively
+	let truncatedText = text;
+
+	while (svgTextElement.getComputedTextLength() > maxWidth && truncatedText.length > 0) {
+		const midIndex = Math.floor(truncatedText.length / 2);
+		truncatedText = `${truncatedText.slice(0, midIndex)}${ELLIPSIS}${truncatedText.slice(midIndex + 1)}`;
+		svgTextElement.textContent = truncatedText;
+		truncatedText = truncatedText.slice(0, midIndex) + truncatedText.slice(midIndex + ELLIPSIS.length);
+	}
+
+	svgTextElement.setAttribute("visibility", visibility);
+}
+]]]]><![CDATA[></code>
+</script>
+]]></uax:XmlElement>
+		</Value>
+	</UAVariable>
+	<UAVariable NodeId="ns=1;s=SYSTEM.LIBRARY.ATVISE.DISPLAYSCRIPTS.admin.dialogs.certificates_endpoint_editor" BrowseName="1:certificates_endpoint_editor" DataType="XmlElement" AccessLevel="7" UserAccessLevel="7" Historizing="true">
+		<DisplayName Locale="en">certificates_endpoint_editor</DisplayName>
+		<Description Locale="en">certificates_endpoint_editor</Description>
+		<References>
+			<Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=SYSTEM.LIBRARY.ATVISE.DISPLAYSCRIPTS.admin.dialogs</Reference>
+			<Reference ReferenceType="HasTypeDefinition">DisplayScriptType</Reference>
+		</References>
+		<Value>
+			<uax:XmlElement><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+<script>
+  <metadata>
+    <priority>0</priority>
+    <help/>
+  </metadata>
+  <code><![CDATA[/**
+ * Endpoint Certificate Editor Display Script
+ * ------------------------------------------
+ * This script supports the creation and editing of endpoint certificates.
+ */
+
+/**
+ * DECLARATION SECTION
+ */
+const formData = {
+	applicationUri: webMI.query.applicationUri,
+	certificateStore: webMI.query.certificateStore,
+	certIniPath: webMI.query.certIniPath,
+	commonName: webMI.query.commonName,
+	country: webMI.query.country,
+	dnsName: webMI.query.dnsName,
+	ipAddress: webMI.query.ipAddress,
+	locality: webMI.query.locality,
+	organization: webMI.query.organization,
+	organizationalUnit: webMI.query.organizationalUnit,
+	state: webMI.query.state,
+	validity: webMI.query.validity,
+	keyLength: webMI.query.keyLength
+};
+
+const keyboard = webMI.query.keyboard;
+
+webMI.addOnload(function () {
+	// Function to set form value and connect value change trigger
+	function setupField(fieldName, inputField) {
+		// Set form value
+		webMI.trigger.fire("setValue", formData[fieldName], inputField);
+
+		// Connect value change trigger
+		webMI.trigger.connect(
+			"valuechanged",
+			(trigger) => {
+				formData[fieldName] = trigger.value;
+			},
+			inputField
+		);
+	}
+
+	// Setup form fields
+	setupField("commonName", "in_out_common_name");
+	setupField("applicationUri", "in_out_application_uri");
+	setupField("dnsName", "in_out_dns_name");
+	setupField("ipAddress", "in_out_ip_address");
+	setupField("organization", "in_out_organization");
+	setupField("organizationalUnit", "in_out_organizational_unit");
+	setupField("locality", "in_out_locality");
+	setupField("state", "in_out_state");
+	setupField("country", "in_out_country");
+	setupField("validity", "in_out_validity")
+	setupField("keyLength", "in_out_key_length")
+
+	// Clear any existing error message
+	webMI.gfx.setText("error_message", "");
+	webMI.gfx.setVisible("error_message", null);
+});
+
+limitTextElementWidth("label_store_path");
+limitTextElementWidth("label_cert_ini_path");
+
+/**
+ * Limits the width of an SVG text element by truncating its content and adding an omission string.
+ * If the text width exceeds the specified maximum width, the function removes characters from the start
+ * of the text content until the width is within the limit.
+ * A title element is added to the text element for accessibility, providing the full text as a tooltip.
+ *
+ * @param {string} elementId - The ID of the SVG text element to limit.
+ * @param {number} [maxWidth=220] - The maximum allowable width for the text element, in pixels.
+ * @param {string} [omissionString="…"] - The string to prepend to the truncated text to indicate that it has been shortened.
+ */
+function limitTextElementWidth(elementId, maxWidth = 300, omissionString = "…") {
+	const textElement = document.getElementById(elementId);
+	let textContent = textElement.textContent;
+
+	if (textElement.getBBox().width > maxWidth) {
+		const titleElement = webMI.rootWindow.document.createElementNS("http://www.w3.org/2000/svg", "title");
+		titleElement.textContent = textContent;
+
+		while (textElement.getBBox().width > maxWidth) {
+			textContent = textContent.slice(1, textContent.length);
+			textElement.textContent = omissionString + textContent;
+		}
+
+		textElement.appendChild(titleElement);
+	}
+}
+
+// Function to validate required form fields
+function validateFormFields() {
+	const requiredFields = ["commonName"];
+	const missingFields = requiredFields.filter((field) => !formData[field] || formData[field].trim() === "");
+
+	if (missingFields.length > 0) {
+		return missingFields; // Return the array of missing fields
+	}
+	return true; // All required fields are filled
+}
+
+// Function to show error message
+function showErrorMessage() {
+	const errorMessage = `T{Please provide the common name!}`;
+	webMI.gfx.setText("error_message", errorMessage);
+	webMI.gfx.setVisible("error_message", true);
+}
+
+webMI.trigger.connect(
+	"clicked",
+	function () {
+		const validationResult = validateFormFields();
+
+		if (validationResult === true) {
+			webMI.gfx.setText("error_message", "");
+			webMI.trigger.fire("com.atvise.createCertificate", formData);
+			this.close();
+		} else {
+			showErrorMessage(validationResult); // Show the nicer error message
+		}
+	},
+	"save_button"
+);
+
+webMI.trigger.connect(
+	"clicked",
+	function () {
+		webMI.display.closeWindow();
+	},
+	"cancel_button"
+);
+]]]]><![CDATA[></code>
+</script>
+]]></uax:XmlElement>
+		</Value>
+	</UAVariable>
+	<UAVariable NodeId="ns=1;s=SYSTEM.LIBRARY.ATVISE.DISPLAYSCRIPTS.admin.administration" BrowseName="1:administration" DataType="XmlElement" AccessLevel="7" UserAccessLevel="7" Historizing="true">
+		<DisplayName Locale="en">administration</DisplayName>
+		<Description Locale="en">administration</Description>
+		<References>
+			<Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=SYSTEM.LIBRARY.ATVISE.DISPLAYSCRIPTS.admin</Reference>
+			<Reference ReferenceType="HasTypeDefinition">DisplayScriptType</Reference>
+		</References>
+		<Value>
+			<uax:XmlElement><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+<script>
+  <metadata>
+    <priority>0</priority>
+    <help/>
+  </metadata>
+  <code><![CDATA[/**
+ * Code for the layouts advanced fixed 1920x1080, advanced overlay 1920x1080 and advanced overlay 1280x800 object display
+ * ----------------------------------------------------------------------------------------------------------------------
+ * This script supports the display creating navigation and button events
+ */
+
+/**
+ * DECLARATION SECTION
+ */
+const queryParams = webMI.query;
+const tabHandler = webMI.callExtension("SYSTEM.LIBRARY.ATVISE.QUICKDYNAMICS.Tab Handler");
+const loginHandler = webMI.callExtension("SYSTEM.LIBRARY.ATVISE.QUICKDYNAMICS.Login Handler", {
+	message_display: "SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Advanced.dialogs.message_dialog_small",
+	user_display: "SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Advanced.dialogs.user_editor",
+	password_display: "SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Advanced.dialogs.pw_editor"
+});
+const certificateManager = webMI.callExtension("SYSTEM.LIBRARY.ATVISE.QUICKDYNAMICS.Certificate Manager");
+
+/**
+ * UI SETUP SECTION
+ */
+const buttonNavBgWidth = webMI.gfx.getWidth("button_navigation_button_bg") - 2;
+const buttonNavBgHeight = webMI.gfx.getHeight("button_navigation_button_bg") - 2;
+
+webMI.gfx.setWidth("button_navigation_button_bg", buttonNavBgWidth);
+webMI.gfx.setHeight("button_navigation_button_bg", buttonNavBgHeight);
+webMI.gfx.setX("button_navigation_button_bg", "2");
+webMI.gfx.setY("button_navigation_button_bg", "2");
+
+webMI.gfx.setMoveY("nav_certificate_manager", 200);
+
+/**
+ * EVENT SECTION
+ */
+
+// For overlay layouts having button_navigation
+if (webMI.gfx.getX("button_navigation") !== undefined) {
+	webMI.addEvent("button_navigation", "click", () => {
+		const toggle = "menu_container";
+		webMI.trigger.fire("com.atvise.menu_toggle", toggle);
+	});
+}
+
+webMI.addEvent("logo_clickarea", "click", () => {
+	const names = tabHandler.getParentIFrameNames();
+	names.forEach((name) => {
+		webMI.trigger.fire(`com.atvise.getDefaultDisplay_${name}`, (display, url) => {
+			if (url !== undefined) {
+				webMI.display.openUrl(url, queryParams, name);
+			} else if (display !== undefined) {
+				webMI.display.openDisplay(display, queryParams, name);
+			}
+		});
+	});
+});
+
+webMI.addEvent(webMI.data, "clientvariableschange", (e) => {
+	const responseType = loginHandler.getResponseType(e);
+
+	if (responseType === "validity" || responseType === "expired") {
+		loginHandler.showMessageDialog(e);
+	}
+});
+
+webMI.addEvent(webMI.data, "clientvariableschange", async (e) => {
+	if (e && e.username && e.username != "") {
+		try {
+			await certificateManager.list("SERVER", ["OWN"]);
+			webMI.gfx.setMoveY("nav_certificate_manager", 0);
+		} catch (err) {
+			if (err.message.includes("access denied")) {
+				// Move the button out of the ViewBox because hiding it as a whole won't work.
+				webMI.gfx.setMoveY("nav_certificate_manager", 200);
+			}
+		}
+	}
+});
+]]]]><![CDATA[></code>
+</script>
+]]></uax:XmlElement>
+		</Value>
+	</UAVariable>
+	<UAVariable NodeId="ns=1;s=SYSTEM.LIBRARY.ATVISE.DISPLAYSCRIPTS.admin.certificate_manager" BrowseName="1:certificate_manager" DataType="XmlElement" AccessLevel="7" UserAccessLevel="7" Historizing="true">
+		<DisplayName Locale="en">certificate_manager</DisplayName>
+		<Description Locale="en">certificate_manager</Description>
+		<References>
+			<Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=SYSTEM.LIBRARY.ATVISE.DISPLAYSCRIPTS.admin</Reference>
+			<Reference ReferenceType="HasTypeDefinition">DisplayScriptType</Reference>
+		</References>
+		<Value>
+			<uax:XmlElement><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+<script>
+  <metadata>
+    <priority>0</priority>
+    <help/>
+  </metadata>
+  <code><![CDATA[// Certificate Manager Display Script
+const POPUP_TITLE_BAR_HEIGHT = 20;
+
+if (!webMI.getMethodSupport().includes("CertificateManager")) {
+	showExceptionMessage(new Error("Certificate Management is not supported on this version of atvise."));
+	return;
+}
+
+const certificateManager = webMI.callExtension("SYSTEM.LIBRARY.ATVISE.QUICKDYNAMICS.Certificate Manager");
+
+const TableStores = {
+	SERVER: "SERVER",
+	MIRROR: "MIRROR",
+	HTTPS: "HTTPS"
+};
+
+const ServerTypes = {
+	OWN: "OWN",
+	TRUSTED: "TRUSTED",
+	REJECTED: "REJECTED",
+	ISSUER: "ISSUER",
+	USERS_OWN: "USERS_OWN",
+	USERS_TRUSTED: "USERS_TRUSTED",
+	USERS_REJECTED: "USERS_REJECTED",
+	USERS_ISSUER: "USERS_ISSUER"
+};
+
+const CertificateTableTypes = {
+	OWN_CERTIFICATES: "own_certificates",
+	PEER_CERTIFICATES: "peer_certificates",
+	ISSUER_CERTIFICATES: "issuer_certificates",
+	USER_CERTIFICATES: "user_own_certificates",
+	USER_PEER_CERTIFICATES: "user_peer_certificates",
+	USER_ISSUER_CERTIFICATES: "user_issuer_certificates"
+};
+
+const TableToCertificateTypes = {
+	[CertificateTableTypes.OWN_CERTIFICATES]: [ServerTypes.OWN],
+	[CertificateTableTypes.PEER_CERTIFICATES]: [ServerTypes.TRUSTED, ServerTypes.REJECTED],
+	[CertificateTableTypes.ISSUER_CERTIFICATES]: [ServerTypes.ISSUER],
+	[CertificateTableTypes.USER_CERTIFICATES]: [ServerTypes.USERS_OWN],
+	[CertificateTableTypes.USER_PEER_CERTIFICATES]: [ServerTypes.USERS_TRUSTED, ServerTypes.USERS_REJECTED],
+	[CertificateTableTypes.USER_ISSUER_CERTIFICATES]: [ServerTypes.USERS_ISSUER]
+};
+
+let tableControllerCertificates;
+let currentTableData;
+let currentStore = TableStores.SERVER;
+let currentTableType = CertificateTableTypes.OWN_CERTIFICATES;
+let webMIQueryProperties = {};
+let reloadInProgress = false;
+const timestampedTableID = (webMIQueryProperties.tableID = webMI.query["tableID"]);
+const buttons = ["upload", "delete", "create", "trust", "reject"];
+
+const menuTree = [
+	{
+		key: TableStores.SERVER,
+		label: "T{OPC UA Server}",
+		children: [
+			{
+				label: "T{Own}",
+				key: CertificateTableTypes.OWN_CERTIFICATES,
+				columns: [
+					{
+						id: "Details",
+						name: "",
+						field: "Details",
+						sortable: false,
+						formatter: function () {
+							const detailButton = webMI.rootWindow.document.createElement("div");
+							detailButton.innerHTML = `<i class="fa-solid fa-circle-info" style="cursor: pointer" title="Show Details"></i>`;
+							return detailButton.outerHTML;
+						}
+					},
+					{
+						id: "IssuerType",
+						name: "T{Issuer Type}",
+						field: "IssuerType",
+						sortable: true,
+						filter: true
+					},
+					{
+						id: "Valid",
+						name: "T{Valid}",
+						field: "atvise_certificate_validity",
+						sortable: true,
+						filter: true
+					},
+					{
+						id: "Filename",
+						name: "T{Filename}",
+						field: "Filename",
+						resizable: true,
+						sortable: true,
+						filter: true
+					},
+					{
+						id: "ValidFrom",
+						name: "T{Valid from}",
+						field: "ValidFrom",
+						sortable: true,
+						filter: true,
+						visible: false
+					},
+					{ id: "ValidTo", name: "T{Valid To}", field: "ValidTo", sortable: true, filter: true },
+					{
+						id: "CommonName",
+						name: "T{Common name (CN)}",
+						field: "CommonName",
+						resizable: true,
+						sortable: true,
+						filter: true
+					},
+					{
+						id: "AppURI",
+						name: "T{Application URI}",
+						field: "AppURI",
+						resizable: true,
+						sortable: true,
+						filter: true
+					},
+					{ id: "DNS", name: "T{DNS names (DNS)}", field: "DNS", resizable: true, sortable: true, filter: true },
+					{ id: "IP", name: "T{IP addresses (IP)}", field: "IPs", resizable: true, sortable: true, filter: true },
+					{
+						id: "Issuer",
+						name: "T{Issuer}",
+						field: "Issuer",
+						resizable: true,
+						sortable: true,
+						filter: true
+					}
+				],
+				buttons: ["upload", "delete", "create"]
+			},
+			{
+				label: "T{Peers}",
+				key: CertificateTableTypes.PEER_CERTIFICATES,
+				columns: [
+					{
+						id: "Details",
+						name: "",
+						field: "Details",
+						width: 10,
+						sortable: false,
+						formatter: function () {
+							const detailButton = webMI.rootWindow.document.createElement("div");
+							detailButton.innerHTML = `<i class="fa-solid fa-circle-info" style="cursor: pointer" title="Show Details"></i>`;
+							return detailButton.outerHTML;
+						}
+					},
+					{
+						id: "IssuerType",
+						name: "T{Issuer Type}",
+						field: "IssuerType",
+						sortable: true,
+						filter: true
+					},
+					{
+						id: "Filename",
+						name: "T{Filename}",
+						field: "Filename",
+						resizable: true,
+						sortable: true,
+						filter: true,
+						visible: false
+					},
+					{
+						id: "Type",
+						name: "T{Status}",
+						field: "Type",
+						sortable: true,
+						filter: true
+					},
+					{
+						id: "Valid",
+						name: "T{Valid}",
+						field: "atvise_certificate_validity",
+						filter: true
+					},
+					{
+						id: "ValidFrom",
+						name: "T{Valid from}",
+						field: "ValidFrom",
+						sortable: true,
+						filter: true,
+						visible: false
+					},
+					{ id: "ValidTo", name: "T{Valid To}", field: "ValidTo", resizable: true, sortable: true, filter: true },
+					{
+						id: "CommonName",
+						name: "T{Common name (CN)}",
+						field: "CommonName",
+						resizable: true,
+						sortable: true,
+						filter: true
+					},
+					{ id: "AppURI", name: "T{Application URI}", field: "AppURI", resizable: true, sortable: true, filter: true },
+					{
+						id: "DNS",
+						name: "T{DNS names (DNS)}",
+						field: "DNS",
+						resizable: true,
+						sortable: true,
+						filter: true,
+						visible: false
+					},
+					{
+						id: "IP",
+						name: "T{IP addresses (IP)}",
+						field: "IPs",
+						resizable: true,
+						sortable: true,
+						filter: true,
+						visible: false
+					},
+					{ id: "Issuer", name: "T{Issuer}", field: "Issuer", resizable: true, sortable: false, filter: true }
+				],
+				buttons: ["upload", "delete", "trust", "reject"]
+			},
+			{
+				label: "T{Issuers}",
+				key: CertificateTableTypes.ISSUER_CERTIFICATES,
+				columns: [
+					{
+						id: "Details",
+						name: "",
+						field: "Details",
+						resizable: false,
+						width: 10,
+						sortable: false,
+						formatter: function () {
+							const detailButton = webMI.rootWindow.document.createElement("div");
+							detailButton.innerHTML = `<i class="fa-solid fa-circle-info" style="cursor: pointer" title="Show Details"></i>`;
+							return detailButton.outerHTML;
+						}
+					},
+					{
+						id: "IssuerType",
+						name: "T{Issuer Type}",
+						field: "IssuerType",
+						sortable: true,
+						filter: true
+					},
+					{
+						id: "Filename",
+						name: "T{Filename}",
+						field: "Filename",
+						resizable: true,
+						sortable: true,
+						filter: true,
+						visible: false
+					},
+					{
+						id: "Valid",
+						name: "T{Valid}",
+						field: "atvise_certificate_validity",
+						sortable: true,
+						filter: true
+					},
+					{
+						id: "ValidFrom",
+						name: "T{Valid from}",
+						field: "ValidFrom",
+						sortable: true,
+						filter: true,
+						visible: false
+					},
+					{ id: "ValidTo", name: "T{Valid To}", field: "ValidTo", resizable: true, sortable: true, filter: true },
+					{
+						id: "CommonName",
+						name: "T{Common name (CN)}",
+						field: "CommonName",
+						resizable: true,
+						sortable: true,
+						filter: true
+					},
+					{ id: "Issuer", name: "T{Issuer}", field: "Issuer", resizable: true, sortable: false, filter: true }
+				],
+				buttons: ["upload", "delete"]
+			},
+			{
+				label: "T{Users}",
+				key: CertificateTableTypes.USER_PEER_CERTIFICATES,
+				columns: [
+					{
+						id: "Details",
+						name: "",
+						field: "Details",
+						resizable: false,
+						width: 10,
+						sortable: false,
+						formatter: function () {
+							const detailButton = webMI.rootWindow.document.createElement("div");
+							detailButton.innerHTML = `<i class="fa-solid fa-circle-info" style="cursor: pointer" title="Show Details"></i>`;
+							return detailButton.outerHTML;
+						}
+					},
+					{
+						id: "IssuerType",
+						name: "T{Issuer Type}",
+						field: "IssuerType",
+						sortable: true,
+						filter: true
+					},
+					{
+						id: "Filename",
+						name: "T{Filename}",
+						field: "Filename",
+						resizable: true,
+						sortable: true,
+						filter: true,
+						visible: false
+					},
+					{
+						id: "Type",
+						name: "T{Status}",
+						field: "Type",
+						sortable: true,
+						filter: true
+					},
+					{ id: "Username", name: "T{Username}", field: "CommonName", resizable: true, sortable: true, filter: true },
+					{
+						id: "Valid",
+						name: "T{Valid}",
+						field: "atvise_certificate_validity",
+						sortable: true,
+						filter: true
+					},
+					{
+						id: "ValidFrom",
+						name: "T{Valid from}",
+						field: "ValidFrom",
+						sortable: true,
+						filter: true,
+						visible: false
+					},
+					{ id: "ValidTo", name: "T{Valid To}", field: "ValidTo", resizable: true, sortable: true, filter: true },
+					{
+						id: "Issuer",
+						name: "T{Issuer}",
+						field: "Issuer",
+						sortable: false,
+						filter: true
+					}
+				],
+				buttons: ["upload", "delete", "trust", "reject"]
+			}
+		]
+	},
+	{
+		key: TableStores.MIRROR,
+		label: "T{OPC UA Datasources}",
+		children: [
+			{
+				label: "T{Own}",
+				key: CertificateTableTypes.OWN_CERTIFICATES,
+				columns: [
+					{
+						id: "Details",
+						name: "",
+						field: "Details",
+						resizable: false,
+						width: 10,
+						sortable: false,
+						formatter: function () {
+							const detailButton = webMI.rootWindow.document.createElement("div");
+							detailButton.innerHTML = `<i class="fa-solid fa-circle-info" style="cursor: pointer" title="Show Details"></i>`;
+							return detailButton.outerHTML;
+						}
+					},
+					{
+						id: "IssuerType",
+						name: "T{Issuer Type}",
+						field: "IssuerType",
+						sortable: true,
+						filter: true
+					},
+					{
+						id: "Valid",
+						name: "T{Valid}",
+						field: "atvise_certificate_validity",
+						sortable: true,
+						filter: true
+					},
+					{
+						id: "Filename",
+						name: "T{Filename}",
+						field: "Filename",
+						resizable: true,
+						sortable: true,
+						filter: true,
+						visible: true
+					},
+					{ id: "ValidFrom", name: "T{Valid from}", field: "ValidFrom", sortable: true, filter: true, visible: false },
+					{ id: "ValidTo", name: "T{Valid To}", field: "ValidTo", sortable: true, filter: true },
+					{
+						id: "CommonName",
+						name: "T{Common name (CN)}",
+						field: "CommonName",
+						resizable: true,
+						sortable: true,
+						filter: true
+					},
+					{ id: "AppURI", name: "T{Application URI}", field: "AppURI", resizable: true, sortable: true, filter: true },
+					{
+						id: "DNS",
+						name: "T{DNS names (DNS)}",
+						field: "DNS",
+						resizable: true,
+						sortable: true,
+						filter: true,
+						visible: false
+					},
+					{
+						id: "IP",
+						name: "T{IP addresses (IP)}",
+						field: "IPs",
+						resizable: true,
+						sortable: true,
+						filter: true,
+						visible: false
+					},
+					{ id: "Issuer", name: "T{Issuer}", field: "Issuer", resizable: true, sortable: true, filter: true }
+				],
+				buttons: ["upload", "delete", "create"]
+			},
+			{
+				label: "T{Peers}",
+				key: CertificateTableTypes.PEER_CERTIFICATES,
+				columns: [
+					{
+						id: "Details",
+						name: "",
+						field: "Details",
+						resizable: false,
+						width: 10,
+						sortable: false,
+						formatter: function () {
+							const detailButton = webMI.rootWindow.document.createElement("div");
+							detailButton.innerHTML = `<i class="fa-solid fa-circle-info" style="cursor: pointer" title="Show Details"></i>`;
+							return detailButton.outerHTML;
+						}
+					},
+					{
+						id: "IssuerType",
+						name: "T{Issuer Type}",
+						field: "IssuerType",
+						sortable: true,
+						filter: true
+					},
+					{
+						id: "Filename",
+						name: "T{Filename}",
+						field: "Filename",
+						resizable: true,
+						sortable: true,
+						filter: true,
+						visible: false
+					},
+					{
+						id: "Type",
+						name: "T{Status}",
+						field: "Type",
+						sortable: true,
+						filter: true
+					},
+					{
+						id: "Valid",
+						name: "T{Valid}",
+						field: "atvise_certificate_validity",
+						sortable: true,
+						filter: true,
+						width: 50
+					},
+					{
+						id: "ValidFrom",
+						name: "T{Valid from}",
+						field: "ValidFrom",
+						sortable: true,
+						filter: true,
+						visible: false
+					},
+					{ id: "ValidTo", name: "T{Valid To}", field: "ValidTo", sortable: true, filter: true },
+					{
+						id: "CommonName",
+						name: "T{Common name (CN)}",
+						field: "CommonName",
+						resizable: true,
+						sortable: true,
+						filter: true
+					},
+					{ id: "AppURI", name: "T{Application URI}", field: "AppURI", resizable: true, sortable: true, filter: true },
+					{
+						id: "DNS",
+						name: "T{DNS names (DNS)}",
+						field: "DNS",
+						resizable: true,
+						sortable: true,
+						filter: true,
+						visible: false
+					},
+					{
+						id: "IP",
+						name: "T{IP addresses (IP)}",
+						field: "IPs",
+						resizable: true,
+						sortable: true,
+						filter: true,
+						visible: false
+					},
+					{ id: "Issuer", name: "T{Issuer}", field: "Issuer", resizable: true, sortable: false, filter: true }
+				],
+				buttons: ["upload", "delete", "trust", "reject"]
+			},
+			{
+				label: "T{Issuers}",
+				key: CertificateTableTypes.ISSUER_CERTIFICATES,
+				columns: [
+					{
+						id: "Details",
+						name: "",
+						field: "Details",
+						resizable: false,
+						width: 10,
+						sortable: false,
+						formatter: function () {
+							const detailButton = webMI.rootWindow.document.createElement("div");
+							detailButton.innerHTML = `<i class="fa-solid fa-circle-info" style="cursor: pointer" title="Show Details"></i>`;
+							return detailButton.outerHTML;
+						}
+					},
+					{
+						id: "IssuerType",
+						name: "T{Issuer Type}",
+						field: "IssuerType",
+						sortable: true,
+						filter: true
+					},
+					{
+						id: "Filename",
+						name: "T{Filename}",
+						field: "Filename",
+						resizable: true,
+						sortable: true,
+						filter: true,
+						visible: false
+					},
+					{
+						id: "Valid",
+						name: "T{Valid}",
+						field: "atvise_certificate_validity",
+						sortable: true,
+						filter: true
+					},
+					{
+						id: "ValidFrom",
+						name: "T{Valid from}",
+						field: "ValidFrom",
+						sortable: true,
+						filter: true,
+						visible: false
+					},
+					{ id: "ValidTo", name: "T{Valid To}", field: "ValidTo", sortable: true, filter: true },
+					{
+						id: "CommonName",
+						name: "T{Common name (CN)}",
+						field: "CommonName",
+						resizable: true,
+						sortable: true,
+						filter: true
+					},
+					{ id: "Issuer", name: "T{Issuer}", field: "Issuer", resizable: true, sortable: false, filter: true }
+				],
+				buttons: ["upload", "delete"]
+			},
+			{
+				label: "T{Users}",
+				key: CertificateTableTypes.USER_CERTIFICATES,
+				columns: [
+					{
+						id: "Details",
+						name: "",
+						field: "Details",
+						resizable: false,
+						width: 10,
+						sortable: false,
+						formatter: function () {
+							const detailButton = webMI.rootWindow.document.createElement("div");
+							detailButton.innerHTML = `<i class="fa-solid fa-circle-info" style="cursor: pointer" title="Show Details"></i>`;
+							return detailButton.outerHTML;
+						}
+					},
+					{
+						id: "IssuerType",
+						name: "T{Issuer Type}",
+						field: "IssuerType",
+						sortable: true,
+						filter: true
+					},
+					{
+						id: "Filename",
+						name: "T{Filename}",
+						field: "Filename",
+						resizable: true,
+						sortable: true,
+						filter: true,
+						visible: false
+					},
+					{
+						id: "Username",
+						name: "T{Username}",
+						field: "CommonName",
+						resizable: true,
+						sortable: true,
+						filter: true
+					},
+					{
+						id: "Valid",
+						name: "T{Valid}",
+						field: "atvise_certificate_validity",
+						sortable: true,
+						filter: true
+					},
+					{
+						id: "ValidFrom",
+						name: "T{Valid from}",
+						field: "ValidFrom",
+						sortable: true,
+						filter: true,
+						visible: false
+					},
+					{ id: "ValidTo", name: "T{Valid To}", field: "ValidTo", sortable: true, filter: true },
+					{ id: "Issuer", name: "T{Issuer}", field: "Issuer", resizable: true, sortable: false, filter: true }
+				],
+				buttons: ["upload", "delete"]
+			},
+			{
+				label: "T{User Issuers}",
+				key: CertificateTableTypes.USER_ISSUER_CERTIFICATES,
+				columns: [
+					{
+						id: "Details",
+						name: "",
+						field: "Details",
+						resizable: false,
+						width: 10,
+						sortable: false,
+						formatter: function () {
+							const detailButton = webMI.rootWindow.document.createElement("div");
+							detailButton.innerHTML = `<i class="fa-solid fa-circle-info" style="cursor: pointer" title="Show Details"></i>`;
+							return detailButton.outerHTML;
+						}
+					},
+					{
+						id: "IssuerType",
+						name: "T{Issuer Type}",
+						field: "IssuerType",
+						sortable: true,
+						filter: true
+					},
+					{
+						id: "Filename",
+						name: "T{Filename}",
+						field: "Filename",
+						resizable: true,
+						sortable: true,
+						filter: true,
+						visible: false
+					},
+					{
+						id: "Valid",
+						name: "T{Valid}",
+						field: "atvise_certificate_validity",
+						sortable: true,
+						filter: true
+					},
+					{
+						id: "ValidFrom",
+						name: "T{Valid from}",
+						field: "ValidFrom",
+						sortable: true,
+						filter: true,
+						visible: false
+					},
+					{ id: "ValidTo", name: "T{Valid To}", field: "ValidTo", sortable: true, filter: true },
+					{
+						id: "CommonName",
+						name: "T{Common name (CN)}",
+						field: "CommonName",
+						resizable: true,
+						sortable: true,
+						filter: true
+					},
+					{ id: "Issuer", name: "T{Issuer}", field: "Issuer", resizable: true, sortable: false, filter: true }
+				],
+				buttons: ["upload", "delete"]
+			}
+		]
+	},
+	{
+		key: TableStores.HTTPS,
+		label: "T{HTTPS}",
+		children: [
+			{
+				label: "T{Own}",
+				key: CertificateTableTypes.OWN_CERTIFICATES,
+				columns: [
+					{
+						id: "Details",
+						name: "",
+						field: "Details",
+						resizable: false,
+						width: 10,
+						sortable: false,
+						formatter: function () {
+							const detailButton = webMI.rootWindow.document.createElement("div");
+							detailButton.innerHTML = `<i class="fa-solid fa-circle-info" style="cursor: pointer" title="Show Details"></i>`;
+							return detailButton.outerHTML;
+						}
+					},
+					{
+						id: "IssuerType",
+						name: "T{Issuer Type}",
+						field: "IssuerType",
+						sortable: true,
+						filter: true
+					},
+					{
+						id: "Valid",
+						name: "T{Valid}",
+						field: "atvise_certificate_validity",
+						sortable: true,
+						filter: true,
+						width: 50
+					},
+					{
+						id: "Filename",
+						name: "T{Filename}",
+						field: "Filename",
+						resizable: true,
+						sortable: true,
+						filter: true,
+						visible: true
+					},
+					{ id: "ValidFrom", name: "T{Valid from}", field: "ValidFrom", sortable: true, filter: true, visible: false },
+					{ id: "ValidTo", name: "T{Valid To}", field: "ValidTo", sortable: true, filter: true },
+					{
+						id: "CommonName",
+						name: "T{Common name (CN)}",
+						field: "CommonName",
+						resizable: true,
+						sortable: true,
+						filter: true
+					},
+					{ id: "AppURI", name: "T{Application URI}", field: "AppURI", resizable: true, sortable: true, filter: true },
+					{
+						id: "DNS",
+						name: "T{DNS names (DNS)}",
+						field: "DNS",
+						resizable: true,
+						sortable: true,
+						filter: true,
+						visible: false
+					},
+					{
+						id: "IP",
+						name: "T{IP addresses (IP)}",
+						field: "IPs",
+						resizable: true,
+						sortable: true,
+						filter: true,
+						visible: false
+					},
+					{ id: "Issuer", name: "T{Issuer}", field: "Issuer", resizable: true, sortable: true, filter: true }
+				],
+				buttons: ["upload", "delete", "create"]
+			}
+		]
+	}
+];
+
+function addColumnProperties(menuTree) {
+	menuTree.forEach((section) => {
+		section.children.forEach((subsection) => {
+			subsection.columns.forEach((column) => {
+				if (column.id === "Details") {
+					column.width = 10;
+					column.resizable = false;
+					column.cssClass = "slick-cell-center";
+				}
+
+				if (column.id === "IssuerType") {
+					column.width = 120;
+					column.resizable = false;
+					column.cssClass = "slick-cell-center";
+				}
+
+				if (column.id === "Type") {
+					column.width = 100;
+					column.resizable = false;
+					column.cssClass = "slick-cell-center";
+					column.formatter = typeFormatter;
+				}
+
+				if (column.id === "Valid") {
+					column.width = 88;
+					column.resizable = false;
+					column.cssClass = "slick-cell-center";
+					column.filterExtension = [
+						{
+							value: "",
+							textContent: "T{All}"
+						},
+						{
+							value: "true",
+							textContent: "T{Valid}"
+						},
+						{ value: "false", textContent: "T{Invalid}" }
+					];
+					column.formatter = validityFormatter;
+				}
+
+				if (column.id === "ValidTo") {
+					column.width = 130;
+					column.resizable = false;
+					column.cssClass = "slick-cell-center";
+				}
+
+				if (column.id === "ValidFrom") {
+					column.width = 130;
+					column.resizable = false;
+					column.cssClass = "slick-cell-center";
+				}
+
+				if (column.id === "Issuer") {
+					column.cssClass = "slick-cell-center";
+				}
+			});
+		});
+	});
+}
+
+addColumnProperties(menuTree);
+
+const config = {
+	mode: "once",
+	options: { clear_table: false },
+	onHeaderClickCallback: function (_e, clickInfo) {
+		switch (clickInfo.column.field) {
+			case "atvise_marker":
+				setButtonsActive(tableControllerCertificates.getSelectedItems().length != 0);
+				break;
+			default:
+				break;
+		}
+	},
+	onClickCallback: function (_e, clickInfo) {
+		switch (clickInfo.column.field) {
+			case "atvise_marker":
+				setButtonsActive(tableControllerCertificates.getSelectedItems().length != 0);
+				break;
+			case "Details":
+				// Build two dimensional array from row data and pass it to details view
+				showCertificateDetails(buildTwoDimensionalArray(clickInfo.item.rawCertificate));
+				break;
+			default:
+				break;
+		}
+	},
+	dataRequestFunction: function () {}
+};
+
+function setButtonsActive(state) {
+	webMI.trigger.fire("com.atvise.setActive", state, "btn_trust");
+	webMI.trigger.fire("com.atvise.setActive", state, "btn_delete");
+	webMI.trigger.fire("com.atvise.setActive", state, "btn_reject");
+}
+
+function validityFormatter(_row, _cell, value, _columnDef, _dataContext, _grid) {
+	if (value === true) {
+		return "✓";
+	} else if (value === false) {
+		return "✗";
+	} else {
+		return "?";
+	}
+}
+
+/**
+ * Normalizes the display of TRUSTED and REJECTED certificate types.
+ *
+ * If the type is "USERS_TRUSTED" or "USERS_REJECTED", the "USERS_" prefix is removed
+ * for a cleaner UI. All other values remain unchanged.
+ */
+function typeFormatter(_row, _cell, value, _columnDef, _dataContext, _grid) {
+	if (value === "USERS_TRUSTED") return "TRUSTED";
+	if (value === "USERS_REJECTED") return "REJECTED";
+	return webMI.secureString(value); // Leave everything else untouched
+}
+
+function buildTwoDimensionalArray(obj) {
+	const result = [];
+
+	// Recursive function to handle nested arrays and objects
+	function processValue(value) {
+		if (Array.isArray(value)) {
+			return value
+				.map((item) => {
+					return typeof item === "object" ? JSON.stringify(item, null, 2) : item;
+				})
+				.join(", ");
+		} else if (typeof value === "object" && value !== null) {
+			return JSON.stringify(value, null, 2);
+		} else {
+			return value;
+		}
+	}
+
+	// Iterate over the object's properties
+	for (const [key, value] of Object.entries(obj)) {
+		const processedValue = processValue(value, key);
+		result.push([key, processedValue]);
+	}
+
+	return result;
+}
+
+function createTableCallback() {
+	tableControllerCertificates = webMI.table.request(timestampedTableID, "controller");
+	initializeStoreComboboxAndSelectItem();
+
+	const selectorHeaderIcon = webMI.rootWindow.document.createElement("i");
+	selectorHeaderIcon.className = "fas fa-check-square";
+	selectorHeaderIcon.style.pointerEvents = "none";
+
+	const selectorColumnName = webMI.rootWindow.document
+		.querySelector("[id^='slickgrid_'][id$='selector']")
+		.querySelector(".slick-column-name");
+	selectorColumnName.appendChild(selectorHeaderIcon);
+
+	reloadTable();
+}
+
+function createTable(callback) {
+	// Register and set up the table
+	const initialColumns = menuTree
+		.find((storeConfig) => storeConfig.key === currentStore)
+		.children.find((type) => type.key === currentTableType).columns;
+	config.columns = JSON.parse(JSON.stringify(initialColumns));
+	webMI.table.register(timestampedTableID, "config", config);
+	webMI.table.setReady(timestampedTableID, "config");
+	webMI.table.waitReady(timestampedTableID, "controller", callback);
+}
+
+// Wait for the table to be ready and then set up additional UI elements
+createTable(createTableCallback);
+
+/**
+ * Retrieves the SlickGrid table column configuration for the current store and type from the `menuTree`.
+ *
+ * This function filters the `menuTree` to find the store matching the `currentStore` value,
+ * then filters the children of that store to find the type matching the `currentType` value.
+ * It returns the `columns` configuration of the matched type, if found.
+ *
+ * @returns {Array} The SlickGrid columns configuration for the current store and type, or an empty array if not found.
+ */
+function getTableConfig(options) {
+	const atviseMarker = tableControllerCertificates.columns.filter((c) => c.id === "atvise_marker")[0];
+	if (!Array.isArray(menuTree) || typeof currentStore !== "string" || typeof currentTableType !== "string") {
+		console.error("Invalid menuTree, currentStore, or currentType");
+		return [];
+	}
+
+	const store = menuTree.find((store) => store.key === currentStore);
+	if (!store || !Array.isArray(store.children)) {
+		console.error("Store not found or invalid children");
+		return [];
+	}
+
+	const type = store.children.find((child) => child.key === currentTableType);
+	if (!type || !Array.isArray(type.columns)) {
+		console.error("Type not found or invalid columns");
+		return [];
+	}
+
+	// Since we are updating the column
+	if (!type.columns.find((col) => col.id === "atvise_marker")) {
+		type.columns.unshift(atviseMarker);
+	}
+
+	let eligibleColumns;
+
+	if (options && "onlyVisible" in options && options.onlyVisible) {
+		eligibleColumns = type.columns.filter((column) => column.visible !== false);
+	} else {
+		eligibleColumns = type.columns;
+	}
+
+	eligibleColumns.forEach((column) => {
+		column.headerCssClass = "slick-header-column-center";
+	});
+
+	return eligibleColumns;
+}
+
+setButtonsActive(false);
+
+if (webMI.isRedundant()) {
+	webMI.gfx.setVisible("btn_sync_stores", true);
+	webMI.gfx.setVisible("header_sync_stores", true);
+	webMI.gfx.setVisible("seperator_sync_stores", true);
+	webMI.gfx.setMoveX("action_group", -130);
+}
+
+webMI.trigger.connect(
+	"valuechanged",
+	function (trigger) {
+		if (trigger.value === undefined) {
+			// Values for combobox not set yet.
+			trigger.value = currentStore;
+		}
+
+		const storeKey = trigger.value;
+		const typeList = menuTree.find((store) => {
+			return store.key === storeKey;
+		}).children;
+
+		const dropDownList = typeList.map((type) => {
+			return { text: type.label, value: type.key };
+		});
+
+		currentStore = storeKey;
+
+		webMI.trigger.fire("setItems", dropDownList, "type_picker");
+		webMI.trigger.fire("setSelectedItem", dropDownList[0].text, "type_picker");
+	},
+	"store_picker"
+);
+
+webMI.trigger.connect(
+	"valuechanged",
+	async function (trigger) {
+		currentTableType = trigger.value;
+
+		await reloadTable(currentStore, TableToCertificateTypes[currentTableType]);
+	},
+	"type_picker"
+);
+
+webMI.trigger.connect("com.atvise.upload_certificate", (trigger) => {
+	const file1 = trigger.value.file1;
+	const file2 = trigger.value.file2;
+	const sharedName = trigger.value.sharedName;
+
+	certificateManager
+		.upload(currentStore, TableToCertificateTypes[currentTableType][0], [file1, file2], sharedName, currentStore)
+		.then(() => {
+			toast.show("T{File uploaded successfully.}", "success");
+			reloadTable();
+		})
+		.catch((err) => {
+			toast.show(err, "error");
+			reloadTable();
+		});
+});
+
+webMI.trigger.connect(
+	"clicked",
+	() => {
+		showCertificateUploadDialog();
+	},
+	"btn_upload"
+);
+
+webMI.trigger.connect(
+	"clicked",
+	() => {
+		showCertificateForm();
+	},
+	"btn_create"
+);
+
+webMI.trigger.connect(
+	"clicked",
+	() => {
+		reloadTable();
+	},
+	"btn_reload"
+);
+
+webMI.trigger.connect(
+	"clicked",
+	() => {
+		const certificatesToTrust = tableControllerCertificates.getSelectedItems().map((row) => {
+			return { name: row.rawCertificate.name, type: row.Type };
+		});
+		const trustPromises = certificatesToTrust.map((certificateToTrust) => {
+			return certificateManager
+				.trust(currentStore, certificateToTrust.type, certificateToTrust.name)
+				.then(() => {
+					toast.show(`<b>${certificateToTrust.name}</b>` + ": T{Certificate trusted successfully.}", "success");
+				})
+				.catch((err) => {
+					toast.show(`<b>${certificateToTrust.name}: </b>${err}`, "error");
+				});
+		});
+
+		// Wait for all promises to be fulfilled before calling reloadTable
+		Promise.all(trustPromises).then(() => {
+			reloadTable(); // This will be called once all promises are fulfilled
+		});
+	},
+	"btn_trust"
+);
+
+webMI.trigger.connect(
+	"clicked",
+	() => {
+		const certificatesToReject = tableControllerCertificates.getSelectedItems().map((row) => {
+			return { name: row.rawCertificate.name, type: row.Type };
+		});
+		const rejectPromises = certificatesToReject.map((certificateToReject) => {
+			console.log(currentStore, certificateToReject.type, certificateToReject.name);
+			return certificateManager
+				.reject(currentStore, certificateToReject.type, certificateToReject.name)
+				.then(() => {
+					toast.show(`<b>${certificateToReject.name}</b>` + ": T{Certificate rejected successfully.}", "success");
+				})
+				.catch((err) => {
+					toast.show(`<b>${certificateToReject.name}: </b>${err}`, "error");
+				});
+		});
+
+		// Wait for all promises to be fulfilled before calling reloadTable
+		Promise.all(rejectPromises).then(() => {
+			reloadTable(); // This will be called once all promises are fulfilled
+		});
+	},
+	"btn_reject"
+);
+
+webMI.trigger.connect(
+	"clicked",
+	() => {
+		webMI.trigger.fire("com.atvise.setActive", false, "btn_sync_stores");
+		certificateManager
+			.syncStores()
+			.then(() => {
+				webMI.trigger.fire("com.atvise.setActive", true, "btn_sync_stores");
+				toast.show("T{Certificate stores successfully synchronized.}", "success");
+			})
+			.catch((err) => {
+				toast.show(`T{Syncing error}: ${err}`, "error");
+				webMI.trigger.fire("com.atvise.setActive", true, "btn_sync_stores");
+			});
+	},
+	"btn_sync_stores"
+);
+
+webMI.trigger.connect("com.atvise.createCertificate", (trigger) => {
+	const commonName = trigger.value.commonName;
+	const certificateName = commonName;
+
+	certificateManager
+		.create(currentStore, certificateName, commonName)
+		.then(() => {
+			toast.show(`<b>${commonName}</b>` + ": T{Certificate created successfully.}", "success");
+			reloadTable();
+		})
+		.catch((err) => {
+			toast.show(err, "error");
+			reloadTable();
+		});
+});
+
+webMI.trigger.connect(
+	"clicked",
+	() => {
+		showDeletePrompt();
+	},
+	"btn_delete"
+);
+
+webMI.trigger.connect("com.atvise.deleteCertificates", function (trigger) {
+	const promptWindow = trigger.value;
+
+	const certificatesToDelete = tableControllerCertificates.getSelectedItems().map((row) => ({
+		fileName: row.rawCertificate.name,
+		intType: row.Type || TableToCertificateTypes[currentTableType]
+	}));
+
+	const deletePromises = certificatesToDelete.map((certificateToDelete) => {
+		let certType;
+
+		if (TableToCertificateTypes[currentTableType].length > 1) {
+			certType = [certificateToDelete.intType];
+		} else {
+			certType = TableToCertificateTypes[currentTableType];
+		}
+
+		return certificateManager
+			.delete(currentStore, certType, certificateToDelete.fileName)
+			.then(() => {
+				toast.show(`<b>${certificateToDelete.fileName}</b>: T{Certificate deleted successfully.}`, "success");
+			})
+			.catch((err) => {
+				toast.show(`<b>${certificateToDelete.fileName}: </b>${err}`, "error");
+			});
+	});
+
+	// Wait for all promises to be fulfilled before calling reloadTable
+	Promise.all(deletePromises).then(() => {
+		reloadTable(); // This will be called once all promises are fulfilled
+	});
+
+	promptWindow.close();
+});
+
+function formatDate(timestring) {
+	if (!timestring) return ""; // Return empty if no input
+	// Convert 'YYYY-MM-DDTHH:MM:SS.sssZ' to 'YYYY-MM-DD HH:MM:SS'
+	// e.g. "2024-05-07T22:00:00.000Z" -> "2024-05-07 22:00:00"
+	return timestring.split(".")[0].replace("T", " ");
+}
+
+// Helper function to map fields from backend data to the table row
+function mapFieldsToColumns(columns, certificate) {
+	const rowData = {
+		rawCertificate: {
+			name: certificate.name,
+			...certificate.data
+		}
+	};
+
+	columns.forEach(({ field }) => {
+		switch (field) {
+			case "atvise_certificate_validity":
+				rowData[field] = new Date(certificate.data.fields.validTo) > new Date();
+				break;
+
+			case "Type":
+				rowData[field] = certificate.type;
+				break;
+
+			case "IssuerType":
+				rowData[field] = certificate.issuerType;
+				break;
+
+			case "ValidFrom":
+				rowData[field] = formatDate(certificate.data.fields.validFrom);
+				break;
+
+			case "ValidTo":
+				rowData[field] = formatDate(certificate.data.fields.validTo);
+				break;
+
+			case "Filename":
+				rowData[field] = certificate.name;
+				break;
+
+			case "CommonName":
+				rowData[field] = certificate.data.subject?.commonName || "";
+				break;
+
+			case "AppURI":
+				rowData[field] = certificate.data.subjectAltName?.uri || "";
+				break;
+
+			case "DNS":
+				rowData[field] = certificate.data.subjectAltName?.dnsNames?.join(", ") || "";
+				break;
+
+			case "IPs":
+				rowData[field] = certificate.data.subjectAltName?.ipAddresses?.join(", ") || "";
+				break;
+
+			case "Issuer":
+				rowData[field] = certificate.data.issuer?.commonName || "";
+				break;
+
+			default:
+				rowData[field] = certificate[field] || "";
+				break;
+		}
+	});
+
+	return rowData;
+}
+
+function initializeStoreComboboxAndSelectItem() {
+	const storeList = menuTree.map((store) => {
+		return { text: store.label, value: store.key };
+	});
+	webMI.trigger.fire("setItems", storeList, "store_picker");
+	webMI.trigger.fire("setSelectedItem", storeList[0].text, "store_picker");
+}
+
+/**
+ * Reloads the certificate data table for the current store and type.
+ *
+ * Fetches certificates, updates the table, and handles errors. Clears existing data
+ * and configures columns before reloading.
+ *
+ * @async
+ * @returns {Promise<void>} Resolves when the table reload is complete.
+ */
+async function reloadTable() {
+	if (reloadInProgress) {
+		return;
+	}
+
+	reloadInProgress = true;
+	webMI.trigger.fire("com.atvise.setActive", false, "btn_reload");
+	tableControllerCertificates.clearData();
+	tableControllerCertificates.grid.setColumns(getTableConfig({ onlyVisible: true }));
+	tableControllerCertificates.gridMenu.setColumns(getTableConfig());
+
+	// When reloading, we implicitly reset all checkmarks to not-checked, so we
+	//  also need to reset the state of the action buttons.
+	setButtonsActive(false);
+
+	try {
+		await certificateManager
+			.list(currentStore, TableToCertificateTypes[currentTableType])
+			.then((certificates) => {
+				// Map server data to a flat structure based on the table's columns.
+				let tableData = certificates.map((certificate) => {
+					return mapFieldsToColumns(getTableConfig(), certificate);
+				});
+
+				currentTableData = tableData;
+
+				tableControllerCertificates.addData({ result: tableData });
+				setTimeout(() => {
+					reloadInProgress = false;
+					webMI.trigger.fire("com.atvise.setActive", true, "btn_reload");
+				}, 250);
+			})
+			.catch((error) => {
+				if (!error.message.includes("bad user access denied")) {
+					console.error(`Error fetching data:`, error);
+				}
+				showExceptionMessage(error);
+				reloadInProgress = false;
+				webMI.trigger.fire("com.atvise.setActive", true, "btn_reload");
+				return { result: [] };
+			});
+	} catch (error) {
+		console.error("Error updating table:", error);
+		showExceptionMessage(error);
+		reloadInProgress = false;
+		webMI.trigger.fire("com.atvise.setActive", true, "btn_reload");
+	}
+
+	const visibleButtons = menuTree
+		.find((store) => store.key === currentStore)
+		.children.find((child) => child.key === currentTableType).buttons;
+
+	buttons.forEach((button) => {
+		webMI.gfx.setVisible(`btn_${button}`, false);
+	});
+
+	visibleButtons.forEach((visibleButton) => {
+		webMI.gfx.setVisible(`btn_${visibleButton}`, null);
+	});
+}
+
+/**
+ * Displays an error message in a dialog window.
+ *
+ * Opens a modal dialog to inform the user of an exception, showing the provided exception message.
+ *
+ * @param {Error} exception - The exception object containing the error message to display.
+ * @returns {void}
+ */
+function showExceptionMessage(exception) {
+	let message;
+	if (exception.message.includes("bad user access denied")) {
+		message = "T{Permission(s) missing for certificate management!}";
+	} else {
+		message = exception.message;
+	}
+
+	webMI.display.openWindow({
+		display: "SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Advanced.dialogs.message_dialog_small",
+		height: 140 + POPUP_TITLE_BAR_HEIGHT,
+		width: 400,
+		modal: true,
+		resizable: false,
+		movable: true,
+		scrollbars: false,
+		menubar: false,
+		status: false,
+		toolbar: false,
+		title: "T{Error}",
+		query: {
+			headline: "T{Error}",
+			message: message,
+			button: "T{OK}"
+		}
+	});
+	return;
+}
+
+/**
+ * Displays a success message in a dialog window.
+ *
+ * Opens a modal dialog to inform the user of a successful operation, showing the provided message.
+ *
+ * @param {string} message - The success message to display.
+ * @returns {void}
+ */
+function showSuccessMessage(message) {
+	webMI.display.openWindow({
+		display: "SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Advanced.dialogs.message_dialog_small",
+		height: 140 + POPUP_TITLE_BAR_HEIGHT,
+		width: 400,
+		modal: true,
+		resizable: false,
+		movable: true,
+		scrollbars: false,
+		menubar: false,
+		status: false,
+		toolbar: false,
+		title: "T{Info}",
+		query: {
+			headline: "T{Info}",
+			message: message,
+			button: "T{OK}"
+		}
+	});
+
+	return;
+}
+
+/**
+ * Displays the endpoint form for certificate management in a modal dialog.
+ *
+ * Opens a modal window that allows users to view or edit endpoint details for certificates.
+ * The form includes fields such as application URI, paths for storing certificates, and
+ * various organizational details.
+ *
+ * @returns {void}
+ */
+function showCertificateForm() {
+	const defaults = {};
+
+	certificateManager
+		.getDefaults(currentStore)
+		.then((serverDefaults) => {
+			Object.assign(defaults, {
+				applicationUri: serverDefaults.data.subjectAltName.uri,
+				pathToStore: serverDefaults.storePath,
+				pathToCertIni: serverDefaults.iniPath,
+				commonName: serverDefaults.data.subject.commonName,
+				country: serverDefaults.data.subject.country,
+				dnsName: serverDefaults.data.subjectAltName.dnsNames,
+				ipAddress: serverDefaults.data.subjectAltName.ipAddresses,
+				locality: serverDefaults.data.subject.locality,
+				organization: serverDefaults.data.subject.organization,
+				organizationalUnit: serverDefaults.data.subject.organizationalUnit,
+				state: serverDefaults.data.subject.state,
+				certificate_description: `${currentStore}/${TableToCertificateTypes[currentTableType]}`,
+				validity: serverDefaults.data.fields.validTime,
+				keyLength: serverDefaults.data.fields.keyLength
+			});
+
+			webMI.display.openWindow({
+				display: "SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Advanced.admin.dialogs.certificates_endpoint_editor",
+				height: 630 + POPUP_TITLE_BAR_HEIGHT,
+				width: 1013,
+				modal: true,
+				resizable: false,
+				movable: true,
+				scrollbars: false,
+				menubar: false,
+				status: false,
+				toolbar: false,
+				title: "T{New Self-Signed Certificate}",
+				query: defaults
+			});
+		})
+		.catch((err) => {
+			toast.show(err, "error");
+		});
+}
+
+/**
+ * Displays the endpoint form for certificate management in a modal dialog.
+ *
+ * Opens a modal window that allows users to view or edit endpoint details for certificates.
+ * The form includes fields such as application URI, paths for storing certificates, and
+ * various organizational details.
+ *
+ * @returns {void}
+ */
+function showCertificateDetails(certificateData) {
+	webMI.display.openWindow({
+		display: "SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Advanced.admin.dialogs.certificate_details_viewer",
+		height: 800 + POPUP_TITLE_BAR_HEIGHT,
+		width: 500,
+		modal: true,
+		resizable: false,
+		movable: true,
+		scrollbars: false,
+		menubar: false,
+		status: false,
+		toolbar: false,
+		title: "T{Certificate Details}",
+		query: {
+			certificateData: JSON.stringify(certificateData)
+		}
+	});
+}
+
+/**
+ * Opens a modal dialog for certificate uploads based on the current store and table type.
+ * Supports configurations for SERVER, MIRROR, and HTTPS stores with options
+ * for DER/PEM pairs or single-file uploads.
+ *
+ * @returns {void}
+ */
+
+function showCertificateUploadDialog() {
+	const configMapping = {
+		[TableStores.SERVER]: {
+			[CertificateTableTypes.OWN_CERTIFICATES]: {
+				certificate_description: "T{OPC UA DER/PEM-Pair}",
+				fileType1: "der",
+				fileType2: "pem",
+				file1Label: "T{Certificate (.der)} *",
+				file2Label: "T{Private Key (.pem)} *",
+				fileNameLabel: "T{Shared Filename} *"
+			},
+			[CertificateTableTypes.PEER_CERTIFICATES]: {
+				certificate_description: "T{OPC UA Client Certificate (DER)}",
+				fileType1: "der",
+				fileType2: "",
+				file1Label: "T{Certificate (.der)} *",
+				file2Label: "",
+				fileNameLabel: ""
+			},
+			[CertificateTableTypes.ISSUER_CERTIFICATES]: {
+				certificate_description: "T{OPC UA Client Certificate (DER)}",
+				fileType1: "der",
+				fileType2: "",
+				file1Label: "T{Certificate (.der)} *",
+				file2Label: "",
+				fileNameLabel: ""
+			},
+			[CertificateTableTypes.USER_PEER_CERTIFICATES]: {
+				certificate_description: "T{OPC UA Client Certificate (DER)}",
+				fileType1: "der",
+				fileType2: "",
+				file1Label: "T{Certificate (.der)} *",
+				file2Label: "",
+				fileNameLabel: ""
+			}
+		},
+		[TableStores.MIRROR]: {
+			[CertificateTableTypes.OWN_CERTIFICATES]: {
+				certificate_description: "T{OPC UA DER/PEM-Pair}",
+				fileType1: "der",
+				fileType2: "pem",
+				file1Label: "T{Certificate (.der)} *",
+				file2Label: "T{Private Key (.pem)} *",
+				fileNameLabel: "T{Shared Filename} *"
+			},
+			[CertificateTableTypes.PEER_CERTIFICATES]: {
+				certificate_description: "T{OPC UA Client Certificate (DER)}",
+				fileType1: "der",
+				fileType2: "",
+				file1Label: "T{Certificate (.der)} *",
+				file2Label: "",
+				fileNameLabel: ""
+			},
+			[CertificateTableTypes.ISSUER_CERTIFICATES]: {
+				certificate_description: "T{OPC UA Client Certificate (DER)}",
+				fileType1: "der",
+				fileType2: "",
+				file1Label: "T{Certificate (.der)} *",
+				file2Label: "",
+				fileNameLabel: ""
+			},
+			[CertificateTableTypes.USER_CERTIFICATES]: {
+				certificate_description: "T{OPC UA DER/PEM-Pair}",
+				fileType1: "der",
+				fileType2: "pem",
+				file1Label: "T{Certificate (.der)} *",
+				file2Label: "T{Private Key (.pem)} *",
+				fileNameLabel: "T{Shared Filename} *"
+			},
+			[CertificateTableTypes.USER_ISSUER_CERTIFICATES]: {
+				certificate_description: "T{OPC UA Client Certificate (DER)}",
+				fileType1: "der",
+				fileType2: "",
+				file1Label: "T{Certificate (.der)} *",
+				file2Label: "",
+				fileNameLabel: ""
+			}
+		},
+		[TableStores.HTTPS]: {
+			[CertificateTableTypes.OWN_CERTIFICATES]: {
+				certificate_description: "T{HTTPS Certificate (PEM)}",
+				fileType1: "pem",
+				fileType2: "",
+				file1Label: "T{Certificate (.pem)} *",
+				file2Label: "",
+				fileNameLabel: ""
+			}
+		}
+	};
+
+	let certificate_description = "T{Unknown certificate type}";
+	let fileType1 = "";
+	let fileType2 = "";
+	let file1Label = "";
+	let file2Label = "";
+	let fileNameLabel = "";
+
+	const storeConfig = configMapping[currentStore];
+	if (storeConfig) {
+		const tableTypeConfig = storeConfig[currentTableType];
+		if (tableTypeConfig) {
+			({ certificate_description, fileType1, fileType2, file1Label, file2Label, fileNameLabel } = tableTypeConfig);
+		}
+	}
+
+	webMI.display.openWindow({
+		display: "SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Advanced.admin.dialogs.certificate_upload",
+		height: 405 + POPUP_TITLE_BAR_HEIGHT,
+		width: 430,
+		modal: true,
+		resizable: false,
+		movable: true,
+		scrollbars: false,
+		menubar: false,
+		status: false,
+		toolbar: false,
+		title: "T{Certificate Upload}",
+		query: {
+			certificate_description,
+			fileType1,
+			fileType2,
+			file1Label,
+			file2Label,
+			fileNameLabel
+		}
+	});
+}
+
+/**
+ * Displays a confirmation dialog for deleting selected certificates.
+ * Opens a modal dialog to prompt the user for confirmation before deleting the selected certificates.
+ *
+ * @returns {void}
+ */
+function showDeletePrompt() {
+	webMI.display.openWindow({
+		display: "SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Advanced.dialogs.message_dialog",
+		height: 240 + POPUP_TITLE_BAR_HEIGHT,
+		width: 400,
+		modal: true,
+		resizable: false,
+		movable: true,
+		scrollbars: false,
+		menubar: false,
+		status: false,
+		toolbar: false,
+		title: "T{Delete Certificate}",
+		query: {
+			headline: "T{Delete Certificate}",
+			msg1: `T{Please confirm that you want to delete the selected certificates!}`,
+			btn1: "T{Delete}",
+			btn2: "T{Cancel}",
+			action_btn1: "com.atvise.deleteCertificates"
+		}
+	});
+}
+
+/**
+ * Represents a toast notification system for displaying temporary messages.
+ *
+ * The `Toast` class creates a fixed-position container in the browser window to
+ * show toast notifications with different types (info, success, error).
+ * Notifications automatically fade out after a specified duration.
+ */
+class Toast {
+	constructor() {
+		// Create the toast container
+		this.toastContainer = webMI.rootWindow.document.createElement("div");
+		this.toastContainer.style.position = "fixed";
+		this.toastContainer.style.top = "20px";
+		this.toastContainer.style.right = "20px";
+		this.toastContainer.style.zIndex = "9999";
+		this.toastContainer.style.fontFamily = "Arial,Helvetica Neue,Helvetica,sans-serif";
+		webMI.rootWindow.document.body.appendChild(this.toastContainer);
+	}
+
+	/**
+	 * Displays a toast notification with the specified message and type.
+	 *
+	 * @param {string} message - The message to display in the toast.
+	 * @param {string} [type='info'] - The type of the toast (info, success, error).
+	 * @param {number} [duration=3000] - The duration in milliseconds before the toast fades out.
+	 */
+	show(message, type = "info", duration = 3000) {
+		// Create a new toast element
+		const toast = webMI.rootWindow.document.createElement("div");
+		toast.innerHTML = message;
+		toast.style.minWidth = "250px";
+		toast.style.margin = "10px";
+		toast.style.padding = "15px";
+		toast.style.borderRadius = "5px";
+		toast.style.color = "#fff";
+		toast.style.opacity = "0.9";
+		toast.style.transition = "opacity 0.5s ease, transform 0.5s ease";
+		toast.style.display = "flex";
+		toast.style.alignItems = "center";
+
+		// Set background color based on type
+		if (type === "success") {
+			toast.style.backgroundColor = "#4caf50"; // Green
+		} else if (type === "error") {
+			toast.style.backgroundColor = "#f44336"; // Red
+		} else {
+			toast.style.backgroundColor = "#2196F3"; // Blue (info)
+		}
+
+		// Add the toast to the container
+		this.toastContainer.appendChild(toast);
+
+		// Fade out the toast before removing it
+		setTimeout(() => {
+			toast.style.opacity = "0";
+			toast.style.transform = "translateY(-20px)";
+		}, duration - 500); // Fade out before the duration ends
+
+		// Remove the toast from the DOM after the duration
+		setTimeout(() => {
+			this.toastContainer.removeChild(toast);
+		}, duration);
+	}
+}
+
+const toast = new Toast();
+]]]]><![CDATA[></code>
+</script>
+]]></uax:XmlElement>
+		</Value>
+	</UAVariable>
+	<UAObject NodeId="ns=1;s=SYSTEM" BrowseName="1:SYSTEM">
+		<DisplayName Locale="en">SYSTEM</DisplayName>
+		<Description Locale="en">SYSTEM</Description>
+		<References>
+			<Reference ReferenceType="HasComponent" IsForward="false">i=85</Reference>
+			<Reference ReferenceType="HasTypeDefinition">FolderType</Reference>
+		</References>
+		<Extensions>
+			<atvise Upstream="true" ExportedNodeId="ns=1;s=SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS" ExportedBrowseName="1:OBJECTDISPLAYS"></atvise>
+		</Extensions>
+	</UAObject>
+	<UAObject NodeId="ns=1;s=SYSTEM.LIBRARY" BrowseName="1:LIBRARY">
+		<DisplayName Locale="en">LIBRARY</DisplayName>
+		<Description Locale="en">LIBRARY</Description>
+		<References>
+			<Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=SYSTEM</Reference>
+			<Reference ReferenceType="HasTypeDefinition">FolderType</Reference>
+		</References>
+		<Extensions>
+			<atvise Upstream="true"></atvise>
+		</Extensions>
+	</UAObject>
+	<UAObject NodeId="ns=1;s=SYSTEM.LIBRARY.ATVISE" BrowseName="1:ATVISE">
+		<DisplayName Locale="en">ATVISE</DisplayName>
+		<Description Locale="en">ATVISE</Description>
+		<References>
+			<Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=SYSTEM.LIBRARY</Reference>
+			<Reference ReferenceType="HasTypeDefinition">FolderType</Reference>
+		</References>
+		<Extensions>
+			<atvise Upstream="true"></atvise>
+		</Extensions>
+	</UAObject>
+	<UAObject NodeId="ns=1;s=SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS" BrowseName="1:OBJECTDISPLAYS">
+		<DisplayName Locale="en">OBJECTDISPLAYS</DisplayName>
+		<Description Locale="en">OBJECTDISPLAYS</Description>
+		<References>
+			<Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=SYSTEM.LIBRARY.ATVISE</Reference>
+			<Reference ReferenceType="HasTypeDefinition">FolderType</Reference>
+		</References>
+	</UAObject>
+	<UAObject NodeId="ns=1;s=SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Advanced" BrowseName="1:Advanced">
+		<DisplayName Locale="en">Advanced</DisplayName>
+		<Description Locale="en">Advanced</Description>
+		<References>
+			<Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS</Reference>
+			<Reference ReferenceType="HasTypeDefinition">FolderType</Reference>
+		</References>
+	</UAObject>
+	<UAObject NodeId="ns=1;s=SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Advanced.admin" BrowseName="1:admin">
+		<DisplayName Locale="en">admin</DisplayName>
+		<Description Locale="en">admin</Description>
+		<References>
+			<Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Advanced</Reference>
+			<Reference ReferenceType="HasTypeDefinition">FolderType</Reference>
+		</References>
+	</UAObject>
+	<UAObject NodeId="ns=1;s=SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Advanced.admin.dialogs" BrowseName="1:dialogs">
+		<DisplayName Locale="en">dialogs</DisplayName>
+		<Description Locale="en">dialogs</Description>
+		<References>
+			<Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Advanced.admin</Reference>
+			<Reference ReferenceType="HasTypeDefinition">FolderType</Reference>
+		</References>
+	</UAObject>
+	<UAVariable NodeId="ns=1;s=SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Advanced.admin.dialogs.certificate_details_viewer" BrowseName="1:certificate_details_viewer" DataType="XmlElement" AccessLevel="7" UserAccessLevel="7" Historizing="true">
+		<DisplayName Locale="en">certificate_details_viewer</DisplayName>
+		<Description Locale="en">certificate_details_viewer</Description>
+		<References>
+			<Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Advanced.admin.dialogs</Reference>
+			<Reference ReferenceType="HasTypeDefinition">DisplayType</Reference>
+		</References>
+		<Value>
+			<uax:XmlElement><![CDATA[<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<svg height="800" version="1.2" width="500" xmlns="http://www.w3.org/2000/svg" xmlns:atv="http://webmi.atvise.com/2007/svgext" xmlns:xlink="http://www.w3.org/1999/xlink">
+ <defs>
+  <linearGradient gradientUnits="objectBoundingBox" id="linear_0" x1="0" x2="1" y1="0" y2="1">
+   <stop offset="0" stop-color="#a5a5a5"/>
+   <stop offset="1" stop-color="#a5a5a5" stop-opacity="0"/>
+  </linearGradient>
+  <linearGradient gradientUnits="objectBoundingBox" id="linear_1" x1="0" x2="1" y1="0" y2="1">
+   <stop offset="0" stop-color="#000000"/>
+   <stop offset="1" stop-color="#000000" stop-opacity="0"/>
+  </linearGradient>
+ </defs>
+ <desc>Dialog for viewing certificate details.</desc>
+ <title>Certificate Details Viewer</title>
+ <rect atv:refpx="250" atv:refpy="401.5" fill="$FILLCOLOR$" height="803" id="background" stroke="none" stroke-width="0" width="500" x="0" y="0"/>
+ <metadata>
+  <atv:parameter behavior="optional" defaultvalue="T{Endpoint Certificate}" desc="headline" name="headline" substitute="$HEADLINE$" valuetype="trstring"/>
+  <atv:parameter behavior="optional" defaultvalue="SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Symbols.20x20.user" desc="symbol" name="symbol" substitute="$SYMBOL$" valuetype="display"/>
+  <atv:parameter behavior="optional" defaultvalue="SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Advanced.keyboard.keyboard" desc="keyboard display" name="keyboard" valuetype="display"/>
+  <atv:parameter behavior="optional" defaultvalue="SYSTEM.GLOBALS.atvFontColor" desc="font color" name="fontColor" substitute="$FONTCOLOR$" valuetype="global"/>
+  <atv:parameter behavior="optional" defaultvalue="SYSTEM.GLOBALS.atvFillColor" desc="fill color" name="fillColor" substitute="$FILLCOLOR$" valuetype="global"/>
+  <atv:parameter behavior="optional" defaultvalue="SYSTEM.GLOBALS.atvSymbolColor" desc="symbol color" name="symbolColor" valuetype="global"/>
+  <atv:gridconfig enabled="false" gridstyle="lines" height="20" width="20"/>
+  <atv:snapconfig enabled="true" height="1" width="1"/>
+ </metadata>
+ <style>
+    @keyframes highlightAnimation {
+      0% {
+        fill: #f2d600;
+      }
+      100% {
+        fill: white;
+      }
+    }
+
+    /* Apply the animation to the rectangle */
+    .highlight {
+      animation: highlightAnimation 500ms ease-out forwards;
+    }
+  </style>F
+ <rect atv:refpx="-223.142" atv:refpy="-179" fill="#ffffff" height="310" id="key_value_pairs_background" rx="10" ry="10" stroke="none" stroke-width="0" width="460" x="20" y="100"/>
+ <svg atv:dynamic="true" atv:refpx="258" atv:refpy="766" height="30" id="close_button" width="80" x="210" xlink:href="SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Advanced.button" y="751">
+  <atv:argument name="label" value="T{Close}"/>
+  <atv:argument name="tabIndex" value="32"/>
+  <atv:argument name="borderVisible" value="true"/>
+  <atv:argument name="extraBorderColor" value="#ffffff"/>
+ </svg>
+ <text atv:refpx="237.971" atv:refpy="56" fill="$FONTCOLOR$" font-family="Arial" font-size="20" id="headline" text-anchor="middle" x="250" y="60.5">T{Certificate Details}</text>
+ <image atv:refpx="763.764" atv:refpy="315.082" height="0" id="qr_image" width="0" x="650" xlink:href="" y="240"/>
+ <svg atv:refpx="88" atv:refpy="52" height="20" id="id_4" transform="matrix(4,0,0,4,0,0)" width="20" x="11.25" xlink:href="SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Symbols.20x20.certificate" y="3">
+  <atv:argument name="symbolColor" prefix="symbolColor"/>
+ </svg>
+ <rect atv:refpx="-223.142" atv:refpy="141" fill="#ffffff" height="310" id="value_details_background" rx="10" ry="10" stroke="none" stroke-width="0" width="460" x="20" y="420"/>
+ <foreignObject height="290" id="fo_table" width="440" x="30" y="110">
+  <div style="width:100%; height:100%; overflow:auto; max-height: 290px;" xmlns="http://www.w3.org/1999/xhtml">
+   <div id="table"/>
+  </div>
+ </foreignObject>
+ <foreignObject height="290" id="fo_value_details" width="440" x="30" y="430">
+  <div style="width:100%; height:100%; overflow:auto; max-height: 290px;" xmlns="http://www.w3.org/1999/xhtml">
+   <div id="value_details"/>
+  </div>
+ </foreignObject>
+ <script atv:desc="" atv:href="SYSTEM.LIBRARY.ATVISE.DISPLAYSCRIPTS.admin.dialogs.certificate_details_viewer" atv:name="certificate_details_viewer" atv:type="text/ecmascript"/>
+ <script atv:desc="" atv:name="" type="text/ecmascript"/>
+</svg>
+]]></uax:XmlElement>
+		</Value>
+	</UAVariable>
+	<UAVariable NodeId="ns=1;s=SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Advanced.admin.dialogs.certificate_upload" BrowseName="1:certificate_upload" DataType="XmlElement" AccessLevel="7" UserAccessLevel="7" Historizing="true">
+		<DisplayName Locale="en">certificate_upload</DisplayName>
+		<Description Locale="en">certificate_upload</Description>
+		<References>
+			<Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Advanced.admin.dialogs</Reference>
+			<Reference ReferenceType="HasTypeDefinition">DisplayType</Reference>
+		</References>
+		<Value>
+			<uax:XmlElement><![CDATA[<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<svg height="405" version="1.2" width="431" xmlns="http://www.w3.org/2000/svg" xmlns:atv="http://webmi.atvise.com/2007/svgext" xmlns:xlink="http://www.w3.org/1999/xlink">
+ <defs>
+  <linearGradient gradientUnits="objectBoundingBox" id="linear_0" x1="0" x2="1" y1="0" y2="1">
+   <stop offset="0" stop-color="#a5a5a5"/>
+   <stop offset="1" stop-color="#a5a5a5" stop-opacity="0"/>
+  </linearGradient>
+  <linearGradient gradientUnits="objectBoundingBox" id="linear_1" x1="0" x2="1" y1="0" y2="1">
+   <stop offset="0" stop-color="#000000"/>
+   <stop offset="1" stop-color="#000000" stop-opacity="0"/>
+  </linearGradient>
+ </defs>
+ <desc>Dialog for uploading certificates and private keys.</desc>
+ <title>Certificate Upload</title>
+ <metadata>
+  <atv:parameter behavior="optional" defaultvalue="T{Certificate Upload}" desc="headline" name="headline" substitute="$HEADLINE$" valuetype="trstring"/>
+  <atv:parameter behavior="optional" defaultvalue="SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Symbols.20x20.user" desc="symbol" name="symbol" substitute="$SYMBOL$" valuetype="display"/>
+  <atv:parameter behavior="optional" defaultvalue="SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Advanced.keyboard.keyboard" desc="keyboard display" name="keyboard" valuetype="display"/>
+  <atv:parameter behavior="optional" defaultvalue="SYSTEM.GLOBALS.atvFontColor" desc="font color" name="fontColor" substitute="$FONTCOLOR$" valuetype="global"/>
+  <atv:parameter behavior="optional" defaultvalue="SYSTEM.GLOBALS.atvFillColor" desc="fill color" name="fillColor" substitute="$FILLCOLOR$" valuetype="global"/>
+  <atv:parameter behavior="optional" defaultvalue="SYSTEM.GLOBALS.atvSymbolColor" desc="symbol color" name="symbolColor" substitute="$SYMBOLCOLOR$" valuetype="global"/>
+  <atv:parameter behavior="optional" defaultvalue="" desc="certificate description" name="certificate_description" substitute="$CERTIFICATE_DESCRIPTION$" valuetype="string"/>
+  <atv:parameter behavior="optional" defaultvalue="" desc="file type 1" name="fileType1" substitute="$FILE_TYPE_1$" valuetype="string"/>
+  <atv:parameter behavior="optional" defaultvalue="" desc="file type 2" name="fileType2" substitute="$FILE_TYPE_2$" valuetype="string"/>
+  <atv:parameter behavior="optional" defaultvalue="" desc="file 1 label" name="file1Label" substitute="$FILE1_LABEL$" valuetype="string"/>
+  <atv:parameter behavior="optional" defaultvalue="" desc="file 2 label" name="file2Label" substitute="$FILE2_LABEL$" valuetype="string"/>
+  <atv:parameter behavior="optional" defaultvalue="" desc="file name label" name="fileNameLabel" substitute="$FILE_NAME_LABEL$" valuetype="string"/>
+  <atv:parameter behavior="optional" defaultvalue="" desc="path to store" name="pathToStore" substitute="$PATH_TO_STORE$" valuetype="string"/>
+  <atv:parameter behavior="optional" defaultvalue="" desc="path to cert.ini" name="pathToCertIni" substitute="$PATH_TO_CERT_INI$" valuetype="string"/>
+  <atv:gridconfig enabled="false" gridstyle="lines" height="20" width="20"/>
+  <atv:snapconfig enabled="true" height="1" width="1"/>
+ </metadata>
+ <g atv:insensitive="true" atv:refpx="0" atv:refpy="0" id="id_0" transform="matrix(1,0,0,0.5159,0,0)">
+  <rect atv:refpx="215.5" atv:refpy="392.5" fill="$FILLCOLOR$" height="785.00" id="id_3" width="431.00" x="0" y="0"/>
+ </g>
+ <rect atv:refpx="216" atv:refpy="218" fill="#ffffff" height="50" id="file2_background" rx="10" ry="10" stroke="none" stroke-width="0" width="390" x="21" y="228"/>
+ <svg atv:dynamic="true" atv:refpx="174" atv:refpy="379.208" height="30" id="btn_upload" width="80" x="126" xlink:href="SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Advanced.button" y="359.208">
+  <atv:argument name="label" value="T{Upload}"/>
+  <atv:argument name="tabIndex" value="31"/>
+  <atv:argument name="borderVisible" value="true"/>
+  <atv:argument name="extraBorderColor" value="#ffffff"/>
+ </svg>
+ <svg atv:dynamic="true" atv:refpx="268" atv:refpy="489.208" height="30" id="btn_cancel" width="80" x="220" xlink:href="SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Advanced.button" y="359.208">
+  <atv:argument name="label" value="T{Cancel}"/>
+  <atv:argument name="tabIndex" value="32"/>
+  <atv:argument name="borderVisible" value="true"/>
+  <atv:argument name="extraBorderColor" value="#ffffff"/>
+ </svg>
+ <text atv:refpx="205.512" atv:refpy="27.208" fill="$FONTCOLOR$" font-family="Arial" font-size="20" id="headline" text-anchor="middle" x="215.055" y="31.708">$HEADLINE$</text>
+ <rect atv:refpx="-92.571" atv:refpy="45.208" fill="#ffffff" height="40" id="user_background" rx="7.692" ry="8" stroke="none" stroke-width="0" width="300" x="66" y="46.208"/>
+ <text atv:refpx="238" atv:refpy="341.708" fill="#ff0004" font-family="Arial" font-size="14" id="error_message" text-anchor="middle" visibility="hidden" x="216" y="346.208">&lt;errormessage></text>
+ <svg atv:refpx="99.2" atv:refpy="59.208" height="20" id="id_4" transform="matrix(1.6,0,0,1.6,0,0)" width="20" x="51.25" xlink:href="SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Symbols.20x20.certificate" y="5.13">
+  <atv:argument name="symbolColor" prefix="symbolColor"/>
+ </svg>
+ <svg atv:refpx="346" atv:refpy="219" height="30" id="file2_btn_file" transform="matrix(1.375,0,0,1,0,0)" width="80" x="211.635" xlink:href="SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Advanced.button" y="238">
+  <atv:argument name="label" value="T{Choose File}"/>
+  <atv:argument name="tabIndex" value="2"/>
+  <atv:overwrite id="id_6" transform="matrix(0.7273,0,0,1,0,0)" width="108.001"/>
+  <atv:overwrite id="button_label_2" transform="matrix(0.7273,0,0,1,0,0)" x="55"/>
+  <atv:overwrite id="button_label_1" transform="matrix(0.7273,0,0,1,0,0)" x="55"/>
+  <atv:overwrite id="button_label" transform="matrix(0.7273,0,0,1,0,0)" x="55"/>
+  <atv:overwrite id="button_symbol_bottom" transform="matrix(0.4364,0,0,0.6,0,0)" x="81.501"/>
+  <atv:overwrite id="button_symbol_top" transform="matrix(0.4364,0,0,0.6,0,0)" x="81.501"/>
+  <atv:overwrite id="button_symbol" transform="matrix(0.7273,0,0,1,0,0)" x="45"/>
+  <atv:overwrite id="button_stroke" transform="matrix(0.7273,0,0,1,0,0)" width="106.001"/>
+  <atv:overwrite id="button_bg" transform="matrix(0.7273,0,0,1,0,0)" width="108.001"/>
+  <atv:overwrite id="outer_frame" transform="matrix(0.7273,0,0,1,0,0)" width="110.001"/>
+ </svg>
+ <foreignObject height="30" id="file2_fo_file_field" width="250" x="31" y="238">
+  <div id="selectedFile2" style="width: 100%; height: 30px; display: flex; align-items: center; font-family: Arial;font-size: 16px;color: $FONTCOLOR$" xmlns="http://www.w3.org/1999/xhtml">T{No file selected.}</div>
+ </foreignObject>
+ <rect atv:refpx="-185.142" atv:refpy="88" fill="#ffffff" height="50" id="file1_background" rx="10" ry="10" stroke="none" stroke-width="0" width="390" x="21" y="138"/>
+ <svg atv:refpx="345.999" atv:refpy="159" height="30" id="file1_btn_file" transform="matrix(1.375,0,0,1,0,0)" width="80" x="211.636" xlink:href="SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Advanced.button" y="148">
+  <atv:argument name="label" value="T{Choose File}"/>
+  <atv:argument name="tabIndex" value="1"/>
+  <atv:overwrite id="id_6" transform="matrix(0.7273,0,0,1,0,0)" width="108"/>
+  <atv:overwrite id="button_label_2" transform="matrix(0.7273,0,0,1,0,0)" x="55"/>
+  <atv:overwrite id="button_label_1" transform="matrix(0.7273,0,0,1,0,0)" x="55"/>
+  <atv:overwrite id="button_label" transform="matrix(0.7273,0,0,1,0,0)" x="55"/>
+  <atv:overwrite id="button_symbol_bottom" transform="matrix(0.4364,0,0,0.6,0,0)" x="81.5"/>
+  <atv:overwrite id="button_symbol_top" transform="matrix(0.4364,0,0,0.6,0,0)" x="81.5"/>
+  <atv:overwrite id="button_symbol" transform="matrix(0.7273,0,0,1,0,0)" x="45"/>
+  <atv:overwrite id="button_stroke" transform="matrix(0.7273,0,0,1,0,0)" width="106"/>
+  <atv:overwrite id="button_bg" transform="matrix(0.7273,0,0,1,0,0)" width="108"/>
+  <atv:overwrite id="outer_frame" transform="matrix(0.7273,0,0,1,0,0)" width="110"/>
+ </svg>
+ <text atv:refpx="75.898" atv:refpy="124" fill="$FONTCOLOR$" font-family="Arial" font-size="16" id="file1_label" x="27.5" y="128.5">$FILE1_LABEL$</text>
+ <foreignObject height="30" id="file1_fo_file_field" width="250" x="31" y="148">
+  <div id="selectedFile1" style="width: 100%; height: 30px; display: flex; align-items: center; font-family: Arial;font-size: 16px;color: $FONTCOLOR$" xmlns="http://www.w3.org/1999/xhtml">T{No file selected.}</div>
+ </foreignObject>
+ <text atv:refpx="76.898" atv:refpy="215" fill="$FONTCOLOR$" font-family="Arial" font-size="16" id="file2_label" x="28.5" y="219.5">$FILE2_LABEL$</text>
+ <text atv:refpx="229.927" atv:refpy="68.208" fill="$FONTCOLOR$" font-family="Arial" font-size="18" id="certificate_description" text-anchor="middle" x="216.5" y="72.708">$CERTIFICATE_DESCRIPTION$</text>
+ <foreignObject height="120" id="upload_form" width="270" x="-284" y="7" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <div style="margin-bottom: 10px;">
+   <input accept=".$FILE_TYPE_1$" id="fileInput1" name="file1" type="file" xmlns="http://www.w3.org/1999/xhtml"/>
+  </div>
+  <div style="margin-bottom: 10px;">
+   <input accept=".$FILE_TYPE_2$" id="fileInput2" name="file2" type="file" xmlns="http://www.w3.org/1999/xhtml"/>
+  </div>
+  <div>
+   <input id="filename" name="filename" placeholder="Enter filename" type="text" xmlns="http://www.w3.org/1999/xhtml"/>
+  </div>
+ </foreignObject>
+ <script atv:desc="" atv:href="SYSTEM.LIBRARY.ATVISE.DISPLAYSCRIPTS.admin.dialogs.certificate_upload" atv:name="certificate_upload" atv:type="text/ecmascript"/>
+ <script atv:desc="" atv:name="" type="text/ecmascript"/>
+ <text atv:refpx="25.475" atv:refpy="313.5" fill="#575757" font-family="Arial" font-size="16" font-weight="bold" id="saved_as_filename" visibility="hidden" x="26.5" y="319.5">PEM filename</text>
+ <text atv:refpx="28.279" atv:refpy="293.5" fill="#575757" font-family="Arial" font-size="16" id="label_saved_as" visibility="hidden" x="26" y="299.5">T{Private key will be saved as}:</text>
+</svg>
+]]></uax:XmlElement>
+		</Value>
+	</UAVariable>
+	<UAVariable NodeId="ns=1;s=SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Advanced.admin.dialogs.certificates_endpoint_editor" BrowseName="1:certificates_endpoint_editor" DataType="XmlElement" AccessLevel="7" UserAccessLevel="7" Historizing="true">
+		<DisplayName Locale="en">certificates_endpoint_editor</DisplayName>
+		<Description Locale="en">certificates_endpoint_editor</Description>
+		<References>
+			<Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Advanced.admin.dialogs</Reference>
+			<Reference ReferenceType="HasTypeDefinition">DisplayType</Reference>
+		</References>
+		<Value>
+			<uax:XmlElement><![CDATA[<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<svg height="630" version="1.2" width="1013" xmlns="http://www.w3.org/2000/svg" xmlns:atv="http://webmi.atvise.com/2007/svgext" xmlns:xlink="http://www.w3.org/1999/xlink">
+ <desc>Dialog for creating self-signed certificates.</desc>
+ <title>Create Certificate</title>
+ <defs>
+  <linearGradient gradientUnits="objectBoundingBox" id="linear_0" x1="0" x2="1" y1="0" y2="1">
+   <stop offset="0" stop-color="#a5a5a5"/>
+   <stop offset="1" stop-color="#a5a5a5" stop-opacity="0"/>
+  </linearGradient>
+  <linearGradient gradientUnits="objectBoundingBox" id="linear_1" x1="0" x2="1" y1="0" y2="1">
+   <stop offset="0" stop-color="#000000"/>
+   <stop offset="1" stop-color="#000000" stop-opacity="0"/>
+  </linearGradient>
+ </defs>
+ <rect atv:refpx="506.5" atv:refpy="314.792" fill="$FILLCOLOR$" height="630" id="background" stroke="none" stroke-width="0" width="1013" x="0" y="-0.208"/>
+ <rect atv:refpx="197.929" atv:refpy="12" fill="#ffffff" height="40" id="user_background" rx="7.692" ry="8" stroke="none" stroke-width="0" width="300" x="356.5" y="48"/>
+ <metadata>
+  <atv:parameter behavior="optional" defaultvalue="T{Endpoint Certificate}" desc="headline" name="headline" substitute="$HEADLINE$" valuetype="trstring"/>
+  <atv:parameter behavior="optional" defaultvalue="SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Symbols.20x20.user" desc="symbol" name="symbol" substitute="$SYMBOL$" valuetype="display"/>
+  <atv:parameter behavior="optional" defaultvalue="SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Advanced.keyboard.keyboard" desc="keyboard display" name="keyboard" valuetype="display"/>
+  <atv:parameter behavior="optional" defaultvalue="SYSTEM.GLOBALS.atvFontColor" desc="font color" name="fontColor" substitute="$FONTCOLOR$" valuetype="global"/>
+  <atv:parameter behavior="optional" defaultvalue="SYSTEM.GLOBALS.atvFillColor" desc="fill color" name="fillColor" substitute="$FILLCOLOR$" valuetype="global"/>
+  <atv:parameter behavior="optional" defaultvalue="SYSTEM.GLOBALS.atvSymbolColor" desc="symbol color" name="symbolColor" substitute="$SYMBOLCOLOR$" valuetype="global"/>
+  <atv:parameter behavior="optional" defaultvalue="" desc="certificate description" name="certificate_description" substitute="$CERTIFICATE_DESCRIPTION$" valuetype="string"/>
+  <atv:parameter behavior="optional" defaultvalue="" desc="path to store" name="pathToStore" substitute="$PATH_TO_STORE$" valuetype="string"/>
+  <atv:parameter behavior="optional" defaultvalue="" desc="path to cert.ini" name="pathToCertIni" substitute="$PATH_TO_CERT_INI$" valuetype="string"/>
+  <atv:gridconfig enabled="false" gridstyle="lines" height="20" width="20"/>
+  <atv:snapconfig enabled="true" height="1" width="1"/>
+ </metadata>
+ <rect atv:refpx="-234.242" atv:refpy="55" fill="#ffffff" fill-opacity="0.498039" height="50" id="password_background" rx="12.333" ry="10" stroke="none" stroke-width="0" width="481" x="20" y="170"/>
+ <rect atv:refpx="260.5" atv:refpy="185" fill="#ffffff" fill-opacity="0.498039" height="50" id="fullname_background" rx="12.333" ry="10" stroke="none" stroke-width="0" width="481" x="20" y="230"/>
+ <rect atv:refpx="4.286" atv:refpy="115" fill="none" height="50" id="id_1" rx="5.961" ry="5.961" stroke="none" stroke-width="0" width="200" x="110" y="160"/>
+ <svg atv:dynamic="true" atv:refpx="372" atv:refpy="522.5" height="30" id="save_button" width="80" x="416.5" xlink:href="SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Advanced.button" y="577.5">
+  <atv:argument name="label" value="T{Save}"/>
+  <atv:argument name="tabIndex" value="31"/>
+  <atv:argument name="borderVisible" value="true"/>
+  <atv:argument name="extraBorderColor" value="#ffffff"/>
+ </svg>
+ <svg atv:dynamic="true" atv:refpx="472" atv:refpy="522.5" height="30" id="cancel_button" width="80" x="516.5" xlink:href="SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Advanced.button" y="577.5">
+  <atv:argument name="label" value="T{Cancel}"/>
+  <atv:argument name="tabIndex" value="32"/>
+  <atv:argument name="borderVisible" value="true"/>
+  <atv:argument name="extraBorderColor" value="#ffffff"/>
+ </svg>
+ <text atv:refpx="50.427" atv:refpy="255" fill="$FONTCOLOR$" font-family="Arial" font-size="16" id="fullname_label" x="35.5" y="261">T{cert.ini}</text>
+ <text atv:refpx="82.78" atv:refpy="195" fill="$FONTCOLOR$" font-family="Arial" font-size="16" id="password_label" x="34.5" y="201">T{Certificate Store}</text>
+ <text atv:refpx="494.971" atv:refpy="29" fill="$FONTCOLOR$" font-family="Arial" font-size="20" id="headline" text-anchor="middle" x="506.5" y="33.5">T{Create Certificate}</text>
+ <rect atv:refpx="-234.242" atv:refpy="235" fill="#ffffff" fill-opacity="0.498039" height="50" id="default_background" rx="12.333" ry="10" stroke="none" stroke-width="0" width="481" x="20" y="350"/>
+ <text atv:refpx="89.306" atv:refpy="375" fill="$FONTCOLOR$" font-family="Arial" font-size="16" id="default_label" x="34.188" y="381">T{DNS names (DNS)}</text>
+ <svg atv:refpx="422.274" atv:refpy="305" height="30" id="in_out_dns_name" transform="matrix(1.575,0,0,1,0,0)" width="160" x="151.746" xlink:href="SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Advanced.in_out_value" y="360">
+  <atv:argument name="validation" value="String"/>
+  <atv:argument name="tabIndex" value="3"/>
+  <atv:overwrite id="id_0" transform="matrix(0.7273,0,0,1,0,0)" width="220"/>
+  <atv:argument name="tooltip" value="$COM.ATVISE.SELF_VALUE$"/>
+  <atv:argument name="editable" value="No"/>
+  <atv:overwrite id="input_label" transform="matrix(0.6349,0,0,1,0,0)" x="244.055"/>
+  <atv:overwrite id="blinking_frame" transform="matrix(0.6349,0,0,1,0,0)" width="244"/>
+  <atv:overwrite id="focus_frame" transform="matrix(0.6349,0,0,1,0,0)" width="248"/>
+  <atv:overwrite id="input_bg" transform="matrix(0.6349,0,0,1,0,0)" width="244"/>
+  <atv:overwrite id="id_1" transform="matrix(0.6349,0,0,1,0,0)" width="250"/>
+  <atv:overwrite id="input_border" transform="matrix(0.6349,0,0,1,0,0)" width="252"/>
+ </svg>
+ <rect atv:refpx="-14.009" atv:refpy="65" fill="#ffffff" height="50" id="language_background" rx="8.014" ry="10" stroke="none" stroke-width="0" width="561" x="226" y="110"/>
+ <text atv:refpx="285.652" atv:refpy="135" fill="$FONTCOLOR$" font-family="Arial" font-size="16" font-weight="bold" id="language_label" x="240" y="141">T{Common name (CN)}</text>
+ <svg atv:refpx="683.468" atv:refpy="135" height="30" id="in_out_common_name" transform="matrix(2.1437,0,0,1,0,0)" width="160" x="202.449" xlink:href="SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Advanced.in_out_value" y="120">
+  <atv:argument name="validation" value="String"/>
+  <atv:argument name="tabIndex" value="1"/>
+  <atv:overwrite id="id_0" transform="matrix(0.7273,0,0,1,0,0)" width="220"/>
+  <atv:overwrite id="input_label" transform="matrix(0.4665,0,0,1,0,0)" x="335.055"/>
+  <atv:overwrite id="blinking_frame" transform="matrix(0.4665,0,0,1,0,0)" width="335"/>
+  <atv:overwrite id="focus_frame" transform="matrix(0.4665,0,0,1,0,0)" width="339"/>
+  <atv:overwrite id="input_bg" transform="matrix(0.4665,0,0,1,0,0)" width="335"/>
+  <atv:overwrite id="id_1" transform="matrix(0.4665,0,0,1,0,0)" width="341"/>
+  <atv:overwrite id="input_border" transform="matrix(0.4665,0,0,1,0,0)" width="343"/>
+ </svg>
+ <rect atv:refpx="-234.242" atv:refpy="294" fill="#ffffff" fill-opacity="0.498039" height="50" id="content_background" rx="12.333" ry="10" stroke="none" stroke-width="0" width="481" x="20" y="409"/>
+ <text atv:refpx="65.204" atv:refpy="435" fill="$FONTCOLOR$" font-family="Arial" font-size="16" id="content_label" x="34.5" y="441">T{IP addresses (IP)}</text>
+ <text atv:refpx="519.927" atv:refpy="70" fill="$FONTCOLOR$" font-family="Arial" font-size="18" id="certificate_description" text-anchor="middle" x="506.5" y="74.5">$CERTIFICATE_DESCRIPTION$</text>
+ <text atv:refpx="528.5" atv:refpy="552.5" fill="#ff0004" font-family="Arial" font-size="14" font-weight="bold" id="error_message" text-anchor="middle" visibility="hidden" x="506.5" y="557">&lt;errormessage></text>
+ <image atv:refpx="763.764" atv:refpy="315.082" height="0" id="qr_image" width="0" x="650" xlink:href="" y="240"/>
+ <svg atv:refpx="59" atv:refpy="51" height="20" id="id_4" transform="matrix(4,0,0,4,0,0)" width="20" x="4" xlink:href="SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Symbols.20x20.certificate" y="2.75">
+  <atv:argument name="symbolColor" prefix="symbolColor"/>
+ </svg>
+ <svg atv:refpx="422.273" atv:refpy="365" height="30" id="in_out_ip_address" transform="matrix(1.575,0,0,1,0,0)" width="160" x="151.746" xlink:href="SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Advanced.in_out_value" y="420">
+  <atv:argument name="validation" value="String"/>
+  <atv:argument name="tabIndex" value="4"/>
+  <atv:overwrite id="id_0" transform="matrix(0.7273,0,0,1,0,0)" width="220"/>
+  <atv:argument name="editable" value="No"/>
+  <atv:argument name="tooltip" value="$COM.ATVISE.SELF_VALUE$"/>
+  <atv:overwrite id="input_label" transform="matrix(0.6349,0,0,1,0,0)" x="244.055"/>
+  <atv:overwrite id="blinking_frame" transform="matrix(0.6349,0,0,1,0,0)" width="244"/>
+  <atv:overwrite id="focus_frame" transform="matrix(0.6349,0,0,1,0,0)" width="248"/>
+  <atv:overwrite id="input_bg" transform="matrix(0.6349,0,0,1,0,0)" width="244"/>
+  <atv:overwrite id="id_1" transform="matrix(0.6349,0,0,1,0,0)" width="250"/>
+  <atv:overwrite id="input_border" transform="matrix(0.6349,0,0,1,0,0)" width="252"/>
+ </svg>
+ <rect atv:refpx="257.758" atv:refpy="55" fill="#ffffff" fill-opacity="0.498039" height="50" id="id_40" rx="12.333" ry="10" stroke="none" stroke-width="0" width="481" x="512" y="170"/>
+ <rect atv:refpx="257.758" atv:refpy="115" fill="#ffffff" fill-opacity="0.498039" height="50" id="id_41" rx="12.333" ry="10" stroke="none" stroke-width="0" width="481" x="512" y="230"/>
+ <rect atv:refpx="257.758" atv:refpy="175" fill="#ffffff" fill-opacity="0.498039" height="50" id="id_42" rx="12.333" ry="10" stroke="none" stroke-width="0" width="481" x="512" y="290"/>
+ <rect atv:refpx="257.758" atv:refpy="235" fill="#ffffff" fill-opacity="0.498039" height="50" id="id_43" rx="12.333" ry="10" stroke="none" stroke-width="0" width="481" x="512" y="350"/>
+ <rect atv:refpx="257.758" atv:refpy="295" fill="#ffffff" fill-opacity="0.498039" height="50" id="id_44" rx="12.333" ry="10" stroke="none" stroke-width="0" width="481" x="512" y="410"/>
+ <svg atv:refpx="914.274" atv:refpy="125" height="30" id="in_out_organization" transform="matrix(1.575,0,0,1,0,0)" width="160" x="464.127" xlink:href="SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Advanced.in_out_value" y="180">
+  <atv:argument name="validation" value="String"/>
+  <atv:argument name="tabIndex" value="10"/>
+  <atv:overwrite id="id_0" transform="matrix(0.7273,0,0,1,0,0)" width="220"/>
+  <atv:argument name="editable" value="No"/>
+  <atv:argument name="tooltip" value="$COM.ATVISE.SELF_VALUE$"/>
+  <atv:overwrite id="input_label" transform="matrix(0.6349,0,0,1,0,0)" x="244.055"/>
+  <atv:overwrite id="blinking_frame" transform="matrix(0.6349,0,0,1,0,0)" width="244"/>
+  <atv:overwrite id="focus_frame" transform="matrix(0.6349,0,0,1,0,0)" width="248"/>
+  <atv:overwrite id="input_bg" transform="matrix(0.6349,0,0,1,0,0)" width="244"/>
+  <atv:overwrite id="id_1" transform="matrix(0.6349,0,0,1,0,0)" width="250"/>
+  <atv:overwrite id="input_border" transform="matrix(0.6349,0,0,1,0,0)" width="252"/>
+ </svg>
+ <svg atv:refpx="914.274" atv:refpy="185" height="30" id="in_out_organizational_unit" transform="matrix(1.575,0,0,1,0,0)" width="160" x="464.127" xlink:href="SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Advanced.in_out_value" y="240">
+  <atv:argument name="validation" value="String"/>
+  <atv:argument name="tabIndex" value="11"/>
+  <atv:overwrite id="id_0" transform="matrix(0.7273,0,0,1,0,0)" width="220"/>
+  <atv:argument name="editable" value="No"/>
+  <atv:argument name="tooltip" value="$COM.ATVISE.SELF_VALUE$"/>
+  <atv:overwrite id="input_label" transform="matrix(0.6349,0,0,1,0,0)" x="244.055"/>
+  <atv:overwrite id="blinking_frame" transform="matrix(0.6349,0,0,1,0,0)" width="244"/>
+  <atv:overwrite id="focus_frame" transform="matrix(0.6349,0,0,1,0,0)" width="248"/>
+  <atv:overwrite id="input_bg" transform="matrix(0.6349,0,0,1,0,0)" width="244"/>
+  <atv:overwrite id="id_1" transform="matrix(0.6349,0,0,1,0,0)" width="250"/>
+  <atv:overwrite id="input_border" transform="matrix(0.6349,0,0,1,0,0)" width="252"/>
+ </svg>
+ <svg atv:refpx="914.276" atv:refpy="245" height="30" id="in_out_locality" transform="matrix(1.575,0,0,1,0,0)" width="160" x="464.127" xlink:href="SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Advanced.in_out_value" y="300">
+  <atv:argument name="validation" value="String"/>
+  <atv:argument name="tabIndex" value="12"/>
+  <atv:overwrite id="id_0" transform="matrix(0.7273,0,0,1,0,0)" width="220"/>
+  <atv:argument name="tooltip" value="$COM.ATVISE.SELF_VALUE$"/>
+  <atv:argument name="editable" value="No"/>
+  <atv:overwrite id="input_label" transform="matrix(0.6349,0,0,1,0,0)" x="244.055"/>
+  <atv:overwrite id="blinking_frame" transform="matrix(0.6349,0,0,1,0,0)" width="244"/>
+  <atv:overwrite id="focus_frame" transform="matrix(0.6349,0,0,1,0,0)" width="248"/>
+  <atv:overwrite id="input_bg" transform="matrix(0.6349,0,0,1,0,0)" width="244"/>
+  <atv:overwrite id="id_1" transform="matrix(0.6349,0,0,1,0,0)" width="250"/>
+  <atv:overwrite id="input_border" transform="matrix(0.6349,0,0,1,0,0)" width="252"/>
+ </svg>
+ <svg atv:refpx="914.274" atv:refpy="305" height="30" id="in_out_state" transform="matrix(1.575,0,0,1,0,0)" width="160" x="464.127" xlink:href="SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Advanced.in_out_value" y="360">
+  <atv:argument name="validation" value="String"/>
+  <atv:argument name="tabIndex" value="13"/>
+  <atv:overwrite id="id_0" transform="matrix(0.7273,0,0,1,0,0)" width="220"/>
+  <atv:argument name="editable" value="No"/>
+  <atv:argument name="tooltip" value="$COM.ATVISE.SELF_VALUE$"/>
+  <atv:overwrite id="input_label" transform="matrix(0.6349,0,0,1,0,0)" x="244.055"/>
+  <atv:overwrite id="blinking_frame" transform="matrix(0.6349,0,0,1,0,0)" width="244"/>
+  <atv:overwrite id="focus_frame" transform="matrix(0.6349,0,0,1,0,0)" width="248"/>
+  <atv:overwrite id="input_bg" transform="matrix(0.6349,0,0,1,0,0)" width="244"/>
+  <atv:overwrite id="id_1" transform="matrix(0.6349,0,0,1,0,0)" width="250"/>
+  <atv:overwrite id="input_border" transform="matrix(0.6349,0,0,1,0,0)" width="252"/>
+ </svg>
+ <svg atv:refpx="914.274" atv:refpy="365" height="30" id="in_out_country" transform="matrix(1.575,0,0,1,0,0)" width="160" x="464.127" xlink:href="SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Advanced.in_out_value" y="420">
+  <atv:argument name="validation" value="String"/>
+  <atv:argument name="tabIndex" value="14"/>
+  <atv:overwrite id="id_0" transform="matrix(0.7273,0,0,1,0,0)" width="220"/>
+  <atv:argument name="editable" value="No"/>
+  <atv:argument name="tooltip" value="$COM.ATVISE.SELF_VALUE$"/>
+  <atv:overwrite id="input_label" transform="matrix(0.6349,0,0,1,0,0)" x="244.055"/>
+  <atv:overwrite id="blinking_frame" transform="matrix(0.6349,0,0,1,0,0)" width="244"/>
+  <atv:overwrite id="focus_frame" transform="matrix(0.6349,0,0,1,0,0)" width="248"/>
+  <atv:overwrite id="input_bg" transform="matrix(0.6349,0,0,1,0,0)" width="244"/>
+  <atv:overwrite id="id_1" transform="matrix(0.6349,0,0,1,0,0)" width="250"/>
+  <atv:overwrite id="input_border" transform="matrix(0.6349,0,0,1,0,0)" width="252"/>
+ </svg>
+ <text atv:refpx="562.524" atv:refpy="195" fill="$FONTCOLOR$" font-family="Arial" font-size="16" id="id_50" x="525.5" y="201">T{Organization (O)}</text>
+ <text atv:refpx="575.933" atv:refpy="255" fill="$FONTCOLOR$" font-family="Arial" font-size="16" id="id_51" x="525.5" y="261">T{Organizational unit (OU)}</text>
+ <text atv:refpx="548.016" atv:refpy="318.256" fill="$FONTCOLOR$" font-family="Arial" font-size="16" id="id_52" x="525.5" y="321">T{Locality (L)}</text>
+ <text atv:refpx="540.464" atv:refpy="375" fill="$FONTCOLOR$" font-family="Arial" font-size="16" id="id_53" x="525.5" y="381">T{State/Province (ST)}</text>
+ <text atv:refpx="547.885" atv:refpy="435.5" fill="$FONTCOLOR$" font-family="Arial" font-size="16" id="id_54" x="526" y="441.5">T{Country (C)}</text>
+ <g atv:refpx="1186.5" atv:refpy="206" id="id_11" transform="matrix(1,0,0,1,1136,-324)">
+  <rect atv:refpx="10" atv:refpy="532" fill="#000000" fill-opacity="0.0980392" height="20" id="id_59" stroke="none" stroke-width="0" width="20" x="0" y="520"/>
+  <text atv:refpx="63" atv:refpy="530" fill="#000000" font-family="Arial" font-size="16" font-weight="bold" id="id_63" text-anchor="end" x="97" y="535.5">20x20 px</text>
+ </g>
+ <text atv:refpx="406.259" atv:refpy="193.5" fill="$FONTCOLOR$" font-family="Arial" font-size="13" id="label_store_path" text-anchor="end" x="486.5" y="199.5">$PATH_TO_STORE$</text>
+ <text atv:refpx="396.957" atv:refpy="254.5" fill="$FONTCOLOR$" font-family="Arial" font-size="13" id="label_cert_ini_path" text-anchor="end" x="486.5" y="260.5">$PATH_TO_CERT_INI$</text>
+ <script atv:desc="" atv:href="SYSTEM.LIBRARY.ATVISE.DISPLAYSCRIPTS.admin.dialogs.certificates_endpoint_editor" atv:name="certificates_endpoint_editor" atv:type="text/ecmascript"/>
+ <script atv:desc="" atv:name="" type="text/ecmascript"/>
+ <rect atv:refpx="-234.242" atv:refpy="235" fill="#ffffff" fill-opacity="0.498039" height="50" id="id_7" rx="12.333" ry="10" stroke="none" stroke-width="0" width="481" x="20" y="290"/>
+ <text atv:refpx="-48.066" atv:refpy="350" fill="$FONTCOLOR$" font-family="Arial" font-size="16" id="id_8" x="34.188" y="321">T{Application URI}</text>
+ <svg atv:refpx="386.766" atv:refpy="305" height="30" id="in_out_application_uri" transform="matrix(1.575,0,0,1,0,0)" width="160" x="151.746" xlink:href="SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Advanced.in_out_value" y="300">
+  <atv:argument name="validation" value="String"/>
+  <atv:argument name="tabIndex" value="2"/>
+  <atv:overwrite id="id_0" transform="matrix(0.7273,0,0,1,0,0)" width="220"/>
+  <atv:argument name="editable" value="No"/>
+  <atv:argument name="tooltip" value="$COM.ATVISE.SELF_VALUE$"/>
+  <atv:overwrite id="input_label" transform="matrix(0.6349,0,0,1,0,0)" x="244.055"/>
+  <atv:overwrite id="blinking_frame" transform="matrix(0.6349,0,0,1,0,0)" width="244"/>
+  <atv:overwrite id="focus_frame" transform="matrix(0.6349,0,0,1,0,0)" width="248"/>
+  <atv:overwrite id="input_bg" transform="matrix(0.6349,0,0,1,0,0)" width="244"/>
+  <atv:overwrite id="id_1" transform="matrix(0.6349,0,0,1,0,0)" width="250"/>
+  <atv:overwrite id="input_border" transform="matrix(0.6349,0,0,1,0,0)" width="252"/>
+ </svg>
+ <rect atv:refpx="-234.242" atv:refpy="354" fill="#ffffff" fill-opacity="0.498039" height="50" id="id_2" rx="12.333" ry="10" stroke="none" stroke-width="0" width="481" x="20" y="469"/>
+ <rect atv:refpx="257.758" atv:refpy="355" fill="#ffffff" fill-opacity="0.498039" height="50" id="id_3" rx="12.333" ry="10" stroke="none" stroke-width="0" width="481" x="512" y="470"/>
+ <svg atv:refpx="422.273" atv:refpy="425" height="30" id="in_out_validity" transform="matrix(1.575,0,0,1,0,0)" width="160" x="151.746" xlink:href="SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Advanced.in_out_value" y="480">
+  <atv:argument name="validation" value="String"/>
+  <atv:argument name="tabIndex" value="4"/>
+  <atv:overwrite id="id_0" transform="matrix(0.7273,0,0,1,0,0)" width="220"/>
+  <atv:argument name="editable" value="No"/>
+  <atv:argument name="tooltip" value="$COM.ATVISE.SELF_VALUE$"/>
+  <atv:overwrite id="input_label" transform="matrix(0.6349,0,0,1,0,0)" x="244.055"/>
+  <atv:overwrite id="blinking_frame" transform="matrix(0.6349,0,0,1,0,0)" width="244"/>
+  <atv:overwrite id="focus_frame" transform="matrix(0.6349,0,0,1,0,0)" width="248"/>
+  <atv:overwrite id="input_bg" transform="matrix(0.6349,0,0,1,0,0)" width="244"/>
+  <atv:overwrite id="id_1" transform="matrix(0.6349,0,0,1,0,0)" width="250"/>
+  <atv:overwrite id="input_border" transform="matrix(0.6349,0,0,1,0,0)" width="252"/>
+ </svg>
+ <svg atv:refpx="914.274" atv:refpy="425" height="30" id="in_out_key_length" transform="matrix(1.575,0,0,1,0,0)" width="160" x="464.127" xlink:href="SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Advanced.in_out_value" y="480">
+  <atv:argument name="validation" value="String"/>
+  <atv:argument name="tabIndex" value="14"/>
+  <atv:overwrite id="id_0" transform="matrix(0.7273,0,0,1,0,0)" width="220"/>
+  <atv:argument name="editable" value="No"/>
+  <atv:argument name="tooltip" value="$COM.ATVISE.SELF_VALUE$"/>
+  <atv:overwrite id="input_label" transform="matrix(0.6349,0,0,1,0,0)" x="244.055"/>
+  <atv:overwrite id="blinking_frame" transform="matrix(0.6349,0,0,1,0,0)" width="244"/>
+  <atv:overwrite id="focus_frame" transform="matrix(0.6349,0,0,1,0,0)" width="248"/>
+  <atv:overwrite id="input_bg" transform="matrix(0.6349,0,0,1,0,0)" width="244"/>
+  <atv:overwrite id="id_1" transform="matrix(0.6349,0,0,1,0,0)" width="250"/>
+  <atv:overwrite id="input_border" transform="matrix(0.6349,0,0,1,0,0)" width="252"/>
+ </svg>
+ <text atv:refpx="60.955" atv:refpy="495" fill="$FONTCOLOR$" font-family="Arial" font-size="16" id="id_9" x="34.5" y="501">T{Validity (years)}</text>
+ <text atv:refpx="554.579" atv:refpy="495" fill="$FONTCOLOR$" font-family="Arial" font-size="16" id="id_10" x="526" y="501">T{Key length (bits)}</text>
+</svg>
+]]></uax:XmlElement>
+		</Value>
+	</UAVariable>
+	<UAVariable NodeId="ns=1;s=SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Advanced.admin.administration" BrowseName="1:administration" DataType="XmlElement" AccessLevel="7" UserAccessLevel="7" Historizing="true">
+		<DisplayName Locale="en">administration</DisplayName>
+		<Description Locale="en">administration</Description>
+		<References>
+			<Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Advanced.admin</Reference>
+			<Reference ReferenceType="HasTypeDefinition">DisplayType</Reference>
+		</References>
+		<Value>
+			<uax:XmlElement><![CDATA[<?xml version='1.0' encoding='UTF-8'?>
+<svg atv:contentheight="890" atv:contentwidth="1675" atv:defaultdisplayboolean="SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Advanced.button_switch" atv:defaultdisplaynumber="SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Advanced.in_out_value" atv:defaultdisplaystring="SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Advanced.in_out_value" height="1080" version="1.2" width="1920" xmlns="http://www.w3.org/2000/svg" xmlns:atv="http://webmi.atvise.com/2007/svgext" xmlns:xlink="http://www.w3.org/1999/xlink">
+ <defs/>
+ <desc>Layout for the administration page.</desc>
+ <title>Administration</title>
+ <metadata>
+  <atv:parameter behavior="optional" defaultvalue="content" desc="target frame" name="targetFrame" valuetype="string"/>
+  <atv:gridconfig enabled="true" gridstyle="lines" height="20" width="20"/>
+  <atv:snapconfig enabled="true" height="5" width="5"/>
+ </metadata>
+ <svg atv:refpx="959.954" atv:refpy="540.003" height="600" id="content_iframe" transform="matrix(2.4,0,0,1.4833,0,0)" width="800" x="0" xlink:href="SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Advanced.hmi.iframe" y="64.046">
+  <atv:argument name="display" value="SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Advanced.admin.home"/>
+  <atv:argument name="frameName" value="content"/>
+  <atv:argument name="isNavigationFrame" value="true"/>
+  <atv:argument name="base" value="forwarding"/>
+ </svg>
+ <g atv:refpx="107.22" atv:refpy="43.006" id="logo_clickarea">
+  <svg atv:refpx="50" atv:refpy="50" height="80" id="layout_logo" transform="matrix(0.75,0,0,0.75,0,0)" width="80" x="23.333" xlink:href="SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Symbols.atvise_logo" y="19.333"/>
+  <svg atv:refpx="106.77" atv:refpy="43.941" height="12.99" id="layout_logo_r" transform="matrix(2.4895,0,0,2.4895,0,0)" width="48.94" x="26.991" xlink:href="SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Symbols.atvise_R" y="10.09"/>
+  <rect atv:refpx="212.5" atv:refpy="75" fill="#000000" fill-opacity="0.0001" height="60" id="logo_click_1" stroke="none" stroke-width="0" width="60" x="19.5" y="13.5"/>
+  <rect atv:refpx="212.421" atv:refpy="81.302" fill="#000000" fill-opacity="0.0001" height="36.506" id="logo_click_2" stroke="none" stroke-width="0" width="135.001" x="64.999" y="23.494"/>
+ </g>
+ <svg atv:refpx="1228.46" atv:refpy="42.4986" height="45" id="zoom_group" transform="matrix(1.4444,0,0,1.4444,0,0)" width="180" x="760.5" xlink:href="SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Advanced.layoutelements.button_group_zoom" y="6.923"/>
+ <svg atv:refpx="547" atv:refpy="42.5" height="65" id="box_language" width="357" x="368.5" xlink:href="SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Advanced.layoutelements.box_language" y="10">
+  <atv:argument name="font_size" value="18"/>
+  <atv:argument name="fillColor" value="SYSTEM.GLOBALS.atvFillColor"/>
+  <atv:argument value="{&quot;itemHeight&quot;:43,&quot;itemFill&quot;: &quot;#eeeeee&quot;,&quot;itemPadding&quot;:10,&quot;itemMargin&quot;:5,&quot;itemBorderRadius&quot;:3,&quot;itemBorder&quot;:&quot;1px #d7d7d7 solid&quot;, &quot;fill&quot;:0, &quot;strokeWidth&quot;:0,&quot;width&quot;:232,&quot;x&quot;:-1,&quot;y&quot;:78,&quot;textAlign&quot;: &quot;center&quot;}" name="contextMenuStyle"/>
+ </svg>
+ <svg atv:refpx="912.5" atv:refpy="42.5" height="65" id="box_user" width="358" x="733.5" xlink:href="SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Advanced.layoutelements.box_user" y="10">
+  <atv:argument name="font_size" value="18"/>
+ </svg>
+ <svg atv:refpx="1776.146" atv:refpy="55.973" height="52" id="layout_time" width="203" x="1710" xlink:href="SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Advanced.layoutelements.time" y="6"/>
+ <svg atv:refpx="1759" atv:refpy="65" height="30" id="layout_date" width="203" x="1709" xlink:href="SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Advanced.layoutelements.date" y="48"/>
+ <svg atv:refpx="1458" atv:refpy="42.5" height="65" id="redu_info" width="185" x="1365.5" xlink:href="SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Advanced.layoutelements.redu_info" y="10"/>
+ <rect atv:refpx="960" atv:refpy="89.5" fill="$FONTCOLOR$" height="5" id="line_top" stroke="none" stroke-width="0" width="1920" x="0" y="85"/>
+ <rect atv:refpx="960" atv:refpy="992" fill="$FONTCOLOR$" height="5" id="line_bottom" stroke="none" stroke-width="0" width="1920" x="0" y="989.5"/>
+ <svg atv:refpx="126.792" atv:refpy="1035.656" height="65" id="button1" width="230" x="9" xlink:href="SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Advanced.layoutelements.button_custom" y="1005">
+  <atv:argument name="target1" value="SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Advanced.admin.home"/>
+  <atv:argument name="contextmenu1" value=""/>
+  <atv:argument name="symbolScaling1" value="300"/>
+  <atv:argument name="context_menu_fill_color" value="SYSTEM.GLOBALS.atvFillColor2"/>
+  <atv:argument name="context_menu_hover_color" value="SYSTEM.GLOBALS.atvFillColor"/>
+  <atv:argument name="text1" value="T{Home}"/>
+ </svg>
+ <svg atv:refpx="365.792" atv:refpy="1035.656" height="65" id="nav_certificate_manager" width="230" x="248" xlink:href="SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Advanced.layoutelements.button_custom" y="1005">
+  <atv:argument name="target1" value="SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Advanced.admin.certificate_manager"/>
+  <atv:argument name="contextmenu1" value=""/>
+  <atv:argument name="symbolScaling1" value="300"/>
+  <atv:argument name="context_menu_fill_color" value="SYSTEM.GLOBALS.atvFillColor2"/>
+  <atv:argument name="context_menu_hover_color" value="SYSTEM.GLOBALS.atvFillColor"/>
+  <atv:argument name="text1" value="T{Certificate Manager}"/>
+ </svg>
+ <script atv:desc="" atv:href="SYSTEM.LIBRARY.ATVISE.DISPLAYSCRIPTS.admin.administration" atv:name="administration" atv:type="text/ecmascript"/>
+ <script atv:desc="" atv:name="" type="text/ecmascript"><![CDATA[webMI.addEvent(webMI.data, "clientvariableschange", function (e) {
+	if (e && typeof e.username != "undefined" && e.username == "") {
+		setTimeout(function() { 
+			webMI.display.openDisplay("SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Advanced.admin.home", {"base":"forwarding"});
+		}, 10);
+	}
+});]]]]><![CDATA[></script>
+</svg>
+]]></uax:XmlElement>
+		</Value>
+	</UAVariable>
+	<UAVariable NodeId="ns=1;s=SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Advanced.admin.certificate_manager" BrowseName="1:certificate_manager" DataType="XmlElement" AccessLevel="7" UserAccessLevel="7" Historizing="true">
+		<DisplayName Locale="en">certificate_manager</DisplayName>
+		<Description Locale="en">certificate_manager</Description>
+		<References>
+			<Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Advanced.admin</Reference>
+			<Reference ReferenceType="HasTypeDefinition">DisplayType</Reference>
+		</References>
+		<Value>
+			<uax:XmlElement><![CDATA[<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<svg height="680" version="1.2" width="1280" xmlns="http://www.w3.org/2000/svg" xmlns:atv="http://webmi.atvise.com/2007/svgext" xmlns:xlink="http://www.w3.org/1999/xlink">
+ <defs/>
+ <desc>Overview and management of connection certificates.</desc>
+ <title>Certificate Manager</title>
+ <metadata>
+  <atv:parameter behavior="mandatory" defaultvalue="certificate_tables_table" desc="table ID" group="Table" name="tableID" substitute="$TABLEID$" valuetype="string"/>
+  <atv:parameter behavior="optional" defaultvalue="SYSTEM.GLOBALS.atvFontColor" desc="font color" group="Font" name="globalFontColor" substitute="$FONTCOLOR$" valuetype="global"/>
+  <atv:parameter behavior="optional" defaultvalue="SYSTEM.GLOBALS.atvFillColor" desc="fill color" group="Appearance" name="globalFillColor" substitute="$FILLCOLOR$" valuetype="global"/>
+  <atv:gridconfig enabled="true" gridstyle="lines" height="10" width="10"/>
+  <atv:snapconfig enabled="true" height="5" width="5"/>
+ </metadata>
+ <rect atv:refpx="1002.02" atv:refpy="59.817" fill="$FILLCOLOR$" height="80" id="filters_bg" rx="0" ry="0" stroke="#000000" stroke-width="1" width="1280" x="0" y="0"/>
+ <svg atv:refpx="639.949" atv:refpy="380.999" height="640" id="id_1" transform="matrix(2,0,0,0.9344,0,0)" width="640" x="0" xlink:href="SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Advanced.slickgrid.table" y="87.758">
+  <atv:argument name="tableID" prefix="tableID" value=""/>
+  <atv:argument name="row_text_size" value="10"/>
+  <atv:argument name="detail_text_size" value="10"/>
+  <atv:argument name="footer_text_size" value="10"/>
+  <atv:argument name="header_text_size" value="12"/>
+ </svg>
+ <script atv:desc="" atv:href="SYSTEM.LIBRARY.ATVISE.DISPLAYSCRIPTS.admin.certificate_manager" atv:name="certificate_manager" atv:type="text/ecmascript"/>
+ <script atv:desc="" atv:name="" type="text/ecmascript"/>
+ <svg atv:refpx="40" atv:refpy="40" height="60" id="id_5" width="60" x="10" xlink:href="SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Symbols.60x60.certificate" y="10">
+  <atv:argument name="symbolColor" prefix="globalFontColor"/>
+ </svg>
+ <text atv:refpx="142" atv:refpy="40" fill="$FONTCOLOR$" font-family="Arial" font-size="22" id="title" text-anchor="start" x="84" y="47.5">T{Certificate Manager}</text>
+ <g atv:refpx="1037.5" atv:refpy="40" id="action_group">
+  <svg atv:refpx="1060" atv:refpy="59" height="30" id="btn_create" transform="matrix(1.375,0,0,1,0,0)" width="80" x="730.909" xlink:href="SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Advanced.button" y="42">
+   <atv:argument name="label" value="T{Create}"/>
+   <atv:argument name="extraBorderColor" value="#ffffff"/>
+   <atv:argument name="tabIndex" value="6"/>
+   <atv:overwrite id="id_6" transform="matrix(0.7273,0,0,1,0,0)" width="108"/>
+   <atv:overwrite id="button_label_2" transform="matrix(0.7273,0,0,1,0,0)" x="55"/>
+   <atv:overwrite id="button_label_1" transform="matrix(0.7273,0,0,1,0,0)" x="55"/>
+   <atv:overwrite id="button_label" transform="matrix(0.7273,0,0,1,0,0)" x="55"/>
+   <atv:overwrite id="button_symbol_bottom" transform="matrix(0.4364,0,0,0.6,0,0)" x="81.5"/>
+   <atv:overwrite id="button_symbol_top" transform="matrix(0.4364,0,0,0.6,0,0)" x="81.5"/>
+   <atv:overwrite id="button_symbol" transform="matrix(0.7273,0,0,1,0,0)" x="45"/>
+   <atv:overwrite id="button_stroke" transform="matrix(0.7273,0,0,1,0,0)" width="106"/>
+   <atv:overwrite id="button_bg" transform="matrix(0.7273,0,0,1,0,0)" width="108"/>
+   <atv:overwrite id="outer_frame" transform="matrix(0.7273,0,0,1,0,0)" width="110"/>
+  </svg>
+  <svg atv:refpx="1059.999" atv:refpy="40" height="30" id="btn_trust" transform="matrix(1.375,0,0,1,0,0)" width="80" x="730.909" xlink:href="SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Advanced.button" y="42">
+   <atv:argument name="label" value="T{Trust}"/>
+   <atv:argument name="extraBorderColor" value="#ffffff"/>
+   <atv:argument name="tabIndex" value="5"/>
+   <atv:overwrite id="id_6" transform="matrix(0.7273,0,0,1,0,0)" width="108"/>
+   <atv:overwrite id="button_label_2" transform="matrix(0.7273,0,0,1,0,0)" x="55"/>
+   <atv:overwrite id="button_label_1" transform="matrix(0.7273,0,0,1,0,0)" x="55"/>
+   <atv:overwrite id="button_label" transform="matrix(0.7273,0,0,1,0,0)" x="55"/>
+   <atv:overwrite id="button_symbol_bottom" transform="matrix(0.4364,0,0,0.6,0,0)" x="81.5"/>
+   <atv:overwrite id="button_symbol_top" transform="matrix(0.4364,0,0,0.6,0,0)" x="81.5"/>
+   <atv:overwrite id="button_symbol" transform="matrix(0.7273,0,0,1,0,0)" x="45"/>
+   <atv:overwrite id="button_stroke" transform="matrix(0.7273,0,0,1,0,0)" width="106"/>
+   <atv:overwrite id="button_bg" transform="matrix(0.7273,0,0,1,0,0)" width="108"/>
+   <atv:overwrite id="outer_frame" transform="matrix(0.7273,0,0,1,0,0)" width="110"/>
+  </svg>
+  <svg atv:refpx="1180" atv:refpy="25" height="30" id="btn_delete" transform="matrix(1.375,0,0,1,0,0)" width="80" x="815.273" xlink:href="SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Advanced.button" y="7">
+   <atv:argument name="label" value="T{Delete}"/>
+   <atv:argument name="extraBorderColor" value="#ffffff"/>
+   <atv:argument name="tabIndex" value="4"/>
+   <atv:overwrite id="id_6" transform="matrix(0.7273,0,0,1,0,0)" width="108"/>
+   <atv:overwrite id="button_label_2" transform="matrix(0.7273,0,0,1,0,0)" x="55"/>
+   <atv:overwrite id="button_label_1" transform="matrix(0.7273,0,0,1,0,0)" x="55"/>
+   <atv:overwrite id="button_label" transform="matrix(0.7273,0,0,1,0,0)" x="55"/>
+   <atv:overwrite id="button_symbol_bottom" transform="matrix(0.4364,0,0,0.6,0,0)" x="81.5"/>
+   <atv:overwrite id="button_symbol_top" transform="matrix(0.4364,0,0,0.6,0,0)" x="81.5"/>
+   <atv:overwrite id="button_symbol" transform="matrix(0.7273,0,0,1,0,0)" x="45"/>
+   <atv:overwrite id="button_stroke" transform="matrix(0.7273,0,0,1,0,0)" width="106"/>
+   <atv:overwrite id="button_bg" transform="matrix(0.7273,0,0,1,0,0)" width="108"/>
+   <atv:overwrite id="outer_frame" transform="matrix(0.7273,0,0,1,0,0)" width="110"/>
+  </svg>
+  <svg atv:refpx="1175" atv:refpy="60" height="30" id="btn_reject" transform="matrix(1.375,0,0,1,0,0)" width="80" x="814.545" xlink:href="SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Advanced.button" y="42">
+   <atv:argument name="label" value="T{Reject}"/>
+   <atv:argument name="extraBorderColor" value="#ffffff"/>
+   <atv:argument name="tabIndex" value="7"/>
+   <atv:overwrite id="id_6" transform="matrix(0.7273,0,0,1,0,0)" width="108"/>
+   <atv:overwrite id="button_label_2" transform="matrix(0.7273,0,0,1,0,0)" x="55"/>
+   <atv:overwrite id="button_label_1" transform="matrix(0.7273,0,0,1,0,0)" x="55"/>
+   <atv:overwrite id="button_label" transform="matrix(0.7273,0,0,1,0,0)" x="55"/>
+   <atv:overwrite id="button_symbol_bottom" transform="matrix(0.4364,0,0,0.6,0,0)" x="81.5"/>
+   <atv:overwrite id="button_symbol_top" transform="matrix(0.4364,0,0,0.6,0,0)" x="81.5"/>
+   <atv:overwrite id="button_symbol" transform="matrix(0.7273,0,0,1,0,0)" x="45"/>
+   <atv:overwrite id="button_stroke" transform="matrix(0.7273,0,0,1,0,0)" width="106"/>
+   <atv:overwrite id="button_bg" transform="matrix(0.7273,0,0,1,0,0)" width="108"/>
+   <atv:overwrite id="outer_frame" transform="matrix(0.7273,0,0,1,0,0)" width="110"/>
+  </svg>
+  <svg atv:refpx="1060" atv:refpy="25" height="30" id="btn_upload" transform="matrix(1.375,0,0,1,0,0)" width="80" x="730.909" xlink:href="SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Advanced.button" y="7">
+   <atv:argument name="label" value="T{Upload}"/>
+   <atv:argument name="extraBorderColor" value="#ffffff"/>
+   <atv:argument name="tabIndex" value="3"/>
+   <atv:overwrite id="id_6" transform="matrix(0.7273,0,0,1,0,0)" width="108"/>
+   <atv:overwrite id="button_label_2" transform="matrix(0.7273,0,0,1,0,0)" x="55"/>
+   <atv:overwrite id="button_label_1" transform="matrix(0.7273,0,0,1,0,0)" x="55"/>
+   <atv:overwrite id="button_label" transform="matrix(0.7273,0,0,1,0,0)" x="55"/>
+   <atv:overwrite id="button_symbol_bottom" transform="matrix(0.4364,0,0,0.6,0,0)" x="81.5"/>
+   <atv:overwrite id="button_symbol_top" transform="matrix(0.4364,0,0,0.6,0,0)" x="81.5"/>
+   <atv:overwrite id="button_symbol" transform="matrix(0.7273,0,0,1,0,0)" x="45"/>
+   <atv:overwrite id="button_stroke" transform="matrix(0.7273,0,0,1,0,0)" width="106"/>
+   <atv:overwrite id="button_bg" transform="matrix(0.7273,0,0,1,0,0)" width="108"/>
+   <atv:overwrite id="outer_frame" transform="matrix(0.7273,0,0,1,0,0)" width="110"/>
+  </svg>
+  <svg atv:refpx="711.356" atv:refpy="78" height="30" id="type_picker" transform="matrix(1.0938,0,0,1,0,0)" width="160" x="690.286" xlink:href="SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Advanced.combobox" y="43">
+   <atv:argument name="text1" value="T{OPC UA Server}"/>
+   <atv:argument name="text2" value="T{OPC UA Datasources}"/>
+   <atv:argument name="text3" value="T{HTTPS}"/>
+   <atv:argument name="text1value" value="opcua"/>
+   <atv:argument name="text2value" value="mirror"/>
+   <atv:argument name="text3value" value="https"/>
+   <atv:argument name="tabIndex" value="2"/>
+   <atv:overwrite id="focus_frame" transform="matrix(0.9142,0,0,1,0,0)" width="171.008"/>
+   <atv:overwrite id="button_stroke" transform="matrix(0.9142,0,0,1,0,0)" x="150.008"/>
+   <atv:overwrite id="id_7" transform="matrix(0.9142,0,0,1,0,0)" x="150.008"/>
+   <atv:overwrite id="button_bg" transform="matrix(0.9142,0,0,1,0,0)" x="150.008"/>
+   <atv:overwrite id="combobox_label" transform="matrix(0.9142,0,0,1,0,0)" x="140.508"/>
+   <atv:overwrite id="blinking_frame" transform="matrix(0.9142,0,0,1,0,0)" width="143.008"/>
+   <atv:overwrite id="combobox_bg" transform="matrix(0.9142,0,0,1,0,0)" width="143.008"/>
+   <atv:overwrite id="id_1" transform="matrix(0.9142,0,0,1,0,0)" width="173.008"/>
+   <atv:overwrite id="id_0" transform="matrix(0.9142,0,0,1,0,0)" width="175.008"/>
+  </svg>
+  <svg atv:refpx="370.312" atv:refpy="43" height="30" id="store_picker" transform="matrix(1.0938,0,0,1,0,0)" width="160" x="690.286" xlink:href="SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Advanced.combobox" y="8">
+   <atv:argument name="tabIndex" value="1"/>
+   <atv:overwrite id="focus_frame" transform="matrix(0.9142,0,0,1,0,0)" width="171.008"/>
+   <atv:overwrite id="button_stroke" transform="matrix(0.9142,0,0,1,0,0)" x="150.008"/>
+   <atv:overwrite id="id_7" transform="matrix(0.9142,0,0,1,0,0)" x="150.008"/>
+   <atv:overwrite id="button_bg" transform="matrix(0.9142,0,0,1,0,0)" x="150.008"/>
+   <atv:overwrite id="combobox_label" transform="matrix(0.9142,0,0,1,0,0)" x="140.508"/>
+   <atv:overwrite id="blinking_frame" transform="matrix(0.9142,0,0,1,0,0)" width="143.008"/>
+   <atv:overwrite id="combobox_bg" transform="matrix(0.9142,0,0,1,0,0)" width="143.008"/>
+   <atv:overwrite id="id_1" transform="matrix(0.9142,0,0,1,0,0)" width="173.008"/>
+   <atv:overwrite id="id_0" transform="matrix(0.9142,0,0,1,0,0)" width="175.008"/>
+  </svg>
+  <text atv:refpx="1627.871" atv:refpy="-242.53" fill="$FONTCOLOR$" font-family="Arial" font-size="14" id="id_23" text-anchor="end" x="746" y="28">T{Store}:</text>
+  <text atv:refpx="1298.441" atv:refpy="-107" fill="$FONTCOLOR$" font-family="Arial" font-size="14" id="label_eventtext" text-anchor="end" x="746" y="63">T{Type}:</text>
+  <line atv:refpx="980.5" atv:refpy="47.5" id="id_11" stroke="#ffffff" stroke-linejoin="round" stroke-width="2" x1="977" x2="977" y1="7" y2="72"/>
+  <svg atv:refpx="1334" atv:refpy="60" height="30" id="btn_sync_stores" transform="matrix(1.375,0,0,1,0,0)" visibility="hidden" width="80" x="930.182" xlink:href="SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Advanced.button" y="42">
+   <atv:argument name="label" value="T{Sync stores}"/>
+   <atv:argument name="extraBorderColor" value="#ffffff"/>
+   <atv:argument name="tabIndex" value="8"/>
+   <atv:overwrite id="id_6" transform="matrix(0.7273,0,0,1,0,0)" width="108"/>
+   <atv:overwrite id="button_label_2" transform="matrix(0.7273,0,0,1,0,0)" x="55"/>
+   <atv:overwrite id="button_label_1" transform="matrix(0.7273,0,0,1,0,0)" x="55"/>
+   <atv:overwrite id="button_label" transform="matrix(0.7273,0,0,1,0,0)" x="55"/>
+   <atv:overwrite id="button_symbol_bottom" transform="matrix(0.4364,0,0,0.6,0,0)" x="81.5"/>
+   <atv:overwrite id="button_symbol_top" transform="matrix(0.4364,0,0,0.6,0,0)" x="81.5"/>
+   <atv:overwrite id="button_symbol" transform="matrix(0.7273,0,0,1,0,0)" x="45"/>
+   <atv:overwrite id="button_stroke" transform="matrix(0.7273,0,0,1,0,0)" width="106"/>
+   <atv:overwrite id="button_bg" transform="matrix(0.7273,0,0,1,0,0)" width="108"/>
+   <atv:overwrite id="outer_frame" transform="matrix(0.7273,0,0,1,0,0)" width="110"/>
+  </svg>
+  <text atv:refpx="2609.11" atv:refpy="-242.53" fill="$FONTCOLOR$" font-family="Arial" font-size="14" id="header_sync_stores" text-anchor="middle" visibility="hidden" x="1322" y="28">T{Redundancy}:</text>
+  <line atv:refpx="1258.5" atv:refpy="48.5" id="seperator_sync_stores" stroke="#ffffff" stroke-linejoin="round" stroke-width="2" visibility="hidden" x1="1255" x2="1255" y1="8" y2="73"/>
+  <svg atv:refpx="954.832" atv:refpy="3.499" height="30" id="btn_reload" transform="matrix(0.375,0,0,2.1667,0,0)" width="80" x="2500.885" xlink:href="SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Advanced.button" y="3.615">
+   <atv:argument name="label" value=""/>
+   <atv:argument name="extraBorderColor" value="#ffffff"/>
+   <atv:argument name="tabIndex" value="5"/>
+   <atv:argument name="visibilitySymbol" value="inherit"/>
+   <atv:argument name="visibilityLabel" value="hidden"/>
+   <atv:argument name="symbol" value="SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Symbols.20x20.file_reload"/>
+   <atv:overwrite height="63" id="id_6" transform="matrix(2.6667,0,0,0.4615,0,0)" width="28"/>
+   <atv:overwrite id="button_label_2" transform="matrix(2.6667,0,0,0.4615,0,0)" x="15" y="44"/>
+   <atv:overwrite id="button_label_1" transform="matrix(2.6667,0,0,0.4615,0,0)" x="15" y="29"/>
+   <atv:overwrite id="button_label" transform="matrix(2.6667,0,0,0.4615,0,0)" x="15" y="37"/>
+   <atv:overwrite id="button_symbol_bottom" transform="matrix(1.6,0,0,0.2769,0,0)" x="14.833" y="55.459"/>
+   <atv:overwrite id="button_symbol_top" transform="matrix(1.6,0,0,0.2769,0,0)" x="14.833" y="34.126"/>
+   <atv:overwrite id="button_symbol" transform="matrix(2.6667,0,0,0.4615,0,0)" x="5" y="22.5"/>
+   <atv:overwrite height="61" id="button_stroke" transform="matrix(2.6667,0,0,0.4615,0,0)" width="26"/>
+   <atv:overwrite height="63" id="button_bg" transform="matrix(2.6667,0,0,0.4615,0,0)" width="28"/>
+   <atv:overwrite height="65" id="outer_frame" transform="matrix(2.6667,0,0,0.4615,0,0)" width="30"/>
+  </svg>
+ </g>
+</svg>
+]]></uax:XmlElement>
+		</Value>
+	</UAVariable>
+	<UAVariable NodeId="ns=1;s=SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Advanced.admin.home" BrowseName="1:home" DataType="XmlElement" AccessLevel="7" UserAccessLevel="7" Historizing="true">
+		<DisplayName Locale="en">home</DisplayName>
+		<Description Locale="en">home</Description>
+		<References>
+			<Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Advanced.admin</Reference>
+			<Reference ReferenceType="HasTypeDefinition">DisplayType</Reference>
+		</References>
+		<Value>
+			<uax:XmlElement><![CDATA[<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<svg height="680" version="1.2" width="1280" xmlns="http://www.w3.org/2000/svg" xmlns:atv="http://webmi.atvise.com/2007/svgext" xmlns:xlink="http://www.w3.org/1999/xlink">
+ <desc>Welcome page for the administration layout.</desc>
+ <title>Home</title>
+ <defs/>
+ <metadata>
+  <atv:gridconfig enabled="true" gridstyle="lines" height="20" width="20"/>
+  <atv:snapconfig enabled="false" height="10" width="10"/>
+ </metadata>
+ <script atv:desc="" atv:name="" type="text/ecmascript"><![CDATA[var init = webMI.query.base == "forwarding" ? true : false;
+webMI.addEvent(webMI.data, "clientvariableschange", function (e) {
+	if (init && e && e.username && e.username != "") {
+		webMI.data.getRights(["SYSTEM.SECURITY"], (response) => {
+			if (response[0].rights.engineer) {
+				webMI.display.openDisplay("SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Advanced.admin.certificate_manager");
+			}
+		});
+	}
+});
+]]]]><![CDATA[></script>
+ <g atv:refpx="640" atv:refpy="340" id="id_2" transform="matrix(1,0,0,1,-44.343,-32.334)">
+  <text atv:refpx="684.343" atv:refpy="351.372" fill="#575757" font-family="Arial" font-size="72" id="id_0" text-anchor="middle" x="684.343" y="355.872">T{Admin dashboard}</text>
+  <text atv:refpx="679.196" atv:refpy="439.296" fill="#575757" font-family="Arial" font-size="48" id="id_1" text-anchor="middle" x="679.196" y="443.796">T{Please login!}</text>
+ </g>
+</svg>
+]]></uax:XmlElement>
+		</Value>
+	</UAVariable>
+	<UAObject NodeId="ns=1;s=SYSTEM" BrowseName="1:SYSTEM">
+		<DisplayName Locale="en">SYSTEM</DisplayName>
+		<Description Locale="en">SYSTEM</Description>
+		<References>
+			<Reference ReferenceType="HasComponent" IsForward="false">i=85</Reference>
+			<Reference ReferenceType="HasTypeDefinition">FolderType</Reference>
+		</References>
+		<Extensions>
+			<atvise Upstream="true" ExportedNodeId="ns=1;s=SYSTEM.LIBRARY.ATVISE.QUICKDYNAMICS" ExportedBrowseName="1:QUICKDYNAMICS"></atvise>
+		</Extensions>
+	</UAObject>
+	<UAObject NodeId="ns=1;s=SYSTEM.LIBRARY" BrowseName="1:LIBRARY">
+		<DisplayName Locale="en">LIBRARY</DisplayName>
+		<Description Locale="en">LIBRARY</Description>
+		<References>
+			<Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=SYSTEM</Reference>
+			<Reference ReferenceType="HasTypeDefinition">FolderType</Reference>
+		</References>
+		<Extensions>
+			<atvise Upstream="true"></atvise>
+		</Extensions>
+	</UAObject>
+	<UAObject NodeId="ns=1;s=SYSTEM.LIBRARY.ATVISE" BrowseName="1:ATVISE">
+		<DisplayName Locale="en">ATVISE</DisplayName>
+		<Description Locale="en">ATVISE</Description>
+		<References>
+			<Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=SYSTEM.LIBRARY</Reference>
+			<Reference ReferenceType="HasTypeDefinition">FolderType</Reference>
+		</References>
+		<Extensions>
+			<atvise Upstream="true"></atvise>
+		</Extensions>
+	</UAObject>
+	<UAObject NodeId="ns=1;s=SYSTEM.LIBRARY.ATVISE.QUICKDYNAMICS" BrowseName="1:QUICKDYNAMICS">
+		<DisplayName Locale="en">QUICKDYNAMICS</DisplayName>
+		<Description Locale="en">QUICKDYNAMICS</Description>
+		<References>
+			<Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=SYSTEM.LIBRARY.ATVISE</Reference>
+			<Reference ReferenceType="HasTypeDefinition">FolderType</Reference>
+		</References>
+	</UAObject>
+	<UAVariable NodeId="ns=1;s=SYSTEM.LIBRARY.ATVISE.QUICKDYNAMICS.Certificate Manager" BrowseName="1:Certificate Manager" DataType="XmlElement" AccessLevel="7" UserAccessLevel="7" Historizing="true">
+		<DisplayName Locale="en">Certificate Manager</DisplayName>
+		<Description Locale="en">Certificate Manager</Description>
+		<References>
+			<Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=SYSTEM.LIBRARY.ATVISE.QUICKDYNAMICS</Reference>
+			<Reference ReferenceType="HasTypeDefinition">QuickDynamicType</Reference>
+		</References>
+		<Value>
+			<uax:XmlElement><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+<script>
+  <metadata>
+    <icon type="image/png"></icon>
+    <visible>1</visible>
+    <title></title>
+    <description></description>
+  </metadata>
+  <code><![CDATA[/**
+ * CertificateManager Quickdynamic
+ *
+ * Manages digital certificates in various storage locations: "SERVER", "MIRROR", and "HTTPS".
+ * Provides methods to list, check validity, trust, reject, create, read, get defaults, delete, and upload
+ * certificates.
+ *
+ * Valid store values: "SERVER", "MIRROR", "HTTPS".
+ * Valid type values: "OWN", "TRUSTED", "REJECTED", "ISSUER", "ALL".
+ *
+ * Each method returns a promise resolving with the result of the webMI call.
+ *
+ * Usage:
+ * const certManager = new CertificateManager();
+ * certManager.list("SERVER", ["OWN", "TRUSTED"])
+ *   .then(certificates => console.log(certificates))
+ *   .catch(error => console.error(error));
+ */
+class CertificateManager {
+	async callWebMI(action, params) {
+		return new Promise((resolve, reject) => {
+			webMI.data.call("CertificateManager", { action, ...params }, (response) => {
+				const parsedResult = JSON.parse(response.result);
+
+				if (parsedResult.error) {
+					reject(new Error(parsedResult.errorstring));
+				} else {
+					resolve(parsedResult.result);
+				}
+			});
+		});
+	}
+
+	_getFileExtension(filename) {
+		return filename.substring(filename.lastIndexOf(".") + 1) || "";
+	}
+
+	list(store, types) {
+		return this.callWebMI("list", { store, types });
+	}
+
+	checkValidity(store, type, certificateName) {
+		return this.callWebMI("checkValidity", { store, type, certificateName });
+	}
+
+	trust(store, type, certificateName) {
+		return this.callWebMI("trust", { store, type, certificateName });
+	}
+
+	reject(store, type, certificateName) {
+		return this.callWebMI("reject", { store, type, certificateName });
+	}
+
+	create(store, certificateName, commonName) {
+		return this.callWebMI("create", { store, certificateName, commonName });
+	}
+
+	read(store, type, certificateName) {
+		return this.callWebMI("read", { store, type, certificateName });
+	}
+
+	getDefaults(store) {
+		return this.callWebMI("defaults", { store });
+	}
+
+	delete(store, type, certificateName) {
+		return this.callWebMI("delete", { store, type, certificateName });
+	}
+
+	async upload(store, type, certificateFiles, sharedName) {
+		function readFile(file) {
+			return new Promise((resolve, reject) => {
+				const reader = new FileReader();
+				reader.onload = () => {
+					// Extract Base64 content from the Data URL
+					const base64Content = reader.result.split(",")[1]; // Get the part after "data:...;base64,"
+					resolve({
+						name: file.name,
+						content: base64Content
+					});
+				};
+				reader.onerror = () => reject(new Error("File reading error"));
+
+				reader.readAsDataURL(file); // Read as Data URL to get Base64
+			});
+		}
+
+		// Process each file individually
+		for (const file of certificateFiles) {
+			if (typeof file === "undefined") break;
+
+			const fileData = await readFile(file);
+			const fileExtension = this._getFileExtension(fileData.name);
+			const certificateName = `${sharedName}.${fileExtension}`;
+			const fileContent = fileData.content;
+
+			// Send each file as a separate call
+			await this.callWebMI("upload", {
+				store,
+				type,
+				certificateName,
+				fileContent
+			});
+		}
+	}
+
+	async syncStores() {
+		await this.callWebMI("syncStores", {});
+	} 
+}
+
+return new CertificateManager();]]]]><![CDATA[></code>
+</script>
+]]></uax:XmlElement>
+		</Value>
+	</UAVariable>
+	<UAObject NodeId="ns=1;s=SYSTEM" BrowseName="1:SYSTEM">
+		<DisplayName Locale="en">SYSTEM</DisplayName>
+		<Description Locale="en">SYSTEM</Description>
+		<References>
+			<Reference ReferenceType="HasComponent" IsForward="false">i=85</Reference>
+			<Reference ReferenceType="HasTypeDefinition">FolderType</Reference>
+		</References>
+		<Extensions>
+			<atvise Upstream="true" ExportedNodeId="ns=1;s=SYSTEM.LIBRARY.ATVISE.SERVERSCRIPTS" ExportedBrowseName="1:SERVERSCRIPTS"></atvise>
+		</Extensions>
+	</UAObject>
+	<UAObject NodeId="ns=1;s=SYSTEM.LIBRARY" BrowseName="1:LIBRARY">
+		<DisplayName Locale="en">LIBRARY</DisplayName>
+		<Description Locale="en">LIBRARY</Description>
+		<References>
+			<Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=SYSTEM</Reference>
+			<Reference ReferenceType="HasTypeDefinition">FolderType</Reference>
+		</References>
+		<Extensions>
+			<atvise Upstream="true"></atvise>
+		</Extensions>
+	</UAObject>
+	<UAObject NodeId="ns=1;s=SYSTEM.LIBRARY.ATVISE" BrowseName="1:ATVISE">
+		<DisplayName Locale="en">ATVISE</DisplayName>
+		<Description Locale="en">ATVISE</Description>
+		<References>
+			<Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=SYSTEM.LIBRARY</Reference>
+			<Reference ReferenceType="HasTypeDefinition">FolderType</Reference>
+		</References>
+		<Extensions>
+			<atvise Upstream="true"></atvise>
+		</Extensions>
+	</UAObject>
+	<UAObject NodeId="ns=1;s=SYSTEM.LIBRARY.ATVISE.SERVERSCRIPTS" BrowseName="1:SERVERSCRIPTS">
+		<DisplayName Locale="en">SERVERSCRIPTS</DisplayName>
+		<Description Locale="en">SERVERSCRIPTS</Description>
+		<References>
+			<Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=SYSTEM.LIBRARY.ATVISE</Reference>
+			<Reference ReferenceType="HasTypeDefinition">FolderType</Reference>
+		</References>
+	</UAObject>
+	<UAObject NodeId="ns=1;s=SYSTEM.LIBRARY.ATVISE.SERVERSCRIPTS.Admin" BrowseName="1:Admin">
+		<DisplayName Locale="en">Admin</DisplayName>
+		<Description Locale="en">Admin</Description>
+		<References>
+			<Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=SYSTEM.LIBRARY.ATVISE.SERVERSCRIPTS</Reference>
+			<Reference ReferenceType="HasTypeDefinition">FolderType</Reference>
+		</References>
+	</UAObject>
+	<UAVariable NodeId="ns=1;s=SYSTEM.LIBRARY.ATVISE.SERVERSCRIPTS.Admin.CertificateEmailNotificationSample" BrowseName="1:CertificateEmailNotificationSample" DataType="XmlElement" AccessLevel="7" UserAccessLevel="7" Historizing="true">
+		<DisplayName Locale="en">CertificateEmailNotificationSample</DisplayName>
+		<Description Locale="en">CertificateEmailNotificationSample</Description>
+		<References>
+			<Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=SYSTEM.LIBRARY.ATVISE.SERVERSCRIPTS.Admin</Reference>
+			<Reference ReferenceType="HasTypeDefinition">ScriptCodeType</Reference>
+		</References>
+		<Value>
+			<uax:XmlElement><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+<script>
+  <metadata>
+    <priority>0</priority>
+    <owner>root</owner>
+    <runcontext>caller</runcontext>
+  </metadata>
+  <parameter name="triggerDailyAt23oClock" type="timer" trigger="false" relative="false" value="" starttime="23:00:00" repeat="01:00:00"/>
+  <parameter name="smtpServer" type="string" trigger="false" relative="false" value=""/>
+  <parameter name="sender" type="string" trigger="false" relative="false" value=""/>
+  <parameter name="recipient" type="string" trigger="false" relative="false" value=""/>
+  <code><![CDATA[/**
+ * Certificate and Email Automation Script
+ *
+ * This script demonstrates how to use the environment's certificate and email
+ * functionalities to:
+ * - Collect certificates that are about to expire within 48 hours and send an alert.
+ * - Generate and send a monthly report of all installed certificates.
+ *
+ * Functions:
+ * - sendEmail: Helper function to send emails using a specified SMTP server
+ *   that has been configured with the atvise builder.
+ * - getStoreName, getCertTypeName, getIssuerTypeName: Helper functions to map
+ *   certificate properties to human-readable names.
+ * - collectExpiringCertificates: Gathers certificates that are about to expire soon.
+ * - sendExpiryAlert: Sends an alert email for expiring certificates.
+ * - generateMonthlyReport: Generates and sends a monthly report of all certificates.
+ *
+ * Usage:
+ * - The parameters for sender, recipient, and SMTP server have to set, and the
+ *   daily trigger parameter has to be activated (checked).
+ */
+
+// Constants for email notification as defined in this script's parameters.
+const SMTP_SERVER = smtpServer;
+const SENDER_EMAIL = sender;
+const RECIPIENT_EMAIL = recipient;
+const EMAIL_SUBJECT_ALERT = "Certificate Expiry Warning";
+const EMAIL_SUBJECT_MONTHLY_REPORT = "Monthly Certificate Report";
+const ALERT_THRESHOLD_HOURS = 48; // Threshold in hours for expiring certificates alert
+
+// Convert Unix timestamp to Date object
+const convertTimestampToDate = (timestamp) => new Date(timestamp);
+
+// Helper function to send an email
+const sendEmail = (from, to, subject, body) => {
+	call("Mail.SendMail", {
+		smtpserver: SMTP_SERVER,
+		from: from,
+		to: to,
+		subject: subject,
+		body: body
+	});
+};
+
+// Helper function to get store name from server.certificates
+const getStoreName = (store) => {
+	const storeNames = {
+		[server.certificates.STORE_HTTPS]: "HTTPS",
+		[server.certificates.STORE_MIRROR]: "Mirror",
+		[server.certificates.STORE_SERVER]: "Server"
+	};
+	return storeNames[store] || "Unknown";
+};
+
+// Helper function to get certificate type name from server.certificates
+const getCertTypeName = (type) => {
+	const certTypes = {
+		[server.certificates.TYPE_ISSUER]: "Issuer",
+		[server.certificates.TYPE_OWN]: "Own",
+		[server.certificates.TYPE_REJECTED]: "Rejected",
+		[server.certificates.TYPE_TRUSTED]: "Trusted",
+		[server.certificates.TYPE_USERS_ISSUER]: "User Issuer",
+		[server.certificates.TYPE_USERS_OWN]: "User Own",
+		[server.certificates.TYPE_USERS_REJECTED]: "User Rejected",
+		[server.certificates.TYPE_USERS_TRUSTED]: "User Trusted"
+	};
+	return certTypes[type] || "Unknown Type";
+};
+
+// Helper function to get issuer type name from server.certificates
+const getIssuerTypeName = (issuerType) => {
+	const issuerTypes = {
+		[server.certificates.ITYPE_END]: "End",
+		[server.certificates.ITYPE_INTERMEDIATE]: "Intermediate",
+		[server.certificates.ITYPE_ROOT]: "Root"
+	};
+	return issuerTypes[issuerType] || "Unknown Issuer Type";
+};
+
+// Helper function to format certificate details into a readable format
+const formatCertificateDetails = (cert) => {
+	return (
+		`- Certificate Name: ${cert.name}\n` +
+		`  Store: ${cert.store}\n` +
+		`  Type: ${cert.type}\n` +
+		`  Issuer Type: ${cert.issuerType}\n` +
+		`  Issuer: ${cert.issuer}\n` +
+		`  Subject: ${cert.subject}\n` +
+		`  Expiry Date: ${cert.expiryDate.toISOString().slice(0, 19).replace("T", " ")} UTC\n` +
+		`\n`
+	);
+};
+
+// Helper function to check and collect certificates that are about to expire
+const collectExpiringCertificates = () => {
+	const currentDate = new Date();
+	let certificatesExpiringSoon = [];
+
+	const stores = [server.certificates.STORE_HTTPS, server.certificates.STORE_MIRROR, server.certificates.STORE_SERVER];
+	const types = [
+		server.certificates.TYPE_ISSUER,
+		server.certificates.TYPE_OWN,
+		server.certificates.TYPE_REJECTED,
+		server.certificates.TYPE_TRUSTED,
+		server.certificates.TYPE_USERS_ISSUER,
+		server.certificates.TYPE_USERS_OWN,
+		server.certificates.TYPE_USERS_REJECTED,
+		server.certificates.TYPE_USERS_TRUSTED
+	];
+
+	// Loop through stores and types to fetch certificates and check expiry
+	stores.forEach((store) => {
+		types.forEach((type) => {
+			const certificates = server.certificates.list(store, [type]);
+			certificates.result.forEach((cert) => {
+				const expiryDate = convertTimestampToDate(cert.data.fields.validTo);
+				const timeLeft = (expiryDate - currentDate) / (1000 * 60 * 60); // Calculate time left in hours
+
+				// Check if certificate is expiring soon (within ALERT_THRESHOLD_HOURS)
+				if (timeLeft < ALERT_THRESHOLD_HOURS && timeLeft >= 0) {
+					certificatesExpiringSoon.push({
+						name: cert.name,
+						expiryDate,
+						issuer: cert.data.issuer.commonName,
+						subject: cert.data.subject.commonName,
+						store: getStoreName(store),
+						type: getCertTypeName(type),
+						issuerType: getIssuerTypeName(cert.issuerType)
+					});
+				}
+			});
+		});
+	});
+
+	return certificatesExpiringSoon;
+};
+
+// Helper function to send an email alert for expiring certificates
+const sendExpiryAlert = (certificatesExpiringSoon) => {
+	let emailBody = "The following certificates are about to expire within 48 hours:\n\n";
+
+	// Use the formatCertificateDetails function to format the certificates
+	certificatesExpiringSoon.forEach((cert) => {
+		emailBody += formatCertificateDetails(cert);
+	});
+
+	sendEmail(SENDER_EMAIL, RECIPIENT_EMAIL, EMAIL_SUBJECT_ALERT, emailBody);
+};
+
+// Helper function to generate a monthly report of all certificates
+const generateMonthlyReport = () => {
+	let emailBody = "Here is the full list of installed certificates:\n\n";
+
+	// Loop through stores and types to generate a report for all certificates
+	const stores = [server.certificates.STORE_HTTPS, server.certificates.STORE_MIRROR, server.certificates.STORE_SERVER];
+	const types = [
+		server.certificates.TYPE_ISSUER,
+		server.certificates.TYPE_OWN,
+		server.certificates.TYPE_REJECTED,
+		server.certificates.TYPE_TRUSTED,
+		server.certificates.TYPE_USERS_ISSUER,
+		server.certificates.TYPE_USERS_OWN,
+		server.certificates.TYPE_USERS_REJECTED,
+		server.certificates.TYPE_USERS_TRUSTED
+	];
+
+	stores.forEach((store) => {
+		types.forEach((type) => {
+			const certificates = server.certificates.list(store, [type]);
+			certificates.result.forEach((cert) => {
+				emailBody += formatCertificateDetails({
+					name: cert.name,
+					expiryDate: convertTimestampToDate(cert.data.fields.validTo),
+					issuer: cert.data.issuer.commonName,
+					subject: cert.data.subject.commonName,
+					store: getStoreName(store),
+					type: getCertTypeName(type),
+					issuerType: getIssuerTypeName(cert.issuerType)
+				});
+			});
+		});
+	});
+
+	sendEmail(SENDER_EMAIL, RECIPIENT_EMAIL, EMAIL_SUBJECT_MONTHLY_REPORT, emailBody);
+};
+
+// Main script execution
+const main = () => {
+	const currentDay = new Date().getDate();
+
+	// Check for certificates expiring within the next 48 hours
+	const certificatesExpiringSoon = collectExpiringCertificates();
+	if (certificatesExpiringSoon.length > 0) {
+		sendExpiryAlert(certificatesExpiringSoon);
+	}
+
+	// Run the monthly report only on the first day of the month
+	if (currentDay === 1) {
+		generateMonthlyReport();
+	}
+};
+
+// Execute the main function to run the script
+main();
+]]]]><![CDATA[></code>
+</script>
+]]></uax:XmlElement>
+		</Value>
+	</UAVariable>
+	<UAObject NodeId="ns=1;s=SYSTEM" BrowseName="1:SYSTEM">
+		<DisplayName Locale="en">SYSTEM</DisplayName>
+		<Description Locale="en">SYSTEM</Description>
+		<References>
+			<Reference ReferenceType="HasComponent" IsForward="false">i=85</Reference>
+			<Reference ReferenceType="HasTypeDefinition">FolderType</Reference>
+		</References>
+		<Extensions>
+			<atvise Upstream="true" ExportedNodeId="ns=1;s=SYSTEM.LIBRARY.ATVISE.WEBMIMETHODS" ExportedBrowseName="1:WEBMIMETHODS"></atvise>
+		</Extensions>
+	</UAObject>
+	<UAObject NodeId="ns=1;s=SYSTEM.LIBRARY" BrowseName="1:LIBRARY">
+		<DisplayName Locale="en">LIBRARY</DisplayName>
+		<Description Locale="en">LIBRARY</Description>
+		<References>
+			<Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=SYSTEM</Reference>
+			<Reference ReferenceType="HasTypeDefinition">FolderType</Reference>
+		</References>
+		<Extensions>
+			<atvise Upstream="true"></atvise>
+		</Extensions>
+	</UAObject>
+	<UAObject NodeId="ns=1;s=SYSTEM.LIBRARY.ATVISE" BrowseName="1:ATVISE">
+		<DisplayName Locale="en">ATVISE</DisplayName>
+		<Description Locale="en">ATVISE</Description>
+		<References>
+			<Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=SYSTEM.LIBRARY</Reference>
+			<Reference ReferenceType="HasTypeDefinition">FolderType</Reference>
+		</References>
+		<Extensions>
+			<atvise Upstream="true"></atvise>
+		</Extensions>
+	</UAObject>
+	<UAObject NodeId="ns=1;s=SYSTEM.LIBRARY.ATVISE.WEBMIMETHODS" BrowseName="1:WEBMIMETHODS">
+		<DisplayName Locale="en">WEBMIMETHODS</DisplayName>
+		<Description Locale="en">WEBMIMETHODS</Description>
+		<References>
+			<Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=SYSTEM.LIBRARY.ATVISE</Reference>
+			<Reference ReferenceType="HasTypeDefinition">FolderType</Reference>
+		</References>
+	</UAObject>
+	<UAVariable NodeId="ns=1;s=SYSTEM.LIBRARY.ATVISE.WEBMIMETHODS.CertificateManager" BrowseName="1:CertificateManager" DataType="XmlElement" AccessLevel="7" UserAccessLevel="7" Historizing="true">
+		<DisplayName Locale="en">CertificateManager</DisplayName>
+		<Description Locale="en">CertificateManager</Description>
+		<References>
+			<Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=SYSTEM.LIBRARY.ATVISE.WEBMIMETHODS</Reference>
+			<Reference ReferenceType="HasTypeDefinition">ScriptCodeType</Reference>
+		</References>
+		<Value>
+			<uax:XmlElement><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+<script>
+  <metadata>
+    <priority>0</priority>
+    <owner>root</owner>
+    <runcontext>caller</runcontext>
+    <fireevent>1</fireevent>
+  </metadata>
+  <parameter name="request" type="http.request" trigger="false" relative="false" value=""/>
+  <code><![CDATA[/**
+ * Certificate Management Interface
+ *
+ * This script serves as an interface for accessing the methods of
+ * `server.certificates`.
+ *
+ * Supported actions:
+ * - list: Retrieve a list of certificates from the specified store.
+ * - upload: Upload new certificates to the specified store.
+ * - delete: Remove certificates from the specified store.
+ * - create: Create a new certificate in the specified store.
+ * - trust: Trust a specified certificate.
+ * - reject: Reject a specified certificate.
+ * - read: Read details of a specified certificate.
+ * - defaults: Retrieve default values for certificates from cert.ini
+ */
+
+const certificates = server.certificates;
+const { certificateName, action, certificateFile, commonName, fileContent } = request.postvalues;
+
+function removeFileExtension(filename) {
+	return filename.substring(0, filename.lastIndexOf(".")) || filename;
+}
+
+const STORE = {
+	HTTPS: certificates.STORE_HTTPS,
+	MIRROR: certificates.STORE_MIRROR,
+	SERVER: certificates.STORE_SERVER
+};
+
+// Server constants using enums
+const ITYPE = {
+	END: certificates.ITYPE_END,
+	INTERMEDIATE: certificates.ITYPE_INTERMEDIATE,
+	ROOT: certificates.ITYPE_ROOT
+};
+
+// Add mapping for other direction
+for (const key in ITYPE) {
+	ITYPE[ITYPE[key]] = key;
+}
+
+const TYPE = {
+	ISSUER: certificates.TYPE_ISSUER,
+	OWN: certificates.TYPE_OWN,
+	REJECTED: certificates.TYPE_REJECTED,
+	TRUSTED: certificates.TYPE_TRUSTED,
+	USERS_ISSUER: certificates.TYPE_USERS_ISSUER,
+	USERS_OWN: certificates.TYPE_USERS_OWN,
+	USERS_REJECTED: certificates.TYPE_USERS_REJECTED,
+	USERS_TRUSTED: certificates.TYPE_USERS_TRUSTED
+};
+
+let parsedType;
+
+// Add mapping for other direction
+for (const key in TYPE) {
+	TYPE[TYPE[key]] = key;
+}
+
+// Map types to the corresponding certificate type
+function mapTypes(typesParameter) {
+	if (Array.isArray(typesParameter)) {
+		return typesParameter.map((t) => {
+			const parsed = parseFloat(t);
+			return !isNaN(parsed) && String(parsed) === t ? parsed : TYPE[t];
+		});
+	}
+	return null;
+}
+
+const store = STORE[request.postvalues.store];
+
+// Determines the appropriate type from request.postvalues.type.
+// If the type is a string that can be parsed to a valid number without modification,
+// it is treated as a number. Otherwise, it maps the string to the corresponding
+// certificate type in certificates.
+const type =
+	typeof request.postvalues.type === "string" &&
+	!isNaN((parsedType = parseFloat(request.postvalues.type))) &&
+	String(parsedType) === request.postvalues.type
+		? parsedType
+		: TYPE[request.postvalues.type];
+
+const types = mapTypes(request.postvalues.types);
+
+function checkParameters(requiredParams) {
+	for (const [paramName, paramValue] of Object.entries(requiredParams)) {
+		if (paramValue === undefined || paramValue === null || paramValue === "undefined") {
+			return { error: -1, errorstring: `Certificates: Missing parameter - ${paramName}` };
+		}
+	}
+	return null;
+}
+
+if (action === undefined || action === null) {
+	return { error: -1, errorstring: "Certificates: Missing parameter - action" };
+}
+
+let result;
+
+switch (action) {
+	case "list":
+		result = checkParameters({ store, types });
+		if (!result) result = certificates.list(store, types);
+		break;
+
+	case "trust":
+		result = checkParameters({ store, type, certificateName });
+		if (!result) result = certificates.trust(store, type, removeFileExtension(certificateName));
+		break;
+
+	case "reject":
+		result = checkParameters({ store, type, certificateName });
+		if (!result) result = certificates.reject(store, type, removeFileExtension(certificateName));
+		break;
+
+	case "create":
+		result = checkParameters({ store, certificateName, commonName });
+		if (!result) result = certificates.create(store, certificateName, commonName);
+		break;
+
+	case "read":
+		result = checkParameters({ store, type, certificateName });
+		if (!result) result = certificates.read(store, type, certificateName);
+		break;
+
+	case "defaults":
+		result = checkParameters({ store });
+		if (!result) result = certificates.defaults(store);
+		break;
+
+	case "delete":
+		result = checkParameters({ store, type, certificateName });
+		if (!result) result = certificates.delete(store, type, removeFileExtension(certificateName));
+		break;
+
+	case "upload":
+		result = checkParameters({ store, type, certificateName, fileContent });
+		if (!result) result = certificates.upload(store, type, certificateName, fileContent);
+		break;
+		
+	case "syncStores":
+		result = certificates.syncStores();
+		break;
+
+	default:
+		result = { error: -1, errorstring: `Certificates: Unknown action - ${action}` };
+}
+
+// Replace type and issuer type numbers with strings.
+if (Array.isArray(result.result)) {
+	result.result.forEach((item) => {
+		if (item.type in TYPE) {
+			item.type = TYPE[item.type];
+		}
+
+		if (item.issuerType in ITYPE) {
+			item.issuerType = ITYPE[item.issuerType];
+		}
+	});
+}
+
+return JSON.stringify(result);]]]]><![CDATA[></code>
+</script>
+]]></uax:XmlElement>
+		</Value>
+	</UAVariable>
+</UANodeSet>

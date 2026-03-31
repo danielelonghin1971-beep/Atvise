@@ -1,0 +1,800 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<UANodeSet xmlns="http://opcfoundation.org/UA/2011/03/UANodeSet.xsd" xmlns:uax="http://opcfoundation.org/UA/2008/02/Types.xsd">
+	<Extensions>
+		<atvise Version="3.13"></atvise>
+	</Extensions>
+	<NamespaceUris>
+		<Uri>http://www.atvise.com/atServer/UA/</Uri>
+	</NamespaceUris>
+	<Aliases>
+		<Alias Alias="FolderType">i=61</Alias>
+		<Alias Alias="HasComponent">i=47</Alias>
+		<Alias Alias="HasTypeDefinition">i=40</Alias>
+		<Alias Alias="ScriptCodeType">ns=1;s=VariableTypes.ATVISE.ScriptCode</Alias>
+		<Alias Alias="XmlElement">i=16</Alias>
+	</Aliases>
+	<UAObject NodeId="ns=1;s=SYSTEM" BrowseName="1:SYSTEM">
+		<DisplayName Locale="en">SYSTEM</DisplayName>
+		<Description Locale="en">SYSTEM</Description>
+		<References>
+			<Reference ReferenceType="HasComponent" IsForward="false">i=85</Reference>
+			<Reference ReferenceType="HasTypeDefinition">FolderType</Reference>
+		</References>
+		<Extensions>
+			<atvise Upstream="true" ExportedNodeId="ns=1;s=SYSTEM.LIBRARY.ATVISE.SERVERSCRIPTS" ExportedBrowseName="1:SERVERSCRIPTS"></atvise>
+		</Extensions>
+	</UAObject>
+	<UAObject NodeId="ns=1;s=SYSTEM.LIBRARY" BrowseName="1:LIBRARY">
+		<DisplayName Locale="en">LIBRARY</DisplayName>
+		<Description Locale="en">LIBRARY</Description>
+		<References>
+			<Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=SYSTEM</Reference>
+			<Reference ReferenceType="HasTypeDefinition">FolderType</Reference>
+		</References>
+		<Extensions>
+			<atvise Upstream="true"></atvise>
+		</Extensions>
+	</UAObject>
+	<UAObject NodeId="ns=1;s=SYSTEM.LIBRARY.ATVISE" BrowseName="1:ATVISE">
+		<DisplayName Locale="en">ATVISE</DisplayName>
+		<Description Locale="en">ATVISE</Description>
+		<References>
+			<Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=SYSTEM.LIBRARY</Reference>
+			<Reference ReferenceType="HasTypeDefinition">FolderType</Reference>
+		</References>
+		<Extensions>
+			<atvise Upstream="true"></atvise>
+		</Extensions>
+	</UAObject>
+	<UAObject NodeId="ns=1;s=SYSTEM.LIBRARY.ATVISE.SERVERSCRIPTS" BrowseName="1:SERVERSCRIPTS">
+		<DisplayName Locale="en">SERVERSCRIPTS</DisplayName>
+		<Description Locale="en">SERVERSCRIPTS</Description>
+		<References>
+			<Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=SYSTEM.LIBRARY.ATVISE</Reference>
+			<Reference ReferenceType="HasTypeDefinition">FolderType</Reference>
+		</References>
+	</UAObject>
+	<UAObject NodeId="ns=1;s=SYSTEM.LIBRARY.ATVISE.SERVERSCRIPTS.CrossRef" BrowseName="1:CrossRef">
+		<DisplayName Locale="en">CrossRef</DisplayName>
+		<Description Locale="en">CrossRef</Description>
+		<References>
+			<Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=SYSTEM.LIBRARY.ATVISE.SERVERSCRIPTS</Reference>
+			<Reference ReferenceType="HasTypeDefinition">FolderType</Reference>
+		</References>
+	</UAObject>
+	<UAObject NodeId="ns=1;s=SYSTEM.LIBRARY.ATVISE.SERVERSCRIPTS.CrossRef.Lib" BrowseName="1:Lib">
+		<DisplayName Locale="en">Lib</DisplayName>
+		<Description Locale="en">Lib</Description>
+		<References>
+			<Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=SYSTEM.LIBRARY.ATVISE.SERVERSCRIPTS.CrossRef</Reference>
+			<Reference ReferenceType="HasTypeDefinition">FolderType</Reference>
+		</References>
+	</UAObject>
+	<UAVariable NodeId="ns=1;s=SYSTEM.LIBRARY.ATVISE.SERVERSCRIPTS.CrossRef.Lib.DisplayReferences" BrowseName="1:DisplayReferences" DataType="XmlElement" AccessLevel="7" UserAccessLevel="7" Historizing="true">
+		<DisplayName Locale="en">DisplayReferences</DisplayName>
+		<Description Locale="en">DisplayReferences</Description>
+		<References>
+			<Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=SYSTEM.LIBRARY.ATVISE.SERVERSCRIPTS.CrossRef.Lib</Reference>
+			<Reference ReferenceType="HasTypeDefinition">ScriptCodeType</Reference>
+		</References>
+		<Value>
+			<uax:XmlElement><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+<script>
+  <metadata>
+    <priority>0</priority>
+  </metadata>
+  <parameter name="ua" type="uainput" trigger="false" relative="false" value=""/>
+  <code><![CDATA[/* Parse a display and collect references to other displays
+Input (members of uan):
+	-node:ua.nodeid{mandatory} Specifies the nodeid of the display to parse
+	-recursive:bool{optional, default=false} If true collect all descendant otherwise only next child
+Output (return value)	:
+	from:[ua.nodeid] Array of parents
+	to:[ua.nodeid] Array of children
+If no other displays are referenced empty arrays are returned.
+*/
+var recursive = ua.recursive;
+var nodeid = ua.node.result.nodeId.address;
+//console.log("Display References: ", nodeid, " recursive:", recursive);
+
+var display = Ua.findNode(nodeid);
+var displayExist = Ua.Status(display) != Ua.Status.BADNODEIDUNKNOWN;
+
+var xlink = "http://www.w3.org/1999/xlink";
+var from = [];
+var to = [];
+var parsedDisplays = {};
+var displaysToParse = [display];
+
+parsedDisplays[display.result.nodeId.address] = true;
+
+if (!displayExist)
+	throw new Error("Display:" + display.result.nodeId.address + " does not exist.");
+
+while (displaysToParse.length) {
+	if (display = displaysToParse.shift()) {
+		try {
+			var doc = new XMLDoc(display.result.value);
+		} catch (e) {
+			console.log("error", display.result.nodeId.address + ": " + e);
+			throw e;
+		}
+		if (doc.root) {
+			for (var xmlNode = doc.root.first("svg"); xmlNode; xmlNode = xmlNode.next("svg")) {
+
+				var childAddress = (decodeURIComponent(xmlNode.attribute("href", xlink))).split('?', 1).shift();
+				var childNode = Ua.findNode(childAddress);
+				var childExist = Ua.Status(childNode) != Ua.Status.BADNODEIDUNKNOWN;
+
+				if (childExist) {
+					if (recursive && !parsedDisplays[childNode.result.nodeId.address]) {
+						parsedDisplays[childNode.result.nodeId.address] = true;
+						displaysToParse.unshift(childNode.result);
+					}
+					from.push(display.result);
+					to.push(childNode.result);
+				}
+			}
+		}
+	}
+}
+//for (var i = 0; i < from.length; ++i) console.log(from[i].nodeid, " -> ", to[i].nodeid);
+return {"from": from, "to": to};]]]]><![CDATA[></code>
+</script>
+]]></uax:XmlElement>
+		</Value>
+	</UAVariable>
+	<UAVariable NodeId="ns=1;s=SYSTEM.LIBRARY.ATVISE.SERVERSCRIPTS.CrossRef.Lib.DisplayVariables" BrowseName="1:DisplayVariables" DataType="XmlElement" AccessLevel="7" UserAccessLevel="7" Historizing="true">
+		<DisplayName Locale="en">DisplayVariables</DisplayName>
+		<Description Locale="en">DisplayVariables</Description>
+		<References>
+			<Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=SYSTEM.LIBRARY.ATVISE.SERVERSCRIPTS.CrossRef.Lib</Reference>
+			<Reference ReferenceType="HasTypeDefinition">ScriptCodeType</Reference>
+		</References>
+		<Value>
+			<uax:XmlElement><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+<script>
+  <metadata>
+    <priority>0</priority>
+  </metadata>
+  <parameter name="ua" type="uainput" trigger="false" relative="false" value=""/>
+  <code><![CDATA[/* Parse a display and collect referenced variables
+Input (members of ua):
+	-node:ua.nodeid{mandatory} Specifies the nodeid(s) of the display(s) to parse. It can be an array.
+	-base:ua.nodeid{optional, default=null} Specifies the base nodeid of the display
+	-server:ua.nodeid{optional, default=null} If not null, specifies the server where the object folder is checked for variables not used in the parsed displays.
+		If server is defined, absolut adresses will be searched in scripts as well.
+	-recursive:bool{optional, default=false} If true collect all descendant otherwise only the specified display
+Output (return value):
+	from:[ua.nodeid[]] Array of parent display histories
+	to:[string] Array of node addresses of referenced variables
+	exists:[bool] Array of flags that signals if the node name exists. If exists, the to[i] is of type Ua.Node otherwise String
+	unused:[ua.nodeid] Array of variables not used in the displays. Filled if objects is not null.
+	parent:[ua.nodeid] Array of guessed parents, where the referenced variable can be searched.
+If no variables are referenced empty arrays are returned.
+*/
+function isArray(x) {
+	return typeof x == "object" && x instanceof Array;
+}
+
+var recursive = ua.recursive;
+var xlink = "http://www.w3.org/1999/xlink";
+var atv = "http://webmi.atvise.com/2007/svgext";
+var from = [];
+var parent = [];
+var to = [];
+var exists = [];
+var displayNodes = ua.node;
+var displaysToParse = [];
+
+if (isArray(displayNodes)) {
+	for (var i = 0; i < displayNodes.length; ++i) {
+		var display = Ua.findNode(displayNodes[i].nodeId.address);
+		var displayExist = Ua.Status(display) != Ua.Status.BADNODEIDUNKNOWN;
+
+		if (displayExist) {
+			displaysToParse.push(display.result);
+		} else {
+			throw new Error("Display:" + displayNodes + " does not exist.");
+		}
+	}
+} else {
+	var display = Ua.findNode(displayNodes);
+	var displayExist = Ua.Status(display) != Ua.Status.BADNODEIDUNKNOWN;
+
+	if (displayExist) displaysToParse.push(display.result);
+}
+
+var parsingDisplays = {};
+var usedVariables = {};
+
+var server = Ua.findNode(ua.server.result.nodeId.address);
+var serverExist = Ua.Status(server) != Ua.Status.BADNODEIDUNKNOWN;
+
+var objectsFolder = "";
+
+if (serverExist) {
+	objectsFolder = server.result.nodeId.address + ".OBJECTS";
+}
+
+var objects = Ua.findNode(objectsFolder);
+var objectsExist = Ua.Status(objects) != Ua.Status.BADNODEIDUNKNOWN;
+
+if (objectsExist) {
+	var excludeTypes = [];
+
+	var result = Ua.findNode("ObjectTypes.ATVISE").result.browse({
+		nodeClass: Ua.NodeClass.OBJECT,
+		recursive: true
+	}).result;
+
+	for (var i = 0; i < result.length; ++i) {
+		excludeTypes.push(result[i].node.nodeId.address);
+	}
+
+	var result = Ua.findNode("VariableTypes.ATVISE").result.browse({
+		nodeClass: Ua.NodeClass.VARIABLE,
+		recursive: true
+	}).result;
+	
+	for (var i = 0; i < result.length; ++i) {
+		excludeTypes.push(result[i].node.nodeId.address);
+	}
+
+	var result = objects.result.browse({
+		nodeClass: Ua.NodeClass.VARIABLE,
+		recursive: true,
+		exclude: excludeTypes
+	}).result;
+	
+	for (var i = 0; i < result.length; ++i) {
+		usedVariables[result[i].node.nodeId.address] = false;
+	}
+}
+
+function quote(str) {
+	return str.replace(/([.?*+^$[\]\\(){}-])/g, "\\$1");
+}
+
+function collectDisplayVariables(display, params, parentDisplayHistory) {
+	try {
+		var xmlDoc = new XMLDoc(display.value);
+	} catch (e) {
+		throw e;
+	}
+
+	parsingDisplays[display] = true;
+
+	var displayHistory = parentDisplayHistory.slice();
+	displayHistory.push(display);
+
+	var parameters = {
+		base: params["base"]
+	};
+
+	for (var meta = xmlDoc.root.first("metadata"); meta; meta = meta.next("metadata")) {
+		for (var param = meta.first("parameter", atv); param; param = param.next("parameter", atv)) {
+			if (param.attribute("valuetype") == "address") {
+				var name = param.attribute("name");
+				if (!name) continue;
+
+				if (params[name]) parameters[name] = params[name];
+				else if (param.attribute("defaultvalue")) parameters[name] = param.attribute("defaultvalue");
+
+				if (parameters[name]) {
+					var paramNode = Ua.findNode(parameters[name]);
+
+					var paramNodeExist = Ua.Status(paramNode) != Ua.Status.BADNODEIDUNKNOWN;
+
+					if (paramNodeExist) {
+						usedVariables[paramNode.result.nodeId.address] = true;
+						exists.push(true);
+						to.push(paramNode.result.nodeId.address);
+					} else {
+						exists.push(false);
+						to.push(parameters[name]);
+					}
+
+					from.push(displayHistory);
+
+					if (displayHistory.length > 1) parent.push(displayHistory[displayHistory.length - 2]);
+					else parent.push(display);
+				}
+			}
+		}
+	}
+	
+	if (!recursive) return;
+
+	if (objectsExist)
+		for (var script = xmlDoc.root.first("script"); script; script = script.next("script")) {
+			for (var cdata = script.first(XMLDoc.CDATA_SECTION_NODE); cdata; cdata = cdata.next(XMLDoc.CDATA_SECTION_NODE)) {
+				var content = cdata.content;
+				for (var varNodeId in usedVariables) {
+					var regExp = new RegExp("[\"']" + quote(varNodeId) + "[\"']");
+					if (regExp.test(content)) {
+						usedVariables[varNodeId] = true;
+						from.push(displayHistory);
+						to.push(varNodeId);
+						exists.push(true);
+						parent.push(display);
+					}
+					var base = params["base"];
+					if (base && varNodeId.length > base.length && varNodeId.slice(0, base.length) == base) {
+						var regExp = new RegExp(quote('["base"] + "' + varNodeId.slice(base.length) + '"'));
+						if (regExp.test(content)) {
+							usedVariables[varNodeId] = true;
+							from.push(displayHistory);
+							to.push(varNodeId);
+							exists.push(true);
+							if (displayHistory.length > 1) parent.push(displayHistory[displayHistory.length - 2]);
+							else parent.push(display);
+						}
+					}
+				}
+			}
+		}
+
+	for (var svg = xmlDoc.root.first("svg"); svg; svg = svg.next("svg")) {
+		var child = Ua.findNode(decodeURIComponent(svg.attribute("href", xlink)));
+		var childExist = Ua.Status(child) != Ua.Status.BADNODEIDUNKNOWN;
+
+		if (childExist && !parsingDisplays[child.result.nodeId.address]) {
+			var childArguments = {};
+			for (var arg = svg.first("argument", atv); arg; arg = arg.next("argument", atv)) {
+				var name = arg.attribute("name");
+				if (!name) continue;
+				if (name in parameters) {
+					var value = "";
+					var x;
+					if ((x = arg.attribute("prefix")) && parameters[x]) value += parameters[x];
+					if ((x = arg.attribute("value"))) value += x;
+					if ((x = arg.attribute("postfix")) && parameters[x]) value += parameters[x];
+					childArguments[name] = value;
+				}
+			}
+
+			collectDisplayVariables(child.result, childArguments, displayHistory);
+		}
+	}
+	delete parsingDisplays[display];
+}
+
+for (var i = 0; i < displaysToParse.length; ++i) {
+	var params = {};
+	if (ua.base) params["base"] = ua.base;
+
+	parsingDisplays = {};
+
+	collectDisplayVariables(displaysToParse[i], params, []);
+}
+
+var unused = [];
+
+if (objectsExist) {
+	for (var n in usedVariables)
+		if (!usedVariables[n]) {
+			var tmp = Ua.findNode(n);
+			var tmpExist = Ua.Status(tmp) != Ua.Status.BADNODEIDUNKNOWN;
+
+			if (tmpExist) {
+				unused.push(tmp.result);
+			}
+		}
+}
+
+var result = {
+	server: server,
+	from: from,
+	to: to,
+	exists: exists,
+	parent: parent,
+	unused: unused
+};
+
+var hook = Ua.findNode("SYSTEM.LIBRARY.PROJECT.SERVERSCRIPTS.CrossRef.Lib.DisplayVariablesHook");
+var hookExist = Ua.Status(hook) != Ua.Status.BADNODEIDUNKNOWN;
+
+/* Hook of referenced and unused variables
+The hook must have one input paramter named 'ua' of the type 'uainput'
+Input of hook (members of ua):
+	server:[Ua.Node] Specifies the nodeid of the server
+	from:[Ua.Node[]] Array of parent display histories (E.g. disp1->disp2->disp3)
+	to:[String] Array of node addresses (names) of referenced variables
+	exists:[Bool] Array of flags that signals if the node name exists. If exists, the to[i] is of type Ua.Node otherwise String
+	unused:[Ua.Node] Array of variables not used in the displays.
+	parent:[Ua.Node] Array of guessed parents, where the referenced variable can be searched.
+Output of hook (return value):
+	Must have the same structure as the input.
+
+Example: simple hook to return 1-1 the input
+
+return ua;
+*/
+
+if (hookExist)
+	result = call(hook.result, {
+		ua: result
+	});
+
+return result;
+]]]]><![CDATA[></code>
+</script>
+]]></uax:XmlElement>
+		</Value>
+	</UAVariable>
+	<UAVariable NodeId="ns=1;s=SYSTEM.LIBRARY.ATVISE.SERVERSCRIPTS.CrossRef.ListReferencedDisplays" BrowseName="1:ListReferencedDisplays" DataType="XmlElement" AccessLevel="7" UserAccessLevel="7" Historizing="true">
+		<DisplayName Locale="en">ListReferencedDisplays</DisplayName>
+		<Description Locale="en">ListReferencedDisplays</Description>
+		<References>
+			<Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=SYSTEM.LIBRARY.ATVISE.SERVERSCRIPTS.CrossRef</Reference>
+			<Reference ReferenceType="HasTypeDefinition">ScriptCodeType</Reference>
+		</References>
+		<Value>
+			<uax:XmlElement><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+<script>
+  <metadata>
+    <priority>0</priority>
+  </metadata>
+  <parameter name="ua" type="uainput" trigger="false" relative="false" value=""/>
+  <code><![CDATA[/* 
+Parse a display or displays and collect references to other displays
+Input (members of ua):
+	-node:uanodeid{mandatory} Specifies the nodeid of the display or the folder to parse
+Output (return value)	:
+	tablecolumnheaders:[string] Array of column titles
+	tablecolumntypes:[uanodeid] Array of typeDefinitions of column types
+	tabledata:[[string]] Array of string array that represents the rows of the result
+If no other displays are referenced empty arrays are returned.
+*/
+
+function toNodes2(result, x) {
+	for (var i = 0; i < result.length; ++i)
+		x.push(result[i].node);
+}
+
+var node = Ua.findNode(ua.node);
+
+var startNodes = [];
+if (node.result.equal(node.result.typeDefinition.valueOf(), "VariableTypes.ATVISE.Display").result) {
+	startNodes.push(node);
+}
+
+toNodes2(node.result.browse({
+	typeDefinition: "VariableTypes.ATVISE.Display",
+	recursive: true
+}), startNodes);
+
+var from = [];
+var to = [];
+
+for (var i = 0; i < startNodes.length; ++i) {
+	var d = call("SYSTEM.LIBRARY.ATVISE.SERVERSCRIPTS.CrossRef.Lib.DisplayReferences", {
+		"ua": {
+			node: startNodes[i],
+			recursive: false
+		}
+	});
+
+	for (var j = 0; j < d.to.length; ++j) {
+		from.push(d.from[j]);
+		to.push(d.to[j]);
+	}
+}
+
+var strings1 = [];
+var strings2 = [];
+
+for (var i = 0; i < to.length; ++i) {
+	strings1.push(from[i].nodeId.address);
+	strings2.push(to[i].nodeId.address);
+}
+
+var variableTypesNode = Ua.findNode("VariableTypes.ATVISE.Display");
+
+return {
+	tablecolumnheaders: ["Display", "Contains display"],
+	tablecolumntypes: [variableTypesNode, variableTypesNode],
+	tabledata: [strings1, strings2]
+};]]]]><![CDATA[></code>
+</script>
+]]></uax:XmlElement>
+		</Value>
+	</UAVariable>
+	<UAVariable NodeId="ns=1;s=SYSTEM.LIBRARY.ATVISE.SERVERSCRIPTS.CrossRef.ListReferencedFromDisplays" BrowseName="1:ListReferencedFromDisplays" DataType="XmlElement" AccessLevel="7" UserAccessLevel="7" Historizing="true">
+		<DisplayName Locale="en">ListReferencedFromDisplays</DisplayName>
+		<Description Locale="en">ListReferencedFromDisplays</Description>
+		<References>
+			<Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=SYSTEM.LIBRARY.ATVISE.SERVERSCRIPTS.CrossRef</Reference>
+			<Reference ReferenceType="HasTypeDefinition">ScriptCodeType</Reference>
+		</References>
+		<Value>
+			<uax:XmlElement><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+<script>
+  <metadata>
+    <priority>0</priority>
+  </metadata>
+  <parameter name="ua" type="uainput" trigger="false" relative="false" value=""/>
+  <code><![CDATA[/* 
+Parse all displays and collect displays that reference this display
+Input (members of ua):
+	-node:uanodeid{mandatory} Specifies the nodeid of the display to search for
+Output (return value)	:
+	tablecolumnheaders:[string] Array of column titles
+	tablecolumntypes:[uanodeid] Array of typeDefinitions of column types
+	tabledata:[[string]] Array of string array that represents the rows of the result
+If no displays reference the target empty arrays are returned.
+*/
+
+function toNodes(result) {
+	var x = [];
+	for (var i = 0; i < result.length; ++i)
+		x.push(result[i].node);
+	return x;
+}
+
+function toNodes2(result, x) {
+	for (var i = 0; i < result.length; ++i)
+		x.push(result[i].node);
+}
+
+var serverTypes = toNodes(
+	Ua.findNode("ObjectTypes.ATVISE.Server").result.browse({
+		reference: Ua.Reference.HASSUBTYPE,
+		recursive: true
+	}).result
+);
+
+var servers = toNodes(
+	Ua.findNode(Ua.NodeId.OBJECTSFOLDER).result.browse({
+		typeDefinition: serverTypes
+	}).result
+);
+
+servers.push(Ua.findNode("ObjectTypes.PROJECT").result);
+
+var displays = [];
+for (var i = 0; i < servers.length; ++i)
+	toNodes2(
+		servers[i].browse({
+			typeDefinition: "VariableTypes.ATVISE.Display",
+			recursive: true
+		}).result,
+		displays
+	);
+
+var from = [];
+var to = [];
+
+for (var i = 0; i < displays.length; ++i) {
+	var d = call("SYSTEM.LIBRARY.ATVISE.SERVERSCRIPTS.CrossRef.Lib.DisplayReferences", {
+		ua: {
+			node: Ua.findNode(displays[i]),
+			recursive: false
+		}
+	});
+	for (var j = 0; j < d.to.length; ++j) {
+		from.push(d.from[j]);
+		to.push(d.to[j]);
+	}
+}
+
+var strings2 = [];
+var strings1 = [];
+var stringsReturned = {};
+
+var nodesToReturn = [];
+var nodesReturned = {};
+
+var node = Ua.findNode(ua.node);
+
+if (node.result.equal(node.result.typeDefinition.valueOf(), "VariableTypes.ATVISE.Display").result) {
+	nodesToReturn.push(node.result);
+}
+
+toNodes2(
+	node.result.browse({
+		typeDefinition: "VariableTypes.ATVISE.Display",
+		recursive: true
+	}).result,
+	nodesToReturn
+);
+
+for (var i = 0; i < nodesToReturn.length; ++i) {
+	nodesReturned[nodesToReturn[i].nodeId.address] = true;
+}
+
+while (nodesToReturn.length) {
+	var toDisplay = nodesToReturn.shift();
+	for (var j = 0; j < to.length; ++j) {
+		if (to[j].equal(toDisplay).result) {
+			if (!stringsReturned[to[j].nodeId.address + from[j].nodeId.address]) {
+				stringsReturned[to[j].nodeId.address + from[j].nodeId.address] = true;
+				strings1.push(to[j].nodeId.address);
+				strings2.push(from[j].nodeId.address);
+				if (!nodesReturned[from[j].nodeId.address]) {
+					nodesToReturn.unshift(from[j]);
+					nodesReturned[from[j].nodeId.address] = true;
+				}
+			}
+		}
+	}
+}
+
+var variableTypesNode = Ua.findNode("VariableTypes.ATVISE.Display");
+
+return {
+	tablecolumnheaders: ["Display", "Referenced in display"],
+	tablecolumntypes: [variableTypesNode, variableTypesNode],
+	tabledata: [strings1, strings2]
+};]]]]><![CDATA[></code>
+</script>
+]]></uax:XmlElement>
+		</Value>
+	</UAVariable>
+	<UAVariable NodeId="ns=1;s=SYSTEM.LIBRARY.ATVISE.SERVERSCRIPTS.CrossRef.ListUnusedVariables" BrowseName="1:ListUnusedVariables" DataType="XmlElement" AccessLevel="7" UserAccessLevel="7" Historizing="true">
+		<DisplayName Locale="en">ListUnusedVariables</DisplayName>
+		<Description Locale="en">ListUnusedVariables</Description>
+		<References>
+			<Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=SYSTEM.LIBRARY.ATVISE.SERVERSCRIPTS.CrossRef</Reference>
+			<Reference ReferenceType="HasTypeDefinition">ScriptCodeType</Reference>
+		</References>
+		<Value>
+			<uax:XmlElement><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+<script>
+  <metadata>
+    <priority>0</priority>
+  </metadata>
+  <parameter name="ua" type="uainput" trigger="false" relative="false" value=""/>
+  <code><![CDATA[/* 
+Parse all displays of a server and collect referenced variables. Returns the unused ones.
+Input (members of ua):
+	-node:uanodeid{mandatory} Specifies the nodeid of the server to search.
+Output (return value)	:
+	tablecolumnheaders:[string] Array of column titles
+	tablecolumntypes:[uanodeid] Array of typedefinitions of column types
+	tabledata:[[string]] Array of string array that represents the rows of the result
+If no unused variables found empty arrays are returned.
+*/
+function toNodes2(result, x) {
+	for (var i = 0; i < result.length; ++i) x.push(result[i].node);
+}
+
+var server = Ua.findNode(ua.node);
+var serverExist = Ua.Status(server) != Ua.Status.BADNODEIDUNKNOWN;
+
+if (!serverExist) throw new Error("Server:" + ua.node + " does not exist.");
+
+var displays = [];
+
+toNodes2(
+	Ua.findNode(server.result.nodeId.address + ".DISPLAYS").result.browse({
+		typeDefinition: "VariableTypes.ATVISE.Display",
+		recursive: true
+	}).result,
+	displays
+);
+
+toNodes2(
+	Ua.findNode("SYSTEM.DISPLAYS").result.browse({
+		typeDefinition: "VariableTypes.ATVISE.Display",
+		recursive: true
+	}).result,
+	displays
+);
+
+var strings = [];
+var result = call("SYSTEM.LIBRARY.ATVISE.SERVERSCRIPTS.CrossRef.Lib.DisplayVariables", {
+	ua: {
+		node: displays,
+		server: server,
+		recursive: true
+	}
+});
+
+if (result && result.unused) for (var i = 0; i < result.unused.length; ++i) strings.push(result.unused[i].nodeId.address);
+
+return {
+	tablecolumnheaders: ["Unused nodes"],
+	tablecolumntypes: [Ua.findNode(Ua.VariableType.BASEVARIABLETYPE).result],
+	tabledata: [strings]
+};
+]]]]><![CDATA[></code>
+</script>
+]]></uax:XmlElement>
+		</Value>
+	</UAVariable>
+	<UAVariable NodeId="ns=1;s=SYSTEM.LIBRARY.ATVISE.SERVERSCRIPTS.CrossRef.ListUsedVariables" BrowseName="1:ListUsedVariables" DataType="XmlElement" AccessLevel="7" UserAccessLevel="7" Historizing="true">
+		<DisplayName Locale="en">ListUsedVariables</DisplayName>
+		<Description Locale="en">ListUsedVariables</Description>
+		<References>
+			<Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=SYSTEM.LIBRARY.ATVISE.SERVERSCRIPTS.CrossRef</Reference>
+			<Reference ReferenceType="HasTypeDefinition">ScriptCodeType</Reference>
+		</References>
+		<Value>
+			<uax:XmlElement><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+<script>
+  <metadata>
+    <priority>0</priority>
+  </metadata>
+  <parameter name="ua" type="uainput" trigger="false" relative="false" value=""/>
+  <code><![CDATA[/* Parse all displays of a server and collect referenced variables. Returns the referenced ones.
+Input (members of ua):
+	-node:uanodeid{mandatory} Specifies the nodeid of the server to search.
+Output (return value)	:
+	tablecolumnheaders:[string] Array of column titles
+	tablecolumntypes:[uanodeid] Array of typeDefinitions of column types
+	tabledata:[[string]] Array of string array that represents the rows of the result
+If no used variables found empty arrays are returned.
+*/
+function toNodes2(result, x) {
+	for (var i = 0; i < result.length; ++i) x.push(result[i].node);
+}
+
+var server = Ua.findNode(ua.node);
+var serverExist = Ua.Status(server) != Ua.Status.BADNODEIDUNKNOWN;
+
+if (!serverExist) throw new Error("Server:" + ua.node + " does not exist.");
+
+var displays = [];
+toNodes2(
+	Ua.findNode(server.result.nodeId.address + ".DISPLAYS").result.browse({
+		typeDefinition: "VariableTypes.ATVISE.Display",
+		recursive: true
+	}).result,
+	displays
+);
+
+toNodes2(
+	Ua.findNode("SYSTEM.DISPLAYS").result.browse({
+		typeDefinition: "VariableTypes.ATVISE.Display",
+		recursive: true
+	}).result,
+	displays
+);
+
+var strings1 = [];
+var strings2 = [];
+var strings3 = [];
+var strings4 = [];
+
+var result = call("SYSTEM.LIBRARY.ATVISE.SERVERSCRIPTS.CrossRef.Lib.DisplayVariables", {
+	ua: {
+		node: displays,
+		server: server,
+		recursive: true
+	}
+});
+
+if (result && result.from) {
+	for (var i = 0; i < result.from.length; ++i) {
+		strings1.push(result.to[i]);
+		if (result.exists[i]) strings4.push("yes");
+		else strings4.push("no");
+
+		var fromStr = "";
+		for (var j = 0; j < result.from[i].length; ++j) {
+			if (j > 0) fromStr += "->";
+			fromStr += result.from[i][j].nodeId.address;
+		}
+		strings2.push(fromStr);
+		strings3.push(result.parent[i].nodeId.address);
+	}
+}
+
+return {
+	tablecolumnheaders: ["Node", "Used in display", "Exists"],
+	tablecolumntypes: [
+		Ua.findNode(Ua.VariableType.BASEVARIABLETYPE),
+		Ua.findNode("VariableTypes.ATVISE.Display"),
+		Ua.findNode(Ua.VariableType.BASEVARIABLETYPE)
+	],
+	tablecolumntranslate: [false, false, true],
+	tabledata: [strings1, strings3, strings4]
+};
+]]]]><![CDATA[></code>
+</script>
+]]></uax:XmlElement>
+		</Value>
+	</UAVariable>
+</UANodeSet>

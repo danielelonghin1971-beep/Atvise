@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<UANodeSet xmlns="http://opcfoundation.org/UA/2011/03/UANodeSet.xsd" xmlns:uax="http://opcfoundation.org/UA/2008/02/Types.xsd">
+	<Extensions>
+		<atvise Version="3.13"></atvise>
+	</Extensions>
+	<NamespaceUris>
+		<Uri>http://www.atvise.com/atServer/UA/</Uri>
+	</NamespaceUris>
+	<Aliases>
+		<Alias Alias="FolderType">i=61</Alias>
+		<Alias Alias="HasComponent">i=47</Alias>
+		<Alias Alias="HasTypeDefinition">i=40</Alias>
+		<Alias Alias="ScriptCodeType">ns=1;s=VariableTypes.ATVISE.ScriptCode</Alias>
+		<Alias Alias="XmlElement">i=16</Alias>
+	</Aliases>
+	<UAObject NodeId="ns=1;s=SYSTEM" BrowseName="1:SYSTEM">
+		<DisplayName Locale="en">SYSTEM</DisplayName>
+		<Description Locale="en">SYSTEM</Description>
+		<References>
+			<Reference ReferenceType="HasComponent" IsForward="false">i=85</Reference>
+			<Reference ReferenceType="HasTypeDefinition">FolderType</Reference>
+		</References>
+		<Extensions>
+			<atvise Upstream="true" ExportedNodeId="ns=1;s=SYSTEM.LIBRARY.ATVISE.RESOURCES/export" ExportedBrowseName="1:export"></atvise>
+		</Extensions>
+	</UAObject>
+	<UAObject NodeId="ns=1;s=SYSTEM.LIBRARY" BrowseName="1:LIBRARY">
+		<DisplayName Locale="en">LIBRARY</DisplayName>
+		<Description Locale="en">LIBRARY</Description>
+		<References>
+			<Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=SYSTEM</Reference>
+			<Reference ReferenceType="HasTypeDefinition">FolderType</Reference>
+		</References>
+		<Extensions>
+			<atvise Upstream="true"></atvise>
+		</Extensions>
+	</UAObject>
+	<UAObject NodeId="ns=1;s=SYSTEM.LIBRARY.ATVISE" BrowseName="1:ATVISE">
+		<DisplayName Locale="en">ATVISE</DisplayName>
+		<Description Locale="en">ATVISE</Description>
+		<References>
+			<Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=SYSTEM.LIBRARY</Reference>
+			<Reference ReferenceType="HasTypeDefinition">FolderType</Reference>
+		</References>
+		<Extensions>
+			<atvise Upstream="true"></atvise>
+		</Extensions>
+	</UAObject>
+	<UAObject NodeId="ns=1;s=SYSTEM.LIBRARY.ATVISE.RESOURCES" BrowseName="1:RESOURCES">
+		<DisplayName Locale="en">RESOURCES</DisplayName>
+		<Description Locale="en">RESOURCES</Description>
+		<References>
+			<Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=SYSTEM.LIBRARY.ATVISE</Reference>
+			<Reference ReferenceType="HasTypeDefinition">FolderType</Reference>
+		</References>
+		<Extensions>
+			<atvise Upstream="true"></atvise>
+		</Extensions>
+	</UAObject>
+	<UAVariable NodeId="ns=1;s=SYSTEM.LIBRARY.ATVISE.RESOURCES/export" BrowseName="1:export" DataType="XmlElement" AccessLevel="7" UserAccessLevel="7" Historizing="true">
+		<DisplayName Locale="en">export</DisplayName>
+		<Description Locale="en">export</Description>
+		<References>
+			<Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=SYSTEM.LIBRARY.ATVISE.RESOURCES</Reference>
+			<Reference ReferenceType="HasTypeDefinition">ScriptCodeType</Reference>
+		</References>
+		<Value>
+			<uax:XmlElement><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+<script>
+  <parameter name="request" type="http.request" trigger="false" relative="false" value=""/>
+  <parameter name="response" type="http.response" trigger="false" relative="false" value=""/>
+  <parameter name="allowedTypes" type="string" trigger="false" relative="false" value="text/plain,text/csv,application/json"/>
+  <parameter name="allowedExtensions" type="string" trigger="false" relative="false" value="csv,txt,rtf,json"/>
+  <code><![CDATA[var post = request.postvalues;
+var postType = post["type"];
+var fileName = post["name"];
+
+var re = /(?:\.([^.]+))?$/;
+var extension = re.exec(fileName)[1];
+
+var failPage = "<!DOCTYPE HTML PUBLIC \"-//IETF//DTD HTML 2.0//EN\">\n"+
+  "<html><head>\n"+
+  "<title>400  Bad Request</title>\n"+
+  "</head><body>\n"+
+  "<h1>Bad Request</h1>\n"+
+  "<p>File export failed because of invalid file extension or file type. Additional extensions and types can be specified in the export script.\n"+
+  "</body></html>";
+
+if (allowedExtensions.split(",").indexOf(extension) == -1)
+	return response.write(failPage);
+
+if (allowedTypes.split(",").indexOf(postType) == -1)
+	return response.write(failPage);
+
+response.setHeader("Content-Type", postType);
+response.setHeader("Content-Disposition", "attachment; filename=\"" + fileName + "\"");
+response.write(post["content"]);]]]]><![CDATA[></code>
+</script>
+]]></uax:XmlElement>
+		</Value>
+	</UAVariable>
+</UANodeSet>

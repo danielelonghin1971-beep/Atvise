@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<UANodeSet xmlns="http://opcfoundation.org/UA/2011/03/UANodeSet.xsd" xmlns:uax="http://opcfoundation.org/UA/2008/02/Types.xsd">
+	<Extensions>
+		<atvise Version="3.13"></atvise>
+	</Extensions>
+	<NamespaceUris>
+		<Uri>http://www.atvise.com/atServer/UA/</Uri>
+	</NamespaceUris>
+	<Aliases>
+		<Alias Alias="AlarmCategoryType">ns=1;s=ObjectTypes.ATVISE.AlarmConditionCategory</Alias>
+		<Alias Alias="BaseVariableType">i=62</Alias>
+		<Alias Alias="FolderType">i=61</Alias>
+		<Alias Alias="HasComponent">i=47</Alias>
+		<Alias Alias="HasModellingRule">i=37</Alias>
+		<Alias Alias="HasTypeDefinition">i=40</Alias>
+		<Alias Alias="Shared">i=79</Alias>
+		<Alias Alias="UInt16">i=5</Alias>
+	</Aliases>
+	<UAObject NodeId="ns=1;s=AGENT" BrowseName="1:AGENT">
+		<DisplayName Locale="en">AGENT</DisplayName>
+		<Description Locale="en">AGENT</Description>
+		<References>
+			<Reference ReferenceType="HasComponent" IsForward="false">i=85</Reference>
+			<Reference ReferenceType="HasTypeDefinition">FolderType</Reference>
+		</References>
+		<Extensions>
+			<atvise Upstream="true" ExportedNodeId="ns=1;s=AGENT.ALARMING.Categories" ExportedBrowseName="1:Categories"></atvise>
+		</Extensions>
+	</UAObject>
+	<UAObject NodeId="ns=1;s=AGENT.ALARMING" BrowseName="1:ALARMING">
+		<DisplayName Locale="en">ALARMING</DisplayName>
+		<Description Locale="en">ALARMING</Description>
+		<References>
+			<Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=AGENT</Reference>
+			<Reference ReferenceType="HasTypeDefinition">FolderType</Reference>
+		</References>
+		<Extensions>
+			<atvise Upstream="true"></atvise>
+		</Extensions>
+	</UAObject>
+	<UAObject NodeId="ns=1;s=AGENT.ALARMING.Categories" BrowseName="1:Categories">
+		<DisplayName Locale="en">Categories</DisplayName>
+		<Description Locale="en">Categories</Description>
+		<References>
+			<Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=AGENT.ALARMING</Reference>
+			<Reference ReferenceType="HasTypeDefinition">FolderType</Reference>
+		</References>
+	</UAObject>
+	<UAObject NodeId="ns=1;s=AGENT.ALARMING.Categories.Error" BrowseName="1:Error">
+		<DisplayName Locale="en">Error</DisplayName>
+		<Description Locale="en">Error</Description>
+		<References>
+			<Reference ReferenceType="HasModellingRule">Shared</Reference>
+			<Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=AGENT.ALARMING.Categories</Reference>
+			<Reference ReferenceType="HasTypeDefinition">AlarmCategoryType</Reference>
+		</References>
+	</UAObject>
+	<UAVariable NodeId="ns=1;s=AGENT.ALARMING.Categories.Error.acknowledgement_type" BrowseName="1:acknowledgement_type" DataType="UInt16" AccessLevel="7" UserAccessLevel="7" Historizing="true">
+		<DisplayName Locale="en">acknowledgement_type</DisplayName>
+		<Description Locale="en">acknowledgement_type</Description>
+		<References>
+			<Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=AGENT.ALARMING.Categories.Error</Reference>
+			<Reference ReferenceType="HasTypeDefinition">BaseVariableType</Reference>
+		</References>
+		<Value>
+			<uax:UInt16>4</uax:UInt16>
+		</Value>
+	</UAVariable>
+	<UAVariable NodeId="ns=1;s=AGENT.ALARMING.Categories.Error.severity" BrowseName="1:severity" DataType="UInt16" AccessLevel="7" UserAccessLevel="7" Historizing="true">
+		<DisplayName Locale="en">severity</DisplayName>
+		<Description Locale="en">severity</Description>
+		<References>
+			<Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=AGENT.ALARMING.Categories.Error</Reference>
+			<Reference ReferenceType="HasTypeDefinition">BaseVariableType</Reference>
+		</References>
+		<Value>
+			<uax:UInt16>601</uax:UInt16>
+		</Value>
+	</UAVariable>
+	<UAObject NodeId="ns=1;s=AGENT.ALARMING.Categories.Information" BrowseName="1:Information">
+		<DisplayName Locale="en">Information</DisplayName>
+		<Description Locale="en">Information</Description>
+		<References>
+			<Reference ReferenceType="HasModellingRule">Shared</Reference>
+			<Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=AGENT.ALARMING.Categories</Reference>
+			<Reference ReferenceType="HasTypeDefinition">AlarmCategoryType</Reference>
+		</References>
+	</UAObject>
+	<UAVariable NodeId="ns=1;s=AGENT.ALARMING.Categories.Information.acknowledgement_type" BrowseName="1:acknowledgement_type" DataType="UInt16" AccessLevel="7" UserAccessLevel="7" Historizing="true">
+		<DisplayName Locale="en">acknowledgement_type</DisplayName>
+		<Description Locale="en">acknowledgement_type</Description>
+		<References>
+			<Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=AGENT.ALARMING.Categories.Information</Reference>
+			<Reference ReferenceType="HasTypeDefinition">BaseVariableType</Reference>
+		</References>
+		<Value>
+			<uax:UInt16>2</uax:UInt16>
+		</Value>
+	</UAVariable>
+	<UAVariable NodeId="ns=1;s=AGENT.ALARMING.Categories.Information.severity" BrowseName="1:severity" DataType="UInt16" AccessLevel="7" UserAccessLevel="7" Historizing="true">
+		<DisplayName Locale="en">severity</DisplayName>
+		<Description Locale="en">severity</Description>
+		<References>
+			<Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=AGENT.ALARMING.Categories.Information</Reference>
+			<Reference ReferenceType="HasTypeDefinition">BaseVariableType</Reference>
+		</References>
+		<Value>
+			<uax:UInt16>201</uax:UInt16>
+		</Value>
+	</UAVariable>
+	<UAObject NodeId="ns=1;s=AGENT.ALARMING.Categories.Warning" BrowseName="1:Warning">
+		<DisplayName Locale="en">Warning</DisplayName>
+		<Description Locale="en">Warning</Description>
+		<References>
+			<Reference ReferenceType="HasModellingRule">Shared</Reference>
+			<Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=AGENT.ALARMING.Categories</Reference>
+			<Reference ReferenceType="HasTypeDefinition">AlarmCategoryType</Reference>
+		</References>
+	</UAObject>
+	<UAVariable NodeId="ns=1;s=AGENT.ALARMING.Categories.Warning.acknowledgement_type" BrowseName="1:acknowledgement_type" DataType="UInt16" AccessLevel="7" UserAccessLevel="7" Historizing="true">
+		<DisplayName Locale="en">acknowledgement_type</DisplayName>
+		<Description Locale="en">acknowledgement_type</Description>
+		<References>
+			<Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=AGENT.ALARMING.Categories.Warning</Reference>
+			<Reference ReferenceType="HasTypeDefinition">BaseVariableType</Reference>
+		</References>
+		<Value>
+			<uax:UInt16>4</uax:UInt16>
+		</Value>
+	</UAVariable>
+	<UAVariable NodeId="ns=1;s=AGENT.ALARMING.Categories.Warning.severity" BrowseName="1:severity" DataType="UInt16" AccessLevel="7" UserAccessLevel="7" Historizing="true">
+		<DisplayName Locale="en">severity</DisplayName>
+		<Description Locale="en">severity</Description>
+		<References>
+			<Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=AGENT.ALARMING.Categories.Warning</Reference>
+			<Reference ReferenceType="HasTypeDefinition">BaseVariableType</Reference>
+		</References>
+		<Value>
+			<uax:UInt16>401</uax:UInt16>
+		</Value>
+	</UAVariable>
+</UANodeSet>

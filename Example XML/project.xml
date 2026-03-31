@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<UANodeSet xmlns="http://opcfoundation.org/UA/2011/03/UANodeSet.xsd" xmlns:uax="http://opcfoundation.org/UA/2008/02/Types.xsd">
+	<Extensions>
+		<atvise Version="3.13"></atvise>
+	</Extensions>
+	<NamespaceUris>
+		<Uri>http://www.atvise.com/atServer/UA/</Uri>
+	</NamespaceUris>
+	<Aliases>
+		<Alias Alias="FolderType">i=61</Alias>
+		<Alias Alias="HasComponent">i=47</Alias>
+		<Alias Alias="HasTypeDefinition">i=40</Alias>
+		<Alias Alias="TranslationTableType">ns=1;s=VariableTypes.ATVISE.TranslationTable</Alias>
+		<Alias Alias="XmlElement">i=16</Alias>
+	</Aliases>
+	<UAObject NodeId="ns=1;s=SYSTEM" BrowseName="1:SYSTEM">
+		<DisplayName Locale="en">SYSTEM</DisplayName>
+		<Description Locale="en">SYSTEM</Description>
+		<References>
+			<Reference ReferenceType="HasComponent" IsForward="false">i=85</Reference>
+			<Reference ReferenceType="HasTypeDefinition">FolderType</Reference>
+		</References>
+		<Extensions>
+			<atvise Upstream="true" ExportedNodeId="ns=1;s=SYSTEM.LIBRARY.PROJECT.de" ExportedBrowseName="1:de"></atvise>
+		</Extensions>
+	</UAObject>
+	<UAObject NodeId="ns=1;s=SYSTEM.LIBRARY" BrowseName="1:LIBRARY">
+		<DisplayName Locale="en">LIBRARY</DisplayName>
+		<Description Locale="en">LIBRARY</Description>
+		<References>
+			<Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=SYSTEM</Reference>
+			<Reference ReferenceType="HasTypeDefinition">FolderType</Reference>
+		</References>
+		<Extensions>
+			<atvise Upstream="true"></atvise>
+		</Extensions>
+	</UAObject>
+	<UAObject NodeId="ns=1;s=SYSTEM.LIBRARY.PROJECT" BrowseName="1:PROJECT">
+		<DisplayName Locale="en">PROJECT</DisplayName>
+		<Description Locale="en">PROJECT</Description>
+		<References>
+			<Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=SYSTEM.LIBRARY</Reference>
+			<Reference ReferenceType="HasTypeDefinition">FolderType</Reference>
+		</References>
+		<Extensions>
+			<atvise Upstream="true"></atvise>
+		</Extensions>
+	</UAObject>
+	<UAVariable NodeId="ns=1;s=SYSTEM.LIBRARY.PROJECT.de" BrowseName="1:de" DataType="XmlElement" AccessLevel="7" UserAccessLevel="7" Historizing="true">
+		<DisplayName Locale="en">Deutsch</DisplayName>
+		<Description Locale="en">Deutsch</Description>
+		<References>
+			<Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=SYSTEM.LIBRARY.PROJECT</Reference>
+			<Reference ReferenceType="HasTypeDefinition">TranslationTableType</Reference>
+		</References>
+		<Value>
+			<uax:XmlElement><![CDATA[<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS>
+<TS version="2.0" language="de">
+<context>
+    <name></name>
+     <message>
+      <source>LAYOUTS</source>
+      <translation>Ansichten</translation>
+    </message>
+    <message>
+      <source>PROJECT</source>
+      <translation>PROJEKT</translation>
+    </message>
+</context>
+</TS>
+]]></uax:XmlElement>
+		</Value>
+	</UAVariable>
+</UANodeSet>

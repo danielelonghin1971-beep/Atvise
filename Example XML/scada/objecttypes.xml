@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<UANodeSet xmlns="http://opcfoundation.org/UA/2011/03/UANodeSet.xsd" xmlns:uax="http://opcfoundation.org/UA/2008/02/Types.xsd">
+	<Extensions>
+		<atvise Version="3.13"></atvise>
+	</Extensions>
+	<NamespaceUris>
+		<Uri>http://www.atvise.com/atServer/UA/</Uri>
+	</NamespaceUris>
+	<Aliases>
+		<Alias Alias="DisplayType">ns=1;s=VariableTypes.ATVISE.Display</Alias>
+		<Alias Alias="HasComponent">i=47</Alias>
+		<Alias Alias="HasModellingRule">i=37</Alias>
+		<Alias Alias="HasSubtype">i=45</Alias>
+		<Alias Alias="HasTypeDefinition">i=40</Alias>
+		<Alias Alias="Optional">i=80</Alias>
+		<Alias Alias="ScriptCodeType">ns=1;s=VariableTypes.ATVISE.ScriptCode</Alias>
+		<Alias Alias="XmlElement">i=16</Alias>
+	</Aliases>
+	<UAObjectType NodeId="ns=1;s=ObjectTypes.ATVISE" BrowseName="1:ATVISE" IsAbstract="true">
+		<DisplayName Locale="en">ATVISE</DisplayName>
+		<Description Locale="en">ATVISE</Description>
+		<References>
+			<Reference ReferenceType="HasSubtype" IsForward="false">i=58</Reference>
+		</References>
+		<Extensions>
+			<atvise Upstream="true" ExportedNodeId="ns=1;s=ObjectTypes.ATVISE.WebAccess" ExportedBrowseName="1:WebAccess"></atvise>
+		</Extensions>
+	</UAObjectType>
+	<UAObjectType NodeId="ns=1;s=ObjectTypes.ATVISE.WebAccess" BrowseName="1:WebAccess">
+		<DisplayName Locale="en">WebAccess</DisplayName>
+		<Description Locale="en">WebAccess</Description>
+		<References>
+			<Reference ReferenceType="HasSubtype" IsForward="false">ns=1;s=ObjectTypes.ATVISE</Reference>
+		</References>
+	</UAObjectType>
+	<UAObjectType NodeId="ns=1;s=ObjectTypes.ATVISE.WebAccess.Http" BrowseName="1:Http">
+		<DisplayName Locale="en">Http</DisplayName>
+		<Description Locale="en">Http</Description>
+		<References>
+			<Reference ReferenceType="HasSubtype" IsForward="false">ns=1;s=ObjectTypes.ATVISE.WebAccess</Reference>
+		</References>
+	</UAObjectType>
+	<UAVariable NodeId="ns=1;s=ObjectTypes.ATVISE.WebAccess.Http.access_denied_background" BrowseName="1:access_denied_background" DataType="XmlElement" AccessLevel="7" UserAccessLevel="7" Historizing="true">
+		<DisplayName Locale="en">access_denied_background</DisplayName>
+		<Description Locale="en">access_denied_background</Description>
+		<References>
+			<Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=ObjectTypes.ATVISE.WebAccess.Http</Reference>
+			<Reference ReferenceType="HasTypeDefinition">DisplayType</Reference>
+			<Reference ReferenceType="HasModellingRule">Optional</Reference>
+		</References>
+		<Value>
+			<uax:XmlElement><![CDATA[<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<svg version="1.2" width="60" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:atv="http://webmi.atvise.com/2007/svgext" xmlns="http://www.w3.org/2000/svg" height="60">
+ <defs/>
+ <metadata>
+  <atv:gridconfig enabled="false" width="20" height="20" gridstyle="lines"/>
+  <atv:snapconfig enabled="false" width="10" height="10"/>
+ </metadata>
+ <rect width="60" atv:refpy="30.008" height="60" fill="#e5e5e5" x="0" id="id_101" y="0.008" stroke-width="0" atv:refpx="30" fill-opacity="0.5" stroke="#0000ff"/>
+</svg>]]></uax:XmlElement>
+		</Value>
+	</UAVariable>
+	<UAVariable NodeId="ns=1;s=ObjectTypes.ATVISE.WebAccess.Http.access_denied_symbol" BrowseName="1:access_denied_symbol" DataType="XmlElement" AccessLevel="7" UserAccessLevel="7" Historizing="true">
+		<DisplayName Locale="en">access_denied_symbol</DisplayName>
+		<Description Locale="en">access_denied_symbol</Description>
+		<References>
+			<Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=ObjectTypes.ATVISE.WebAccess.Http</Reference>
+			<Reference ReferenceType="HasTypeDefinition">DisplayType</Reference>
+			<Reference ReferenceType="HasModellingRule">Optional</Reference>
+		</References>
+		<Value>
+			<uax:XmlElement><![CDATA[<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<svg version="1.2" width="60" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:atv="http://webmi.atvise.com/2007/svgext" xmlns="http://www.w3.org/2000/svg" height="60">
+ <defs/>
+ <metadata>
+  <atv:gridconfig enabled="false" width="20" height="20" gridstyle="lines"/>
+  <atv:snapconfig enabled="false" width="10" height="10"/>
+ </metadata>
+ <svg atv:refpy="15.008" width="60" height="60" xlink:href="SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Symbols.60x60.prohibition_sign_grey" id="id_89" x="0" y="0" atv:refpx="15.004"/>
+</svg>]]></uax:XmlElement>
+		</Value>
+	</UAVariable>
+	<UAVariable NodeId="ns=1;s=ObjectTypes.ATVISE.WebAccess.Http.unauthorized_response" BrowseName="1:unauthorized_response" DataType="XmlElement" AccessLevel="7" UserAccessLevel="7" Historizing="true">
+		<DisplayName Locale="en">unauthorized_response</DisplayName>
+		<Description Locale="en">unauthorized_response</Description>
+		<References>
+			<Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=ObjectTypes.ATVISE.WebAccess.Http</Reference>
+			<Reference ReferenceType="HasTypeDefinition">ScriptCodeType</Reference>
+			<Reference ReferenceType="HasModellingRule">Optional</Reference>
+		</References>
+		<Value>
+			<uax:XmlElement><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+<script>
+  <metadata>
+    <priority>0</priority>
+  </metadata>
+  <parameter name="request" type="http.request" trigger="false" relative="false" value=""/>
+  <parameter name="response" type="http.response" trigger="false" relative="false" value=""/>
+  <parameter name="session" type="http.session" trigger="false" relative="false" value=""/>
+  <parameter name="allowForm" type="boolean" trigger="false" relative="false" value="false"/>
+  <parameter name="allowHTTP" type="boolean" trigger="false" relative="false" value="false"/>
+  <code><![CDATA[/*
+This script shows an example of what could happen when the authorization fails.
+Please feel free to modify this script to fit your own requirements.
+
+http and https servers are to define under AGENT.WEBACCESS .
+They shall be named http1, http2, http3, ... and https1, https2, https3, ...
+*/
+
+var authentication = session.authentication;
+var status = session.status;
+var host = session.host.name;
+var port = session.host.port;
+var realm = session.realm;
+
+var page = "<!DOCTYPE HTML PUBLIC \"-//IETF//DTD HTML 2.0//EN\">\n" +
+	"<html><head>\n" +
+	"<title>401  Unauthorized</title>\n" +
+	"</head><body>\n" +
+	"<h1>Unauthorized</h1>\n";
+
+function getServerAttributes(server) {
+	var retVal = {};
+	var attributes = server.browse({
+		nodeClass: Ua.NodeClass.VARIABLE
+	});
+
+	for (var i = 0; i < attributes.length; ++i) {
+		if (attributes[i].node.browsename == "authentication") retVal["authentication"] = attributes[i].node.value;
+		if (attributes[i].node.browsename == "port") retVal["port"] = attributes[i].node.value;
+		if (attributes[i].node.browsename == "state") retVal["state"] = attributes[i].node.value;
+	}
+	return retVal;
+}
+
+/**
+ * 
+ * @param loginMethod
+ * @returns {boolean} (loginMethod != authentication)
+ */
+function isValidLoginMethod(loginMethod) {
+	if (allowForm)
+		return loginMethod == "basic" || loginMethod == "digest" || loginMethod == "form";
+	else
+		return loginMethod == "basic" || loginMethod == "digest";
+}
+
+
+/**
+ * @returns {Array} (returns alternative addresses to connect with)
+ */
+function getServerList() {
+	var n = 1;
+	var ret = [];
+	var servers = [];
+
+	var serverNode = Ua.findNode(base);
+	var serverExist = Ua.Status(serverNode) != Ua.Status.BADNODEIDUNKNOWN;
+
+	var isHTTP = serverNode.result.typeDefinition == "ns=1;s=ObjectTypes.ATVISE.WebAccess.Http"
+	var isHTTPs = serverNode.result.typeDefinition == "ns=1;s=ObjectTypes.ATVISE.WebAccess.Https"
+
+	if (isHTTP || (isHTTPs && allowHTTP)) {
+		servers = Ua.findNode("AGENT.WEBACCESS").result.browse({
+			nodeClass: Ua.NodeClass.OBJECT,
+			recursive: true
+		});
+	} else {
+		servers = Ua.findNode("AGENT.WEBACCESS").result.browse({
+			nodeClass: Ua.NodeClass.OBJECT,
+			typeDefinition: serverNode.result.typeDefinition,
+			recursive: true
+		});
+	}
+
+	for (var s in servers.result) {
+		if (servers.result[s].node.nodeId.address != serverNode.result.nodeId.address) {
+			var attributes = getServerAttributes(servers.result[s].node);
+			if (attributes && attributes["authentication"] && isValidLoginMethod(attributes["authentication"]) && attributes["port"]) {
+				var http = (servers.result[s].node.typeDefinition == "ns=1;s=ObjectTypes.ATVISE.WebAccess.Https") ? "https" : "http";
+				ret[n++] = {"url": http + "://" + host + ":" + attributes["port"], "state": attributes["state"]};
+			}
+		}
+	}
+	return ret;
+}
+
+if (authentication == "basic") {
+	
+	//Implement if needed
+	
+} else if (authentication == "digest") {
+	
+	//Implement if needed
+	
+} else if (authentication == "ntlm" || authentication == "negotiate") {
+	
+	if (status == "InvalidUserOrPassword") {
+		page += "<p>Either you are not authorized to access the document requested, or your browser doesn't understand how to supply the credentials required.</p>\n";
+	} else if (status == "AuthenticationServiceError") {
+		page += "<p>The service verifying your credentials may be temporarily unavailable.</p>\n";
+
+		var serverlist = getServerList();
+		
+		if (serverlist) {
+			page += "<p>You can use the following alternative addresses to connect with:</p>\n";
+			for (var s in serverlist) {
+				var state = (serverlist[s].state == 0) ? "Online" : "Offline";
+				page += "<a href=\"" + serverlist[s].url + "\">" + serverlist[s].url + "</a> (State: " + state + ")<br/>\n";
+			}
+			page += "<p><a href=\"#\" onclick=\"window.location.reload(true);\">Refresh page</a></p>\n";
+		}
+		
+	} else if (status == "AuthenticationSecurityError") {
+		page += "<p>This server could not verify that you are authorized to access the document requested.</p>\n";
+		page += "<p>Either your browser doesn't understand how to supply the credentials required or your security settings are incorrect.</p>\n";
+		page += "<p>Check the Security Policies 'Local Policies > Security Options > Network Security LAN Manager authentication level' ";
+		page += "and select 'Send LM & NTLM - use NTLMv2 session security if negotiated'.</p>\n";
+	}
+	
+}
+
+page += "<hr>\n" +
+	"<address>atvise Server at " + escape(host) + ":" + port + "</address>\n" +
+	"</body></html>";
+
+response.write(page);
+
+return;]]]]><![CDATA[></code>
+</script>
+]]></uax:XmlElement>
+		</Value>
+	</UAVariable>
+</UANodeSet>

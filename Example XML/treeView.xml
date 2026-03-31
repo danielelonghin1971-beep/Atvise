@@ -1,0 +1,1622 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<UANodeSet xmlns="http://opcfoundation.org/UA/2011/03/UANodeSet.xsd" xmlns:uax="http://opcfoundation.org/UA/2008/02/Types.xsd">
+	<Extensions>
+		<atvise Version="3.13"></atvise>
+	</Extensions>
+	<NamespaceUris>
+		<Uri>http://www.atvise.com/atServer/UA/</Uri>
+	</NamespaceUris>
+	<Aliases>
+		<Alias Alias="ByteString">i=15</Alias>
+		<Alias Alias="FolderType">i=61</Alias>
+		<Alias Alias="HasComponent">i=47</Alias>
+		<Alias Alias="HasTypeDefinition">i=40</Alias>
+		<Alias Alias="QuickDynamicType">ns=1;s=VariableTypes.ATVISE.QuickDynamic</Alias>
+		<Alias Alias="ResourceCssType">ns=1;s=VariableTypes.ATVISE.Resource.Css</Alias>
+		<Alias Alias="ResourceJavascriptType">ns=1;s=VariableTypes.ATVISE.Resource.Javascript</Alias>
+		<Alias Alias="ResourceSvgType">ns=1;s=VariableTypes.ATVISE.Resource.Svg</Alias>
+		<Alias Alias="XmlElement">i=16</Alias>
+	</Aliases>
+	<UAObject NodeId="ns=1;s=SYSTEM" BrowseName="1:SYSTEM">
+		<DisplayName Locale="en">SYSTEM</DisplayName>
+		<Description Locale="en">SYSTEM</Description>
+		<References>
+			<Reference ReferenceType="HasComponent" IsForward="false">i=85</Reference>
+			<Reference ReferenceType="HasTypeDefinition">FolderType</Reference>
+		</References>
+		<Extensions>
+			<atvise Upstream="true" ExportedNodeId="ns=1;s=SYSTEM.LIBRARY.ATVISE.QUICKDYNAMICS" ExportedBrowseName="1:QUICKDYNAMICS"></atvise>
+		</Extensions>
+	</UAObject>
+	<UAObject NodeId="ns=1;s=SYSTEM.LIBRARY" BrowseName="1:LIBRARY">
+		<DisplayName Locale="en">LIBRARY</DisplayName>
+		<Description Locale="en">LIBRARY</Description>
+		<References>
+			<Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=SYSTEM</Reference>
+			<Reference ReferenceType="HasTypeDefinition">FolderType</Reference>
+		</References>
+		<Extensions>
+			<atvise Upstream="true"></atvise>
+		</Extensions>
+	</UAObject>
+	<UAObject NodeId="ns=1;s=SYSTEM.LIBRARY.ATVISE" BrowseName="1:ATVISE">
+		<DisplayName Locale="en">ATVISE</DisplayName>
+		<Description Locale="en">ATVISE</Description>
+		<References>
+			<Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=SYSTEM.LIBRARY</Reference>
+			<Reference ReferenceType="HasTypeDefinition">FolderType</Reference>
+		</References>
+		<Extensions>
+			<atvise Upstream="true"></atvise>
+		</Extensions>
+	</UAObject>
+	<UAObject NodeId="ns=1;s=SYSTEM.LIBRARY.ATVISE.QUICKDYNAMICS" BrowseName="1:QUICKDYNAMICS">
+		<DisplayName Locale="en">QUICKDYNAMICS</DisplayName>
+		<Description Locale="en">QUICKDYNAMICS</Description>
+		<References>
+			<Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=SYSTEM.LIBRARY.ATVISE</Reference>
+			<Reference ReferenceType="HasTypeDefinition">FolderType</Reference>
+		</References>
+	</UAObject>
+	<UAVariable NodeId="ns=1;s=SYSTEM.LIBRARY.ATVISE.QUICKDYNAMICS.TreeView" BrowseName="1:TreeView" DataType="XmlElement" AccessLevel="7" UserAccessLevel="7" Historizing="true">
+		<DisplayName Locale="en">TreeView</DisplayName>
+		<Description Locale="en">TreeView</Description>
+		<References>
+			<Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=SYSTEM.LIBRARY.ATVISE.QUICKDYNAMICS</Reference>
+			<Reference ReferenceType="HasTypeDefinition">QuickDynamicType</Reference>
+		</References>
+		<Value>
+			<uax:XmlElement><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+<script>
+  <metadata>
+    <icon type="image/png">iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAACxIAAAsSAdLdfvwAAAAZdEVYdFNvZnR3YXJlAHBhaW50Lm5ldCA0LjAuMTZEaa/1AAAA9klEQVRYR+2U0Q3DIAxEM0JG6GKVulkzSkbqBtQnsArWVTW0xIrUj2cJ25wdTFhSSqFkc72vwiYkB8hbrdAo2fiLK5sVGiUbpzDiJe/B4iNk82rgYhNqENdcGxslG/miIhx2AuF3IPYveAcKWh8DDQk78j+AnKb5RsiCTdbHKMKsIGNv9tYLCzZYH6MSv7E4QEzzGn+9sOiGDn7fgPUxJC98BLGX8BuoUzlNAzhWIW4ERZgVZPRdwk7CfsPwBuaNwPoYkvd/B4ahTsXbAI5ViBtBEWYFGSd6B7yoMIqwOEBM8xp/vRhFROeMwIuIzrmER0Cdx5GWJ2HIp5zjmg5LAAAAAElFTkSuQmCC</icon>
+    <visible>1</visible>
+    <title>Tree View</title>
+    <description>Creates a tree view to display nodes.</description>
+  </metadata>
+  <parameter behavior="mandatory" desc="foreign object ID" name="renderTo" valuetype="string"/>
+  <parameter behavior="optional" defaultvalue="AGENT.OBJECTS" desc="start address" name="startAddress" valuetype="address"/>
+  <parameter behavior="mandatory" defaultvalue="100" desc="busy indicator delay" name="busyIndicatorTolerance" valuetype="number"/>
+  <parameter behavior="optional" defaultvalue="3" desc="icon offset" name="expandoOffset" valuetype="number"/>
+  <parameter behavior="optional" defaultvalue="12" desc="font size" name="fontSize" valuetype="number"/>
+  <parameter behavior="optional" defaultvalue="{&quot;baseVariableImage&quot;:&quot;/treeView/icons/baseVariable.svg&quot;,&quot;folderImage&quot;:&quot;/treeView/icons/folder.svg&quot;,&quot;aggregateFunctionImage&quot;:&quot;/treeView/icons/aggregateFunction.svg&quot;,&quot;collapsedLeafImage&quot;:&quot;/treeView/icons/leafCollapsed.svg&quot;,&quot;expandedLeafImage&quot;:&quot;/treeView/icons/leafExpanded.svg&quot;}" desc="image paths" name="imagePaths" valuetype="string"/>
+  <parameter behavior="optional" defaultvalue="15" desc="child indentation" name="leafIndentation" valuetype="number"/>
+  <parameter behavior="optional" defaultvalue="2" desc="margin" name="leafPadding" valuetype="number"/>
+  <parameter behavior="optional" defaultvalue="[&quot;baseVariable&quot;, &quot;aggregateFunction&quot;]" desc="type filter" name="selectableTypes" valuetype="string"/>
+  <parameter behavior="optional" defaultvalue="100" desc="search depth" name="searchDepth" valuetype="string"/>
+  <parameter behavior="mandatory" defaultvalue="treeView/datasources/opcua.js" desc="filename of datasource implementation" name="dataSourceFilePath" valuetype="string"/>
+  <parameter behavior="mandatory" defaultvalue="SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Advanced.dialogs.message_dialog_small" desc="display for error message" name="dialogDisplay" valuetype="display"/>
+  <parameter behavior="mandatory" defaultvalue="opcUA" desc="name of data source" name="dataSourceType" valuetype="string"/>
+  <parameter behavior="mandatory" defaultvalue="{}" desc="options for data source" name="dataSourceOptions" valuetype="string"/>
+  <parameter behavior="optional" defaultvalue="true" desc="set caching behavior for tree view" name="nodeCacheActive" valuetype="bool"/>
+  <code><![CDATA[return (function (window, document) {
+	/**
+	 * @callback {function} TreeView#eventCallback
+	 * @param {object} data The corresponding node information.
+	 * @param {HTMLNode} target The clicked html node.
+	 */
+
+	/**
+	 * Fired when a node is expanded.
+	 * @event TreeView#expand
+	 * @type {object}
+	 * @property {object} data The corresponding node information.
+	 * @property {HTMLNode} target The clicked html node.
+	 */
+
+	/**
+	 * Fired when all nodes are expanded by calling {@link TreeView#expandAll}
+	 * @event TreeView#expandAll
+	 * @type {object}
+	 * @property {object} data The corresponding node information.
+	 * @property {HTMLNode} target The clicked html node.
+	 */
+
+	/**
+	 * Fired when a node is collapsed.
+	 * @event TreeView#collapse
+	 * @type {object}
+	 * @property {object} data The corresponding node information.
+	 * @property {HTMLNode} target The clicked html node.
+	 */
+
+	/**
+	 * Fired when all nodes are collapsed by calling {@link TreeView#collapseAll}
+	 * @event TreeView#collapseAll
+	 * @type {object}
+	 * @property {object} data The corresponding node information.
+	 * @property {HTMLNode} target The clicked html node.
+	 */
+
+	/**
+	 * Fired a node is selected.
+	 * @event TreeView#select
+	 * @type {object}
+	 * @property {object} data The corresponding node information.
+	 * @property {HTMLNode} target The clicked html node.
+	 */
+
+	/**
+	 * Fired a single node that is rendered the first time. (The first time it is appended to the DOM)
+	 * @event TreeView#render
+	 * @type {object}
+	 * @property {object} data The corresponding node information.
+	 * @property {HTMLNode} target The clicked html node.
+	 */
+
+	/**
+	 * Fired when the TreeView has finished its' initialization.
+	 * @event TreeView#ready
+	 * @type {object}
+	 * @property {object} TreeViewInstance The instance of the TreeView to work on.
+	 */
+	var events = ["expand", "expandAll", "collapse", "collapseAll", "select", "notFound", "render", "ready"];
+
+	let datasource;
+
+	/**
+	 * The configuration object for the TreeView.
+	 * @typedef {object} TreeView#options
+	 * @property {string} renderTo The id of the container to render the tree to.
+	 * @property {string} [startAddress="AGENT.OBJECTS"] The opcUA Address to start displaying the tree from.
+	 * @property {array} [selectableTypes = "[baseVariable, aggregateFunction]"] The types of leaves that can be selected. See {@link TreeView#types}
+	 * @property {number} [fontSize=12] The font size for the treeView [px].
+	 * @property {number} [leafPadding=2] The padding top and bottom between the leaves [px]
+	 * @property {number} [leafIndentation=15] The indentation for child leaves [px]
+	 * @property {number} [expandoOffset=3] The distance from the expando to the leaf icon[px]
+	 * @property {number} [expandoOffset=3] The distance from the expando to the leaf icon[px]
+	 * @property {number} [busyIndicatorTolerance=100] The time to has to pass by to start displaying the busy indicator [ms]
+	 * @property {number} [searchDepth=100] The folder depth to use for filtering internally.
+	 * @property {number} [navigationDepth=100] The folder depth to use for navigating internally.
+	 * @property {object} imagePaths The image paths for the tree icons.
+	 *     See default:
+	 *        <p>- baseVariableImage: "/treeView/icons/baseVariable.svg" </p>
+	 *        <p>- folderImage: "/treeView/icons/folder.svg" </p>
+	 *        <p>- aggregateFunctionImage: "/treeView/icons/aggregateFunction.svg" </p>
+	 *        <p>- collapsedLeafImage: "/treeView/icons/leafCollapsed.svg" </p>
+	 *        <p>- expandedLeafImage: "/treeView/icons/leafExpanded.svg" </p>
+	 */
+	var defaultOptions = {
+		renderTo: "",
+		startAddress: "AGENT.OBJECTS",
+		aggregateAddressPrefix: "AGENT.HISTORY.AGGREGATETEMPLATES",
+		dataSourceFilePath: "treeView/datasources/opcua.js",
+		fontSize: 12,
+		leafPadding: 2,
+		leafIndentation: 15,
+		busyIndicatorTolerance: 100,
+		expandoOffset: 3,
+		searchDepth: 100,
+		navigationDepth: 1,
+		imagePaths: {
+			baseVariableImage: "/treeView/icons/baseVariable.svg",
+			folderImage: "/treeView/icons/folder.svg",
+			aggregateFunctionImage: "/treeView/icons/aggregateFunction.svg",
+			collapsedLeafImage: "/treeView/icons/leafCollapsed.svg",
+			expandedLeafImage: "/treeView/icons/leafExpanded.svg"
+		}
+	};
+
+	/**
+	 * A helper method for parsing the data-item of a node
+	 * @param {HTMLElement} node The corresponding DOM-node
+	 * @return {string} object The parsed data-item
+	 * @memberOf TreeView
+	 * @private
+	 */
+	function getDataFromNode(node) {
+		if (node) {
+			return JSON.parse(node.getAttribute("data-item"));
+		} else {
+			return undefined;
+		}
+	}
+
+	/**
+	 * A class that represents a tree view that shows opcUA nodes.
+	 * @param {TreeView#options} options Configuration options.
+	 * @class
+	 * @alias TreeView
+	 */
+	class TreeView {
+		constructor(options) {
+			this.internal = {};
+			this.internal.doc = document;
+			this.internal.win = window;
+			this.internal.options = mergeData(defaultOptions, options);
+			this.internal.eventListeners = [];
+			this.internal.selectedNodeData = {};
+			this.internal.selectedNode = undefined;
+			this.internal.scrollWrapper = null;
+			this.internal.container = null;
+			this.internal.busyIndicator = null;
+			this.internal.busyIndicatorWrapper = null;
+			this.internal.handlers = {};
+			this.internal.node = options.renderTo;
+			this.internal.availableAddresses = [];
+			this.internal.spacer = false;
+			this.internal.initialized = false;
+			this.internal.adHocMode = false;
+			initialize(this);
+
+			if (options.dataSourceType === "" || options.dataSourceFilePath === "") {
+				this.internal.adHocMode = true;
+				datasource = {};
+				this.setSelectableTypes = function (selectableTypes) {
+					this.internal.options.selectableTypes = selectableTypes;
+				};
+
+				this.setTreeStructure = function (treeStructure) {
+					datasource.treeStructure = treeStructure;
+					datasource.fetchTreeStructure = function (browseNodeId) {
+						return new Promise((resolve) => {
+							const treeStructure = [];
+							let subTree;
+
+							function findById(treeStructure, browseNodeId) {
+								for (let node of treeStructure) {
+									if (node.id === browseNodeId) return node;
+
+									if (node.children) {
+										let desiredNode = findById(node.children, browseNodeId);
+										if (desiredNode) return desiredNode;
+									}
+								}
+								return false;
+							}
+
+							if (browseNodeId) {
+								subTree = findById(datasource.treeStructure, browseNodeId);
+							} else {
+								subTree = { children: datasource.treeStructure };
+							}
+
+							subTree.children.forEach((item) => {
+								var iconElement = document.createElement("img");
+
+								if (options.imagePaths[item.type]) {
+									iconElement.src = "en" + options.imagePaths[item.type];
+								}
+
+								treeStructure.push({
+									name: item.name || item.id,
+									address: item.address || item.id,
+									type: item.type,
+									hasChildren: !!(item.children && item.children.length),
+									children: item.children || [],
+									dataID: item.id,
+									icon: iconElement
+								});
+							});
+
+							if (treeStructure.error) {
+								reject(treeStructure);
+							} else {
+								resolve(treeStructure);
+							}
+						});
+					};
+
+					return datasource
+						.fetchTreeStructure(this.internal.options.startAddress)
+						.then(this.renderDataToDOM.bind(this));
+				};
+			} else {
+				webMI.data.loadScript(options.dataSourceFilePath, () => {
+					const type = options.dataSourceType;
+					datasource = new webMI.rootWindow.treeViewDatasources[type](this.internal.options);
+					this.internal.options.selectableTypes = datasource.getSelectableTypes();
+					datasource.fetchTreeStructure().then(this.renderDataToDOM.bind(this));
+				});
+			}
+
+			webMI.addOnunload(this.destroy.bind(this));
+		}
+		/**
+		 * Expands a leaflet by the expando or the leaf text
+		 * @param {HTMLElement} node The node that has the data-item attribute on it.
+		 * @param {boolean} skipEmit Option to prevent treeView event
+		 */
+		expand(node, skipEmit) {
+			var data = getDataFromNode(node);
+			var leaves = getChildLeaves(node);
+
+			if (data.hasChildren) {
+				if (leaves) {
+					leaves.classList.remove("hidden");
+					var expando = node.querySelector(".tree-expando");
+					expando.src = this.internal.options.languagePrefix + this.internal.options.imagePaths.expandedLeafImage;
+					updateScroller(this);
+					if (!skipEmit) {
+						emit(this, "expand", {
+							target: node,
+							data: getDataFromNode(node)
+						});
+					}
+				} else {
+					showBusyIndicator(this);
+					datasource
+						.fetchTreeStructure(data.address, node)
+						.then((response) => {
+							this.renderDataToDOM.bind(this)(response, node);
+						})
+						.catch((error) => {
+							let message = error.toString();
+
+							// Limit message to 200 character and append ellipsis
+							if (message.length > 200) {
+								message = error.toString().substring(0, 200) + " …";
+							}
+
+							this.dialog = webMI.display.openWindow({
+								display: base.dialogDisplay,
+								height: 160,
+								width: 400,
+								modal: true,
+								resizable: false,
+								movable: true,
+								scrollbars: false,
+								menubar: false,
+								status: false,
+								toolbar: false,
+								query: {
+									headline: "T{Tree View} T{Error}!",
+									message: message,
+									action_btn1: "com.atvise.tree_view_error_dialog"
+								}
+							});
+
+							if (this.dialog) {
+								this.dialog.cuba = function () {
+									this.dialog = null;
+								};
+							}
+
+							webMI.trigger.connect("com.atvise.tree_view_error_dialog", () => {
+								webMI.display.closeWindow(this.dialog);
+								this.dialog = null;
+							});
+							console.error(error);
+							hideBusyIndicator(this);
+						});
+				}
+			}
+		}
+		/**
+		 * Expands all leaves
+		 */
+		expandAll() {
+			var self = this;
+			if (self.expandAllInProgress) {
+				return;
+			}
+			self.expandAllInProgress = true;
+			showBusyIndicator(self);
+
+			datasource.fetchAvailableNodeAdresses(function (addresses) {
+				self.internal.availableAddresses = addresses;
+				expandNodeList(self, flattenAddresses(self.internal.availableAddresses), function () {
+					emit(self, "expandAll", {});
+					hideBusyIndicator(self);
+					self.expandAllInProgress = false;
+				});
+			});
+		}
+		/**
+		 * Collapses a leaf by the expando or the leaf text
+		 * @param {HTMLElement} node  The node that has the data-item attribute on it.
+		 * @param {boolean} skipEmit Option to prevent treeView event
+		 */
+		collapse(node, skipEmit) {
+			var leaves = getChildLeaves(node);
+
+			leaves.classList.add("hidden");
+			var expando = node.querySelector(".tree-expando");
+			expando.src = this.internal.options.languagePrefix + this.internal.options.imagePaths.collapsedLeafImage;
+			updateScroller(this);
+			if (skipEmit) {
+				return;
+			}
+			emit(this, "collapse", {
+				target: node,
+				data: getDataFromNode(node)
+			});
+		}
+		/**
+		 * Collapses all leaves
+		 */
+		collapseAll() {
+			var self = this;
+			var nodes = this.internal.container.querySelectorAll(".tree-expando");
+			forEach(nodes, function (node) {
+				var parent = node.parentNode;
+				var leaves = parent.parentNode.querySelector(".tree-child-leaves");
+				if (parent && leaves && parent.hasAttribute("data-item")) {
+					self.collapse(parent, true);
+				}
+			});
+			emit(this, "collapseAll", {});
+		}
+		/**
+		 * Get the data for the currently selected tree element
+		 * @return {object} data Data from selected element
+		 */
+		getSelectedNode() {
+			return this.internal.selectedNodeData;
+		}
+		/**
+		 * Select a specifc node in the tree.
+		 * @param {string} nodePath Nodeaddress to select
+		 * @param {string} aggregatePath Aggreateaddress to select. (in relation to the nodePath)
+		 * @param {boolean} skipCollapse Omit collapsing all nodes.
+		 */
+		selectNode(nodePath, aggregatePath, skipCollapse) {
+			var self = this;
+			var nodeAddresses = [];
+			if (this.internal.adHocMode || !isNaN(Number(nodePath.slice(0, nodePath.indexOf("."))))) {
+				nodeAddresses.push(nodePath);
+			} else {
+				nodeAddresses = buildAddressList(self, nodePath, aggregatePath);
+			}
+
+			if (!self || !self.internal) return;
+
+			if (self.selectInProgress) {
+				return;
+			}
+
+			self.selectInProgress = true;
+			showBusyIndicator(self);
+
+			if (!skipCollapse) {
+				this.collapseAll();
+			}
+
+			expandNodeList(self, nodeAddresses, function (result) {
+				var selectElement = result.relatedNode;
+				if (selectElement === null) {
+					selectElement = result.lastValidNode;
+				}
+				if (selectElement) {
+					let scrollerInterval;
+					processSelection(self, selectElement.querySelector(".tree-leaf-text"), null);
+
+					if (!self.internal.scroller) {
+						scrollerInterval = setInterval(() => {
+							if (self.internal.scroller) {
+								self.internal.scroller.scrollToElement(selectElement);
+								clearInterval(scrollerInterval);
+							}
+						}, 100);
+					} else {
+						self.internal.scroller.scrollToElement(selectElement);
+					}
+				} else {
+					processSelection(self);
+				}
+
+				self.selectInProgress = false;
+				hideBusyIndicator(self);
+			});
+		}
+		/**
+		 * Only show nodes in the tree that contain the search-string in their path.
+		 * @param {string} searchString The string to filter for.
+		 * @param {boolean} refreshSearchData Refresh the nodesdata used for filter. (use this when the nodes have been updated on the server side)
+		 */
+		filter(searchString, refreshSearchData) {
+			var self = this;
+			var results = {};
+
+			if (!self || !self.internal) return;
+
+			if (self.filterInProgress) {
+				console.warn("Filtering for term: " + searchString + " omitted, because filterprocess is busy.");
+				return;
+			}
+
+			self.filterInProgress = true;
+			showBusyIndicator(self);
+
+			if (refreshSearchData || self.internal.availableAddresses.length < 1) {
+				datasource.fetchAvailableNodeAdresses(function (availableAddresses) {
+					self.internal.availableAddresses = availableAddresses;
+					results = getSearchResults(self, searchString);
+
+					self.collapseAll();
+					filterNodes(self, results.searchResults, results.negativeResults, searchString, function () {
+						self.filterInProgress = false;
+						hideBusyIndicator(self);
+					});
+				});
+			} else {
+				results = getSearchResults(self, searchString);
+				self.collapseAll();
+				filterNodes(self, results.searchResults, results.negativeResults, searchString, function () {
+					self.filterInProgress = false;
+					hideBusyIndicator(self);
+				});
+			}
+		}
+		/**
+		 * Attach an event handler to the tree view
+		 * @param {string} name Name of the event to attach
+		 * @param {TreeView#eventCallback} callback The callback to execute on the event
+		 * @param {object} scope The context to call the callback with
+		 */
+		on(name, callback, scope) {
+			if (events.indexOf(name) > -1) {
+				if (!this.internal.handlers[name]) {
+					this.internal.handlers[name] = [];
+				}
+				this.internal.handlers[name].push({
+					callback: callback,
+					context: scope
+				});
+
+				//execute ready callback immediately if initialization is already complete
+				if (name === "ready" && this.internal.initialized === true) {
+					emit(this, "ready", this);
+				}
+			} else {
+				throw new Error(name + " is not supported by TreeView.");
+			}
+		}
+		/**
+		 * Attach an event handler to the tree view and remove it automatically after it has been executed the first time.
+		 * @param {string} name Name of the event to attach
+		 * @param {TreeView#eventCallback} callback The callback to execute on the event
+		 * @param {object} scope The context to call the callback with
+		 */
+		one(name, callback, scope) {
+			if (events.indexOf(name) > -1) {
+				if (!this.internal.handlers[name]) {
+					this.internal.handlers[name] = [];
+				}
+				this.internal.handlers[name].push({
+					callback: callback,
+					context: scope,
+					one: true
+				});
+			} else {
+				throw new Error(name + " is not supported by TreeView.");
+			}
+		}
+		/**
+		 * Detach an event handler from the tree view
+		 * @param {string} name Name of the event to detach
+		 * @param {TreeView#eventCallback} callback The function to detach
+		 */
+		off(name, callback) {
+			var index,
+				found = false;
+			if (this.internal.handlers[name] instanceof Array) {
+				this.internal.handlers[name].forEach(function (handle, i) {
+					index = i;
+					if (handle.callback === callback && !found) {
+						found = true;
+					}
+				});
+				if (found) {
+					this.internal.handlers[name].splice(index, 1);
+				}
+			}
+		}
+		/**
+		 * Destroy the TreeView and release memory
+		 */
+		destroy() {
+			this.internal.handlers = null;
+			for (var i = 0; i < this.internal.eventListeners.length; i++) {
+				var listenerObj = this.internal.eventListeners[i];
+				listenerObj.node.removeEventListener(listenerObj.event, listenerObj.callback, false);
+			}
+			while (this.internal.scrollWrapper.firstChild) {
+				this.internal.scrollWrapper.removeChild(this.internal.scrollWrapper.firstChild);
+			}
+			if (this.internal.busyIndicatorTimeout) {
+				this.internal.win.clearTimeout(this.internal.busyIndicatorTimeout);
+			}
+			this.internal.scroller.destroy();
+			this.internal.scroller = null;
+			this.internal.doc = null;
+			this.internal.win = null;
+			this.internal.scrollWrapper = null;
+			this.internal.selectedNodeData = null;
+			this.internal.selectedNode = null;
+			this.internal.busyIndicator = null;
+			this.internal.busyIndicatorWrapper = null;
+			this.internal.container = null;
+			this.internal.eventListeners = null;
+			this.internal.availableAddresses = null;
+			this.internal.spacer = null;
+			this.internal.initialized = null;
+			this.internal = null;
+
+			this.selectInProgress = null;
+			this.filterInProgress = null;
+			this.expandAllInProgress = null;
+		}
+		/**
+		 * A method that takes the data to display in the treeView and appends the HTML elements to the DOM
+		 * @param {HTMLElement} container The DOM element the data should be rendered to (can also be a leaf element)
+		 * @param {object} data The data that should be appended to the dom
+		 * @param {object} self The TreeView instance
+		 * @fires TreeView#render
+		 * @memberOf TreeView
+		 * @private
+		 */
+		renderDataToDOM(data, container) {
+			const self = this;
+
+			if (!self || !self.internal) return;
+
+			if (!container) {
+				container = self.internal.container;
+			}
+			var leaves = [];
+			forEach(data, function (item) {
+				leaves.push(renderLeaf.call(self, item));
+			});
+			
+			// Add spacer to prevent the scrollbar from overlapping the last element
+			if(!self.internal.spacer) {
+				leaves.push(renderLeaf.call(self, {}));
+				self.internal.spacer = true;
+			}
+
+			if (container !== self.internal.container) {
+				var childContainer = self.internal.doc.createElement("div");
+				childContainer.setAttribute("class", "tree-child-leaves");
+				childContainer.style.marginLeft = self.internal.options.leafIndentation + "px";
+				container.parentNode.appendChild(childContainer);
+				container = childContainer;
+			}
+
+			container.innerHTML = leaves
+				.map(function (leaf) {
+					return leaf.outerHTML;
+				})
+				.join("");
+
+			forEach(container.querySelectorAll(".tree-leaf-text"), function (node) {
+				if (isMobileTouchDevice) {
+					node.addEventListener("touchstart", clickHandler.bind(self), false);
+					self.internal.eventListeners.push({
+						node: node,
+						event: "touchstart",
+						callback: clickHandler.bind(self)
+					});
+				} else {
+					node.addEventListener("click", clickHandler.bind(self), false);
+					self.internal.eventListeners.push({
+						node: node,
+						event: "click",
+						callback: clickHandler.bind(self)
+					});
+				}
+				node.addEventListener("dblclick", dblClickHandler.bind(self), false);
+				self.internal.eventListeners.push({
+					node: node,
+					event: "dblclick",
+					callback: dblClickHandler.bind(self)
+				});
+			});
+			forEach(container.querySelectorAll(".tree-expando"), function (node) {
+				if (isMobileTouchDevice) {
+					node.addEventListener("touchstart", clickHandler.bind(self), false);
+					self.internal.eventListeners.push({
+						node: node,
+						event: "touchstart",
+						callback: clickHandler.bind(self)
+					});
+				} else {
+					node.addEventListener("click", clickHandler.bind(self), false);
+					self.internal.eventListeners.push({
+						node: node,
+						event: "click",
+						callback: clickHandler.bind(self)
+					});
+				}
+			});
+
+			if (self.internal.initialized === false) {
+				emit(self, "ready", self);
+				self.internal.initialized = true;
+			}
+
+			//when child leaves were loaded from server or selection or filtering, emit expand event
+			if (
+				container !== self.internal.container &&
+				!self.selectInProgress &&
+				!self.filterInProgress &&
+				!self.expandAllInProgress
+			) {
+				var targetNode = container.parentNode.querySelector(".tree-leaf-content");
+				emit(self, "expand", {
+					target: targetNode,
+					data: getDataFromNode(targetNode)
+				});
+				hideBusyIndicator(self);
+			}
+			emit(self, "render", {
+				target: targetNode,
+				data: getDataFromNode(targetNode)
+			});
+			updateScroller(self);
+		}
+	}
+
+	/**
+	 * Initialize the tree view
+	 * @param {object} self The TreeView instance
+	 * @memberOf TreeView
+	 * @private
+	 */
+	function initialize(self) {
+		self.internal.scrollWrapper = self.internal.doc.getElementById(self.internal.node);
+		if (self.internal.scrollWrapper === null) {
+			self.internal.doc = self.internal.win.frameElement.ownerDocument;
+			self.internal.win = self.internal.doc.defaultView;
+			self.internal.scrollWrapper = self.internal.doc.getElementById(self.internal.node);
+			if (self.internal.scrollWrapper === null) {
+				throw new Error("Node '" + self.internal.node + "' not found!");
+			}
+		}
+		self.internal.scrollWrapper.classList.add("tree-wrapper");
+		self.internal.container = self.internal.doc.createElement("div");
+		self.internal.scrollWrapper.appendChild(self.internal.container);
+		self.internal.container.style.fontSize = self.internal.options.fontSize + "px";
+		self.internal.container.classList.add("tree-container");
+		self.internal.busyIndicator = self.internal.doc.createElement("div");
+		self.internal.busyIndicator.classList.add("tree-busy-indicator");
+		self.internal.busyIndicatorWrapper = self.internal.doc.createElement("div");
+		self.internal.busyIndicatorWrapper.classList.add("tree-busy-indicator-wrapper");
+		self.internal.busyIndicatorWrapper.classList.add("hidden");
+		self.internal.busyIndicatorWrapper.appendChild(self.internal.busyIndicator);
+		self.internal.scrollWrapper.appendChild(self.internal.busyIndicatorWrapper);
+
+		var languageName = "";
+		for (var language in project.languages) {
+			languageName = language;
+			break;
+		}
+		self.internal.options.languagePrefix = languageName;
+
+		loadRelatedCSS(self);
+		webMI.data.loadScript("other/atvise.iscroll.js", initScrollbars.bind(self));
+	}
+
+	/**
+	 * Initialize the scrollbar (IScroll)
+	 * @memberOf TreeView
+	 * @private
+	 */
+	function initScrollbars() {
+		this.internal.scroller = new this.internal.win.IScroll(this.internal.scrollWrapper, {
+			preventDefaultException: { className: /(^|\s)tree-leaf-text|tree-expando(\s|$)/ },
+			preventDefault: true,
+			useTransform: false,
+			useTransition: false,
+			mouseWheel: true,
+			scrollbars: true,
+			bounce: false,
+			mouseWheelSpeed: 1,
+			disablePointer: true,
+			disableMouse: false,
+			disableTouch: false,
+			momentum: true,
+			scrollX: true,
+			scrollY: true,
+			tap: false,
+			bindToWrapper: true,
+			interactiveScrollbars: true,
+			HWCompositing: false
+		});
+	}
+
+	/**
+	 * @param {object} self The treeview instance.
+	 * @memberOf TreeView
+	 * @private
+	 */
+	function loadRelatedCSS(self) {
+		if (self.internal.doc.getElementById("treeViewStyle") == null) {
+			var fileref = self.internal.doc.createElement("link");
+			fileref.rel = "stylesheet";
+			fileref.id = "treeViewStyle";
+			fileref.type = "text/css";
+			fileref.href = "/treeView/css/treeViewStyle.css";
+			self.internal.doc.getElementsByTagName("head")[0].appendChild(fileref);
+		}
+	}
+
+	/**
+	 * Update the scrollbar when content has changed
+	 * @param {object} self The TreeView instance
+	 * @memberOf TreeView
+	 * @private
+	 */
+	function updateScroller(self) {
+		if (!self.internal) return;
+
+		self.internal.win.setTimeout(function () {
+			if (self.internal && self.internal.scroller) {
+				self.internal.scroller.refresh();
+			}
+		}, 0);
+	}
+
+	/**
+	 * Emit an event from the tree view
+	 * @param {object} self The TreeView instance
+	 * @param {string} name The name of the event to emit
+	 * @memberOf TreeView
+	 * @private
+	 */
+	function emit(self, name) {
+		var args = [].slice.call(arguments, 2);
+		if (events.indexOf(name) > -1) {
+			if (self.internal.handlers[name] && self.internal.handlers[name] instanceof Array) {
+				forEach(self.internal.handlers[name], function (handle) {
+					self.internal.win.setTimeout(function () {
+						handle.callback.apply(handle.context, args);
+						if (handle.one) {
+							self.off(name, handle.callback);
+						}
+					}, 0);
+				});
+			}
+		} else {
+			throw new Error(name + " event cannot be found on TreeView.");
+		}
+	}
+
+	/**
+	 * A Handler that is executed for every dblclick on a leaf.
+	 * @param {Event} e The event object passed by the browser
+	 * @memberOf TreeView
+	 * @private
+	 */
+	function dblClickHandler(e) {
+		var targetNode = e.target || e.currentTarget;
+		if (targetNode.classList.contains("tree-leaf-text")) {
+			handleLeafClick(this, targetNode.parentNode);
+		}
+	}
+
+	/**
+	 * A Handler that is executed for every click on a leaf.
+	 * @param {Event} e The event object passed by the browser
+	 * @memberOf TreeView
+	 * @private
+	 */
+	function clickHandler(e) {
+		e.preventDefault();
+		var targetNode = e.target || e.currentTarget;
+		if (targetNode.classList.contains("tree-leaf-text")) {
+			processSelection(this, targetNode, e);
+		} else if (targetNode.classList.contains("tree-expando")) {
+			handleLeafClick(this, targetNode.parentNode);
+		}
+	}
+
+	/**
+	 * A method that adds the selection class to the leaf text.
+	 * @param {object} self The treeVIew instance
+	 * @param {HTMLElement} targetNode The HTMLElement the user has clicked on
+	 * @param {Event} event The event delivered by the browser
+	 * @memberOf TreeView
+	 * @private
+	 */
+	function processSelection(self, targetNode, event) {
+		if (self.internal.selectedNode && self.internal.selectedNode !== null) {
+			self.internal.selectedNode.classList.remove("selected");
+			self.internal.selectedNode = null;
+			self.internal.selectedNodeData = null;
+		}
+
+		if (targetNode) {
+			var data = getDataFromNode(targetNode.parentNode);
+			if (data.type == "folder") {
+				handleLeafClick(self, targetNode.parentNode);
+				return;
+			}
+
+			if (!event) {
+				// User hasn't clicked or touched anything. Create a pseudo event for handling in opt_series display.
+				event = {
+					target: targetNode
+				};
+			}
+
+			var selectableValid = false;
+			for (var i = 0; i < self.internal.options.selectableTypes.length; i++) {
+				if (self.internal.options.selectableTypes[i] == data.type) {
+					selectableValid = true;
+					break;
+				}
+			}
+
+			if (selectableValid) {
+				emit(self, "select", {
+					event: event,
+					data: data
+				});
+
+				self.internal.selectedNode = targetNode;
+				self.internal.selectedNodeData = data;
+				targetNode.classList.add("selected");
+			}
+		} else {
+			emit(self, "notFound", {});
+		}
+	}
+
+	/**
+	 * A method that triggers collapsing or expanding of a node.
+	 * @param {object} self The TreeView instance
+	 * @param {HTMLElement} targetNode The node that has the data-item attribute.
+	 * @memberOf TreeView
+	 * @private
+	 */
+	function handleLeafClick(self, targetNode) {
+		var leaves = getChildLeaves(targetNode);
+		if (leaves) {
+			if (leaves.classList.contains("hidden")) {
+				self.expand(targetNode);
+			} else {
+				self.collapse(targetNode);
+			}
+		} else {
+			self.expand(targetNode);
+		}
+	}
+
+	/**
+	 * A method that displays the busy indicator.
+	 * @param {object} self The TreeView instance
+	 * @memberOf TreeView
+	 * @private
+	 */
+	function showBusyIndicator(self) {
+		if (!self.internal.busyIndicatorTimeout || self.internal.busyIndicatorTimeout === null) {
+			self.internal.busyIndicatorTimeout = self.internal.win.setTimeout(function () {
+				self.internal.busyIndicatorWrapper.classList.remove("hidden");
+			}, self.internal.options.busyIndicatorTolerance);
+		}
+	}
+
+	/**
+	 * A method that hides the busy indicator.
+	 * @param {object} self The TreeView instance
+	 * @memberOf TreeView
+	 * @private
+	 */
+	function hideBusyIndicator(self) {
+		self.internal.win.clearTimeout(self.internal.busyIndicatorTimeout);
+		self.internal.busyIndicatorTimeout = null;
+		self.internal.busyIndicatorWrapper.classList.add("hidden");
+	}
+
+	/**
+	 * A method that render a single leaf and returns the created HTML elements
+	 * @param {object} item The data that represents the leaf
+	 * @return {HTMLElement} leaf The HTML node that was created
+	 * @memberOf TreeView
+	 * @private
+	 */
+	function renderLeaf(item) {
+		if (!this.internal) return;
+
+		if (item.dataID) {
+			var dataID = item.dataID;
+			delete item.dataID;
+		}
+
+		var leaf = this.internal.doc.createElement("div");
+		var content = this.internal.doc.createElement("div");
+		var text = this.internal.doc.createElement("div");
+		var expando = this.internal.doc.createElement("img");
+		var icon = false || item.icon;
+		var iconImgElement;
+
+		// Check if icon is an img element
+		if (icon && icon.tagName?.toUpperCase() !== "IMG") {
+			iconImgElement = webMI.rootWindow.document.createElement("img");
+			iconImgElement.src = this.internal.options.languagePrefix + icon;
+
+			icon = iconImgElement;
+		} else if (!icon) {
+			iconImgElement = webMI.rootWindow.document.createElement("img");
+			iconImgElement.style.height = 0;
+			iconImgElement.style.width = 0;
+
+			icon = iconImgElement;
+		}
+
+		icon.setAttribute("class", "tree-icon");
+		icon.style.marginLeft = this.internal.options.fontSize + this.internal.options.expandoOffset + "px";
+		leaf.setAttribute("class", "tree-leaf");
+		content.setAttribute("class", "tree-leaf-content");
+		content.style.height = this.internal.options.fontSize + "px";
+		content.style.paddingTop = this.internal.options.leafPadding + "px";
+		content.style.paddingBottom = this.internal.options.leafPadding + "px";
+		content.setAttribute("data-item", JSON.stringify(item));
+		if (dataID) {
+			content.setAttribute("data-id", dataID);
+		}
+		content.id = "address-" + item.address;
+		text.setAttribute("class", "tree-leaf-text");
+		text.textContent = item.name;
+		if (item.hasChildren) {
+			expando.setAttribute("class", "tree-expando");
+			expando.style.top = this.internal.options.leafPadding + "px";
+			expando.src = this.internal.options.languagePrefix + this.internal.options.imagePaths.collapsedLeafImage;
+			content.appendChild(expando);
+		}
+		content.appendChild(icon);
+		content.appendChild(text);
+		leaf.appendChild(content);
+		return leaf;
+	}
+
+	/**
+	 * A method that searches for the occurence of a string in nodepaths.
+	 * @param {object} self The TreeView instance
+	 * @param {string} searchString The string to filter for.
+	 * @return {object} results
+	 * @memberOf TreeView
+	 * @private
+	 */
+	function getSearchResults(self, searchString) {
+		var negativeResults = [];
+		var searchResults = [];
+
+		for (var i = 0; i < self.internal.availableAddresses.length; i++) {
+			var aggregateReference = self.internal.availableAddresses[i].aggregateReference;
+			if (aggregateReference) {
+				var aggregatePathString = aggregateReference.substring(
+					aggregateReference.indexOf(aggregateReference.split(".")[4])
+				);
+			} else {
+				aggregatePathString = "";
+			}
+
+			if (
+				self.internal.availableAddresses[i].address.indexOf(searchString) !== -1 ||
+				aggregatePathString.indexOf(searchString) !== -1
+			) {
+				searchResults.push(self.internal.availableAddresses[i]);
+			} else {
+				negativeResults.push(self.internal.availableAddresses[i]);
+			}
+		}
+
+		if (searchString !== "") {
+			return ensureFullPath(searchResults, negativeResults);
+		}
+
+		return { searchResults: searchResults, negativeResults: negativeResults };
+	}
+
+	/**
+	 * A method that ensures that the full path of a filtered node is shown in the treeView.
+	 * @param {array} searchResults An array that contains the node addresses that should be displayed.
+	 * @param {array} negativeResults An array that contains the node addresses that should not be displayed.
+	 * @return {object} updatedAddresses
+	 * @memberOf TreeView
+	 * @private
+	 */
+	function ensureFullPath(searchResults, negativeResults) {
+		//ensure that the full path is filtered
+		var additionalSearchResults = [];
+		for (var i = 0; i < negativeResults.length; i++) {
+			var negativeResult = negativeResults[i].address;
+			for (var h = 0; h < searchResults.length; h++) {
+				var searchResult = searchResults[h].address;
+				if (searchResult.indexOf(negativeResult + ".") !== -1) {
+					additionalSearchResults.push({
+						additionalResult: negativeResults[i],
+						insertBefore: searchResults[h]
+					});
+				}
+			}
+		}
+
+		for (var j = 0; j < additionalSearchResults.length; j++) {
+			var additionalResult = additionalSearchResults[j].additionalResult;
+			var insertBefore = additionalSearchResults[j].insertBefore;
+
+			searchResults.splice(searchResults.indexOf(insertBefore), 0, additionalResult);
+
+			if (negativeResults.indexOf(additionalResult) !== -1) {
+				negativeResults.splice(negativeResults.indexOf(additionalResult), 1);
+			}
+		}
+
+		return { searchResults: searchResults, negativeResults: negativeResults };
+	}
+
+	/**
+	 * A method that invokes the expandation of nodes and hides non relevant ones for filtering.
+	 * @param {object} self The TreeView instance
+	 * @param {array} searchResults An array that contains the node addresses that should be displayed.
+	 * @param {array} negativeResults An array that contains the node addresses that should not be displayed.
+	 * @param {string} searchString The string to filter for.
+	 * @param {function} doneCallback The callbacl function that is invoked when the filtering is complete.
+	 * @memberOf TreeView
+	 * @private
+	 */
+	function filterNodes(self, searchResults, negativeResults, searchString, doneCallback) {
+		var nodeExpandations = [];
+
+		for (var h = 0; h < searchResults.length; h++) {
+			var address = searchResults[h].address;
+			var aggregateReference = searchResults[h].aggregateReference;
+
+			var htmlNode = self.internal.doc.getElementById("address-" + address);
+			if (htmlNode) {
+				htmlNode.style.display = "";
+			}
+
+			if (searchString !== "") {
+				nodeExpandations.push(
+					function (address, aggregateReference) {
+						var nodeAddresses = buildAddressList(self, address, aggregateReference);
+
+						return new Promise(function (resolve) {
+							expandNodeList(self, nodeAddresses, function () {
+								resolve();
+							});
+						});
+					}.bind(self, address, aggregateReference)
+				);
+			} else {
+				nodeExpandations.push(function () {
+					return Promise.resolve();
+				});
+			}
+		}
+
+		//run promise chain
+		nodeExpandations
+			.reduce(function (prev, curr) {
+				return prev.then(curr);
+			}, Promise.resolve())
+			.then(function () {
+				for (var j = 0; j < negativeResults.length; j++) {
+					var address = negativeResults[j].address;
+					var htmlNode = self.internal.doc.getElementById("address-" + address);
+					if (htmlNode) {
+						htmlNode.style.display = "none";
+					}
+				}
+				doneCallback();
+			});
+	}
+
+	/**
+	 * A method that builds out of the nodeAddress and aggregateAddress a sequential list of nodes that have to be expanded after each other.
+	 * @param {object} self The TreeView instance
+	 * @param {string} nodePath The address of the node.
+	 * @param {string} aggregatePath The address of the aggregate.
+	 * @return {Array} nodeAddresses
+	 * @memberOf TreeView
+	 * @private
+	 */
+	function buildAddressList(self, nodePath, aggregatePath) {
+		var nodeAddresses = [];
+
+		try {
+			var startAddress = self.internal.options.startAddress;
+			var aggregateAddressPrefix = self.internal.options.aggregateAddressPrefix;
+
+			var subPath = nodePath.substring(nodePath.indexOf(startAddress) + startAddress.length + 1); //+ 1 cut off first dot
+			var nodeFragments = subPath.split(".");
+
+			if (subPath != "") nodePath = startAddress;
+
+			//build nodeAddresses
+			for (var i = 0; i < nodeFragments.length; i++) {
+				if (nodeFragments[i]) nodePath = nodePath + "." + nodeFragments[i];
+				nodeAddresses.push(nodePath);
+			}
+
+			if (aggregatePath && aggregatePath.length > 0) {
+				var aggregateSubPath = aggregatePath.substring(
+					aggregatePath.indexOf(aggregateAddressPrefix) + aggregateAddressPrefix.length + 1
+				); //+ 1 cut off first dot
+				var aggregateTemplateName = aggregateSubPath.split(".", 1)[0];
+				aggregateAddressPrefix = aggregateAddressPrefix + "." + aggregateTemplateName;
+				nodeAddresses.push(aggregateAddressPrefix);
+				var aggregateFragments = aggregateSubPath.split(".");
+
+				//build nodeAddresses for aggregates
+				for (var h = 1; h < aggregateFragments.length; h++) {
+					aggregateAddressPrefix = aggregateAddressPrefix + "." + aggregateFragments[h];
+					nodeAddresses.push(aggregateAddressPrefix);
+				}
+			}
+		} catch (ex) {
+			// already invalidated
+			// console.error(ex);
+		}
+
+		return nodeAddresses;
+	}
+
+	/**
+	 * A method that expands nodes from a list sequentially.
+	 * @param {object} self The TreeView instance.
+	 * @param {array} nodeAddresses A list of addresses of nodes and aggregates.
+	 * @param {function} doneCallback A callback function that is invoked after all nodes have been expanded.
+	 * @memberOf TreeView
+	 * @private
+	 */
+	function expandNodeList(self, nodeAddresses, doneCallback) {
+		var expandSteps = [];
+		var lastValidHtmlNode = null;
+
+		//push functions for loading nodeAddresses into array
+		for (var h = 0; h < nodeAddresses.length; h++) {
+			var address = nodeAddresses[h];
+
+			expandSteps.push(
+				function (address) {
+					var htmlNode = self.internal.doc.getElementById("address-" + address);
+
+					//do not expand last element and ensure htmlNode exists
+					if (address !== nodeAddresses[nodeAddresses.length - 1] && htmlNode !== null) {
+						if (address.indexOf(this.internal.options.aggregateAddressPrefix) === -1) {
+							lastValidHtmlNode = htmlNode;
+						}
+
+						self.expand(htmlNode, true);
+						var data = getDataFromNode(htmlNode);
+
+						//if node has children and it's childleaves are not loaded yet, wait for expand event
+						if (data.hasChildren && !getChildLeaves(htmlNode)) {
+							return new Promise(function (resolve) {
+								self.one("render", function () {
+									resolve({ relatedNode: htmlNode, lastValidNode: lastValidHtmlNode });
+								});
+							});
+						} else {
+							return Promise.resolve({ relatedNode: htmlNode, lastValidNode: lastValidHtmlNode });
+						}
+					} else {
+						return Promise.resolve({ relatedNode: htmlNode, lastValidNode: lastValidHtmlNode });
+					}
+				}.bind(self, address)
+			);
+		}
+
+		//run promise chain
+		expandSteps
+			.reduce(function (prev, curr) {
+				return prev.then(curr);
+			}, Promise.resolve())
+			.then(function (result) {
+				doneCallback(result);
+			});
+	}
+
+	/**
+	 * A helper method that returns the child leaves of a node.
+	 * @param {HTMLElement} node
+	 * @return {boolean}
+	 * @memberOf TreeView
+	 * @private
+	 */
+	function getChildLeaves(node) {
+		var leaves = node.parentNode.querySelector(".tree-child-leaves");
+		if (leaves) {
+			return leaves;
+		} else {
+			return false;
+		}
+	}
+
+	/**
+	 * A helper method that builds a flat array of an array of objects (object-specific)
+	 * @param {array} addresses
+	 * @return {array} flattenedArray
+	 * @memberOf TreeView
+	 * @private
+	 */
+	function flattenAddresses(addresses) {
+		var flattenedArray = [];
+
+		for (var i = 0; i < addresses.length; i++) {
+			flattenedArray.push(addresses[i].address);
+			if (addresses[i].aggregateReference) {
+				flattenedArray.push(addresses[i].aggregateReference);
+			}
+		}
+
+		return flattenedArray;
+	}
+
+	/**
+	 * A helper method to merge to objects recursively
+	 * @param {object} data The base-object
+	 * @param {object} addData The data to add recursively to the base object
+	 * @memberOf TreeView
+	 * @private
+	 */
+	function mergeData(data, addData) {
+		for (var p in addData) {
+			try {
+				// Property in destination object set; update its value.
+				if (addData[p].constructor === Object) {
+					data[p] = mergeData(data[p], addData[p]);
+				} else {
+					data[p] = addData[p];
+				}
+			} catch (e) {
+				// Property in destination object not set; create it and set its value.
+				data[p] = addData[p];
+			}
+		}
+		return data;
+	}
+
+	/**
+	 * A forEach that will work with a NodeList and generic Arrays
+	 * @param {Array} arr The array to iterate over
+	 * @param {function} callback Function that executes for each element. First parameter is element, second is index
+	 * @param {object} scope The context to execute callback with
+	 * @memberOf TreeView
+	 * @private
+	 */
+	function forEach(arr, callback, scope) {
+		var i,
+			len = arr.length;
+		for (i = 0; i < len; i += 1) {
+			callback.call(scope, arr[i], i);
+		}
+	}
+
+	// Ensure correct types for options
+	var options = {};
+	for (const key in base) {
+		switch (key) {
+			// Strings
+			case "renderTo":
+			case "dataSourceType":
+			case "dataSourceFilePath":
+			case "startAddress":
+				options[key] = base[key];
+				break;
+			// Booleans
+			case "nodeCacheActive":
+				options[key] = base[key] === "true" ? true : false;
+				break;
+			// JSON-Strings
+			case "selectableTypes":
+			case "imagePaths":
+				options[key] = JSON.parse(base[key]);
+				break;
+			// Numbers
+			case "searchDepth":
+			case "fontSize":
+			case "leafPadding":
+			case "leafIndentation":
+			case "busyIndicatorTolerance":
+			case "expandoOffset":
+				options[key] = parseFloat(base[key]);
+				break;
+		}
+	}
+
+	if (typeof options["dataSourceFilePath"] === "undefined" && base.dataSourceType === "opcUA") {
+		options["dataSourceFilePath"] = "treeView/datasources/opcua.js";
+	}
+
+	if (typeof base.dataSourceOptions === "object") {
+		options.dataSourceOptions = base.dataSourceOptions;
+	} else if (typeof base.dataSourceOptions === "string") {
+		try {
+			options.dataSourceOptions = JSON.parse(base.dataSourceOptions);
+		} catch (err) {
+			if (err instanceof SyntaxError) {
+				if (options.dataSourceType === "scope") {
+					// Fallback for legacy scope options
+					options.dataSourceOptions = { host: base.dataSourceOptions };
+				} else {
+					throw new Error("dataSourceOptions must be an object or a JSON string.");
+				}
+			}
+		}
+	} else {
+		throw new Error("dataSourceOptions must be an object or a JSON string.");
+	}
+
+	// Move dataSourceOptions up one level
+	for (const key in options.dataSourceOptions) {
+		options[key] = options.dataSourceOptions[key];
+	}
+
+	delete options.dataSourceOptions;
+
+	return new TreeView(options);
+})(window, document);
+]]]]><![CDATA[></code>
+</script>
+]]></uax:XmlElement>
+		</Value>
+	</UAVariable>
+	<UAObject NodeId="ns=1;s=SYSTEM" BrowseName="1:SYSTEM">
+		<DisplayName Locale="en">SYSTEM</DisplayName>
+		<Description Locale="en">SYSTEM</Description>
+		<References>
+			<Reference ReferenceType="HasComponent" IsForward="false">i=85</Reference>
+			<Reference ReferenceType="HasTypeDefinition">FolderType</Reference>
+		</References>
+		<Extensions>
+			<atvise Upstream="true" ExportedNodeId="ns=1;s=SYSTEM.LIBRARY.ATVISE.RESOURCES" ExportedBrowseName="1:RESOURCES"></atvise>
+		</Extensions>
+	</UAObject>
+	<UAObject NodeId="ns=1;s=SYSTEM.LIBRARY" BrowseName="1:LIBRARY">
+		<DisplayName Locale="en">LIBRARY</DisplayName>
+		<Description Locale="en">LIBRARY</Description>
+		<References>
+			<Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=SYSTEM</Reference>
+			<Reference ReferenceType="HasTypeDefinition">FolderType</Reference>
+		</References>
+		<Extensions>
+			<atvise Upstream="true"></atvise>
+		</Extensions>
+	</UAObject>
+	<UAObject NodeId="ns=1;s=SYSTEM.LIBRARY.ATVISE" BrowseName="1:ATVISE">
+		<DisplayName Locale="en">ATVISE</DisplayName>
+		<Description Locale="en">ATVISE</Description>
+		<References>
+			<Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=SYSTEM.LIBRARY</Reference>
+			<Reference ReferenceType="HasTypeDefinition">FolderType</Reference>
+		</References>
+		<Extensions>
+			<atvise Upstream="true"></atvise>
+		</Extensions>
+	</UAObject>
+	<UAObject NodeId="ns=1;s=SYSTEM.LIBRARY.ATVISE.RESOURCES" BrowseName="1:RESOURCES">
+		<DisplayName Locale="en">RESOURCES</DisplayName>
+		<Description Locale="en">RESOURCES</Description>
+		<References>
+			<Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=SYSTEM.LIBRARY.ATVISE</Reference>
+			<Reference ReferenceType="HasTypeDefinition">FolderType</Reference>
+		</References>
+	</UAObject>
+	<UAObject NodeId="ns=1;s=SYSTEM.LIBRARY.ATVISE.RESOURCES/treeView" BrowseName="1:treeView">
+		<DisplayName Locale="en">treeView</DisplayName>
+		<Description Locale="en">treeView</Description>
+		<References>
+			<Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=SYSTEM.LIBRARY.ATVISE.RESOURCES</Reference>
+			<Reference ReferenceType="HasTypeDefinition">FolderType</Reference>
+		</References>
+	</UAObject>
+	<UAObject NodeId="ns=1;s=SYSTEM.LIBRARY.ATVISE.RESOURCES/treeView/css" BrowseName="1:css">
+		<DisplayName Locale="en">css</DisplayName>
+		<Description Locale="en">css</Description>
+		<References>
+			<Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=SYSTEM.LIBRARY.ATVISE.RESOURCES/treeView</Reference>
+			<Reference ReferenceType="HasTypeDefinition">FolderType</Reference>
+		</References>
+	</UAObject>
+	<UAVariable NodeId="ns=1;s=SYSTEM.LIBRARY.ATVISE.RESOURCES/treeView/css/treeViewStyle.css" BrowseName="1:treeViewStyle.css" DataType="ByteString" AccessLevel="7" UserAccessLevel="7" Historizing="true">
+		<DisplayName Locale="en">treeViewStyle.css</DisplayName>
+		<Description Locale="en">treeViewStyle.css</Description>
+		<References>
+			<Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=SYSTEM.LIBRARY.ATVISE.RESOURCES/treeView/css</Reference>
+			<Reference ReferenceType="HasTypeDefinition">ResourceCssType</Reference>
+		</References>
+		<Value>
+			<uax:ByteString>LnRyZWUtd3JhcHBlciB7Cglmb250LWZhbWlseTogQXJpYWw7Cgl3aWR0aDogaW5oZXJpdDsKCWhlaWdodDogaW5oZXJpdDsKCXBvc2l0aW9uOiByZWxhdGl2ZTsKfQoudHJlZS1jb250YWluZXIgewogICBwb3NpdGlvbjogcmVsYXRpdmU7CglkaXNwbGF5OiBpbmxpbmUtYmxvY2s7Cn0KCi50cmVlLWxlYWYgewoJcG9zaXRpb246IHJlbGF0aXZlCn0KCi50cmVlLWxlYWYgLnRyZWUtY2hpbGQtbGVhdmVzIHsKCWRpc3BsYXk6IGJsb2NrCn0KCi50cmVlLWxlYWYgLmhpZGRlbiB7CglkaXNwbGF5OiBub25lOwp9CgoudHJlZS1sZWFmIC50cmVlLWV4cGFuZG8gewoJcG9zaXRpb246IGFic29sdXRlOwoJaGVpZ2h0OiBpbmhlcml0OwoJdG9wOiAwOwoJbGVmdDogMDsKfQoKLnRyZWUtbGVhZiAuaGlkZGVuIHsKCXZpc2liaWxpdHk6IGhpZGRlbgp9CgoudHJlZS1sZWFmIC50cmVlLWxlYWYtdGV4dCB7CgljdXJzb3I6IHBvaW50ZXI7CglmbG9hdDogbGVmdDsKCXBhZGRpbmctbGVmdDogM3B4OwoJcGFkZGluZy1yaWdodDogM3B4OwoJd2hpdGUtc3BhY2U6IG5vd3JhcDsKCS13ZWJraXQtdG91Y2gtY2FsbG91dDogbm9uZTsgLyogaU9TIFNhZmFyaSAqLwoJLXdlYmtpdC11c2VyLXNlbGVjdDogbm9uZTsgLyogU2FmYXJpICovCgkta2h0bWwtdXNlci1zZWxlY3Q6IG5vbmU7IC8qIEtvbnF1ZXJvciBIVE1MICovCgktbW96LXVzZXItc2VsZWN0OiBub25lOyAvKiBGaXJlZm94ICovCgktbXMtdXNlci1zZWxlY3Q6IG5vbmU7IC8qIEludGVybmV0IEV4cGxvcmVyL0VkZ2UgKi8KCXVzZXItc2VsZWN0OiBub25lOyAvCn0KCi50cmVlLWxlYWYgLnRyZWUtbGVhZi10ZXh0OmhvdmVyIHsKCWNvbG9yOiAjMTU2N2EyCn0KCi50cmVlLWxlYWYgLnRyZWUtbGVhZi10ZXh0LnNlbGVjdGVkIHsKCWJhY2tncm91bmQtY29sb3I6IGxpZ2h0Z3JleTsKCWJvcmRlci1yYWRpdXM6IDVweAp9CgoudHJlZS1sZWFmIC50cmVlLWxlYWYtY29udGVudCB7CglkaXNwbGF5OiBmbGV4OwoJanVzdGlmeS1jb250ZW50OiBmbGV4LXN0YXJ0OwoJYWxpZ24taXRlbXM6IGNlbnRlcgp9CgoudHJlZS1sZWFmIC50cmVlLWljb24gewoJZmxvYXQ6IGxlZnQ7CgloZWlnaHQ6IGluaGVyaXQKfQoKLnRyZWUtYnVzeS1pbmRpY2F0b3IgewoJYm9yZGVyOiA1cHggc29saWQgI2YzZjNmMzsKCWJvcmRlci1yYWRpdXM6IDUwJTsKCWJvcmRlci10b3A6IDVweCBzb2xpZCAjODg4ODg4OwoJd2lkdGg6IDI1cHg7CgloZWlnaHQ6IDI1cHg7Cgktd2Via2l0LWFuaW1hdGlvbjogc3BpbiAycyBsaW5lYXIgaW5maW5pdGU7CglhbmltYXRpb246IHNwaW4gMnMgbGluZWFyIGluZmluaXRlOwp9Ci50cmVlLWJ1c3ktaW5kaWNhdG9yLXdyYXBwZXJ7CgloZWlnaHQ6IGluaGVyaXQ7Cgl3aWR0aDogaW5oZXJpdDsKCXBvc2l0aW9uOiBhYnNvbHV0ZTsKCXRvcDogMDsKCWxlZnQ6IDA7CglkaXNwbGF5OiBmbGV4OwoJanVzdGlmeS1jb250ZW50OiBjZW50ZXI7CglhbGlnbi1pdGVtczogY2VudGVyOwoJYmFja2dyb3VuZDogcmdiYSgyMTEsIDIxMSwgMjExLCAwLjUpCn0KLnRyZWUtYnVzeS1pbmRpY2F0b3Itd3JhcHBlci5oaWRkZW57CglkaXNwbGF5OiBub25lOwp9CgpALXdlYmtpdC1rZXlmcmFtZXMgc3BpbiB7CgkwJSB7CgkJLXdlYmtpdC10cmFuc2Zvcm06IHJvdGF0ZSgwZGVnKTsKCX0KCTEwMCUgewoJCS13ZWJraXQtdHJhbnNmb3JtOiByb3RhdGUoMzYwZGVnKTsKCX0KfQoKQGtleWZyYW1lcyBzcGluIHsKCTAlIHsKCQl0cmFuc2Zvcm06IHJvdGF0ZSgwZGVnKTsKCX0KCTEwMCUgewoJCXRyYW5zZm9ybTogcm90YXRlKDM2MGRlZyk7Cgl9Cn0=</uax:ByteString>
+		</Value>
+	</UAVariable>
+	<UAObject NodeId="ns=1;s=SYSTEM.LIBRARY.ATVISE.RESOURCES/treeView/datasources" BrowseName="1:datasources">
+		<DisplayName Locale="en">datasources</DisplayName>
+		<Description Locale="en">datasources</Description>
+		<References>
+			<Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=SYSTEM.LIBRARY.ATVISE.RESOURCES/treeView</Reference>
+			<Reference ReferenceType="HasTypeDefinition">FolderType</Reference>
+		</References>
+	</UAObject>
+	<UAVariable NodeId="ns=1;s=SYSTEM.LIBRARY.ATVISE.RESOURCES/treeView/datasources/opcua.js" BrowseName="1:opcua.js" DataType="ByteString" AccessLevel="7" UserAccessLevel="7" Historizing="true">
+		<DisplayName Locale="en">opcua.js</DisplayName>
+		<Description Locale="en">opcua.js</Description>
+		<References>
+			<Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=SYSTEM.LIBRARY.ATVISE.RESOURCES/treeView/datasources</Reference>
+			<Reference ReferenceType="HasTypeDefinition">ResourceJavascriptType</Reference>
+		</References>
+		<Value>
+			<uax:ByteString>KCgpID0+IHsKCS8vIEhlcmUgdGhlIHNhbWUgbmFtZSBzaG91bGQgYmUgdXNlZCBhcyBmb3IgdGhlIHJlc3BlY3RpdmUgaGlnaGNoYXJ0cyBkYXRhc291cmNlCgljb25zdCBkYXRhU291cmNlTmFtZSA9ICJvcGNVQSI7CgoJdmFyIHR5cGVzID0gewoJCWJhc2VWYXJpYWJsZTogImJhc2VWYXJpYWJsZSIsCgkJZm9sZGVyOiAiZm9sZGVyIiwKCQlwcm9qZWN0VmFyaWFibGVzOiAiYmFzZVZhcmlhYmxlIiwKCQlhZ2dyZWdhdGVUZW1wbGF0ZTogImFnZ3JlZ2F0ZVRlbXBsYXRlIiwKCQlhZ2dyZWdhdGVGdW5jdGlvbjogImFnZ3JlZ2F0ZUZ1bmN0aW9uIiwKCQlhZ2dyZWdhdGVGdW5jdGlvblR5cGU6ICJhZ2dyZWdhdGVGdW5jdGlvblR5cGUiCgl9OwoKCXZhciBhZ2dyZWdhdGVPcHRpb25zID0gewoJCWludGVydmFsVW5pdDogImludGVydmFsX3VuaXQiLAoJCWludGVydmFsVmFsdWU6ICJpbnRlcnZhbF92YWx1ZSIsCgkJb2Zmc2V0VW5pdDogIm9mZnNldF91bml0IiwKCQlvZmZzZXRWYWx1ZTogIm9mZnNldF92YWx1ZSIsCgkJc3RlcHBlZDogInN0ZXBwZWQiLAoJCWFnZ3JlZ2F0ZVR5cGU6ICJhZ2dyZWdhdGUiLAoJCXJlbGF0ZWROb2RlQWRkcmVzczogInJlbGF0ZWROb2RlQWRkcmVzcyIKCX07CgoJdmFyIG9wY1VBVHlwZXMgPSB7CgkJYmFzZVZhcmlhYmxlRGF0YVR5cGU6ICJpPTYzIiwKCQliYXNlVmFyaWFibGU6ICJpPTYyIiwKCQlmb2xkZXI6ICJpPTYxIiwKCQlwcm9qZWN0OiAiT2JqZWN0VHlwZXMuUFJPSkVDVCIsCgkJcHJvamVjdFZhcmlhYmxlczogIlZhcmlhYmxlVHlwZXMuUFJPSkVDVCIsCgkJYWdncmVnYXRlVGVtcGxhdGU6ICJPYmplY3RUeXBlcy5BVFZJU0UuQWdncmVnYXRlVGVtcGxhdGUiLAoJCWFnZ3JlZ2F0ZUZ1bmN0aW9uOiAiT2JqZWN0VHlwZXMuQVRWSVNFLkFnZ3JlZ2F0ZUZ1bmN0aW9uIiwKCQlhZ2dyZWdhdGVGdW5jdGlvblR5cGU6ICJpPTIzNDAiCgl9OwoKCS8qKgoJICogQSBoZWxwZXIgbWV0aG9kIGZvciBwYXJzaW5nIHRoZSBkYXRhLWl0ZW0gb2YgYSBub2RlCgkgKiBAcGFyYW0ge0hUTUxFbGVtZW50fSBub2RlIFRoZSBjb3JyZXNwb25kaW5nIERPTS1ub2RlCgkgKiBAcmV0dXJuIHtzdHJpbmd9IG9iamVjdCBUaGUgcGFyc2VkIGRhdGEtaXRlbQoJICovCglmdW5jdGlvbiBnZXREYXRhRnJvbU5vZGUobm9kZSkgewoJCWlmIChub2RlKSB7CgkJCXJldHVybiBKU09OLnBhcnNlKG5vZGUuZ2V0QXR0cmlidXRlKCJkYXRhLWl0ZW0iKSk7CgkJfSBlbHNlIHsKCQkJcmV0dXJuIHVuZGVmaW5lZDsKCQl9Cgl9CgoJLyoqCgkgKiBBIGhlbHBlciBtZXRob2QgZm9yIGFkZGluZyBhZGRpdGlvbmFsIGRhdGEgdG8gdGhlIGRhdGEtaXRlbSBvZiBhIG5vZGUKCSAqIEBwYXJhbSB7b2JqZWN0fSBpdGVtIFRoZSBpdGVtIChvYmplY3QpIHRvIGJlIGFkZGVkCgkgKiBAcGFyYW0ge0hUTUxFbGVtZW50fSBhZGREYXRhIFRoZSBjb3JyZXNwb25kaW5nIERPTS1ub2RlCgkgKi8KCWZ1bmN0aW9uIGFkZERhdGFUb0l0ZW0oaXRlbSwgYWRkRGF0YSkgewoJCXZhciBkYXRhID0gSlNPTi5wYXJzZShpdGVtLmdldEF0dHJpYnV0ZSgiZGF0YS1pdGVtIikpOwoJCWl0ZW0uc2V0QXR0cmlidXRlKCJkYXRhLWl0ZW0iLCBKU09OLnN0cmluZ2lmeShtZXJnZURhdGEoZGF0YSwgYWRkRGF0YSkpKTsKCX0KCgkvKioKCSAqIEEgaGVscGVyIG1ldGhvZCB0byBtZXJnZSB0byBvYmplY3RzIHJlY3Vyc2l2ZWx5CgkgKiBAcGFyYW0ge29iamVjdH0gZGF0YSBUaGUgYmFzZS1vYmplY3QKCSAqIEBwYXJhbSB7b2JqZWN0fSBhZGREYXRhIFRoZSBkYXRhIHRvIGFkZCByZWN1cnNpdmVseSB0byB0aGUgYmFzZSBvYmplY3QKCSAqLwoJZnVuY3Rpb24gbWVyZ2VEYXRhKGRhdGEsIGFkZERhdGEpIHsKCQlmb3IgKHZhciBwIGluIGFkZERhdGEpIHsKCQkJdHJ5IHsKCQkJCS8vIFByb3BlcnR5IGluIGRlc3RpbmF0aW9uIG9iamVjdCBzZXQ7IHVwZGF0ZSBpdHMgdmFsdWUuCgkJCQlpZiAoYWRkRGF0YVtwXS5jb25zdHJ1Y3RvciA9PT0gT2JqZWN0KSB7CgkJCQkJZGF0YVtwXSA9IG1lcmdlRGF0YShkYXRhW3BdLCBhZGREYXRhW3BdKTsKCQkJCX0gZWxzZSB7CgkJCQkJZGF0YVtwXSA9IGFkZERhdGFbcF07CgkJCQl9CgkJCX0gY2F0Y2ggKGUpIHsKCQkJCS8vIFByb3BlcnR5IGluIGRlc3RpbmF0aW9uIG9iamVjdCBub3Qgc2V0OyBjcmVhdGUgaXQgYW5kIHNldCBpdHMgdmFsdWUuCgkJCQlkYXRhW3BdID0gYWRkRGF0YVtwXTsKCQkJfQoJCX0KCQlyZXR1cm4gZGF0YTsKCX0KCgkvKioKCSAqIEEgaGVscGVyIGZ1bmN0aW9ucyB0aGF0IGdldHMgdGhlIHJlbGF0ZWQgbm9kZSBhZGRyZXNzIG9mIGEgaHRtbCBlbGVtZW50LgoJICogQHBhcmFtIHtIVE1MRWxlbWVudH0gcmVmZXJlbmNlTm9kZSBBIGh0bWwgbm9kZSB0aGF0IGhhcyBhIGRhdGEtaXRlbSBhdHRyaWJ1dGUuCgkgKiBAcmV0dXJuIHtzdHJpbmd9IHJlbGF0ZWRBZGRyZXNzCgkgKi8KCWZ1bmN0aW9uIGdldFJlbGF0ZWROb2RlQWRkcmVzcyhyZWZlcmVuY2VOb2RlKSB7CgkJdmFyIGN1cnJlbnROb2RlID0gcmVmZXJlbmNlTm9kZTsKCQl2YXIgcmVsYXRlZEFkZHJlc3MgPSBnZXREYXRhRnJvbU5vZGUoY3VycmVudE5vZGUpLmFkZHJlc3M7CgoJCXdoaWxlIChyZWxhdGVkQWRkcmVzcy5pbmRleE9mKCJISVNUT1JZIikgIT09IC0xKSB7CgkJCWN1cnJlbnROb2RlID0gY3VycmVudE5vZGUucGFyZW50Tm9kZTsKCQkJdmFyIG5vZGVEYXRhID0ge307CgkJCWZvciAodmFyIGkgPSAwOyBpIDwgY3VycmVudE5vZGUuY2hpbGROb2Rlcy5sZW5ndGg7IGkrKykgewoJCQkJbm9kZURhdGEgPSBnZXREYXRhRnJvbU5vZGUoY3VycmVudE5vZGUuY2hpbGROb2Rlc1tpXSk7CgkJCQlpZiAobm9kZURhdGEpIHsKCQkJCQlyZWxhdGVkQWRkcmVzcyA9IG5vZGVEYXRhLmFkZHJlc3M7CgkJCQkJYnJlYWs7CgkJCQl9CgkJCX0KCQl9CgoJCXJldHVybiByZWxhdGVkQWRkcmVzczsKCX0KCgkvKioKCSAqIEEgaGVscGVyIGZ1bmN0aW9ucyB0aGF0IHNlYXJjaGVzIHRoZSByZXNwb25zZSBjYWNoZSBmb3IgdGhlIHNlYXJjaHRlcm0uCgkgKiBAcGFyYW0ge3N0cmluZ30gYWRkcmVzcyBub2RlSWQgb2YgdGhlIG5vZGUgdG8gc2VhcmNoIGZvci4KCSAqIEBwYXJhbSB7b2JqZWN0fSBub2RlVHJlZSBBIGNhY2hlZCByZXNwb25zZSBvZiBhbGwgbm9kZXMgaW4gdGhlIHByb2plY3QuCgkgKiBAcmV0dXJuIHtvYmplY3R9IE9iamVjdCBjb25hdGluaW5nIHRoZSBub2RlcyByZXF1aXJlZCBpbmZvCgkgKi8KCWZ1bmN0aW9uIGZpbmRDaGlsZHJlbihhZGRyZXNzLCBub2RlVHJlZSkgewoJCWxldCByZXN1bHQ7CgkJaWYgKG5vZGVUcmVlLmFkZHJlc3MgPT09IGFkZHJlc3MpIHsKCQkJcmV0dXJuIG5vZGVUcmVlOwoJCX0KCQlmb3IgKGxldCBub2RlTmFtZSBpbiBub2RlVHJlZSkgewoJCQlpZiAobm9kZVRyZWVbbm9kZU5hbWVdLmFkZHJlc3MgPT09IGFkZHJlc3MpIHsKCQkJCXJldHVybiBub2RlVHJlZVtub2RlTmFtZV0uY2hpbGRzOwoJCQl9IGVsc2UgewoJCQkJaWYgKG5vZGVUcmVlW25vZGVOYW1lXS5jaGlsZHMpIHsKCQkJCQlyZXN1bHQgPSBmaW5kQ2hpbGRyZW4oYWRkcmVzcywgbm9kZVRyZWVbbm9kZU5hbWVdLmNoaWxkcyk7CgkJCQl9CgkJCX0KCgkJCWlmIChyZXN1bHQpIHJldHVybiByZXN1bHQ7CgkJfQoJfQoKCWZ1bmN0aW9uIFRyZWVWaWV3RGF0YXNvdXJjZShvcHRpb25zKSB7CgkJY29uc3Qgc2VsZiA9IHRoaXM7CgkJY29uc3QgZGVmYXVsdE9wdGlvbnMgPSB7CgkJCXJlbmRlclRvOiAiIiwKCQkJc3RhcnRBZGRyZXNzOiAiQUdFTlQuT0JKRUNUUyIsCgkJCWFnZ3JlZ2F0ZUFkZHJlc3NQcmVmaXg6ICJBR0VOVC5ISVNUT1JZLkFHR1JFR0FURVRFTVBMQVRFUyIsCgkJCXNlbGVjdGFibGVUeXBlczogW3R5cGVzLmJhc2VWYXJpYWJsZSwgdHlwZXMuYWdncmVnYXRlRnVuY3Rpb25dLAoJCQlmb250U2l6ZTogMTIsCgkJCWxlYWZQYWRkaW5nOiAyLAoJCQlsZWFmSW5kZW50YXRpb246IDE1LAoJCQlidXN5SW5kaWNhdG9yVG9sZXJhbmNlOiAxMDAsCgkJCWV4cGFuZG9PZmZzZXQ6IDMsCgkJCXNlYXJjaERlcHRoOiAxMDAsCgkJCW5hdmlnYXRpb25EZXB0aDogMSwKCQkJdHlwZUltYWdlUGF0aHM6IHsKCQkJCWJhc2VWYXJpYWJsZTogIi90cmVlVmlldy9pY29ucy9iYXNlVmFyaWFibGUuc3ZnIiwKCQkJCWZvbGRlcjogIi90cmVlVmlldy9pY29ucy9mb2xkZXIuc3ZnIiwKCQkJCWFnZ3JlZ2F0ZUZ1bmN0aW9uOiAiL3RyZWVWaWV3L2ljb25zL2FnZ3JlZ2F0ZUZ1bmN0aW9uLnN2ZyIKCQkJfQoJCX07CgoJCXRoaXMuY2FjaGVkQXZhaWxhYmxlTm9kZXMgPSBmYWxzZTsKCQl0aGlzLmJ1aWxkaW5nTm9kZXNDYWNoZSA9IGZhbHNlOwoJCXRoaXMuYnJvd3NlTm9kZXNCYWNrbG9nID0gW107CgoJCXNlbGYub3B0aW9ucyA9IHt9OwoJCU9iamVjdC5hc3NpZ24oc2VsZi5vcHRpb25zLCBkZWZhdWx0T3B0aW9ucywgb3B0aW9ucyk7CgoJCXZhciBsYW5ndWFnZU5hbWUgPSAiIjsKCQlmb3IgKHZhciBsYW5ndWFnZSBpbiBwcm9qZWN0Lmxhbmd1YWdlcykgewoJCQlsYW5ndWFnZU5hbWUgPSBsYW5ndWFnZTsKCQkJYnJlYWs7CgkJfQoJCXNlbGYub3B0aW9ucy5sYW5ndWFnZVByZWZpeCA9IGxhbmd1YWdlTmFtZTsKCiAgICAgICAgaWYgKHRoaXMub3B0aW9ucy5ub2RlQ2FjaGVBY3RpdmUpIHsKICAgICAgICAgICAgdGhpcy5mZXRjaEF2YWlsYWJsZU5vZGVBZHJlc3NlcygoKSA9PiB7CiAgICAgICAgICAgICAgICAvLyBDYWNoZSBpcyByZWFkeS4KICAgICAgICAgICAgfSk7CiAgICAgICAgfQoJfQoKCS8qKgoJICogQSBtZXRob2QgdGhhdCBmZXRjaGVzIGFsbCBub2RlcyB0aGF0IGNhbiBiZSBkaXNwbGF5ZWQgaW4gdGhlIHRyZWVWaWV3IGFuZCBidWlsZHMgYW4gYXJyYXkgZm9yIHRyZWUgZmlsdGVyaW5nLgoJICogQHBhcmFtIHtvYmplY3R9IHNlbGYgVGhlIFRyZWVWaWV3IGluc3RhbmNlLgoJICogQHBhcmFtIHtmdW5jdGlvbn0gZGF0YUNhbGxiYWNrIEEgY2FsbGJhY2sgZnVuY3Rpb24gdGhhdCBpcyBpbnZva2VkIHdpdGggYWxsIHRoZSBhdmFpbGFibGUgbm9kZXMuCgkgKi8KCVRyZWVWaWV3RGF0YXNvdXJjZS5wcm90b3R5cGUuZmV0Y2hBdmFpbGFibGVOb2RlQWRyZXNzZXMgPSBmdW5jdGlvbiAoZGF0YUNhbGxiYWNrKSB7CgkJY29uc3Qgc2VsZiA9IHRoaXM7CgoJCWlmICh0aGlzLmNhY2hlZEF2YWlsYWJsZU5vZGVzICYmIHRoaXMub3B0aW9ucy5ub2RlQ2FjaGVBY3RpdmUpIHsKCQkJdGhpcy5idWlsZEFkZHJlc3Nlc0FycmF5KGZ1bmN0aW9uIChhZGRyZXNzZXMpIHsKCQkJCXZhciBvcmRlcmVkQWRyZXNzZXMgPSBbXTsKCQkJCXZhciBsYXN0VmFsaWRBZGRyZXNzID0gbnVsbDsKCgkJCQlmb3IgKHZhciBpID0gMDsgaSA8IGFkZHJlc3Nlcy5sZW5ndGg7IGkrKykgewoJCQkJCXZhciBhZGRyZXNzID0gd2ViTUkuZXNjYXBlSFRNTChhZGRyZXNzZXNbaV0pOwoJCQkJCWlmIChhZGRyZXNzLmluZGV4T2Yoc2VsZi5vcHRpb25zLmFnZ3JlZ2F0ZUFkZHJlc3NQcmVmaXgpID09PSAtMSkgewoJCQkJCQlsYXN0VmFsaWRBZGRyZXNzID0gYWRkcmVzczsKCQkJCQkJb3JkZXJlZEFkcmVzc2VzLnB1c2goeyBhZGRyZXNzOiBhZGRyZXNzIH0pOwoJCQkJCX0gZWxzZSB7CgkJCQkJCW9yZGVyZWRBZHJlc3Nlcy5wdXNoKHsgYWRkcmVzczogbGFzdFZhbGlkQWRkcmVzcywgYWdncmVnYXRlUmVmZXJlbmNlOiBhZGRyZXNzIH0pOwoJCQkJCX0KCQkJCX0KCgkJCQlkYXRhQ2FsbGJhY2sob3JkZXJlZEFkcmVzc2VzKTsKCQkJfSwgdGhpcy5jYWNoZWRBdmFpbGFibGVOb2Rlcyk7CgkJCXJldHVybjsKCQl9CgoJCWlmICh0aGlzLmJ1aWxkaW5nTm9kZXNDYWNoZSkgewoJCQl0aGlzLmJyb3dzZU5vZGVzQmFja2xvZy5wdXNoKGRhdGFDYWxsYmFjayk7CgkJCXJldHVybjsKCQl9CgoJCXRoaXMuYnVpbGRpbmdOb2Rlc0NhY2hlID0gdHJ1ZTsKCgkJd2ViTUkuZGF0YS5jYWxsKAoJCQkiQnJvd3NlTm9kZXMiLAoJCQl7CgkJCQlzdGFydEFkZHJlc3M6IHRoaXMub3B0aW9ucy5zdGFydEFkZHJlc3MsCgkJCQllbmRMZXZlbDogdGhpcy5vcHRpb25zLnNlYXJjaERlcHRoLAoJCQkJdlR5cGVzOiBbCgkJCQkJb3BjVUFUeXBlcy5iYXNlVmFyaWFibGVEYXRhVHlwZSwKCQkJCQlvcGNVQVR5cGVzLmJhc2VWYXJpYWJsZSwKCQkJCQlvcGNVQVR5cGVzLmZvbGRlciwKCQkJCQlvcGNVQVR5cGVzLnByb2plY3QsCgkJCQkJb3BjVUFUeXBlcy5wcm9qZWN0VmFyaWFibGVzLAoJCQkJCW9wY1VBVHlwZXMuYWdncmVnYXRlVGVtcGxhdGUsCgkJCQkJb3BjVUFUeXBlcy5hZ2dyZWdhdGVGdW5jdGlvbgoJCQkJXSwKCQkJCW1hcHBpbmc6IFsKCQkJCQl7YWxpYXM6ICJhZGRyZXNzIiwga2V5czogWyJub2RlSWQiLCAieG1sIl0sIHJlbW92ZU5zVGFnOiB0cnVlfSwKCQkJCQl7YWxpYXM6ICJuYW1lIiwga2V5czogWyJicm93c2VOYW1lIiwgIm5hbWUiXX0sCgkJCQkJe2FsaWFzOiAidHlwZSIsIGtleXM6IFsidHlwZURlZmluaXRpb24iLCAieG1sIl0sIHJlbW92ZU5zVGFnOiB0cnVlfQoJCQkJXSwKCQkJCWluY2x1ZGVTdGFydEFkZHJlc3M6IGZhbHNlCgkJCX0sCgkJCShyZXNwb25zZSkgPT4gewoJCQkJdGhpcy5jYWNoZWRBdmFpbGFibGVOb2RlcyA9IHJlc3BvbnNlOwoJCQkJdGhpcy5idWlsZEFkZHJlc3Nlc0FycmF5KGZ1bmN0aW9uIChhZGRyZXNzZXMpIHsKCQkJCQl2YXIgb3JkZXJlZEFkcmVzc2VzID0gW107CgkJCQkJdmFyIGxhc3RWYWxpZEFkZHJlc3MgPSBudWxsOwoKCQkJCQlmb3IgKHZhciBpID0gMDsgaSA8IGFkZHJlc3Nlcy5sZW5ndGg7IGkrKykgewoJCQkJCQl2YXIgYWRkcmVzcyA9IHdlYk1JLmVzY2FwZUhUTUwoYWRkcmVzc2VzW2ldKTsKCQkJCQkJaWYgKGFkZHJlc3MuaW5kZXhPZihzZWxmLm9wdGlvbnMuYWdncmVnYXRlQWRkcmVzc1ByZWZpeCkgPT09IC0xKSB7CgkJCQkJCQlsYXN0VmFsaWRBZGRyZXNzID0gYWRkcmVzczsKCQkJCQkJCW9yZGVyZWRBZHJlc3Nlcy5wdXNoKHsgYWRkcmVzczogYWRkcmVzcyB9KTsKCQkJCQkJfSBlbHNlIHsKCQkJCQkJCW9yZGVyZWRBZHJlc3Nlcy5wdXNoKHsgYWRkcmVzczogbGFzdFZhbGlkQWRkcmVzcywgYWdncmVnYXRlUmVmZXJlbmNlOiBhZGRyZXNzIH0pOwoJCQkJCQl9CgkJCQkJfQoKCQkJCQlzZWxmLmNhY2hlZEF2YWlsYWJsZU5vZGVzOwoKCQkJCQlkYXRhQ2FsbGJhY2sob3JkZXJlZEFkcmVzc2VzKTsKCgkJCQkJc2VsZi5icm93c2VOb2Rlc0JhY2tsb2cuZm9yRWFjaCgoY2FsbGJhY2spID0+IHsKCQkJCQkJY2FsbGJhY2sob3JkZXJlZEFkcmVzc2VzKTsKCQkJCQl9KTsKCQkJCX0sIHJlc3BvbnNlKTsKCQkJfQoJCSk7Cgl9OwoKCS8qKgoJICogUHJvdmlkZXMgdGhlIHRyZWUgdmlldyB3aXRoIHRoZSBkYXRhIHR5cGVzIHRoYXQgYWN0dWFsbHkgYXJlIHNlbGVjdGFibGUgaW5zdGVhZCBvZiBqdXN0IGJyb3dzYWJsZS4KCSAqIEByZXR1cm5zIHthcnJheX0gU2VsZWN0YWJsZSB0eXBlcwoJICovCglUcmVlVmlld0RhdGFzb3VyY2UucHJvdG90eXBlLmdldFNlbGVjdGFibGVUeXBlcyA9IGZ1bmN0aW9uICgpIHsKCQlyZXR1cm4gW3R5cGVzLmJhc2VWYXJpYWJsZSwgdHlwZXMuYWdncmVnYXRlRnVuY3Rpb25dOwoJfTsKCgkvKioKCSAqIEEgbWV0aG9kIHRoYXQgaXMgdXNlZCBieSB7QGxpbmsgVHJlZVZpZXdEYXRhc291cmNlI2ZldGNoQXZhaWxhYmxlTm9kZUFkcmVzc2VzfSBhcyBhIGNhbGxiYWNrLgoJICogQHBhcmFtIHtmdW5jdGlvbn0gZGF0YUNhbGxiYWNrIFRoZSBjYWxsYmFjayBmdW5jdGlvbiB0aGF0IGlzIGludm9rZWQgd2l0aCB0aGUgcHJvY2Vzc2VkIGRhdGEuCgkgKiBAcGFyYW0ge29iamVjdH0gbm9kZVN0cnVjdHVyZSBUaGUgbm9kZSBzdHJ1Y3R1cmUgZGVsaXZlcmVkIGZyb20gdGhlIHNlcnZlci4KCSAqIEByZXR1cm4ge0FycmF5fSBhZGRyZXNzZXMKCSAqLwoJVHJlZVZpZXdEYXRhc291cmNlLnByb3RvdHlwZS5idWlsZEFkZHJlc3Nlc0FycmF5ID0gZnVuY3Rpb24gKGRhdGFDYWxsYmFjaywgbm9kZVN0cnVjdHVyZSkgewoJCXZhciBhZGRyZXNzZXMgPSBbXTsKCgkJZm9yIChlbGVtZW50IGluIG5vZGVTdHJ1Y3R1cmUpIHsKCQkJdmFyIG5vZGVFbnRyeSA9IG5vZGVTdHJ1Y3R1cmVbZWxlbWVudF07CgoJCQlpZiAoY2hlY2tJZ25vcmVkUHJvcGVydGllcyhub2RlRW50cnkpICYmIG9wY1VBVHlwZXMuYWdncmVnYXRlVGVtcGxhdGUuaW5kZXhPZihub2RlRW50cnlbInR5cGUiXSkgPT09IC0xKSB7CgkJCQlhZGRyZXNzZXMucHVzaChub2RlRW50cnlbImFkZHJlc3MiXSk7CgkJCX0KCgkJCWlmIChub2RlRW50cnlbImNoaWxkcyJdICE9PSBudWxsKSB7CgkJCQlhZGRyZXNzZXMgPSBhZGRyZXNzZXMuY29uY2F0KHRoaXMuYnVpbGRBZGRyZXNzZXNBcnJheShudWxsLCBub2RlRW50cnlbImNoaWxkcyJdKSk7CgkJCX0KCQl9CgkJaWYgKHR5cGVvZiBkYXRhQ2FsbGJhY2sgPT09ICJmdW5jdGlvbiIpIHsKCQkJZGF0YUNhbGxiYWNrKGFkZHJlc3Nlcyk7CgkJfQoKCQlyZXR1cm4gYWRkcmVzc2VzOwoJfTsKCgkvKioKCSAqIEEgbWV0aG9kIHRoYXQgcmVxdWVzdHMgdGhlIG5vZGUgc3RydWN0dXJlIGZyb20gdGhlIHNlcnZlcgoJICogQHBhcmFtIHtzdHJpbmd9IHJlZmVyZW5jZUFkZHJlc3MgVGhlIG5vZGUgYWRkcmVzcyB0byBnZXQgdGhlIGRhdGEgZm9yCgkgKiBAcGFyYW0ge0hUTUxFbGVtZW50fSByZWZlcmVuY2VOb2RlIFRoZSBub2RlIHRoZSBkYXRhIGlzIHJlcXVlc3RlZCBmb3IKCSAqLwoJVHJlZVZpZXdEYXRhc291cmNlLnByb3RvdHlwZS5mZXRjaFRyZWVTdHJ1Y3R1cmUgPSBmdW5jdGlvbiAocmVmZXJlbmNlQWRkcmVzcywgcmVmZXJlbmNlTm9kZSkgewoJCXJldHVybiBuZXcgUHJvbWlzZSgocmVzb2x2ZSwgcmVqZWN0KSA9PiB7CgkJCWlmICh3ZWJNSS5nZXRNZXRob2RTdXBwb3J0KCkuaW5kZXhPZigiQnJvd3NlTm9kZXMiKSA9PSAtMSkgewoJCQkJcmV0dXJuOwoJCQl9CgoJCQl2YXIgc3RhcnRBZGRyZXNzID0gdGhpcy5vcHRpb25zLnN0YXJ0QWRkcmVzczsKCgkJCWlmIChyZWZlcmVuY2VBZGRyZXNzKSB7CgkJCQlzdGFydEFkZHJlc3MgPSByZWZlcmVuY2VBZGRyZXNzOwoJCQl9IGVsc2UgewoJCQkJdmFyIGRhdGEgPSBnZXREYXRhRnJvbU5vZGUocmVmZXJlbmNlTm9kZSk7CgkJCQlpZiAoZGF0YSkgewoJCQkJCXN0YXJ0QWRkcmVzcyA9IGRhdGEuYWRkcmVzczsKCQkJCX0KCQkJfQoKCQkJdHJ5IHsKCQkJCXZhciBhZ2dyZWdhdGVGdW5jdGlvbiA9IHN0YXJ0QWRkcmVzcy5pbmRleE9mKCJBR0VOVC5ISVNUT1JZLkFHR1JFR0FURVRFTVBMQVRFUy4iKSA+IC0xOwoJCQl9IGNhdGNoIChlcnIpIHsKCQkJCWNvbnNvbGUubG9nKGVycik7CgkJCX0KCgkJCWlmICh0aGlzLmNhY2hlZEF2YWlsYWJsZU5vZGVzICYmIHRoaXMub3B0aW9ucy5ub2RlQ2FjaGVBY3RpdmUpIHsKCQkJCWxldCByZXNwb25zZSA9IGZpbmRDaGlsZHJlbihzdGFydEFkZHJlc3MsIHRoaXMuY2FjaGVkQXZhaWxhYmxlTm9kZXMpOwoJCQkJY29uc3QgZGF0YSA9IHRoaXMucGFyc2VOb2RlU3RydWN0dXJlLmJpbmQodGhpcywgcmVmZXJlbmNlTm9kZSkocmVzcG9uc2UpOwoJCQkJcmVzb2x2ZShkYXRhLCByZWZlcmVuY2VOb2RlKTsKCQkJfSBlbHNlIHsKCQkJCXdlYk1JLmRhdGEuY2FsbCgKCQkJCQkiQnJvd3NlTm9kZXMiLAoJCQkJCXsKCQkJCQkJc3RhcnRBZGRyZXNzOiBzdGFydEFkZHJlc3MsCgkJCQkJCWVuZExldmVsOiBhZ2dyZWdhdGVGdW5jdGlvbiA/IDIgOiB0aGlzLm9wdGlvbnMubmF2aWdhdGlvbkRlcHRoLAoJCQkJCQl2VHlwZXM6IFsKCQkJCQkJCW9wY1VBVHlwZXMuYmFzZVZhcmlhYmxlRGF0YVR5cGUsCgkJCQkJCQlvcGNVQVR5cGVzLmJhc2VWYXJpYWJsZSwKCQkJCQkJCW9wY1VBVHlwZXMuZm9sZGVyLAoJCQkJCQkJb3BjVUFUeXBlcy5wcm9qZWN0LAoJCQkJCQkJb3BjVUFUeXBlcy5wcm9qZWN0VmFyaWFibGVzLAoJCQkJCQkJb3BjVUFUeXBlcy5hZ2dyZWdhdGVGdW5jdGlvblR5cGUsCgkJCQkJCQlvcGNVQVR5cGVzLmFnZ3JlZ2F0ZVRlbXBsYXRlLAoJCQkJCQkJb3BjVUFUeXBlcy5hZ2dyZWdhdGVGdW5jdGlvbgoJCQkJCQldLAoJCQkJCQltYXBwaW5nOiBbCgkJCQkJCQl7IGFsaWFzOiAiYWRkcmVzcyIsIGtleXM6IFsibm9kZUlkIiwgInhtbCJdLCByZW1vdmVOc1RhZzogdHJ1ZSB9LAoJCQkJCQkJeyBhbGlhczogIm5hbWUiLCBrZXlzOiBbImJyb3dzZU5hbWUiLCAibmFtZSJdIH0sCgkJCQkJCQl7IGFsaWFzOiAidHlwZSIsIGtleXM6IFsidHlwZURlZmluaXRpb24iLCAieG1sIl0sIHJlbW92ZU5zVGFnOiB0cnVlIH0KCQkJCQkJXSwKCQkJCQkJaW5jbHVkZVN0YXJ0QWRkcmVzczogZmFsc2UKCQkJCQl9LAoJCQkJCShyZXNwb25zZSkgPT4gewoJCQkJCQlpZiAocmVzcG9uc2UuZXJyb3IgJiYgdHlwZW9mIHJlc3BvbnNlLmVycm9yID09PSAibnVtYmVyIikgewoJCQkJCQkJcmVqZWN0KHJlc3BvbnNlKTsKCQkJCQkJfSBlbHNlIHsKCQkJCQkJCWNvbnN0IGRhdGEgPSB0aGlzLnBhcnNlTm9kZVN0cnVjdHVyZS5iaW5kKHRoaXMsIHJlZmVyZW5jZU5vZGUpKHJlc3BvbnNlKTsKCQkJCQkJCXJlc29sdmUoZGF0YSwgcmVmZXJlbmNlTm9kZSk7CgkJCQkJCX0KCQkJCQl9CgkJCQkpOwoJCQl9CgkJfSk7Cgl9OwoKCS8qKgoJICogQSBtZXRob2QgdGhhdCBwYXJzZXMgdGhlIGZldGNoZWQgbm9kZSBzdHJ1Y3R1cmUgYW5kIHJlcXVlc3RzIGFkZGl0aW9uYWwgbm9kZSBpbmZvcm1hdGlvbgoJICogQHBhcmFtIHtIVE1MRWxlbWVudH0gcmVmZXJlbmNlTm9kZSBUaGUgbm9kZSB0aGUgZGF0YSBpcyByZXF1ZXN0ZWQgZm9yCgkgKiBAcGFyYW0ge29iamVjdH0gbm9kZVN0cnVjdHVyZSBUaGUgbm9kZSBzdHJ1Y3R1cmUgcmV0dXJuZWQgZnJvbSB0aGUgc2VydmVyCgkgKi8KCVRyZWVWaWV3RGF0YXNvdXJjZS5wcm90b3R5cGUucGFyc2VOb2RlU3RydWN0dXJlID0gZnVuY3Rpb24gKHJlZmVyZW5jZU5vZGUsIG5vZGVTdHJ1Y3R1cmUpIHsKCQlpZiAobm9kZVN0cnVjdHVyZS5lcnJvciAmJiB0eXBlb2Ygbm9kZVN0cnVjdHVyZS5lcnJvciA9PT0gIm51bWJlciIpIHJldHVybjsKCgkJLy8gQ2hlY2sgaWYgdHdvIERCIHNwYWNlcyBleGlzdAoJCXZhciBkYnNwYWNlcyA9IHt9OwoJCWZvciAodmFyIHByb3BlcnR5IGluIG5vZGVTdHJ1Y3R1cmUpIHsKCQkJaWYgKCFpc05hTihwcm9wZXJ0eS5zdWJzdHIoMCwgcHJvcGVydHkuaW5kZXhPZigiLiIpKSkpIGRic3BhY2VzW3Byb3BlcnR5LnN1YnN0cigwLCBwcm9wZXJ0eS5pbmRleE9mKCIuIikpXSA9IHRydWU7CgkJfQoKCQlpZiAoT2JqZWN0LmtleXMoZGJzcGFjZXMpLmxlbmd0aCA+IDEpIHsKCQkJZm9yICh2YXIgcHJvcGVydHkgaW4gbm9kZVN0cnVjdHVyZSkgewoJCQkJbm9kZVN0cnVjdHVyZVtwcm9wZXJ0eV0ubmFtZSA9IG5vZGVTdHJ1Y3R1cmVbcHJvcGVydHldLmFkZHJlc3M7CgkJCX0KCQl9CgoJCXZhciBkYXRhID0gW107CgkJZm9yICh2YXIgZWxlbWVudCBpbiBub2RlU3RydWN0dXJlKSB7CgkJCXZhciBub2RlRW50cnkgPSBub2RlU3RydWN0dXJlW2VsZW1lbnRdOwoJCQl2YXIgZGF0YUlEID0gZ2VuZXJhdGVEYXRhSUQoKTsKCQkJdmFyIGhhc0NoaWxkcmVuID0gbm9kZUVudHJ5LmNoaWxkcyAhPSBudWxsOwoKCQkJdmFyIHByb2plY3RWYXJpYWJsZU5hbWUgPSBmYWxzZTsKCgkJCS8vIFdvcmthcm91bmQgZsODwrxyIGFsdGUgUG9ydGFsdmVyc2lvbmVuLCB3byBCcm93c2VOb2RlcyBub2NoIGtlaW4gInR5cGUiIGxpZWZlcnQKCQkJaWYgKHR5cGVvZiBub2RlRW50cnkudHlwZSA9PSAidW5kZWZpbmVkIikgewoJCQkJaWYgKGhhc0NoaWxkcmVuKSBub2RlRW50cnkudHlwZSA9ICJpPTYxIjsKCQkJCWVsc2Ugbm9kZUVudHJ5LnR5cGUgPSAiaT02MiI7CgkJCX0KCgkJCWlmIChub2RlRW50cnkudHlwZS5pbmRleE9mKCJWYXJpYWJsZVR5cGVzLlBST0pFQ1QiKSA9PT0gMCkgewoJCQkJcHJvamVjdFZhcmlhYmxlTmFtZSA9IG5vZGVFbnRyeS50eXBlOwoJCQl9CgoJCQlzd2l0Y2ggKG5vZGVFbnRyeS50eXBlKSB7CgkJCQljYXNlIG9wY1VBVHlwZXMuYmFzZVZhcmlhYmxlRGF0YVR5cGU6CgkJCQkJZGF0YS5wdXNoKHsKCQkJCQkJbmFtZTogbm9kZUVudHJ5Lm5hbWUsCgkJCQkJCWFkZHJlc3M6IG5vZGVFbnRyeS5hZGRyZXNzLAoJCQkJCQl0eXBlOiB0eXBlcy5iYXNlVmFyaWFibGUsCgkJCQkJCWhhc0NoaWxkcmVuOiBoYXNDaGlsZHJlbiwKCQkJCQkJY2hpbGRyZW46IFtdLAoJCQkJCQlkYXRhSUQ6IGRhdGFJRAoJCQkJCX0pOwoJCQkJCWJyZWFrOwoJCQkJY2FzZSBvcGNVQVR5cGVzLmJhc2VWYXJpYWJsZToKCQkJCQlpZiAoY2hlY2tJZ25vcmVkUHJvcGVydGllcyhub2RlRW50cnkpKSB7CgkJCQkJCWRhdGEucHVzaCh7CgkJCQkJCQluYW1lOiBub2RlRW50cnkubmFtZSwKCQkJCQkJCWFkZHJlc3M6IG5vZGVFbnRyeS5hZGRyZXNzLAoJCQkJCQkJdHlwZTogdHlwZXMuYmFzZVZhcmlhYmxlLAoJCQkJCQkJaGFzQ2hpbGRyZW46IGhhc0NoaWxkcmVuLAoJCQkJCQkJY2hpbGRyZW46IFtdLAoJCQkJCQkJZGF0YUlEOiBkYXRhSUQKCQkJCQkJfSk7CgkJCQkJfQoJCQkJCWJyZWFrOwoJCQkJY2FzZSBwcm9qZWN0VmFyaWFibGVOYW1lOgoJCQkJCWRhdGEucHVzaCh7CgkJCQkJCW5hbWU6IG5vZGVFbnRyeS5uYW1lLAoJCQkJCQlhZGRyZXNzOiBub2RlRW50cnkuYWRkcmVzcywKCQkJCQkJdHlwZTogdHlwZXMucHJvamVjdFZhcmlhYmxlcywKCQkJCQkJaGFzQ2hpbGRyZW46IGhhc0NoaWxkcmVuLAoJCQkJCQljaGlsZHJlbjogW10sCgkJCQkJCWRhdGFJRDogZGF0YUlECgkJCQkJfSk7CgkJCQkJYnJlYWs7CgkJCQljYXNlIG9wY1VBVHlwZXMuZm9sZGVyOgoJCQkJCWRhdGEucHVzaCh7CgkJCQkJCW5hbWU6IG5vZGVFbnRyeS5uYW1lLAoJCQkJCQlhZGRyZXNzOiBub2RlRW50cnkuYWRkcmVzcywKCQkJCQkJdHlwZTogdHlwZXMuZm9sZGVyLAoJCQkJCQloYXNDaGlsZHJlbjogaGFzQ2hpbGRyZW4sCgkJCQkJCWNoaWxkcmVuOiBbXQoJCQkJCX0pOwoJCQkJCWJyZWFrOwoJCQkJY2FzZSBvcGNVQVR5cGVzLmFnZ3JlZ2F0ZVRlbXBsYXRlLnNsaWNlKDcpOgoJCQkJCWRhdGEucHVzaCh7CgkJCQkJCW5hbWU6IG5vZGVFbnRyeS5uYW1lLAoJCQkJCQlhZGRyZXNzOiBub2RlRW50cnkuYWRkcmVzcywKCQkJCQkJdHlwZTogdHlwZXMuZm9sZGVyLAoJCQkJCQloYXNDaGlsZHJlbjogaGFzQ2hpbGRyZW4sCgkJCQkJCWNoaWxkcmVuOiBbXQoJCQkJCX0pOwoJCQkJCWJyZWFrOwoJCQkJY2FzZSBvcGNVQVR5cGVzLmFnZ3JlZ2F0ZUZ1bmN0aW9uOgoJCQkJCWZldGNoQWdncmVnYXRlT3B0aW9ucyhub2RlRW50cnksIGRhdGFJRCwgcmVmZXJlbmNlTm9kZSk7CgkJCQkJaGFzQ2hpbGRyZW4gPSBjaGVja0NoaWxkcmVuKG5vZGVFbnRyeS5jaGlsZHMpOwoJCQkJCWRhdGEucHVzaCh7CgkJCQkJCW5hbWU6IG5vZGVFbnRyeS5uYW1lLAoJCQkJCQlhZGRyZXNzOiBub2RlRW50cnkuYWRkcmVzcywKCQkJCQkJdHlwZTogdHlwZXMuYWdncmVnYXRlRnVuY3Rpb24sCgkJCQkJCWhhc0NoaWxkcmVuOiBoYXNDaGlsZHJlbiwKCQkJCQkJY2hpbGRyZW46IGhhc0NoaWxkcmVuID8gbm9kZUVudHJ5LmNoaWxkcyA6IFtdLAoJCQkJCQlkYXRhSUQ6IGRhdGFJRAoJCQkJCX0pOwoJCQkJCWJyZWFrOwoJCQkJY2FzZSBvcGNVQVR5cGVzLmFnZ3JlZ2F0ZUZ1bmN0aW9uVHlwZToKCQkJCQlicmVhazsKCQkJCWRlZmF1bHQ6CgkJCQkJZGF0YS5wdXNoKHsKCQkJCQkJbmFtZTogbm9kZUVudHJ5Lm5hbWUsCgkJCQkJCWFkZHJlc3M6IG5vZGVFbnRyeS5hZGRyZXNzLAoJCQkJCQl0eXBlOiB0eXBlcy5mb2xkZXIsCgkJCQkJCWhhc0NoaWxkcmVuOiBoYXNDaGlsZHJlbiwKCQkJCQkJY2hpbGRyZW46IFtdCgkJCQkJfSk7CgkJCQkJYnJlYWs7CgkJCX0KCQl9CgoJCS8vIEFzc2lnbiBpY29ucwoJCWRhdGEuZm9yRWFjaCgoaXRlbSkgPT4gewoJCQl2YXIgaWNvbiA9IGRvY3VtZW50LmNyZWF0ZUVsZW1lbnQoImltZyIpOwoJCQlpY29uLnNyYyA9IHRoaXMub3B0aW9ucy5sYW5ndWFnZVByZWZpeCArIHRoaXMub3B0aW9ucy50eXBlSW1hZ2VQYXRoc1tpdGVtLnR5cGVdOwoJCQlpdGVtLmljb24gPSBpY29uOwoJCX0pOwoKCQlyZXR1cm4gZGF0YTsKCX07CgoJLyoqCgkgKiBBIGhlbHBlciBtZXRob2QgdGhhdCBjaGVja3MgaWYgdGhlcmUgYXJlIGNoaWxkcmVuIHRoYXQgYXJlIHdvcnRoIHRvIGJlIGRpc3BsYXllZCBpbiB0aGUgdHJlZS4KCSAqIEBwYXJhbSB7b2JqZWN0fSBjaGlsZHJlbiBUaGUgZWxlbWVudCBvZiB0aGUgbm9kZSBzdHJ1Y3R1cmUgdG8gY2hlY2sgdGhlIGNoaWxkcmVuIGZvcgoJICovCglmdW5jdGlvbiBjaGVja0NoaWxkcmVuKGNoaWxkcmVuKSB7CgkJdmFyIGlnbm9yZWROb2RlcyA9IFsKCQkJe25hbWU6IGFnZ3JlZ2F0ZU9wdGlvbnMub2Zmc2V0VW5pdCwgdHlwZTogb3BjVUFUeXBlcy5iYXNlVmFyaWFibGV9LAoJCQl7bmFtZTogYWdncmVnYXRlT3B0aW9ucy5vZmZzZXRWYWx1ZSwgdHlwZTogb3BjVUFUeXBlcy5iYXNlVmFyaWFibGV9LAoJCQl7bmFtZTogYWdncmVnYXRlT3B0aW9ucy5pbnRlcnZhbFVuaXQsIHR5cGU6IG9wY1VBVHlwZXMuYmFzZVZhcmlhYmxlfSwKCQkJe25hbWU6IGFnZ3JlZ2F0ZU9wdGlvbnMuaW50ZXJ2YWxWYWx1ZSwgdHlwZTogb3BjVUFUeXBlcy5iYXNlVmFyaWFibGV9LAoJCQl7bmFtZTogYWdncmVnYXRlT3B0aW9ucy5zdGVwcGVkLCB0eXBlOiBvcGNVQVR5cGVzLmJhc2VWYXJpYWJsZX0sCgkJCXtuYW1lOiAiKiIsIHR5cGU6IG9wY1VBVHlwZXMuYWdncmVnYXRlRnVuY3Rpb25UeXBlfQoJCV07CgkJdmFyIHZhbGlkQ2hpbGRyZW4gPSBmYWxzZTsKCgkJaWYgKGNoaWxkcmVuICE9PSAib25kZW1hbmQiKSB7CgkJCWZvciAoZWxlbWVudCBpbiBjaGlsZHJlbikgewoJCQkJdmFyIG5vZGVFbnRyeSA9IGNoaWxkcmVuW2VsZW1lbnRdOwoJCQkJdmFyIGlnbm9yZU5vZGUgPSBmYWxzZTsKCQkJCWZvciAodmFyIGkgPSAwOyBpIDwgaWdub3JlZE5vZGVzLmxlbmd0aDsgaSsrKSB7CgkJCQkJaWYgKAoJCQkJCQkobm9kZUVudHJ5Lm5hbWUgPT0gaWdub3JlZE5vZGVzW2ldLm5hbWUgfHwgaWdub3JlZE5vZGVzW2ldLm5hbWUgPT0gIioiKSAmJgoJCQkJCQlub2RlRW50cnkudHlwZSA9PSBpZ25vcmVkTm9kZXNbaV0udHlwZQoJCQkJCSkgewoJCQkJCQlpZ25vcmVOb2RlID0gdHJ1ZTsKCQkJCQkJYnJlYWs7CgkJCQkJfQoJCQkJfQoJCQkJaWYgKCFpZ25vcmVOb2RlKSB7CgkJCQkJdmFsaWRDaGlsZHJlbiA9IHRydWU7CgkJCQkJYnJlYWs7CgkJCQl9CgkJCX0KCQl9CgoJCXJldHVybiB2YWxpZENoaWxkcmVuOwoJfQoKCS8qKgoJICogQSBoZWxwZXIgbWV0aG9kIHRoYXQgY2hlY2tzIHRoZSBiYXNlIHZhcmlhYmxlcyB0aGF0IHNob3VsZCBiZSBpZ25vcmVkIGZvciBkaXNwbGF5aW5nCgkgKiBAcGFyYW0ge29iamVjdH0gbm9kZUVudHJ5IFRoZSBlbGVtZW50IG9mIHRoZSBub2RlIHN0cnVjdHVyZSB0byBiZSBldmVudHVhbGx5IGlnbm9yZWQKCSAqLwoJZnVuY3Rpb24gY2hlY2tJZ25vcmVkUHJvcGVydGllcyhub2RlRW50cnkpIHsKCQl2YXIgaXNOb2RlT3B0aW9uID0gZmFsc2U7CgkJZm9yIChvcHRpb24gaW4gYWdncmVnYXRlT3B0aW9ucykgewoJCQlpZiAoYWdncmVnYXRlT3B0aW9uc1tvcHRpb25dID09IG5vZGVFbnRyeS5uYW1lKSB7CgkJCQlpc05vZGVPcHRpb24gPSB0cnVlOwoJCQkJYnJlYWs7CgkJCX0KCQl9CgkJcmV0dXJuICFpc05vZGVPcHRpb247Cgl9CgoJLyoqCgkgKiBBIGhlbHBlciBtZXRob2QgdGhhdCBnZXRzIHRoZSBvcHRpb25zIGZvciBub2RlcyB0aGF0IHJlcHJlc2VudCBhZ2dyZWdhdGUgZnVuY3Rpb25zCgkgKiBAcGFyYW0ge29iamVjdH0gbm9kZUVudHJ5IFRoZSBlbGVtZW50IG9mIHRoZSBub2RlIHN0cnVjdHVyZSB0aGF0IGlzIGFuIGFnZ3JlZ2F0ZSBmdW5jdGlvbgoJICovCglmdW5jdGlvbiBmZXRjaEFnZ3JlZ2F0ZU9wdGlvbnMobm9kZUVudHJ5LCBkYXRhSUQsIHJlZmVyZW5jZU5vZGUpIHsKCQl2YXIgcmVsYXRlZE5vZGVBZGRyZXNzID0gZ2V0UmVsYXRlZE5vZGVBZGRyZXNzKHJlZmVyZW5jZU5vZGUpOwoJCXZhciBhZ2dyZWdhdGVBZGRyZXNzID0gbm9kZUVudHJ5LmFkZHJlc3M7CgoJCXZhciBhZ2dyZWdhdGVUeXBlOwoJCXdlYk1JLmRhdGEuY2FsbCgKCQkJIkJyb3dzZU5vZGVzIiwKCQkJewoJCQkJc3RhcnRBZGRyZXNzOiBub2RlRW50cnkuYWRkcmVzcywKCQkJCWVuZExldmVsOiAxLAoJCQkJdlR5cGVzOiBbb3BjVUFUeXBlcy5hZ2dyZWdhdGVGdW5jdGlvblR5cGVdLAoJCQkJbWFwcGluZzogWwoJCQkJCXthbGlhczogImFkZHJlc3MiLCBrZXlzOiBbIm5vZGVJZCIsICJ4bWwiXSwgcmVtb3ZlTnNUYWc6IHRydWV9LAoJCQkJCXthbGlhczogIm5hbWUiLCBrZXlzOiBbImJyb3dzZU5hbWUiLCAibmFtZSJdfSwKCQkJCQl7YWxpYXM6ICJ0eXBlIiwga2V5czogWyJ0eXBlRGVmaW5pdGlvbiIsICJ4bWwiXSwgcmVtb3ZlTnNUYWc6IHRydWV9CgkJCQldLAoJCQkJaW5jbHVkZVN0YXJ0QWRkcmVzczogZmFsc2UKCQkJfSwKCQkJZnVuY3Rpb24gKGUpIHsKCQkJCWFnZ3JlZ2F0ZVR5cGUgPSBlW09iamVjdC5rZXlzKGUpWzBdXS5uYW1lOwoJCQkJd2ViTUkuZGF0YS5yZWFkKAoJCQkJCVsKCQkJCQkJYWdncmVnYXRlQWRkcmVzcyArICIuIiArIGFnZ3JlZ2F0ZU9wdGlvbnMuaW50ZXJ2YWxWYWx1ZSwKCQkJCQkJYWdncmVnYXRlQWRkcmVzcyArICIuIiArIGFnZ3JlZ2F0ZU9wdGlvbnMuaW50ZXJ2YWxVbml0LAoJCQkJCQlhZ2dyZWdhdGVBZGRyZXNzICsgIi4iICsgYWdncmVnYXRlT3B0aW9ucy5vZmZzZXRWYWx1ZSwKCQkJCQkJYWdncmVnYXRlQWRkcmVzcyArICIuIiArIGFnZ3JlZ2F0ZU9wdGlvbnMub2Zmc2V0VW5pdAoJCQkJCV0sCgkJCQkJZnVuY3Rpb24gKGRhdGEpIHsKCQkJCQkJdmFyIGFnZ3JlZ2F0ZURhdGEgPSB7YWdncmVnYXRlSW5mbzoge319OwoJCQkJCQlhZ2dyZWdhdGVEYXRhLmFnZ3JlZ2F0ZUluZm9bYWdncmVnYXRlT3B0aW9ucy5pbnRlcnZhbFZhbHVlXSA9IGRhdGFbMF0udmFsdWU7CgkJCQkJCWFnZ3JlZ2F0ZURhdGEuYWdncmVnYXRlSW5mb1thZ2dyZWdhdGVPcHRpb25zLmludGVydmFsVW5pdF0gPSBkYXRhWzFdLnZhbHVlOwoJCQkJCQlhZ2dyZWdhdGVEYXRhLmFnZ3JlZ2F0ZUluZm9bYWdncmVnYXRlT3B0aW9ucy5vZmZzZXRWYWx1ZV0gPSBkYXRhWzJdLnZhbHVlOwoJCQkJCQlhZ2dyZWdhdGVEYXRhLmFnZ3JlZ2F0ZUluZm9bYWdncmVnYXRlT3B0aW9ucy5vZmZzZXRVbml0XSA9IGRhdGFbM10udmFsdWU7CgkJCQkJCWFnZ3JlZ2F0ZURhdGEuYWdncmVnYXRlSW5mb1thZ2dyZWdhdGVPcHRpb25zLmFnZ3JlZ2F0ZVR5cGVdID0gYWdncmVnYXRlVHlwZTsKCQkJCQkJYWdncmVnYXRlRGF0YS5hZ2dyZWdhdGVJbmZvW2FnZ3JlZ2F0ZU9wdGlvbnMucmVsYXRlZE5vZGVBZGRyZXNzXSA9IHJlbGF0ZWROb2RlQWRkcmVzczsKCQkJCQkJYWRkRGF0YVRvSXRlbShyZWZlcmVuY2VOb2RlLnBhcmVudE5vZGUucXVlcnlTZWxlY3RvcigiZGl2W2RhdGEtaWQ9JyIgKyBkYXRhSUQgKyAiJ10iKSwgYWdncmVnYXRlRGF0YSk7CgkJCQkJfQoJCQkJKTsKCQkJfQoJCSk7Cgl9CgoJLyoqCgkgKiBBIGhlbHBlciBtZXRob2QgdGhhdCBnZW5lcmF0ZXMgYSB1bmlxdWUgZGF0YS1pZAoJICogQHJldHVybiB7c3RyaW5nfSBpZCBBIHVuaXF1ZSBkYXRhIGlkCgkgKi8KCWZ1bmN0aW9uIGdlbmVyYXRlRGF0YUlEKCkgewoJCXZhciBTNCA9IGZ1bmN0aW9uICgpIHsKCQkJcmV0dXJuICgoKDEgKyBNYXRoLnJhbmRvbSgpKSAqIDB4MTAwMDApIHwgMCkudG9TdHJpbmcoMTYpLnN1YnN0cmluZygxKTsKCQl9OwoJCXJldHVybiBTNCgpICsgUzQoKSArICItIiArIFM0KCkgKyAiLSIgKyBTNCgpICsgIi0iICsgUzQoKSArICItIiArIFM0KCkgKyBTNCgpICsgUzQoKTsKCX0KCglpZiAoIXdpbmRvdy50cmVlVmlld0RhdGFzb3VyY2VzKSB7CgkJd2luZG93LnRyZWVWaWV3RGF0YXNvdXJjZXMgPSB7fTsKCX0KCgl3aW5kb3cudHJlZVZpZXdEYXRhc291cmNlc1tkYXRhU291cmNlTmFtZV0gPSBUcmVlVmlld0RhdGFzb3VyY2U7Cn0pKHdpbmRvdywgZG9jdW1lbnQpOwo=</uax:ByteString>
+		</Value>
+	</UAVariable>
+	<UAVariable NodeId="ns=1;s=SYSTEM.LIBRARY.ATVISE.RESOURCES/treeView/datasources/scope.js" BrowseName="1:scope.js" DataType="ByteString" AccessLevel="7" UserAccessLevel="7" Historizing="true">
+		<DisplayName Locale="en">scope.js</DisplayName>
+		<Description Locale="en">scope.js</Description>
+		<References>
+			<Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=SYSTEM.LIBRARY.ATVISE.RESOURCES/treeView/datasources</Reference>
+			<Reference ReferenceType="HasTypeDefinition">ResourceJavascriptType</Reference>
+		</References>
+		<Value>
+			<uax:ByteString>KCgpID0+IHsKCS8vIEhlcmUgdGhlIHNhbWUgbmFtZSBzaG91bGQgYmUgdXNlZCBhcyBmb3IgdGhlIHJlc3BlY3RpdmUgaGlnaGNoYXJ0cyBkYXRhc291cmNlCgljb25zdCBkYXRhU291cmNlTmFtZSA9ICJzY29wZSI7CgoJaWYgKCF3aW5kb3cudHJlZVZpZXdEYXRhc291cmNlcykgewoJCXdpbmRvdy50cmVlVmlld0RhdGFzb3VyY2VzID0ge307Cgl9CgoJLy8gSWYgdGhlIGNsYXNzIGZvciB0aGlzIGRhdGFzb3VyY2UgaGFzIGFscmVhZHkgYmVlbiBjcmVhdGVkLCBhYm9ydC4KCWlmICh3aW5kb3cudHJlZVZpZXdEYXRhc291cmNlc1tkYXRhU291cmNlTmFtZV0pIHJldHVybjsKCgkvLyBOT1RFOiBIZXJlIGNvbWVzIHRoZSBTY29wZSBQcm94eSBiYXNlZCBvbjoKCS8vIFRoZSBIaWdoY2hhcnRzIERhdGFzb3VyY2UgZm9yIFNjb3BlCgkvLyBBbHNvIGluY2x1ZGVzIHRoZSBtb2R1bGVzIFNjb3BlIFNESyAodjEuMC4zKSwgU2NvcGUgUHJveHkgKHYxLjAuMykKCgkvKioKCSogRm9ybS11cmxlbmNvZGVzIGFuIG9iamVjdCBzbyBpdCBjYW4gYmUgc2VudCB2aWEgQUpBWC4KCSogQHBhcmFtIHt7fX0gb2JqIFRoZSBvYmplY3QgdG8gZW5jb2RlLgoJKiBAcGFyYW0ge3N0cmluZ30gW3ByZWZpeF0gVXNlZCBpbnRlcm5hbGx5IHdoZW4gZW5jb2RpbmcgbXVsdGktbGV2ZWwgb2JqZWN0cy4KCSogQHJldHVybiB7c3RyaW5nfSBUaGUgc2VyaWFsaXplZCBvYmplY3QuCgkqLwoJZnVuY3Rpb24gc2VyaWFsaXplKG9iaiwgcHJlZml4KSB7Cgljb25zdCBwYXJ0cyA9IFtdOwoKCS8vIGVzbGludC1kaXNhYmxlLW5leHQtbGluZSBuby1yZXN0cmljdGVkLXN5bnRheAoJZm9yIChjb25zdCBwIGluIG9iaikgewoJICBpZiAoT2JqZWN0LnByb3RvdHlwZS5oYXNPd25Qcm9wZXJ0eS5jYWxsKG9iaiwgcCkpIHsKCQljb25zdCBrID0gcHJlZml4ID8gIiIuY29uY2F0KHByZWZpeCwgIlsiKS5jb25jYXQocCwgIl0iKSA6IHA7CgkJY29uc3QgdiA9IG9ialtwXTsKCQlwYXJ0cy5wdXNoKHR5cGVvZiB2ID09PSAnb2JqZWN0JyA/IHNlcmlhbGl6ZSh2LCBrKSA6ICIiLmNvbmNhdChlbmNvZGVVUklDb21wb25lbnQoayksICI9IikuY29uY2F0KGVuY29kZVVSSUNvbXBvbmVudCh2KSkpOwoJICB9Cgl9CglyZXR1cm4gcGFydHMuam9pbignJicpOwoJfQoKCS8qKgoJKiBTdGFydCB0aGUgcHJveHkgYnkgZ2l2aW5nIGl0IGEgU2NvcGUgaG9zdCBhZGRyZXNzLgoJKiBAcGFyYW0ge3N0cmluZ30gaG9zdCBUaGUgc2NvcGUgYWRkcmVzcyB0byBwcm94eS4KCSogQHBhcmFtIHtudW1iZXJ9IFtwb3J0XSBUaGUgcG9ydCB0byBwcm94eSBkZWZhdWx0cyB0byBjdXJyZW50IGxvY2F0aW9uIHBvcnQuCgkqIEBleGFtcGxlIDxjYXB0aW9uPkJhc2ljIHVzYWdlPC9jYXB0aW9uPgoJKiBTY29wZVByb3h5LnVzZSgnMTAuMjAwLjMwMC40MDAnKTsKCSovCglmdW5jdGlvbiB1c2UoaG9zdCkgewoJbGV0IHBvcnQgPSBhcmd1bWVudHMubGVuZ3RoID4gMSAmJiBhcmd1bWVudHNbMV0gIT09IHVuZGVmaW5lZCA/IGFyZ3VtZW50c1sxXSA6IGxvY2F0aW9uLnBvcnQ7Cgljb25zdCBvcmlnaW5hbCA9IHdlYk1JLmRhdGEuY2FsbDsKCXZhciBwcm90b2NvbCA9ICIvLyI7CglpZiAoaG9zdCAmJiBob3N0Lmxlbmd0aCA+IDApIHsKCSAgaG9zdCA9IGhvc3QudG9Mb3dlckNhc2UoKTsKCSAgaWYgKGhvc3QuaW5kZXhPZigiaHR0cDovLyIpID4gMCB8fCBob3N0LmluZGV4T2YoImh0dHBzOi8vIikgPiAwKSB7CgkJdGhyb3cgbmV3IEVycm9yKCdJbnZhbGlkIGhvc3Qgc3BlY2lmaWVkIGZvciBzY29wZSBwcm94eSBmdW5jdGlvbi4nKTsKCSAgfQoJICBpZiAoaG9zdC5pbmRleE9mKCJodHRwOi8vIikgPT0gMCkgewoJCXByb3RvY29sID0gImh0dHA6Ly8iOwoJCWhvc3QgPSBob3N0LnJlcGxhY2UocHJvdG9jb2wsICIiKTsKCSAgfSBlbHNlIGlmIChob3N0LmluZGV4T2YoImh0dHBzOi8vIikgPT0gMCkgewoJCXByb3RvY29sID0gImh0dHBzOi8vIjsKCQlob3N0ID0gaG9zdC5yZXBsYWNlKHByb3RvY29sLCAiIik7CgkgIH0gZWxzZSBpZiAoaG9zdC5pbmRleE9mKCIvLyIpID09IDApIHsKCQlob3N0ID0gaG9zdC5yZXBsYWNlKHByb3RvY29sLCAiIik7CgkgIH0KCSAgaWYgKGhvc3QuaW5kZXhPZigiOiIpID4gLTEpIHsKCQlwb3J0ID0gaG9zdC5zcGxpdCgiOiIpWzFdOwoJCWhvc3QgPSBob3N0LnNwbGl0KCI6IilbMF07CgkJaWYgKHBvcnQubWF0Y2goL1thLXosLyxcXFxcXS9nKSkgewoJCSAgdGhyb3cgbmV3IEVycm9yKCdJbnZhbGlkIHBvcnQgc3BlY2lmaWVkIGZvciBzY29wZSBwcm94eSBmdW5jdGlvbi4nKTsKCQl9CgkgIH0KCX0gZWxzZSB7CgkgIHJldHVybjsgLy8gcmV0dXJuIG9uIGludmFsaWQgaG9zdAoJfQoJd2ViTUkuZGF0YS5jYWxsID0gZnVuY3Rpb24gY2FsbChvcmlnaW5hbFBhdGgsIG9yaWdpbmFsT3B0aW9ucywgY2FsbGJhY2spIHsKCSAgdmFyIF90aGlzID0gdGhpczsKCSAgY29uc3QgcGF0aCA9IG9yaWdpbmFsUGF0aDsKCSAgY29uc3Qgb3B0aW9ucyA9IG9yaWdpbmFsT3B0aW9uczsKCSAgY29uc3QgbSA9IHBhdGgubWF0Y2goL15tMSguKykvKTsgLy8gc2NvcGVfCgoJICBjb25zdCBzYW1lUHJvdG9jb2wgPSBwcm90b2NvbCA9PT0gIi8vIiB8fCBwcm90b2NvbC5zdGFydHNXaXRoKGxvY2F0aW9uLnByb3RvY29sKTsKCSAgY29uc3Qgc2FtZU9yaWdpbiA9IHNhbWVQcm90b2NvbCAmJiBob3N0ID09PSBsb2NhdGlvbi5ob3N0bmFtZSAmJiBwb3J0ID09PSBsb2NhdGlvbi5wb3J0OwoJICBpZiAobSAhPT0gbnVsbCAmJiAhc2FtZU9yaWdpbikgewoJCWNvbnN0IHhodHRwID0gbmV3IFhNTEh0dHBSZXF1ZXN0KCk7CgkJY29uc3QgYWRkcmVzcyA9IHByb3RvY29sLmNvbmNhdChob3N0LCAiOiIsIHBvcnQpOwoJCXhodHRwLm9ucmVhZHlzdGF0ZWNoYW5nZSA9ICgpID0+IHsKCQkgIGlmICh4aHR0cC5yZWFkeVN0YXRlID09PSA0KSB7CgkJCWNhbGxiYWNrLmNhbGwodGhpcywgeGh0dHAuc3RhdHVzID09PSAyMDAgPyBKU09OLnBhcnNlKHhodHRwLnJlc3BvbnNlVGV4dCkgOiB7CgkJCSAgZXJyb3I6IDEsCgkJCSAgZXJyb3JzdHJpbmc6ICJTY29wZVByb3h5IGNvdWxkIG5vdCBjb25uZWN0IHRvICIuY29uY2F0KGFkZHJlc3MpCgkJCX0pOwoJCSAgfQoJCX07CgkJeGh0dHAub3BlbignUE9TVCcsIGFkZHJlc3MuY29uY2F0KCIvd2ViTUkvPyIsIG1bMF0pLCB0cnVlKTsKCQl4aHR0cC5zZXRSZXF1ZXN0SGVhZGVyKCdDb250ZW50LXR5cGUnLCAnYXBwbGljYXRpb24veC13d3ctZm9ybS11cmxlbmNvZGVkJyk7CgkJeGh0dHAuc2VuZChzZXJpYWxpemUob3B0aW9ucykpOwoJICB9IGVsc2UgewoJCS8vIE5vIHByb3h5IG5lZWRlZAoJCW9yaWdpbmFsLmFwcGx5KHRoaXMsIFtwYXRoLCBvcHRpb25zLCBmdW5jdGlvbiAoKSB7CgkJICBmb3IgKHZhciBfbGVuID0gYXJndW1lbnRzLmxlbmd0aCwgYXJncyA9IG5ldyBBcnJheShfbGVuKSwgX2tleSA9IDA7IF9rZXkgPCBfbGVuOyBfa2V5KyspIHsKCQkJYXJnc1tfa2V5XSA9IGFyZ3VtZW50c1tfa2V5XTsKCQkgIH0KCQkgIGNhbGxiYWNrLmFwcGx5KF90aGlzLCBhcmdzKTsKCQl9XSk7CgkgIH0KCX07Cgl9CgoJLy8gTk9URTogRW5kIG9mIHRoZSBTY29wZSBQcm94eQoKCS8vIFNjb3BlIGhlbHBlciBmdW5jdGlvbnMKCgkvKioKCSogR2V0IGFsbCB7QGxpbmsgUmVjb3JkZXJ9cyBhdmFpbGFibGUgb24gYSBzY29wZSBzZXJ2ZXIuCgkqLwoKCglmdW5jdGlvbiBnZXRSZWNvcmRlcnMoY2FsbGJhY2spIHsKCQlyZXR1cm4gcHJvbWlzaWZ5KGNhbGxiYWNrLCAoYykgPT4KCQkgIHdlYk1JLmRhdGEuY2FsbCgnbTFzY29wZV9nZXRyZWNvcmRlcicsIHt9LCAoZSkgPT4gZXZlbnRDYWxsYmFjayhlLCBjKSkKCQkpOwoJfQoKCS8qKgoJKiBHZXQgYWxsIHtAbGluayBDaGFubmVsfXMgYXNzb2NpYXRlZCB3aXRoIGEgUmVjb3JkZXIuCgkqIFdpdGggdGhlIHJlc3VsdCBvZiB0aGlzIGZ1bmN0aW9uIGl0IGlzIHBvc3NpYmxlIHRvIGRpc3BsYXkgdGhlIHtAbGluayBDaGFubmVsfXMgYSBSZWNvcmRlciBoYXMuCgkqIEBwYXJhbSByZWNvcmRlciBUaGUgbmFtZSBvZiBhbiBleGlzdGluZyB7QGxpbmsgUmVjb3JkZXJ9LgoJKi8KCgoJZnVuY3Rpb24gZ2V0Q2hhbm5lbHMocmVjb3JkZXIsIGNhbGxiYWNrKSB7CgkJcmV0dXJuIHByb21pc2lmeShjYWxsYmFjaywgKGMpID0+CgkJICB3ZWJNSS5kYXRhLmNhbGwoJ20xc2NvcGVfZ2V0Y2hhbm5lbCcsIHsgcmVjbmFtZTogcmVjb3JkZXIgfSwgKGUpID0+CgkJCWV2ZW50Q2FsbGJhY2soZSwgYykKCQkgICkKCQkpOwoJfQoKCS8qKgoJKiBAcGFyYW0gY2FsbGJhY2sgd2hlbiBjYWxsYmFjayB3YXMgc3BlY2lmaWVkIHRoZSByZXR1cm4gdmFsdWUgd2lsbCBiZSB0aGUgcmV0dXJuIHZhbHVlIG9mIHRoZSBjYWxsYmFjayBmdW5jdGlvbgoJKiBAcGFyYW0gZm4gd2hlbiBubyBjYWxsYmFjayB3YXMgc3BlY2lmaWVkIHRoZSByZXR1cm4gdmFsdWUgd2lsbCBiZSBhIHtAbGluayBQcm9taXNlfQoJKi8KCWZ1bmN0aW9uIHByb21pc2lmeShjYWxsYmFjaywgZm4pIHsKCgkJaWYgKGNhbGxiYWNrKSB7CgkJICByZXR1cm4gZm4oY2FsbGJhY2spOwoJCX0KCgkJcmV0dXJuIG5ldyBQcm9taXNlKChyZXNvbHZlLCByZWplY3QpID0+CgkJICBmbigoZXJyb3IsIHJlc3VsdCkgPT4gKGVycm9yID8gcmVqZWN0KGVycm9yKSA6IHJlc29sdmUocmVzdWx0KSkpCgkJKTsKCX0KCgkvKioKCSogQ3JlYXRlcyBhIG5vZGUuanMtc3R5bGUgY2FsbGJhY2sgZnJvbSBhIHdlYk1pLmRhdGEtZXZlbnQuCgkqIEBwYXJhbSBlIFRoZSBvcmlnaW5hbCBldmVudC4KCSogQHBhcmFtIGNhbGxiYWNrIFRoZSBmdW5jdGlvbiB0byBjYWxsIHdpdGguCgkqIEBwYXJhbSBbb3B0aW9uc10gT3B0aW9ucyB0byBub3JtYWxpemUgdGhlIGNhbGxiYWNrIGFyZ3VtZW50cy4KCSogQHBhcmFtIG9wdGlvbnMuYXJyYXlBcmd1bWVudCBOb3JtYWxpemUgdGhlIGNhbGxiYWNrIHJlc3VsdHMgaWYgYSBub24tYXJyYXkgaXMgcGFzc2VkIHRvIHRoaXMgYXJndW1lbnQuCgkqLwoJZnVuY3Rpb24gZXZlbnRDYWxsYmFjaygKCQllLAoJCWNhbGxiYWNrLAoJCW9wdGlvbnMKCQkpIHsKCQlpZiAob3B0aW9ucyAmJiBvcHRpb25zLmFycmF5QXJndW1lbnQgJiYgIWlzQXJyYXkob3B0aW9ucy5hcnJheUFyZ3VtZW50KSAmJiBlLnJlc3VsdCkgewoJCSAgLy8gZXNsaW50LWRpc2FibGUtbmV4dC1saW5lIG5vLXBhcmFtLXJlYXNzaWduCgkJICBlID0gZS5yZXN1bHRbMF07CgkJfQoKCQlsZXQgZXJyb3IgPSBudWxsOwoKCQlpZiAoZS5lcnJvciA9PT0gdW5kZWZpbmVkKSB7CgkJICAvLyBhcnJheSByZXN1bHQgb2JqZWN0CgkJICBmb3IgKGxldCBpID0gMDsgaSA8IChlLnJlc3VsdCApLmxlbmd0aDsgaSsrKSB7CgkJCWNvbnN0IHIgPSBlLnJlc3VsdFtpXTsKCQkJbGV0IG91dCA9IHIucmVzdWx0OwoKCQkJaWYgKHIuZXJyb3IgPiAwKSB7CgkJCSAgaWYgKGVycm9yID09PSBudWxsKSB7CgkJCQlvdXQgPSBlcnJvciA9IG5ldyBFcnJvcihyLmVycm9yc3RyaW5nKTsKCQkJICB9IGVsc2UgewoJCQkJb3V0ID0gbmV3IEVycm9yKHIuZXJyb3JzdHJpbmcpOwoKCQkJCWVycm9yID0gbmV3IFNjb3BlTXVsdGlwbGVFcnJvcihlcnJvcik7CgkJCQllcnJvci5hZGRFcnJvcihvdXQpOwoJCQkgIH0KCQkJfQoKCQkJLy8gZXNsaW50LWRpc2FibGUtbmV4dC1saW5lIG5vLXBhcmFtLXJlYXNzaWduCgkJCWUucmVzdWx0W2ldID0gb3V0OwoJCSAgfQoJCX0gZWxzZSBpZiAoZS5lcnJvciA+IDApIHsKCQkgIGVycm9yID0gbmV3IEVycm9yKChlICkuZXJyb3JzdHJpbmcpOwoJCX0KCgkJY2FsbGJhY2soZXJyb3IsIChlLnJlc3VsdCB8fCBlKSApOwoJfQoKCS8vIFNjb3BlIGhlbHBlciBmdW5jdGlvbnMgRW5kCgoJdmFyIHR5cGVzID0gewoJCXJlY29yZGVyOiAiZm9sZGVyIiwKCQljaGFubmVsOiAiY2hhbm5lbCIKCX07CgoJZnVuY3Rpb24gVHJlZVZpZXdEYXRhc291cmNlU2NvcGUob3B0aW9ucykgewoJCWNvbnN0IHNlbGYgPSB0aGlzOwoKCQlzZWxmLm9wdGlvbnMgPSB7CgkJCWhvc3Q6IG9wdGlvbnMuaG9zdCB8fCAiIiwKCQkJc3RhcnRBZGRyZXNzOiBvcHRpb25zLnN0YXJ0QWRkcmVzcyB8fCAiIiwKCQkJc2VsZWN0YWJsZVR5cGVzOiBbdHlwZXMuY2hhbm5lbF0sCgkJCXR5cGVJbWFnZVBhdGhzOiB7CgkJCQljaGFubmVsOiAiL3RyZWVWaWV3L2ljb25zL2Jhc2VWYXJpYWJsZS5zdmciCgkJCX0KCQl9OwoKCQl1c2Uoc2VsZi5vcHRpb25zLmhvc3QpOwoJfQoKCS8qKgoJICogUHJvdmlkZXMgdGhlIHRyZWUgdmlldyB3aXRoIHRoZSBkYXRhIHR5cGVzIHRoYXQgYWN0dWFsbHkgYXJlIHNlbGVjdGFibGUgaW5zdGVhZCBvZiBqdXN0IGJyb3dzYWJsZS4KCSAqIEByZXR1cm5zIHthcnJheX0gU2VsZWN0YWJsZSB0eXBlcwoJICovCglUcmVlVmlld0RhdGFzb3VyY2VTY29wZS5wcm90b3R5cGUuZ2V0U2VsZWN0YWJsZVR5cGVzID0gZnVuY3Rpb24gKCkgewoJCXJldHVybiB0aGlzLm9wdGlvbnMuc2VsZWN0YWJsZVR5cGVzOwoJfTsKCgkvKioKCSAqIEEgbWV0aG9kIHRoYXQgcmVxdWVzdHMgdGhlIG5vZGUgc3RydWN0dXJlIGZyb20gdGhlIHNlcnZlcgoJICovCglUcmVlVmlld0RhdGFzb3VyY2VTY29wZS5wcm90b3R5cGUuZmV0Y2hUcmVlU3RydWN0dXJlID0gYXN5bmMgZnVuY3Rpb24gKG5vZGUpIHsKCQlpZiAoIW5vZGUpIHsKCQkJY29uc3QgcmVjb3JkZXJzID0gYXdhaXQgZ2V0UmVjb3JkZXJzKCk7CgoJCQlyZXR1cm4gcmVjb3JkZXJzLm1hcCgocmVjb3JkZXIpID0+ICh7CgkJCQluYW1lOiByZWNvcmRlci5yZWNuYW1lLAoJCQkJaWQ6IHJlY29yZGVyLnJlY25hbWUsCgkJCQl0eXBlOiB0eXBlcy5yZWNvcmRlciwKCQkJCWljb246IHRoaXMub3B0aW9ucy50eXBlSW1hZ2VQYXRocy5yZWNvcmRlciwKCQkJCWhhc0NoaWxkcmVuOiB0cnVlLAoJCQkJYWRkcmVzczogcmVjb3JkZXIucmVjbmFtZQoJCQl9KSk7CgkJfQoKCQlpZiAobm9kZS5jaGFubmVsKSByZXR1cm4gW107CgoJCWNvbnN0IGNoYW5uZWxzID0gYXdhaXQgZ2V0Q2hhbm5lbHMobm9kZSk7CgoJCXJldHVybiBjaGFubmVscy5tYXAoKGNoYW5uZWwpID0+ICh7CgkJCWlkOiB0aGlzLnN0cmluZ2lmeUNoYW5uZWxBZGRyZXNzKG5vZGUsIGNoYW5uZWwubmFtZSksCgkJCWFkZHJlc3M6IHRoaXMuc3RyaW5naWZ5Q2hhbm5lbEFkZHJlc3Mobm9kZSwgY2hhbm5lbC5uYW1lKSwKCQkJbmFtZTogY2hhbm5lbC5uYW1lLAoJCQl0eXBlOiB0eXBlcy5jaGFubmVsLAoJCQlpY29uOiB0aGlzLm9wdGlvbnMudHlwZUltYWdlUGF0aHMuY2hhbm5lbAoJCX0pKTsKCX07CgoJLyoqCgkgKiBBIG1ldGhvZCB0aGF0IGZldGNoZXMgYWxsIG5vZGVzIHRoYXQgY2FuIGJlIGRpc3BsYXllZCBpbiB0aGUgdHJlZVZpZXcgYW5kIGJ1aWxkcyBhbiBhcnJheSBmb3IgdHJlZSBmaWx0ZXJpbmcuCgkgKiBAcGFyYW0ge2Z1bmN0aW9ufSBkYXRhQ2FsbGJhY2sgQSBjYWxsYmFjayBmdW5jdGlvbiB0aGF0IGlzIGludm9rZWQgd2l0aCBhbGwgdGhlIGF2YWlsYWJsZSBub2Rlcy4KCSAqLwoJVHJlZVZpZXdEYXRhc291cmNlU2NvcGUucHJvdG90eXBlLmZldGNoQXZhaWxhYmxlTm9kZUFkcmVzc2VzID0gYXN5bmMgZnVuY3Rpb24gKGRhdGFDYWxsYmFjaykgewoJCWNvbnN0IHNlbGYgPSB0aGlzOwoJCWNvbnN0IGFkZHJlc3NMaXN0ID0gW107CgkJY29uc3QgcmVjb3JkZXJzID0gYXdhaXQgc2VsZi5mZXRjaFRyZWVTdHJ1Y3R1cmUoKTsKCgkJZm9yIChjb25zdCByZWNvcmRlciBvZiByZWNvcmRlcnMpIHsKCQkJYWRkcmVzc0xpc3QucHVzaChyZWNvcmRlci5pZCk7CgkJfQoKCQlmb3IgKGNvbnN0IHJlY29yZGVyIG9mIHJlY29yZGVycykgewoJCQlsZXQgY2hhbm5lbHMgPSBbXTsKCgkJCXRyeSB7CgkJCQljaGFubmVscyA9IGF3YWl0IHNlbGYuZmV0Y2hUcmVlU3RydWN0dXJlKHJlY29yZGVyLmlkKTsKCQkJfSBjYXRjaCAoZXJyKSB7CgkJCQkvLyBTb21lIHJlY29yZGVycyB3aWxsIHRocm93IGFuICdJbnZhbGlkIFN0YXRlJyBlcnJvci4KCQkJCWNvbnRpbnVlOwoJCQl9CgoJCQlmb3IgKGNvbnN0IGNoYW5uZWwgb2YgY2hhbm5lbHMpIHsKCQkJCWFkZHJlc3NMaXN0LnB1c2goY2hhbm5lbC5pZCk7CgkJCX0KCQl9CgoJCS8vIFRyYW5zZm9ybSB0byBleHBlY3RlZCBzdHJ1Y3R1cmUKCQlsZXQgb3JkZXJlZEFkcmVzc2VzID0gYWRkcmVzc0xpc3QubWFwKChhZGRyZXNzKSA9PiB7CgkJCXJldHVybiB7IGFkZHJlc3M6IGFkZHJlc3MgfTsKCQl9KTsKCgkJZGF0YUNhbGxiYWNrKG9yZGVyZWRBZHJlc3Nlcyk7Cgl9OwoKCS8qKiBAcHJpdmF0ZSAqLwoJVHJlZVZpZXdEYXRhc291cmNlU2NvcGUucHJvdG90eXBlLnN0cmluZ2lmeUNoYW5uZWxBZGRyZXNzID0gZnVuY3Rpb24gKHJlY29yZGVyLCBjaGFubmVsKSB7CgkJcmV0dXJuIGAke3JlY29yZGVyfToke2NoYW5uZWx9YDsKCX07CgoJLy8gUmVnaXN0ZXIgY2xhc3MgZ2xvYmFsbHkKCXdpbmRvdy50cmVlVmlld0RhdGFzb3VyY2VzW2RhdGFTb3VyY2VOYW1lXSA9IFRyZWVWaWV3RGF0YXNvdXJjZVNjb3BlOwp9KSgpOwo=</uax:ByteString>
+		</Value>
+	</UAVariable>
+	<UAVariable NodeId="ns=1;s=SYSTEM.LIBRARY.ATVISE.RESOURCES/treeView/datasources/template.js" BrowseName="1:template.js" DataType="ByteString" AccessLevel="7" UserAccessLevel="7" Historizing="true">
+		<DisplayName Locale="en">template.js</DisplayName>
+		<Description Locale="en">template.js</Description>
+		<References>
+			<Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=SYSTEM.LIBRARY.ATVISE.RESOURCES/treeView/datasources</Reference>
+			<Reference ReferenceType="HasTypeDefinition">ResourceJavascriptType</Reference>
+		</References>
+		<Value>
+			<uax:ByteString>KCgpID0+IHsKCS8vIEhlcmUgdGhlIHNhbWUgbmFtZSBzaG91bGQgYmUgdXNlZCBhcyBmb3IgdGhlIHJlc3BlY3RpdmUgaGlnaGNoYXJ0cyBkYXRhc291cmNlCgljb25zdCBkYXRhU291cmNlTmFtZSA9ICJUZW1wbGF0ZUZvclRyZWVWaWV3RGF0YXNvdXJjZSI7CgoJdmFyIHR5cGVzID0gewoJCWZvbGRlcmlzaFR5cGU6ICJmb2xkZXJpc2hUeXBlIiwKCQlsZWFmaXNoVHlwZTogImxlYWZpc2hUeXBlIgoJfTsKCgljb25zdCBtb2NrZWRUcmVlU3RydWN0ID0gWwoJCXsKCQkJaWQ6ICJyb290IiwKCQkJdHlwZTogdHlwZXMuZm9sZGVyaXNoVHlwZSwKCQkJY2hpbGRyZW46IFsKCQkJCXsKCQkJCQlpZDogImZvbGRlcjEiLAoJCQkJCXR5cGU6IHR5cGVzLmZvbGRlcmlzaFR5cGUsCgkJCQkJY2hpbGRyZW46IFsKCQkJCQkJewoJCQkJCQkJaWQ6ICJsZWFmMWluRm9sZGVyMSIsCgkJCQkJCQl0eXBlOiB0eXBlcy5sZWFmaXNoVHlwZQoJCQkJCQl9LAoJCQkJCQl7CgkJCQkJCQlpZDogImxlYWYyaW5Gb2xkZXIxIiwKCQkJCQkJCXR5cGU6IHR5cGVzLmxlYWZpc2hUeXBlCgkJCQkJCX0sCgkJCQkJCXsKCQkJCQkJCWlkOiAibGVhZjNpbkZvbGRlcjEiLAoJCQkJCQkJdHlwZTogdHlwZXMubGVhZmlzaFR5cGUKCQkJCQkJfQoJCQkJCV0KCQkJCX0sCgkJCQl7CgkJCQkJaWQ6ICJmb2xkZXIyIiwKCQkJCQl0eXBlOiB0eXBlcy5mb2xkZXJpc2hUeXBlLAoJCQkJCWNoaWxkcmVuOiBbCgkJCQkJCXsKCQkJCQkJCWlkOiAiZm9sZGVyMWluRm9sZGVyMiIsCgkJCQkJCQl0eXBlOiB0eXBlcy5mb2xkZXJpc2hUeXBlLAoJCQkJCQkJY2hpbGRyZW46IFsKCQkJCQkJCQl7CgkJCQkJCQkJCWlkOiAibGVhZjFpbmZvbGRlcjFpbkZvbGRlcjIiLAoJCQkJCQkJCQl0eXBlOiB0eXBlcy5sZWFmaXNoVHlwZQoJCQkJCQkJCX0sCgkJCQkJCQkJewoJCQkJCQkJCQlpZDogImxlYWYyaW5mb2xkZXIxaW5Gb2xkZXIyIiwKCQkJCQkJCQkJdHlwZTogdHlwZXMubGVhZmlzaFR5cGUKCQkJCQkJCQl9LAoJCQkJCQkJCXsKCQkJCQkJCQkJaWQ6ICJsZWFmM2luZm9sZGVyMWluRm9sZGVyMiIsCgkJCQkJCQkJCXR5cGU6IHR5cGVzLmxlYWZpc2hUeXBlCgkJCQkJCQkJfQoJCQkJCQkJXQoJCQkJCQl9LAoJCQkJCQl7CgkJCQkJCQlpZDogImxlYWYxaW5Gb2xkZXIyIiwKCQkJCQkJCXR5cGU6IHR5cGVzLmxlYWZpc2hUeXBlCgkJCQkJCX0sCgkJCQkJCXsKCQkJCQkJCWlkOiAibGVhZjJpbkZvbGRlcjIiLAoJCQkJCQkJdHlwZTogdHlwZXMubGVhZmlzaFR5cGUKCQkJCQkJfSwKCQkJCQkJewoJCQkJCQkJaWQ6ICJsZWFmM2luRm9sZGVyMiIsCgkJCQkJCQl0eXBlOiB0eXBlcy5sZWFmaXNoVHlwZQoJCQkJCQl9CgkJCQkJXQoJCQkJfQoJCQldCgkJfQoJXTsKCglmdW5jdGlvbiBUcmVlVmlld0RhdGFzb3VyY2VUZW1wbGF0ZSgpIHsKCQljb25zdCBzZWxmID0gdGhpczsKCgkJc2VsZi5vcHRpb25zID0gewoJCQlzdGFydEFkZHJlc3M6ICJBR0VOVC5PQkpFQ1RTIiwKCQkJc2VsZWN0YWJsZVR5cGVzOiBbdHlwZXMuZm9sZGVyaXNoVHlwZSwgdHlwZXMubGVhZmlzaFR5cGVdLAoJCQl0eXBlSW1hZ2VQYXRoczogewoJCQkJZm9sZGVyaXNoVHlwZTogIi90cmVlVmlldy9pY29ucy9mb2xkZXIuc3ZnIiwKCQkJCWxlYWZpc2hUeXBlOiAiL3RyZWVWaWV3L2ljb25zL2Jhc2VWYXJpYWJsZS5zdmciCgkJCX0KCQl9OwoKCQl2YXIgbGFuZ3VhZ2VOYW1lID0gIiI7CgkJZm9yICh2YXIgbGFuZ3VhZ2UgaW4gcHJvamVjdC5sYW5ndWFnZXMpIHsKCQkJbGFuZ3VhZ2VOYW1lID0gbGFuZ3VhZ2U7CgkJCWJyZWFrOwoJCX0KCQlzZWxmLm9wdGlvbnMubGFuZ3VhZ2VQcmVmaXggPSBsYW5ndWFnZU5hbWU7Cgl9CgoJLyoqCgkgKiBQcm92aWRlcyB0aGUgdHJlZSB2aWV3IHdpdGggdGhlIGRhdGEgdHlwZXMgdGhhdCBhY3R1YWxseSBhcmUgc2VsZWN0YWJsZSBpbnN0ZWFkIG9mIGp1c3QgYnJvd3NhYmxlLgoJICogQHJldHVybnMge2FycmF5fSBTZWxlY3RhYmxlIHR5cGVzCgkgKi8KCVRyZWVWaWV3RGF0YXNvdXJjZVRlbXBsYXRlLnByb3RvdHlwZS5nZXRTZWxlY3RhYmxlVHlwZXMgPSBmdW5jdGlvbiAoKSB7CgkJcmV0dXJuIFt0eXBlcy5iYXNlVmFyaWFibGUsIHR5cGVzLmFnZ3JlZ2F0ZUZ1bmN0aW9uXTsKCX07CgoJLyoqCgkgKiBBIG1ldGhvZCB0aGF0IHJlcXVlc3RzIHRoZSBub2RlIHN0cnVjdHVyZSBmcm9tIHRoZSBzZXJ2ZXIKCSAqIEBwYXJhbSB7c3RyaW5nfSBicm93c2VOb2RlSWQgVGhlIG5vZGUgYWRkcmVzcyB0byBnZXQgdGhlIGRhdGEgZm9yCgkgKi8KCVRyZWVWaWV3RGF0YXNvdXJjZVRlbXBsYXRlLnByb3RvdHlwZS5mZXRjaFRyZWVTdHJ1Y3R1cmUgPSBmdW5jdGlvbiAoYnJvd3NlTm9kZUlkKSB7CgkJcmV0dXJuIG5ldyBQcm9taXNlKChyZXNvbHZlLCByZWplY3QpID0+IHsKCQkJY29uc3QgdHJlZVN0cnVjdHVyZSA9IFtdOwoKCQkJaWYgKCFicm93c2VOb2RlSWQpIHsKCQkJCWJyb3dzZU5vZGVJZCA9ICJyb290IjsKCQkJfQoKCQkJZnVuY3Rpb24gZmluZEJ5SWQodHJlZVN0cnVjdHVyZSwgYnJvd3NlTm9kZUlkKSB7CgkJCQlmb3IgKGxldCBub2RlIG9mIHRyZWVTdHJ1Y3R1cmUpIHsKCQkJCQlpZiAobm9kZS5pZCA9PT0gYnJvd3NlTm9kZUlkKSByZXR1cm4gbm9kZTsKCgkJCQkJaWYgKG5vZGUuY2hpbGRyZW4pIHsKCQkJCQkJbGV0IGRlc2lyZWROb2RlID0gZmluZEJ5SWQobm9kZS5jaGlsZHJlbiwgYnJvd3NlTm9kZUlkKTsKCQkJCQkJaWYgKGRlc2lyZWROb2RlKSByZXR1cm4gZGVzaXJlZE5vZGU7CgkJCQkJfQoJCQkJfQoJCQkJcmV0dXJuIGZhbHNlOwoJCQl9CgoJCQlsZXQgc3ViVHJlZSA9IGZpbmRCeUlkKG1vY2tlZFRyZWVTdHJ1Y3QsIGJyb3dzZU5vZGVJZCk7CgoJCQlzdWJUcmVlLmNoaWxkcmVuLmZvckVhY2goKGl0ZW0pID0+IHsKCQkJCXZhciBpY29uRWxlbWVudCA9IGRvY3VtZW50LmNyZWF0ZUVsZW1lbnQoImltZyIpOwoJCQkJaWNvbkVsZW1lbnQuc3JjID0gdGhpcy5vcHRpb25zLmxhbmd1YWdlUHJlZml4ICsgdGhpcy5vcHRpb25zLnR5cGVJbWFnZVBhdGhzW2l0ZW0udHlwZV07CgoJCQkJdHJlZVN0cnVjdHVyZS5wdXNoKHsKCQkJCQluYW1lOiBpdGVtLmlkLAoJCQkJCWFkZHJlc3M6IGl0ZW0uaWQsCgkJCQkJdHlwZTogaXRlbS50eXBlLAoJCQkJCWhhc0NoaWxkcmVuOiAhIShpdGVtLmNoaWxkcmVuICYmIGl0ZW0uY2hpbGRyZW4ubGVuZ3RoKSwKCQkJCQljaGlsZHJlbjogaXRlbS5jaGlsZHJlbiB8fCBbXSwKCQkJCQlkYXRhSUQ6IGdlbmVyYXRlRGF0YUlEKCksCgkJCQkJaWNvbjogaWNvbkVsZW1lbnQKCQkJCX0pOwoJCQl9KTsKCgkJCWlmICh0cmVlU3RydWN0dXJlLmVycm9yKSB7CgkJCQlyZWplY3QodHJlZVN0cnVjdHVyZSk7CgkJCX0gZWxzZSB7CgkJCQlyZXNvbHZlKHRyZWVTdHJ1Y3R1cmUpOwoJCQl9CgkJfSk7Cgl9OwoKCS8qKgoJICogQSBoZWxwZXIgbWV0aG9kIHRoYXQgZ2VuZXJhdGVzIGEgdW5pcXVlIGRhdGEtaWQKCSAqIEByZXR1cm4ge3N0cmluZ30gaWQgQSB1bmlxdWUgZGF0YSBpZAoJICogQG1lbWJlck9mIFRyZWVWaWV3CgkgKiBAcHJpdmF0ZQoJICovCglmdW5jdGlvbiBnZW5lcmF0ZURhdGFJRCgpIHsKCQl2YXIgUzQgPSBmdW5jdGlvbiAoKSB7CgkJCXJldHVybiAoKCgxICsgTWF0aC5yYW5kb20oKSkgKiAweDEwMDAwKSB8IDApLnRvU3RyaW5nKDE2KS5zdWJzdHJpbmcoMSk7CgkJfTsKCQlyZXR1cm4gUzQoKSArIFM0KCkgKyAiLSIgKyBTNCgpICsgIi0iICsgUzQoKSArICItIiArIFM0KCkgKyAiLSIgKyBTNCgpICsgUzQoKSArIFM0KCk7Cgl9CgoJaWYgKCF3aW5kb3cudHJlZVZpZXdEYXRhc291cmNlcykgewoJCXdpbmRvdy50cmVlVmlld0RhdGFzb3VyY2VzID0ge307Cgl9CgoJd2luZG93LnRyZWVWaWV3RGF0YXNvdXJjZXNbZGF0YVNvdXJjZU5hbWVdID0gVHJlZVZpZXdEYXRhc291cmNlOwp9KSh3aW5kb3csIGRvY3VtZW50KTsK</uax:ByteString>
+		</Value>
+	</UAVariable>
+	<UAObject NodeId="ns=1;s=SYSTEM.LIBRARY.ATVISE.RESOURCES/treeView/icons" BrowseName="1:icons">
+		<DisplayName Locale="en">icons</DisplayName>
+		<Description Locale="en">icons</Description>
+		<References>
+			<Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=SYSTEM.LIBRARY.ATVISE.RESOURCES/treeView</Reference>
+			<Reference ReferenceType="HasTypeDefinition">FolderType</Reference>
+		</References>
+	</UAObject>
+	<UAVariable NodeId="ns=1;s=SYSTEM.LIBRARY.ATVISE.RESOURCES/treeView/icons/aggregateFunction.svg" BrowseName="1:aggregateFunction.svg" DataType="ByteString" AccessLevel="7" UserAccessLevel="7" Historizing="true">
+		<DisplayName Locale="en">aggregateFunction.svg</DisplayName>
+		<Description Locale="en">aggregateFunction.svg</Description>
+		<References>
+			<Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=SYSTEM.LIBRARY.ATVISE.RESOURCES/treeView/icons</Reference>
+			<Reference ReferenceType="HasTypeDefinition">ResourceSvgType</Reference>
+		</References>
+		<Value>
+			<uax:ByteString>PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPCEtLSBHZW5lcmF0b3I6IEFkb2JlIElsbHVzdHJhdG9yIDE1LjAuMCwgU1ZHIEV4cG9ydCBQbHVnLUluIC4gU1ZHIFZlcnNpb246IDYuMDAgQnVpbGQgMCkgIC0tPgo8IURPQ1RZUEUgc3ZnIFBVQkxJQyAiLS8vVzNDLy9EVEQgU1ZHIDEuMS8vRU4iICJodHRwOi8vd3d3LnczLm9yZy9HcmFwaGljcy9TVkcvMS4xL0RURC9zdmcxMS5kdGQiPgo8c3ZnIHZlcnNpb249IjEuMSIgaWQ9IkViZW5lXzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IgoJIHdpZHRoPSIxNnB4IiBoZWlnaHQ9IjE2cHgiIHZpZXdCb3g9IjAgMCAxNiAxNiIgZW5hYmxlLWJhY2tncm91bmQ9Im5ldyAwIDAgMTYgMTYiIHhtbDpzcGFjZT0icHJlc2VydmUiPgo8Zz4KCTxkZWZzPgoJCTxyZWN0IGlkPSJTVkdJRF8xXyIgd2lkdGg9IjE2IiBoZWlnaHQ9IjE2Ii8+Cgk8L2RlZnM+Cgk8Y2xpcFBhdGggaWQ9IlNWR0lEXzJfIj4KCQk8dXNlIHhsaW5rOmhyZWY9IiNTVkdJRF8xXyIgIG92ZXJmbG93PSJ2aXNpYmxlIi8+Cgk8L2NsaXBQYXRoPgoJPGcgY2xpcC1wYXRoPSJ1cmwoI1NWR0lEXzJfKSI+CgkJPGxpbmVhckdyYWRpZW50IGlkPSJTVkdJRF8zXyIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiIHgxPSIzLjI0OTUiIHkxPSIzLjQwMjgiIHgyPSIxNC43NDciIHkyPSIxNC41Mjk4Ij4KCQkJPHN0b3AgIG9mZnNldD0iMCIgc3R5bGU9InN0b3AtY29sb3I6IzM2QTRERCIvPgoJCQk8c3RvcCAgb2Zmc2V0PSIxIiBzdHlsZT0ic3RvcC1jb2xvcjojMzA1Q0E2Ii8+CgkJPC9saW5lYXJHcmFkaWVudD4KCQk8cmVjdCBmaWxsPSJ1cmwoI1NWR0lEXzNfKSIgd2lkdGg9IjE2IiBoZWlnaHQ9IjE2Ii8+CgkJPHJlY3QgeD0iMS41IiB5PSIyLjUiIGZpbGw9IiNmZmZmZmYiIHN0cm9rZT0iI2ZmZmZmZiIgc3Ryb2tlLW1pdGVybGltaXQ9IjEwIiB3aWR0aD0iMTMiIGhlaWdodD0iMiIvPgoJCTxsaW5lIGZpbGw9Im5vbmUiIHN0cm9rZT0iI2ZmZmZmZiIgc3Ryb2tlLW1pdGVybGltaXQ9IjEwIiB4MT0iMyIgeTE9IjcuNSIgeDI9IjUiIHkyPSI3LjUiLz4KCQk8bGluZSBmaWxsPSJub25lIiBzdHJva2U9IiNmZmZmZmYiIHN0cm9rZS1taXRlcmxpbWl0PSIxMCIgeDE9IjciIHkxPSI3LjUiIHgyPSI5IiB5Mj0iNy41Ii8+CgkJPGxpbmUgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjZmZmZmZmIiBzdHJva2UtbWl0ZXJsaW1pdD0iMTAiIHgxPSIzIiB5MT0iMTAuNSIgeDI9IjUiIHkyPSIxMC41Ii8+CgkJPGxpbmUgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjZmZmZmZmIiBzdHJva2UtbWl0ZXJsaW1pdD0iMTAiIHgxPSI3IiB5MT0iMTAuNSIgeDI9IjkiIHkyPSIxMC41Ii8+CgkJPGxpbmUgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjZmZmZmZmIiBzdHJva2UtbWl0ZXJsaW1pdD0iMTAiIHgxPSIzIiB5MT0iMTMuNSIgeDI9IjUiIHkyPSIxMy41Ii8+CgkJPGxpbmUgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjZmZmZmZmIiBzdHJva2UtbWl0ZXJsaW1pdD0iMTAiIHgxPSI3IiB5MT0iMTMuNSIgeDI9IjkiIHkyPSIxMy41Ii8+CgkJPHRleHQgdHJhbnNmb3JtPSJtYXRyaXgoMSAwIDAgMSAxMC4xMTIzIDEzLjU0NjkpIiBmaWxsPSIjZmZmZmZmIiBmb250LWZhbWlseT0iJ015cmlhZFByby1SZWd1bGFyJyIgZm9udC1zaXplPSIxMC4zNTUxIj7DhuKAmTwvdGV4dD4KCTwvZz4KPC9nPgo8L3N2Zz4K</uax:ByteString>
+		</Value>
+	</UAVariable>
+	<UAVariable NodeId="ns=1;s=SYSTEM.LIBRARY.ATVISE.RESOURCES/treeView/icons/baseVariable.svg" BrowseName="1:baseVariable.svg" DataType="ByteString" AccessLevel="7" UserAccessLevel="7" Historizing="true">
+		<DisplayName Locale="en">baseVariable.svg</DisplayName>
+		<Description Locale="en">baseVariable.svg</Description>
+		<References>
+			<Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=SYSTEM.LIBRARY.ATVISE.RESOURCES/treeView/icons</Reference>
+			<Reference ReferenceType="HasTypeDefinition">ResourceSvgType</Reference>
+		</References>
+		<Value>
+			<uax:ByteString>PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPCEtLSBHZW5lcmF0b3I6IEFkb2JlIElsbHVzdHJhdG9yIDE1LjAuMCwgU1ZHIEV4cG9ydCBQbHVnLUluIC4gU1ZHIFZlcnNpb246IDYuMDAgQnVpbGQgMCkgIC0tPgo8IURPQ1RZUEUgc3ZnIFBVQkxJQyAiLS8vVzNDLy9EVEQgU1ZHIDEuMS8vRU4iICJodHRwOi8vd3d3LnczLm9yZy9HcmFwaGljcy9TVkcvMS4xL0RURC9zdmcxMS5kdGQiPgo8c3ZnIHZlcnNpb249IjEuMSIgaWQ9IkViZW5lXzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IgoJIHdpZHRoPSIxNnB4IiBoZWlnaHQ9IjE2cHgiIHZpZXdCb3g9IjAgMCAxNiAxNiIgZW5hYmxlLWJhY2tncm91bmQ9Im5ldyAwIDAgMTYgMTYiIHhtbDpzcGFjZT0icHJlc2VydmUiPgo8Zz4KCTxkZWZzPgoJCTxyZWN0IGlkPSJTVkdJRF8xXyIgd2lkdGg9IjE2IiBoZWlnaHQ9IjE2Ii8+Cgk8L2RlZnM+Cgk8Y2xpcFBhdGggaWQ9IlNWR0lEXzJfIj4KCQk8dXNlIHhsaW5rOmhyZWY9IiNTVkdJRF8xXyIgIG92ZXJmbG93PSJ2aXNpYmxlIi8+Cgk8L2NsaXBQYXRoPgoJPGxpbmVhckdyYWRpZW50IGlkPSJTVkdJRF8zXyIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiIHgxPSI0Ljg1MzUiIHkxPSI1LjYzOTIiIHgyPSIxMS4xMDk2IiB5Mj0iMTAuMTMxNyI+CgkJPHN0b3AgIG9mZnNldD0iMCIgc3R5bGU9InN0b3AtY29sb3I6IzM2QTdFMCIvPgoJCTxzdG9wICBvZmZzZXQ9IjEiIHN0eWxlPSJzdG9wLWNvbG9yOiMyRTNDOEUiLz4KCTwvbGluZWFyR3JhZGllbnQ+Cgk8Y2lyY2xlIGNsaXAtcGF0aD0idXJsKCNTVkdJRF8yXykiIGZpbGw9InVybCgjU1ZHSURfM18pIiBjeD0iOC4wMSIgY3k9IjcuOTA2IiByPSI0LjE3NyIvPgo8L2c+Cjwvc3ZnPgo=</uax:ByteString>
+		</Value>
+	</UAVariable>
+	<UAVariable NodeId="ns=1;s=SYSTEM.LIBRARY.ATVISE.RESOURCES/treeView/icons/folder.svg" BrowseName="1:folder.svg" DataType="ByteString" AccessLevel="7" UserAccessLevel="7" Historizing="true">
+		<DisplayName Locale="en">folder.svg</DisplayName>
+		<Description Locale="en">folder.svg</Description>
+		<References>
+			<Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=SYSTEM.LIBRARY.ATVISE.RESOURCES/treeView/icons</Reference>
+			<Reference ReferenceType="HasTypeDefinition">ResourceSvgType</Reference>
+		</References>
+		<Value>
+			<uax:ByteString>PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPCEtLSBHZW5lcmF0b3I6IEFkb2JlIElsbHVzdHJhdG9yIDE1LjAuMCwgU1ZHIEV4cG9ydCBQbHVnLUluIC4gU1ZHIFZlcnNpb246IDYuMDAgQnVpbGQgMCkgIC0tPgo8IURPQ1RZUEUgc3ZnIFBVQkxJQyAiLS8vVzNDLy9EVEQgU1ZHIDEuMS8vRU4iICJodHRwOi8vd3d3LnczLm9yZy9HcmFwaGljcy9TVkcvMS4xL0RURC9zdmcxMS5kdGQiPgo8c3ZnIHZlcnNpb249IjEuMSIgaWQ9IkViZW5lXzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IgoJIHdpZHRoPSIxNnB4IiBoZWlnaHQ9IjE2cHgiIHZpZXdCb3g9IjAgMCAxNiAxNiIgZW5hYmxlLWJhY2tncm91bmQ9Im5ldyAwIDAgMTYgMTYiIHhtbDpzcGFjZT0icHJlc2VydmUiPgo8Zz4KCTxkZWZzPgoJCTxyZWN0IGlkPSJTVkdJRF8xXyIgd2lkdGg9IjE2IiBoZWlnaHQ9IjE2Ii8+Cgk8L2RlZnM+Cgk8Y2xpcFBhdGggaWQ9IlNWR0lEXzJfIj4KCQk8dXNlIHhsaW5rOmhyZWY9IiNTVkdJRF8xXyIgIG92ZXJmbG93PSJ2aXNpYmxlIi8+Cgk8L2NsaXBQYXRoPgoJPGcgY2xpcC1wYXRoPSJ1cmwoI1NWR0lEXzJfKSI+CgkJPGc+CgkJCTxsaW5lYXJHcmFkaWVudCBpZD0iU1ZHSURfM18iIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIiB4MT0iMTIuMDg4OSIgeTE9IjcuMjYxNyIgeDI9IjE2LjE4NTMiIHkyPSIxMS4xMDM1Ij4KCQkJCTxzdG9wICBvZmZzZXQ9IjAiIHN0eWxlPSJzdG9wLWNvbG9yOiMzNkE3RTAiLz4KCQkJCTxzdG9wICBvZmZzZXQ9IjEiIHN0eWxlPSJzdG9wLWNvbG9yOiMyRTNDOEUiLz4KCQkJPC9saW5lYXJHcmFkaWVudD4KCQkJPHBvbHlnb24gZmlsbD0idXJsKCNTVkdJRF8zXykiIHBvaW50cz0iMTIuOTg0LDEzLjAzMSAxNiw2IDEzLDYgCQkJIi8+CgkJPC9nPgoJCTxsaW5lYXJHcmFkaWVudCBpZD0iU1ZHSURfNF8iIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIiB4MT0iMC4xMTI4IiB5MT0iMy43NzI1IiB4Mj0iMTEuNzc5NyIgeTI9IjEyLjE1MDQiPgoJCQk8c3RvcCAgb2Zmc2V0PSIwIiBzdHlsZT0ic3RvcC1jb2xvcjojMzZBN0UwIi8+CgkJCTxzdG9wICBvZmZzZXQ9IjEiIHN0eWxlPSJzdG9wLWNvbG9yOiMyRTNDOEUiLz4KCQk8L2xpbmVhckdyYWRpZW50PgoJCTxwb2x5Z29uIGZpbGw9InVybCgjU1ZHSURfNF8pIiBwb2ludHM9IjAsMTMgMTIsMTMgMTIsMyAxMiwzIDYsMyA2LDIgMSwyIDEsMyAwLDMgCQkiLz4KCTwvZz4KPC9nPgo8L3N2Zz4K</uax:ByteString>
+		</Value>
+	</UAVariable>
+	<UAVariable NodeId="ns=1;s=SYSTEM.LIBRARY.ATVISE.RESOURCES/treeView/icons/leafCollapsed.svg" BrowseName="1:leafCollapsed.svg" DataType="ByteString" AccessLevel="7" UserAccessLevel="7" Historizing="true">
+		<DisplayName Locale="en">leafCollapsed.svg</DisplayName>
+		<Description Locale="en">leafCollapsed.svg</Description>
+		<References>
+			<Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=SYSTEM.LIBRARY.ATVISE.RESOURCES/treeView/icons</Reference>
+			<Reference ReferenceType="HasTypeDefinition">ResourceSvgType</Reference>
+		</References>
+		<Value>
+			<uax:ByteString>PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPCEtLSBHZW5lcmF0b3I6IEFkb2JlIElsbHVzdHJhdG9yIDE1LjAuMCwgU1ZHIEV4cG9ydCBQbHVnLUluIC4gU1ZHIFZlcnNpb246IDYuMDAgQnVpbGQgMCkgIC0tPgo8IURPQ1RZUEUgc3ZnIFBVQkxJQyAiLS8vVzNDLy9EVEQgU1ZHIDEuMS8vRU4iICJodHRwOi8vd3d3LnczLm9yZy9HcmFwaGljcy9TVkcvMS4xL0RURC9zdmcxMS5kdGQiPgo8c3ZnIHZlcnNpb249IjEuMSIgaWQ9IkViZW5lXzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IgoJIHdpZHRoPSIxNnB4IiBoZWlnaHQ9IjE2cHgiIHZpZXdCb3g9IjAgMCAxNiAxNiIgZW5hYmxlLWJhY2tncm91bmQ9Im5ldyAwIDAgMTYgMTYiIHhtbDpzcGFjZT0icHJlc2VydmUiPgo8Zz4KCTxnPgoJCTxwYXRoIGZpbGw9IiMwMDVEOUYiIGQ9Ik03Ljk5NSwyLjE2MmMzLjE5NCwwLDUuNzk0LDIuNiw1Ljc5NCw1Ljc5NGMwLDMuMTk0LTIuNiw1Ljc5NC01Ljc5NCw1Ljc5NAoJCQljLTMuMTk1LDAtNS43OTQtMi42LTUuNzk0LTUuNzk0QzIuMjAxLDQuNzYxLDQuOCwyLjE2Miw3Ljk5NSwyLjE2MiBNNy45OTUsMC4xNjJjLTQuMzA1LDAtNy43OTQsMy40OS03Ljc5NCw3Ljc5NAoJCQljMCw0LjMwNCwzLjQ5LDcuNzk0LDcuNzk0LDcuNzk0YzQuMzA0LDAsNy43OTQtMy40OSw3Ljc5NC03Ljc5NEMxNS43ODksMy42NTEsMTIuMjk5LDAuMTYyLDcuOTk1LDAuMTYyTDcuOTk1LDAuMTYyeiIvPgoJPC9nPgoJPHBhdGggZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMDA1RDlGIiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1taXRlcmxpbWl0PSIxMCIgZD0iTTQuNjY1LDMuMjAxIi8+Cgk8cGF0aCBmaWxsPSJub25lIiBzdHJva2U9IiMwMDVEOUYiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbWl0ZXJsaW1pdD0iMTAiIGQ9Ik0yLjcxNywzLjgzMwoJCUMyLjYyNCwzLjkyNSw2Ljg0NSwzLjM1OSw4LjMxNiw4LjQwMiIvPgoJPHBvbHlsaW5lIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzAwNUQ5RiIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1taXRlcmxpbWl0PSIxMCIgcG9pbnRzPSIxMC42NDIsNi4xODkgCgkJOC45ODksMTAuMTU3IDQuODEzLDguOTEyIAkiLz4KPC9nPgo8L3N2Zz4K</uax:ByteString>
+		</Value>
+	</UAVariable>
+	<UAVariable NodeId="ns=1;s=SYSTEM.LIBRARY.ATVISE.RESOURCES/treeView/icons/leafExpanded.svg" BrowseName="1:leafExpanded.svg" DataType="ByteString" AccessLevel="7" UserAccessLevel="7" Historizing="true">
+		<DisplayName Locale="en">leafExpanded.svg</DisplayName>
+		<Description Locale="en">leafExpanded.svg</Description>
+		<References>
+			<Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=SYSTEM.LIBRARY.ATVISE.RESOURCES/treeView/icons</Reference>
+			<Reference ReferenceType="HasTypeDefinition">ResourceSvgType</Reference>
+		</References>
+		<Value>
+			<uax:ByteString>PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPCEtLSBHZW5lcmF0b3I6IEFkb2JlIElsbHVzdHJhdG9yIDE1LjAuMCwgU1ZHIEV4cG9ydCBQbHVnLUluIC4gU1ZHIFZlcnNpb246IDYuMDAgQnVpbGQgMCkgIC0tPgo8IURPQ1RZUEUgc3ZnIFBVQkxJQyAiLS8vVzNDLy9EVEQgU1ZHIDEuMS8vRU4iICJodHRwOi8vd3d3LnczLm9yZy9HcmFwaGljcy9TVkcvMS4xL0RURC9zdmcxMS5kdGQiPgo8c3ZnIHZlcnNpb249IjEuMSIgaWQ9IkViZW5lXzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IgoJIHdpZHRoPSIxNnB4IiBoZWlnaHQ9IjE2cHgiIHZpZXdCb3g9IjAgMCAxNiAxNiIgZW5hYmxlLWJhY2tncm91bmQ9Im5ldyAwIDAgMTYgMTYiIHhtbDpzcGFjZT0icHJlc2VydmUiPgo8Zz4KCTxnPgoJCTxwYXRoIGZpbGw9IiMwMDVEOUYiIGQ9Ik03Ljk5NCwyLjE2MWMzLjE5NSwwLDUuNzk1LDIuNiw1Ljc5NSw1Ljc5NHMtMi42LDUuNzk0LTUuNzk1LDUuNzk0QzQuOCwxMy43NSwyLjIsMTEuMTUsMi4yLDcuOTU2CgkJCVM0LjgsMi4xNjEsNy45OTQsMi4xNjEgTTcuOTk0LDAuMTYxQzMuNjksMC4xNjEsMC4yLDMuNjUxLDAuMiw3Ljk1NmMwLDQuMzA0LDMuNDksNy43OTQsNy43OTQsNy43OTQKCQkJYzQuMzA1LDAsNy43OTUtMy40OSw3Ljc5NS03Ljc5NEMxNS43ODksMy42NTEsMTIuMjk5LDAuMTYxLDcuOTk0LDAuMTYxTDcuOTk0LDAuMTYxeiIvPgoJPC9nPgoJPHBhdGggZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMDA1RDlGIiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1taXRlcmxpbWl0PSIxMCIgZD0iTTExLjMyNSwxMi43MTEiLz4KCTxwYXRoIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzAwNUQ5RiIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1taXRlcmxpbWl0PSIxMCIgZD0iTTEzLjI3MiwxMi4wNzgKCQljMC4wOTQtMC4wOTItNC4xMjgsMC40NzUtNS41OTktNC41NjgiLz4KCTxwb2x5bGluZSBmaWxsPSJub25lIiBzdHJva2U9IiMwMDVEOUYiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbWl0ZXJsaW1pdD0iMTAiIHBvaW50cz0iNS4zNDgsOS43MjMgCgkJNyw1Ljc1NSAxMS4xNzcsNyAJIi8+CjwvZz4KPC9zdmc+Cg==</uax:ByteString>
+		</Value>
+	</UAVariable>
+</UANodeSet>

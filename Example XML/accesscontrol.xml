@@ -1,0 +1,2133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<UANodeSet xmlns="http://opcfoundation.org/UA/2011/03/UANodeSet.xsd" xmlns:uax="http://opcfoundation.org/UA/2008/02/Types.xsd">
+	<Extensions>
+		<atvise Version="3.13"></atvise>
+	</Extensions>
+	<NamespaceUris>
+		<Uri>http://www.atvise.com/atServer/UA/</Uri>
+	</NamespaceUris>
+	<Aliases>
+		<Alias Alias="DisplayScriptType">ns=1;s=VariableTypes.ATVISE.DisplayScript</Alias>
+		<Alias Alias="DisplayType">ns=1;s=VariableTypes.ATVISE.Display</Alias>
+		<Alias Alias="FolderType">i=61</Alias>
+		<Alias Alias="HasComponent">i=47</Alias>
+		<Alias Alias="HasTypeDefinition">i=40</Alias>
+		<Alias Alias="QuickDynamicType">ns=1;s=VariableTypes.ATVISE.QuickDynamic</Alias>
+		<Alias Alias="ScriptCodeType">ns=1;s=VariableTypes.ATVISE.ScriptCode</Alias>
+		<Alias Alias="XmlElement">i=16</Alias>
+	</Aliases>
+	<UAObject NodeId="ns=1;s=SYSTEM" BrowseName="1:SYSTEM">
+		<DisplayName Locale="en">SYSTEM</DisplayName>
+		<Description Locale="en">SYSTEM</Description>
+		<References>
+			<Reference ReferenceType="HasComponent" IsForward="false">i=85</Reference>
+			<Reference ReferenceType="HasTypeDefinition">FolderType</Reference>
+		</References>
+		<Extensions>
+			<atvise Upstream="true" ExportedNodeId="ns=1;s=SYSTEM.LIBRARY.ATVISE.DISPLAYSCRIPTS" ExportedBrowseName="1:DISPLAYSCRIPTS"></atvise>
+		</Extensions>
+	</UAObject>
+	<UAObject NodeId="ns=1;s=SYSTEM.LIBRARY" BrowseName="1:LIBRARY">
+		<DisplayName Locale="en">LIBRARY</DisplayName>
+		<Description Locale="en">LIBRARY</Description>
+		<References>
+			<Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=SYSTEM</Reference>
+			<Reference ReferenceType="HasTypeDefinition">FolderType</Reference>
+		</References>
+		<Extensions>
+			<atvise Upstream="true"></atvise>
+		</Extensions>
+	</UAObject>
+	<UAObject NodeId="ns=1;s=SYSTEM.LIBRARY.ATVISE" BrowseName="1:ATVISE">
+		<DisplayName Locale="en">ATVISE</DisplayName>
+		<Description Locale="en">ATVISE</Description>
+		<References>
+			<Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=SYSTEM.LIBRARY</Reference>
+			<Reference ReferenceType="HasTypeDefinition">FolderType</Reference>
+		</References>
+		<Extensions>
+			<atvise Upstream="true"></atvise>
+		</Extensions>
+	</UAObject>
+	<UAObject NodeId="ns=1;s=SYSTEM.LIBRARY.ATVISE.DISPLAYSCRIPTS" BrowseName="1:DISPLAYSCRIPTS">
+		<DisplayName Locale="en">DISPLAYSCRIPTS</DisplayName>
+		<Description Locale="en">DISPLAYSCRIPTS</Description>
+		<References>
+			<Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=SYSTEM.LIBRARY.ATVISE</Reference>
+			<Reference ReferenceType="HasTypeDefinition">FolderType</Reference>
+		</References>
+	</UAObject>
+	<UAObject NodeId="ns=1;s=SYSTEM.LIBRARY.ATVISE.DISPLAYSCRIPTS.hmi" BrowseName="1:hmi">
+		<DisplayName Locale="en">hmi</DisplayName>
+		<Description Locale="en">hmi</Description>
+		<References>
+			<Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=SYSTEM.LIBRARY.ATVISE.DISPLAYSCRIPTS</Reference>
+			<Reference ReferenceType="HasTypeDefinition">FolderType</Reference>
+		</References>
+	</UAObject>
+	<UAVariable NodeId="ns=1;s=SYSTEM.LIBRARY.ATVISE.DISPLAYSCRIPTS.hmi.accesscontrol" BrowseName="1:accesscontrol" DataType="XmlElement" AccessLevel="7" UserAccessLevel="7" Historizing="true">
+		<DisplayName Locale="en">accesscontrol</DisplayName>
+		<Description Locale="en">accesscontrol</Description>
+		<References>
+			<Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=SYSTEM.LIBRARY.ATVISE.DISPLAYSCRIPTS.hmi</Reference>
+			<Reference ReferenceType="HasTypeDefinition">DisplayScriptType</Reference>
+		</References>
+		<Value>
+			<uax:XmlElement><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+<script>
+  <metadata>
+    <priority>0</priority>
+  </metadata>
+  <code><![CDATA[/**
+ * Code for the access control log object display
+ * -----------------------------------------------------------------------
+ */
+
+var tableID = webMI.query["tableID"];
+var isPopup = webMI.query["mode"] == "popup";
+
+/**
+ * DECLARATION SECTION
+ */
+webMI.table.loadResources(function () {
+	/* Erstellen der Konfiguration */
+	var config = [];
+
+	/* Konfiguration der darzustellenden Spalten */
+	config["columns"] = [
+		{
+			id: "timestamp",
+			name: "T{Timestamp}",
+			field: "timestamp",
+			type: ["datetime", "s"],
+			sortable: true,
+			filter: true
+		},
+		{
+			id: "user",
+			name: "T{User}",
+			field: "user",
+			filterCheck: true,
+			sortable: true,
+			filter: false
+		},
+		{
+			id: "permission",
+			name: "T{Command}",
+			field: "permission",
+			sortable: true,
+			filter: true,
+			visible: true
+		},
+		{
+			id: "address",
+			name: "T{Address}",
+			field: "address",
+			sortable: true,
+			filter: false
+		},
+		{
+			id: "errortext",
+			name: "T{Error}",
+			field: "errortext",
+			sortable: true,
+			filter: true,
+			visible: !isPopup
+		}
+	];
+
+	/* Konfiguration des  Laufzeitverhalten */
+	config["mode"] = "once";
+
+	/* Konfiguration der Datenabfrage */
+	// eslint-disable-next-line no-unused-vars
+	config["dataRequestFunction"] = function customDataRequest(_continuation) {
+		var accesslog = JSON.parse(JSON.stringify(webMI.data.getPermissionLog()));
+		var data = {
+			result: accesslog
+		};
+		this.addData(data);
+	};
+
+	/* Registierung der Konfiguration */
+	webMI.table.register(tableID, "config", config);
+	webMI.table.setReady(tableID, "config");
+
+	// eslint-disable-next-line no-unused-vars
+	webMI.addEvent(webMI.data, "permissionnotification", function (_notification) {
+		webMI.table.waitReady(tableID, "controller", function () {
+			var tableController = webMI.table.request(tableID, "controller");
+			var currentLog = JSON.parse(JSON.stringify(webMI.data.getPermissionLog()));
+
+			for (var i in currentLog) {
+				var entry = currentLog[i];
+				var item = tableController.search("timestamp", entry.timestamp);
+
+				if (!item || item.length == 0) {
+					var data = {
+						result: [entry]
+					};
+					tableController.addData(data);
+				}
+			}
+		});
+	});
+});
+
+/**
+ * TRIGGER SECTION
+ */
+
+/* Clear table and log data on button click */
+webMI.trigger.connect(
+	"clicked",
+	function () {
+		webMI.data.clearPermissionLog();
+		webMI.table.waitReady(tableID, "controller", function () {
+			var tableController = webMI.table.request(tableID, "controller");
+			tableController.clearData();
+		});
+	},
+	"cmd_clear_log"
+);
+]]]]><![CDATA[></code>
+</script>]]></uax:XmlElement>
+		</Value>
+	</UAVariable>
+	<UAObject NodeId="ns=1;s=SYSTEM.LIBRARY.ATVISE.DISPLAYSCRIPTS.layoutelements" BrowseName="1:layoutelements">
+		<DisplayName Locale="en">layoutelements</DisplayName>
+		<Description Locale="en">layoutelements</Description>
+		<References>
+			<Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=SYSTEM.LIBRARY.ATVISE.DISPLAYSCRIPTS</Reference>
+			<Reference ReferenceType="HasTypeDefinition">FolderType</Reference>
+		</References>
+	</UAObject>
+	<UAVariable NodeId="ns=1;s=SYSTEM.LIBRARY.ATVISE.DISPLAYSCRIPTS.layoutelements.button_view_access" BrowseName="1:button_view_access" DataType="XmlElement" AccessLevel="7" UserAccessLevel="7" Historizing="true">
+		<DisplayName Locale="en">button_view_access</DisplayName>
+		<Description Locale="en">button_view_access</Description>
+		<References>
+			<Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=SYSTEM.LIBRARY.ATVISE.DISPLAYSCRIPTS.layoutelements</Reference>
+			<Reference ReferenceType="HasTypeDefinition">DisplayScriptType</Reference>
+		</References>
+		<Value>
+			<uax:XmlElement><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+<script>
+  <metadata>
+    <priority>0</priority>
+  </metadata>
+  <code><![CDATA[/**
+ * Code for the layout element button alarm log object display
+ * ----------------------------------------
+ * This script supports the display showing the alarmlog.
+ */
+
+/**
+ * DECLARATION SECTION
+ */
+var accesslist = null;
+var anchorX = parseInt(webMI.query["anchorX"]);
+var anchorY = parseInt(webMI.query["anchorY"]);
+var colorActive = webMI.query["alarm_color"];
+var colorInactive = webMI.gfx.getFill("button_access_log_1_outer_frame");
+var height = parseInt(webMI.query["height"]);
+var isAccessLog = false;
+var width = parseInt(webMI.query["width"]);
+var x = parseInt(webMI.query["x"]);
+var y = parseInt(webMI.query["y"]);
+var tableID = webMI.query["tableID"];
+
+/**
+ * UI SETUP SECTION
+ */
+webMI.gfx.setWidth("button_access_log_1_button_bg", webMI.gfx.getWidth("button_access_log_1_button_bg") - 2);
+webMI.gfx.setHeight("button_access_log_1_button_bg", webMI.gfx.getHeight("button_access_log_1_button_bg") - 2);
+webMI.gfx.setX("button_access_log_1_button_bg", "2");
+webMI.gfx.setY("button_access_log_1_button_bg", "2");
+webMI.gfx.setWidth("button_access_log_2_button_bg", webMI.gfx.getWidth("button_access_log_2_button_bg") - 2);
+webMI.gfx.setHeight("button_access_log_2_button_bg", webMI.gfx.getHeight("button_access_log_2_button_bg") - 2);
+webMI.gfx.setX("button_access_log_2_button_bg", "2");
+webMI.gfx.setY("button_access_log_2_button_bg", "2");
+
+/**
+ * RUNTIME SECTION
+ * Runtime code has to be executed after onload to take care all other resources are ready
+ */
+if (webMI.query["buttonSize"] == "large") {
+	webMI.gfx.setVisible("button_access_log_1", false);
+} else {
+	webMI.gfx.setVisible("button_access_log_2", false);
+}
+
+webMI.addOnload(function () {
+	webMI.addEvent(webMI.data, "permissionnotification", function () {
+		setActive(true);
+	});
+});
+
+/**
+ * FUNCTION SECTION
+ */
+function setActive(activate) {
+	if (accesslist == null) {
+		webMI.gfx.setFill(
+			"button_access_log_1_outer_frame",
+			activate
+				? {
+						0: colorActive,
+						2: colorInactive,
+						4: colorActive,
+						6: colorInactive,
+						8: colorActive,
+						10: colorInactive
+				}
+				: colorInactive
+		);
+		webMI.gfx.setFill(
+			"button_access_log_2_outer_frame",
+			activate
+				? {
+						0: colorActive,
+						2: colorInactive,
+						4: colorActive,
+						6: colorInactive,
+						8: colorActive,
+						10: colorInactive
+				}
+				: colorInactive
+		);
+	} else {
+		webMI.gfx.setFill("button_access_log_1_outer_frame", activate ? colorActive : colorInactive);
+		webMI.gfx.setFill("button_access_log_2_outer_frame", activate ? colorActive : colorInactive);
+	}
+	isAccessLog = activate;
+}
+
+function handleAccessLog() {
+	if (accesslist == null) {
+		webMI.gfx.setFill("button_access_log_1_outer_frame", isAccessLog ? colorActive : colorInactive);
+		webMI.gfx.setFill("button_access_log_2_outer_frame", isAccessLog ? colorActive : colorInactive);
+
+		webMI.gfx.setFill("context_menu_sign", webMI.query["symbolColorActive"]);
+
+		webMI.gfx.setFill("button_access_log_1_button_bg", webMI.query["fillColorActive"]);
+		webMI.gfx.setFill("button_access_log_1_button_label", webMI.query["fontColorActive"]);
+		webMI.gfx.setFill("button_access_log_1_button_label_1", webMI.query["fontColorActive"]);
+		webMI.gfx.setFill("button_access_log_1_button_label_2", webMI.query["fontColorActive"]);
+
+		webMI.gfx.setFill("button_access_log_2_button_bg", webMI.query["fillColorActive"]);
+		webMI.gfx.setFill("button_access_log_2_button_label", webMI.query["fontColorActive"]);
+		webMI.gfx.setFill("button_access_log_2_button_label_1", webMI.query["fontColorActive"]);
+		webMI.gfx.setFill("button_access_log_2_button_label_2", webMI.query["fontColorActive"]);
+
+		accesslist = webMI.display.openWindow({
+			display: webMI.query["accessDisplay"],
+			extern: false,
+			width: width,
+			height: height,
+			x: x,
+			y: y,
+			anchorX: anchorX,
+			anchorY: anchorY,
+			menubar: false,
+			modal: false,
+			movable: true,
+			resizable: true,
+			scrollbars: false,
+			status: false,
+			title: "T{AccessLog}",
+			titlebar: false,
+			toolbar: false,
+			query: { tableID: tableID }
+		});
+		accesslist.cuba = function () {
+			accesslist = null;
+		};
+	} else {
+		webMI.gfx.setFill("context_menu_sign", webMI.query["symbolColor"]);
+
+		webMI.gfx.setFill("button_access_log_1_button_bg", webMI.query["fillColor"]);
+		webMI.gfx.setFill("button_access_log_1_button_label", webMI.query["fontColor"]);
+		webMI.gfx.setFill("button_access_log_1_button_label_1", webMI.query["fontColor"]);
+		webMI.gfx.setFill("button_access_log_1_button_label_2", webMI.query["fontColor"]);
+
+		webMI.gfx.setFill("button_access_log_2_button_bg", webMI.query["fillColor"]);
+		webMI.gfx.setFill("button_access_log_2_button_label", webMI.query["fontColor"]);
+		webMI.gfx.setFill("button_access_log_2_button_label_1", webMI.query["fontColor"]);
+		webMI.gfx.setFill("button_access_log_2_button_label_2", webMI.query["fontColor"]);
+
+		accesslist.close();
+		accesslist = null;
+	}
+}
+
+/**
+ * TRIGGER SECTION
+ */
+webMI.trigger.connect(
+	"clicked",
+	function () {
+		handleAccessLog();
+		setActive(false);
+	},
+	"button_access_log_1"
+);
+
+webMI.trigger.connect(
+	"clicked",
+	function () {
+		handleAccessLog();
+		setActive(false);
+	},
+	"button_access_log_2"
+);
+
+]]]]><![CDATA[></code>
+</script>]]></uax:XmlElement>
+		</Value>
+	</UAVariable>
+	<UAObject NodeId="ns=1;s=SYSTEM" BrowseName="1:SYSTEM">
+		<DisplayName Locale="en">SYSTEM</DisplayName>
+		<Description Locale="en">SYSTEM</Description>
+		<References>
+			<Reference ReferenceType="HasComponent" IsForward="false">i=85</Reference>
+			<Reference ReferenceType="HasTypeDefinition">FolderType</Reference>
+		</References>
+		<Extensions>
+			<atvise Upstream="true" ExportedNodeId="ns=1;s=SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS" ExportedBrowseName="1:OBJECTDISPLAYS"></atvise>
+		</Extensions>
+	</UAObject>
+	<UAObject NodeId="ns=1;s=SYSTEM.LIBRARY" BrowseName="1:LIBRARY">
+		<DisplayName Locale="en">LIBRARY</DisplayName>
+		<Description Locale="en">LIBRARY</Description>
+		<References>
+			<Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=SYSTEM</Reference>
+			<Reference ReferenceType="HasTypeDefinition">FolderType</Reference>
+		</References>
+		<Extensions>
+			<atvise Upstream="true"></atvise>
+		</Extensions>
+	</UAObject>
+	<UAObject NodeId="ns=1;s=SYSTEM.LIBRARY.ATVISE" BrowseName="1:ATVISE">
+		<DisplayName Locale="en">ATVISE</DisplayName>
+		<Description Locale="en">ATVISE</Description>
+		<References>
+			<Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=SYSTEM.LIBRARY</Reference>
+			<Reference ReferenceType="HasTypeDefinition">FolderType</Reference>
+		</References>
+		<Extensions>
+			<atvise Upstream="true"></atvise>
+		</Extensions>
+	</UAObject>
+	<UAObject NodeId="ns=1;s=SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS" BrowseName="1:OBJECTDISPLAYS">
+		<DisplayName Locale="en">OBJECTDISPLAYS</DisplayName>
+		<Description Locale="en">OBJECTDISPLAYS</Description>
+		<References>
+			<Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=SYSTEM.LIBRARY.ATVISE</Reference>
+			<Reference ReferenceType="HasTypeDefinition">FolderType</Reference>
+		</References>
+	</UAObject>
+	<UAObject NodeId="ns=1;s=SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Advanced" BrowseName="1:Advanced">
+		<DisplayName Locale="en">Advanced</DisplayName>
+		<Description Locale="en">Advanced</Description>
+		<References>
+			<Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS</Reference>
+			<Reference ReferenceType="HasTypeDefinition">FolderType</Reference>
+		</References>
+	</UAObject>
+	<UAObject NodeId="ns=1;s=SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Advanced.hmi" BrowseName="1:hmi">
+		<DisplayName Locale="en">hmi</DisplayName>
+		<Description Locale="en">hmi</Description>
+		<References>
+			<Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Advanced</Reference>
+			<Reference ReferenceType="HasTypeDefinition">FolderType</Reference>
+		</References>
+	</UAObject>
+	<UAVariable NodeId="ns=1;s=SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Advanced.hmi.accesscontrol" BrowseName="1:accesscontrol" DataType="XmlElement" AccessLevel="7" UserAccessLevel="7" Historizing="true">
+		<DisplayName Locale="en">accesscontrol</DisplayName>
+		<Description Locale="en">accesscontrol</Description>
+		<References>
+			<Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Advanced.hmi</Reference>
+			<Reference ReferenceType="HasTypeDefinition">DisplayType</Reference>
+		</References>
+		<Value>
+			<uax:XmlElement><![CDATA[<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<svg height="680" version="1.2" width="1280" xmlns="http://www.w3.org/2000/svg" xmlns:atv="http://webmi.atvise.com/2007/svgext" xmlns:xlink="http://www.w3.org/1999/xlink">
+ <defs/>
+ <title>Access Control Log</title>
+ <desc>Provides a table for access control log messages</desc>
+ <metadata>
+  <atv:parameter behavior="mandatory" defaultvalue="atvise_access_log_table" desc="table ID" name="tableID" valuetype="string"/>
+  <atv:parameter behavior="optional" config="Arial;Courier;Tahoma;Verdana" defaultvalue="Arial" desc="font family" group="Font" name="font_family" valuetype="enum"/>
+  <atv:parameter behavior="optional" defaultvalue="SYSTEM.GLOBALS.atvFontColor" desc="font color" group="Font" name="globalFontColor" substitute="$FONTCOLOR$" valuetype="global"/>
+  <atv:parameter behavior="optional" defaultvalue="30" desc="table header height" group="Table" name="header_height" valuetype="number"/>
+  <atv:parameter behavior="optional" defaultvalue="20" desc="table row height" group="Table" name="row_height" valuetype="number"/>
+  <atv:parameter behavior="optional" defaultvalue="12" desc="table header font size" group="Table" name="header_text_size" valuetype="number"/>
+  <atv:parameter behavior="optional" defaultvalue="12" desc="table row font size" group="Table" name="row_text_size" valuetype="number"/>
+  <atv:parameter behavior="optional" defaultvalue="SYSTEM.GLOBALS.atvFillColor" desc="fill color" group="Appearance" name="globalFillColor" substitute="$FILLCOLOR$" valuetype="global"/>
+  <atv:parameter behavior="optional" defaultvalue="SYSTEM.GLOBALS.atvBorderColor" desc="border color" group="Appearance" name="globalBorderColor" valuetype="global"/>
+  <atv:parameter behavior="optional" defaultvalue="SYSTEM.GLOBALS.atvSymbolColor" desc="symbol color" group="Appearance" name="globalSymbolColor" substitute="$SYMBOLCOLOR$" valuetype="global"/>
+  <atv:parameter behavior="optional" defaultvalue="SYSTEM.GLOBALS.atvObjectDisplays.Tables.ColorConfig" desc="table colors" group="Appearance" name="globalColorConfig" valuetype="global"/>
+  <atv:parameter behavior="optional" defaultvalue="atviseTheme" desc="custom theme" group="Appearance" name="theme_class" valuetype="string"/>
+  <atv:parameter behavior="optional" defaultvalue="250000" desc="data limitation" group="Options" name="truncate" valuetype="number"/>
+  <atv:parameter behavior="optional" defaultvalue="true" desc="paging" group="Options" name="paging" valuetype="bool"/>
+  <atv:parameter behavior="optional" defaultvalue="false" desc="cell linebreak" group="Options" name="linebreak" valuetype="bool"/>
+  <atv:parameter behavior="optional" defaultvalue="true" desc="columns reorderable" group="Options" name="columnReorder" valuetype="bool"/>
+  <atv:parameter behavior="optional" defaultvalue="true" desc="multiselect on cell click" group="Options" name="multicellselect" valuetype="bool"/>
+  <atv:parameter behavior="optional" defaultvalue="true" desc="show menu" group="Menu options" name="showMenu" valuetype="bool"/>
+  <atv:parameter behavior="optional" defaultvalue="T{Export CSV}" desc="custom menu title" group="Menu options" name="showMenuCustomTitle" valuetype="string"/>
+  <atv:parameter behavior="optional" defaultvalue="true" desc="show picker menu" group="Menu options" name="showMenuPicker" valuetype="bool"/>
+  <atv:parameter behavior="optional" defaultvalue="T{Columns}" desc="picker menu title" group="Menu options" name="showMenuPickerTitle" valuetype="string"/>
+  <atv:parameter behavior="optional" defaultvalue="300" desc="menu height" group="Menu options" name="menuHeight" valuetype="number"/>
+  <atv:parameter behavior="optional" defaultvalue="250" desc="menu width" group="Menu options" name="menuWidth" valuetype="number"/>
+  <atv:parameter behavior="optional" config="default;popup" defaultvalue="default" desc="mode" name="mode" valuetype="enum"/>
+  <atv:gridconfig enabled="true" gridstyle="lines" height="20" width="20"/>
+  <atv:snapconfig enabled="true" height="2" width="2"/>
+ </metadata>
+ <rect atv:refpx="640" atv:refpy="1.141" fill="$FILLCOLOR$" height="55" id="filters_bg" rx="0" ry="0" stroke="#575757" stroke-width="1" width="1280" x="0" y="0"/>
+ <text atv:refpx="130.375" atv:refpy="29.5" fill="$FONTCOLOR$" font-family="Arial" font-size="18" id="id_9" text-anchor="start" x="51.977" y="34.5">T{Access Control}</text>
+ <svg atv:refpx="-60.4" atv:refpy="-888.4" height="20" id="id_4" transform="matrix(2.3,0,0,2.3,0,0)" width="20" x="1.739" xlink:href="SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Symbols.20x20.user" y="1.739">
+  <atv:argument name="symbolColor" value="#575757"/>
+ </svg>
+ <svg atv:refpx="640" atv:refpy="368.5" height="430" id="id_0" transform="matrix(1.6623,0,0,1.4581,0,0)" width="770" x="0" xlink:href="SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Advanced.hmi.accesscontrol_log" y="37.719">
+  <atv:argument name="header_height" prefix="header_height"/>
+  <atv:argument name="row_height" prefix="row_height"/>
+  <atv:argument name="header_text_size" prefix="header_text_size"/>
+  <atv:argument name="row_text_size" prefix="row_text_size"/>
+  <atv:argument name="mode" value="default"/>
+  <atv:argument name="header_text_size" prefix="row_text_size" value=""/>
+  <atv:argument name="tableID" prefix="tableID"/>
+ </svg>
+ <svg atv:refpx="1220" atv:refpy="27" height="30" id="cmd_clear_log" width="80" x="1180" xlink:href="SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Advanced.button" y="12">
+  <atv:argument name="label" value="T{Clear Log}"/>
+ </svg>
+ <script atv:desc="" atv:href="SYSTEM.LIBRARY.ATVISE.DISPLAYSCRIPTS.hmi.accesscontrol" atv:name="accesscontrol" atv:type="text/ecmascript"/>
+ <script atv:desc="" atv:name="" type="text/ecmascript"/>
+</svg>
+]]></uax:XmlElement>
+		</Value>
+	</UAVariable>
+	<UAVariable NodeId="ns=1;s=SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Advanced.hmi.accesscontrol_log" BrowseName="1:accesscontrol_log" DataType="XmlElement" AccessLevel="7" UserAccessLevel="7" Historizing="true">
+		<DisplayName Locale="en">accesscontrol_log</DisplayName>
+		<Description Locale="en">accesscontrol_log</Description>
+		<References>
+			<Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Advanced.hmi</Reference>
+			<Reference ReferenceType="HasTypeDefinition">DisplayType</Reference>
+		</References>
+		<Value>
+			<uax:XmlElement><![CDATA[<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<svg height="430" version="1.2" width="770" xmlns="http://www.w3.org/2000/svg" xmlns:atv="http://webmi.atvise.com/2007/svgext" xmlns:xlink="http://www.w3.org/1999/xlink">
+	<defs/>
+	<title>Access Control Log Dialog</title>
+	<desc>Default-dialog for access control log messages</desc>
+	<metadata>
+    <atv:parameter behavior="mandatory" defaultvalue="atvise_access_log" desc="table ID" name="tableID" valuetype="string"/>
+		<atv:parameter behavior="optional" config="Arial;Courier;Tahoma;Verdana" defaultvalue="Arial" desc="font family" group="Font" name="font_family" valuetype="enum"/>
+		<atv:parameter behavior="optional" defaultvalue="SYSTEM.GLOBALS.atvFontColor" desc="font color" group="Font" name="globalFontColor" substitute="$FONTCOLOR$" valuetype="global"/>
+    <atv:parameter behavior="optional" defaultvalue="42" desc="table header height" group="Table" name="header_height" valuetype="number"/>
+    <atv:parameter behavior="optional" defaultvalue="32" desc="table row height" group="Table" name="row_height" valuetype="number"/>
+    <atv:parameter behavior="optional" defaultvalue="17" desc="table header font size" group="Table" name="header_text_size" valuetype="number"/>
+    <atv:parameter behavior="optional" defaultvalue="15" desc="table row font size" group="Table" name="row_text_size" valuetype="number"/>
+		<atv:parameter behavior="optional" defaultvalue="SYSTEM.GLOBALS.atvFillColor" desc="fill color" group="Appearance" name="globalFillColor" substitute="$FILLCOLOR$" valuetype="global"/>
+		<atv:parameter behavior="optional" defaultvalue="SYSTEM.GLOBALS.atvBorderColor" desc="border color" group="Appearance" name="globalBorderColor" valuetype="global"/>
+		<atv:parameter behavior="optional" defaultvalue="SYSTEM.GLOBALS.atvSymbolColor" desc="symbol color" group="Appearance" name="globalSymbolColor" substitute="$SYMBOLCOLOR$" valuetype="global"/>
+		<atv:parameter behavior="optional" defaultvalue="SYSTEM.GLOBALS.atvObjectDisplays.Tables.ColorConfig" desc="table colors" group="Appearance" name="globalColorConfig" valuetype="global"/>
+		<atv:parameter behavior="optional" defaultvalue="atviseTheme" desc="custom theme" group="Appearance" name="theme_class" valuetype="string"/>
+		<atv:parameter behavior="optional" defaultvalue="250000" desc="data limitation" group="Options" name="truncate" valuetype="number"/>
+		<atv:parameter behavior="optional" defaultvalue="true" desc="paging" group="Options" name="paging" valuetype="bool"/>
+		<atv:parameter behavior="optional" defaultvalue="false" desc="cell linebreak" group="Options" name="linebreak" valuetype="bool"/>
+		<atv:parameter behavior="optional" defaultvalue="true" desc="columns reorderable" group="Options" name="columnReorder" valuetype="bool"/>
+		<atv:parameter behavior="optional" defaultvalue="true" desc="multiselect on cell click" group="Options" name="multicellselect" valuetype="bool"/>
+		<atv:parameter behavior="optional" defaultvalue="true" desc="show menu" group="Menu options" name="showMenu" valuetype="bool"/>
+		<atv:parameter behavior="optional" defaultvalue="T{Export CSV}" desc="custom menu title" group="Menu options" name="showMenuCustomTitle" valuetype="string"/>
+		<atv:parameter behavior="optional" defaultvalue="true" desc="show picker menu" group="Menu options" name="showMenuPicker" valuetype="bool"/>
+		<atv:parameter behavior="optional" defaultvalue="T{Columns}" desc="picker menu title" group="Menu options" name="showMenuPickerTitle" valuetype="string"/>
+		<atv:parameter behavior="optional" defaultvalue="300" desc="menu height" group="Menu options" name="menuHeight" valuetype="number"/>
+		<atv:parameter behavior="optional" defaultvalue="250" desc="menu width" group="Menu options" name="menuWidth" valuetype="number"/>
+		<atv:parameter behavior="optional" config="default;popup" defaultvalue="popup" desc="mode" name="mode" valuetype="enum"/>
+		<atv:gridconfig enabled="true" gridstyle="lines" height="20" width="20"/>
+		<atv:snapconfig enabled="true" height="2" width="2"/>
+	</metadata>
+  <svg atv:refpx="385.032" atv:refpy="214.982" height="640" id="atvise_access_log_table" transform="matrix(1.2031,0,0,0.6719,0,0)" width="640" x="0" xlink:href="SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Advanced.slickgrid.table" y="0">
+    <atv:argument name="tableID" prefix="tableID"/>
+		<atv:argument name="multiselect" value="false"/>
+    <atv:argument name="header_height" prefix="header_height"/>
+    <atv:argument name="header_text_size" prefix="header_text_size"/>
+    <atv:argument name="row_height" prefix="row_height"/>
+    <atv:argument name="row_text_size" prefix="row_text_size"/>
+    <atv:argument name="filterBar" value="false"/>
+    <atv:argument name="paging" value="false"/>
+    <atv:argument name="showMode" value="false"/>
+    <atv:argument name="header_text_horizontal" value="center"/>
+	</svg>
+	<script atv:desc="" atv:href="SYSTEM.LIBRARY.ATVISE.DISPLAYSCRIPTS.hmi.accesscontrol" atv:name="accesscontrol" atv:type="text/ecmascript"/>
+	<script atv:desc="" atv:name="" type="text/ecmascript"/>
+</svg>
+]]></uax:XmlElement>
+		</Value>
+	</UAVariable>
+	<UAObject NodeId="ns=1;s=SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Advanced.layoutelements" BrowseName="1:layoutelements">
+		<DisplayName Locale="en">layoutelements</DisplayName>
+		<Description Locale="en">layoutelements</Description>
+		<References>
+			<Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Advanced</Reference>
+			<Reference ReferenceType="HasTypeDefinition">FolderType</Reference>
+		</References>
+	</UAObject>
+	<UAVariable NodeId="ns=1;s=SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Advanced.layoutelements.button_view_access" BrowseName="1:button_view_access" DataType="XmlElement" AccessLevel="7" UserAccessLevel="7" Historizing="true">
+		<DisplayName Locale="en">button_view_access</DisplayName>
+		<Description Locale="en">button_view_access</Description>
+		<References>
+			<Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Advanced.layoutelements</Reference>
+			<Reference ReferenceType="HasTypeDefinition">DisplayType</Reference>
+		</References>
+		<Value>
+			<uax:XmlElement><![CDATA[<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<svg height="65" version="1.2" width="230" xmlns="http://www.w3.org/2000/svg" xmlns:atv="http://webmi.atvise.com/2007/svgext" xmlns:xlink="http://www.w3.org/1999/xlink">
+	<defs/>
+	<title>Button Access Control Log</title>
+	<desc>Opens the access control log.</desc>
+	<metadata>
+		<atv:parameter behavior="optional" defaultvalue="SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Advanced.hmi.accesscontrol_log" desc="display for access log" name="accessDisplay" valuetype="display"/>
+		<atv:parameter behavior="mandatory" defaultvalue="atvise_access_log_alert" desc="table ID" name="tableID" valuetype="string"/>
+		<atv:parameter behavior="optional" defaultvalue="#ff0000" desc="color for alarms" group="" name="alarm_color" valuetype="string"/>
+		<atv:parameter behavior="optional" config="small;large" defaultvalue="small" desc="size" group="Button" name="buttonSize" valuetype="enum"/>
+		<atv:parameter behavior="optional" config="6;7;8;9;10;11;12;14;16;18;20;22;24;26;28;36;48;72" defaultvalue="18" desc="font size" group="Button" name="fontSize" valuetype="enum"/>
+		<atv:parameter behavior="optional" defaultvalue="SYSTEM.GLOBALS.atvFontColor" desc="font color" group="Button" name="fontColor" valuetype="global"/>
+		<atv:parameter behavior="optional" defaultvalue="SYSTEM.GLOBALS.atvFontColor2" desc="font color active" group="Button" name="fontColorActive" valuetype="global"/>
+		<atv:parameter behavior="optional" defaultvalue="SYSTEM.GLOBALS.atvFillColor" desc="fill color" group="Button" name="fillColor" valuetype="global"/>
+		<atv:parameter behavior="optional" defaultvalue="SYSTEM.GLOBALS.atvFillColor2" desc="fill color active" group="Button" name="fillColorActive" valuetype="global"/>
+		<atv:parameter behavior="optional" defaultvalue="SYSTEM.GLOBALS.atvSymbolColor" desc="symbol color" group="Button" name="symbolColor" substitute="$SYMBOLCOLOR$" valuetype="global"/>
+		<atv:parameter behavior="optional" defaultvalue="SYSTEM.GLOBALS.atvFontColor2" desc="symbol color active" group="Button" name="symbolColorActive" valuetype="global"/>
+		<atv:parameter behavior="optional" defaultvalue="#ffffff" desc="focus stroke color" group="Appearance" name="focusStrokeColor" valuetype="color"/>
+		<atv:parameter behavior="optional" config="SYSTEM.SECURITY.RIGHTS" desc="necessary right" group="Button" name="right" valuetype="address"/>
+		<atv:parameter behavior="optional" desc="activation address" group="Button" name="activeNode" valuetype="address"/>
+		<atv:parameter behavior="optional" desc="activation value" group="Button" name="activeValue" valuetype="string"/>
+		<atv:parameter behavior="optional" defaultvalue="772" desc="popup width" group="PopUp" name="width" valuetype="number"/>
+		<atv:parameter behavior="optional" defaultvalue="430" desc="popup height" group="PopUp" name="height" valuetype="number"/>
+		<atv:parameter behavior="optional" defaultvalue="1672" desc="popup position x" group="PopUp" name="x" valuetype="number"/>
+		<atv:parameter behavior="optional" defaultvalue="984" desc="popup position y" group="PopUp" name="y" valuetype="number"/>
+		<atv:parameter behavior="optional" defaultvalue="1" desc="popup anchor x" group="PopUp" name="anchorX" valuetype="number"/>
+		<atv:parameter behavior="optional" defaultvalue="1" desc="popup anchor y" group="PopUp" name="anchorY" valuetype="number"/>
+		<atv:gridconfig enabled="false" gridstyle="lines" height="20" width="20"/>
+		<atv:snapconfig enabled="false" height="10" width="10"/>
+	</metadata>
+	<svg atv:bindtl="0.5,0.5" atv:bindtr="0.5,0.5" atv:refpx="114.999" atv:refpy="32.5" height="30" id="button_access_log_2" transform="matrix(2.875,0,0,2.1667,0,0)" width="80" x="0" xlink:href="SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Advanced.button" y="0">
+		<atv:argument name="symbol" value="SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Symbols.alarmlist.enabled"/>
+		<atv:argument name="label" value="T{Access Log}"/>
+		<atv:argument name="borderColor" value="SYSTEM.GLOBALS.atvBorderColor2"/>
+		<atv:argument name="right" prefix="right"/>
+		<atv:argument name="activeNode" prefix="activeNode"/>
+		<atv:argument name="activeValue" prefix="activeValue"/>
+		<atv:argument name="fontSize" prefix="fontSize"/>
+		<atv:argument name="fontSize2" prefix="fontSize"/>
+		<atv:argument name="focusStrokeColor" prefix="focusStrokeColor"/>
+		<atv:argument name="fontColor" prefix="fontColor"/>
+		<atv:overwrite height="63" id="id_6" transform="matrix(0.3478,0,0,0.4615,0,0)" width="228"/>
+		<atv:overwrite id="button_label_2" transform="matrix(0.3478,0,0,0.4615,0,0)" x="115" y="44"/>
+		<atv:overwrite id="button_label_1" transform="matrix(0.3478,0,0,0.4615,0,0)" x="115" y="29"/>
+		<atv:overwrite id="button_label" transform="matrix(0.3478,0,0,0.4615,0,0)" x="115" y="37"/>
+		<atv:overwrite id="button_symbol" transform="matrix(0.3478,0,0,0.4615,0,0)" x="105" y="22.5"/>
+		<atv:overwrite height="61" id="button_stroke" transform="matrix(0.3478,0,0,0.4615,0,0)" width="226"/>
+		<atv:overwrite height="63" id="button_bg" transform="matrix(0.3478,0,0,0.4615,0,0)" width="228"/>
+		<atv:overwrite height="65" id="outer_frame" transform="matrix(0.3478,0,0,0.4615,0,0)" width="230"/>
+	</svg>
+	<svg atv:bindtl="0,0" atv:bindtr="1,1" atv:refpx="55.5" atv:refpy="32.5" height="30" id="button_access_log_1" transform="matrix(1.3875,0,0,2.1667,0,0)" width="80" x="0" xlink:href="SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Advanced.button" y="0">
+		<atv:argument name="symbol" value="SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Symbols.alarmlist.enabled"/>
+		<atv:argument name="label" value="T{Access Log}"/>
+		<atv:argument name="borderColor" value="SYSTEM.GLOBALS.atvBorderColor2"/>
+		<atv:argument name="right" prefix="right"/>
+		<atv:argument name="activeNode" prefix="activeNode"/>
+		<atv:argument name="activeValue" prefix="activeValue"/>
+		<atv:argument name="fontSize" prefix="fontSize"/>
+		<atv:argument name="fontSize2" prefix="fontSize"/>
+		<atv:argument name="focusStrokeColor" prefix="focusStrokeColor"/>
+		<atv:argument name="fontColor" prefix="fontColor"/>
+		<atv:overwrite height="63" id="id_6" transform="matrix(0.7207,0,0,0.4615,0,0)" width="109"/>
+		<atv:overwrite id="button_label_2" transform="matrix(0.7207,0,0,0.4615,0,0)" x="55.5" y="44"/>
+		<atv:overwrite id="button_label_1" transform="matrix(0.7207,0,0,0.4615,0,0)" x="55.5" y="29"/>
+		<atv:overwrite id="button_label" transform="matrix(0.7207,0,0,0.4615,0,0)" x="55.5" y="37"/>
+		<atv:overwrite id="button_symbol" transform="matrix(0.7207,0,0,0.4615,0,0)" x="45.5" y="22.5"/>
+		<atv:overwrite height="61" id="button_stroke" transform="matrix(0.7207,0,0,0.4615,0,0)" width="107"/>
+		<atv:overwrite height="63" id="button_bg" transform="matrix(0.7207,0,0,0.4615,0,0)" width="109"/>
+		<atv:overwrite height="65" id="outer_frame" transform="matrix(0.7207,0,0,0.4615,0,0)" width="111"/>
+	</svg>
+	<polyline atv:refpx="12.001" atv:refpy="12.836" fill="$SYMBOLCOLOR$" id="context_menu_sign" points="3,2.998 3,20.998 21,2.998 3,2.998" stroke="$SYMBOLCOLOR$" stroke-linejoin="round" stroke-width="1"/>
+	<script atv:desc="" atv:href="SYSTEM.LIBRARY.ATVISE.DISPLAYSCRIPTS.layoutelements.button_view_access" atv:name="button_view_access" atv:type="text/ecmascript"/>
+	<script atv:desc="" atv:name="" type="text/ecmascript"/>
+</svg>
+]]></uax:XmlElement>
+		</Value>
+	</UAVariable>
+	<UAObject NodeId="ns=1;s=SYSTEM" BrowseName="1:SYSTEM">
+		<DisplayName Locale="en">SYSTEM</DisplayName>
+		<Description Locale="en">SYSTEM</Description>
+		<References>
+			<Reference ReferenceType="HasComponent" IsForward="false">i=85</Reference>
+			<Reference ReferenceType="HasTypeDefinition">FolderType</Reference>
+		</References>
+		<Extensions>
+			<atvise Upstream="true" ExportedNodeId="ns=1;s=SYSTEM.LIBRARY.ATVISE.QUICKDYNAMICS" ExportedBrowseName="1:QUICKDYNAMICS"></atvise>
+		</Extensions>
+	</UAObject>
+	<UAObject NodeId="ns=1;s=SYSTEM.LIBRARY" BrowseName="1:LIBRARY">
+		<DisplayName Locale="en">LIBRARY</DisplayName>
+		<Description Locale="en">LIBRARY</Description>
+		<References>
+			<Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=SYSTEM</Reference>
+			<Reference ReferenceType="HasTypeDefinition">FolderType</Reference>
+		</References>
+		<Extensions>
+			<atvise Upstream="true"></atvise>
+		</Extensions>
+	</UAObject>
+	<UAObject NodeId="ns=1;s=SYSTEM.LIBRARY.ATVISE" BrowseName="1:ATVISE">
+		<DisplayName Locale="en">ATVISE</DisplayName>
+		<Description Locale="en">ATVISE</Description>
+		<References>
+			<Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=SYSTEM.LIBRARY</Reference>
+			<Reference ReferenceType="HasTypeDefinition">FolderType</Reference>
+		</References>
+		<Extensions>
+			<atvise Upstream="true"></atvise>
+		</Extensions>
+	</UAObject>
+	<UAObject NodeId="ns=1;s=SYSTEM.LIBRARY.ATVISE.QUICKDYNAMICS" BrowseName="1:QUICKDYNAMICS">
+		<DisplayName Locale="en">QUICKDYNAMICS</DisplayName>
+		<Description Locale="en">QUICKDYNAMICS</Description>
+		<References>
+			<Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=SYSTEM.LIBRARY.ATVISE</Reference>
+			<Reference ReferenceType="HasTypeDefinition">FolderType</Reference>
+		</References>
+	</UAObject>
+	<UAVariable NodeId="ns=1;s=SYSTEM.LIBRARY.ATVISE.QUICKDYNAMICS.Access Control Element Notifier" BrowseName="1:Access Control Element Notifier" DataType="XmlElement" AccessLevel="7" UserAccessLevel="7" Historizing="true">
+		<DisplayName Locale="en">Access Control Element Notifier</DisplayName>
+		<Description Locale="en">Access Control Element Notifier</Description>
+		<References>
+			<Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=SYSTEM.LIBRARY.ATVISE.QUICKDYNAMICS</Reference>
+			<Reference ReferenceType="HasTypeDefinition">QuickDynamicType</Reference>
+		</References>
+		<Value>
+			<uax:XmlElement><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+<script>
+  <metadata>
+    <icon type="image/png">iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAIAAAD8GO2jAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAPNSURBVEhL1dVbTBNZGADg01ZKbaHItRdqWquWTQklRIiyqTFZtJjU8GJ88UFQE30wQdk1AqI2G8TbrmKiicaFxBhjdokGIxelLV4BwUu8YGDLuqKtFwIEL8BCO52Op9O/bNuZ1mLig1/Ow/x/z/w/Z84ZhkNRFPqWom3woa/f/Ne5h/1PGh88+mdwKE40d11+/jJdbn6hIctQAJNY4QaRTfT3VhevyVGIu/WZzvRFFFfiG870xd3Ls3OU0o2rCgdud8Jshi80eHzhZIYyvven7Jm6zPGsYElqSmLTiVNwT7BIDR6dO6xViNzJypCKzOFOUS1SSC4fPwl3BgjbYLjjojpdiO8MqiXPon79nep5SJXtCcrTPdJSk55ZrsP9flzYihCuD7tMVa2L1byxKcj4cDhILkXaDJScDBk/PPOOTr1zbyXEfuwN7FfPDgy+zbg9AvEMwo3c/sGgueH49H7oXsMliGksDSiPq/lK8ynZfIgD+UqTJCJZGmCnJanWtjYIaFyBQMAJplYkWJ72Z/ZNwpRABIHcpHfgpbDR9o5eu38XAtqc0tJSoVAIEU0aP7m98iiPTIM4EC7t/fNxD/YGvI9T9ybfQEDjhlTHuMjjIsK83t4VhN0DH6eLgCsfOE0BPBOD+QtTyaQwx7/mOPXvS2pbeWieHmSSKlORDoVobKcoJmG1bkH3hnkQhjjxBzKuRw1XIAzWvVm5IlMHAY2lAYefmJOtmbgV/Ab4KOToQBW6b0Y7tkIm2MTN8aU/6iGgsb8Hq7f9fHB0bPiICuIZ+EXDPB7vPjOM/Jax1/HOsGUTxLRw/66py/uLuX/eLRpxo9HgpcTGopg5aNoZss9UirBVnjCwqrDsyCFI0cJ/D4jx3WsLBGnv9zUxejBQ8fzq9bLnvYIzljb8YkGWFumDQzrHdhcVTomHaz9JedZXkGUgVyrLUlz/2WKrmxplMhlk/dj3wIcXm3SwtVOnXpHz4u/ze9LcBSpK/v/RouSJnpWq8/vma587uO4fjra3MatjUX0y7S/6GkyVx65ZsxaKtEqBWBQz7oyxvSY7H78rXrbc+EuZwWCAqQzRfpOx8vJygiBqa2tNJlNcXFxeXl5ubq5IJIKfw8ENoqTX61taWmZ1CxZpDwJZLBaHw6HRaKRSKaSiBI0iMpvNEonEarXW1NSUlJRANjoc/EChFZvp6emuri673V5fXy8Wi41GY0dHB14H/BwFLi4Bl2xw0YqKivb29p6eHly9rq5uVtW9+Hw+XIWHnzt+MjabDZY9G7M4pl8n2lP01b73Bgh9BoIFUn7HhnGEAAAAAElFTkSuQmCC</icon>
+    <visible>1</visible>
+    <title>Access Control Element Notifier</title>
+    <description>Permission notifications on elements.</description>
+  </metadata>
+  <parameter behavior="hidden" desc="element ID for notification" name="id" valuetype="string"/>
+  <parameter behavior="optional" desc="address 1" name="node_1" valuetype="address"/>
+  <parameter behavior="optional" config="browse;read;write;execute;alarmAcknowledge;alarmConfirm;engineer" desc="address 1 right" name="right_1" valuetype="enum"/>
+  <parameter behavior="optional" desc="address 2" name="node_2" valuetype="address"/>
+  <parameter behavior="optional" config="browse;read;write;execute;alarmAcknowledge;alarmConfirm;engineer" desc="address 2 right" name="right_2" valuetype="enum"/>
+  <parameter behavior="optional" desc="address 3" name="node_3" valuetype="address"/>
+  <parameter behavior="optional" config="browse;read;write;execute;alarmAcknowledge;alarmConfirm;engineer" desc="address 3 right" name="right_3" valuetype="enum"/>
+  <parameter behavior="optional" desc="address 4" name="node_4" valuetype="address"/>
+  <parameter behavior="optional" config="browse;read;write;execute;alarmAcknowledge;alarmConfirm;engineer" desc="address 4 right" name="right_4" valuetype="enum"/>
+  <parameter behavior="optional" desc="address 5" name="node_5" valuetype="address"/>
+  <parameter behavior="optional" config="browse;read;write;execute;alarmAcknowledge;alarmConfirm;engineer" desc="address 5 right" name="right_5" valuetype="enum"/>
+  <parameter behavior="optional" desc="address 6" name="node_6" valuetype="address"/>
+  <parameter behavior="optional" config="browse;read;write;execute;alarmAcknowledge;alarmConfirm;engineer" desc="address 6 right" name="right_6" valuetype="enum"/>
+  <parameter behavior="optional" desc="address 7" name="node_7" valuetype="address"/>
+  <parameter behavior="optional" config="browse;read;write;execute;alarmAcknowledge;alarmConfirm;engineer" desc="address 7 right" name="right_7" valuetype="enum"/>
+  <parameter behavior="optional" desc="address 8" name="node_8" valuetype="address"/>
+  <parameter behavior="optional" config="browse;read;write;execute;alarmAcknowledge;alarmConfirm;engineer" desc="address 8 right" name="right_8" valuetype="enum"/>
+  <parameter behavior="optional" desc="address 9" name="node_9" valuetype="address"/>
+  <parameter behavior="optional" config="browse;read;write;execute;alarmAcknowledge;alarmConfirm;engineer" desc="address 9 right" name="right_9" valuetype="enum"/>
+  <parameter behavior="optional" desc="address 10" name="node_10" valuetype="address"/>
+  <parameter behavior="optional" config="browse;read;write;execute;alarmAcknowledge;alarmConfirm;engineer" desc="address 10 right" name="right_10" valuetype="enum"/>
+  <parameter behavior="optional" config="Example: AGENT.OBJECTS.node1,r;AGENT.OBJECTS.node2,w" desc="alternate input method" name="alternate" valuetype="string"/>
+  <parameter behavior="optional" config="Example: &lt;i class='fas fa-ban'&gt;&lt;/i&gt;;&lt;i class='fas fa-exclamation-circle'&gt;&lt;/i&gt;" desc="element notification symbol" name="elementSymbol" valuetype="string"/>
+  <parameter behavior="hidden" desc="element notification ID" name="elementId" valuetype="string"/>
+  <parameter behavior="optional" desc="element notification color" name="elementColor" valuetype="color"/>
+  <parameter behavior="optional" desc="element notification background" name="elementBackground" valuetype="color"/>
+  <parameter behavior="optional" desc="element notification border color" name="elementBorderColor" valuetype="address"/>
+  <parameter behavior="optional" desc="element notification margin" name="elementMargin" valuetype="number"/>
+  <parameter behavior="optional" config="true;false" desc="element notification error only" name="elementErrorOnly" valuetype="enum"/>
+  <parameter behavior="optional" desc="element event target" name="elementEventTarget" valuetype="string"/>
+  <code><![CDATA[// This Quick Dynamic manages access control messanges and errors on elements
+if (!webMI.getAccessControlSupport()) {
+	return false;
+}
+
+let rightsOrderedStrings = {
+	browse: { order: 1, name: "T{Visibility}" },
+	read: { order: 2, name: "T{Read}" },
+	write: { order: 3, name: "T{Write}" },
+	engineer: { order: 4, name: "T{Engineer}" },
+	accessControl: { order: 5, name: "T{Configure access control}" },
+	execute: { order: 6, name: "T{Execute}" },
+	scriptAdmin: { order: 7, name: "T{Configure scripts}" },
+	alarmRead: { order: 8, name: "T{Read alarms}" },
+	alarmAcknowledge: { order: 9, name: "T{Acknowledge alarms}" },
+	alarmConfirm: { order: 10, name: "T{Confirm alarms}" },
+	alarmAdmin: { order: 11, name: "T{Manage alarms}" },
+	remoteBrowse: { order: 12, name: "T{Remote browse}" },
+	remoteAlarms: { order: 13, name: "T{Remote alarms}" },
+	remoteEvents: { order: 14, name: "T{Remote events}" }
+};
+
+function orderRights(item1, item2) {
+	return rightsOrderedStrings[item1].order > rightsOrderedStrings[item2].order ? 1 : -1;
+}
+
+var notifier = new (function () {
+	var element;
+	var nodes = [];
+	var rights = [];
+	var rightsDict = {};
+	var _self = this;
+	var initializeTimer = false;
+
+	/* set correct menu id */
+	var menuCfgObj = { id: base.id };
+	if (base.elementId)
+		menuCfgObj = {
+			elementId: base.elementId,
+			elementEventTarget: base.elementEventTarget ? base.elementEventTarget : false
+		};
+
+	for (var key in base.menuLayout) {
+		menuCfgObj[key] = base.menuLayout[key];
+	}
+
+	var odMenu = webMI.callExtension("SYSTEM.LIBRARY.ATVISE.QUICKDYNAMICS.Element Menu", menuCfgObj);
+	var menu;
+
+	var accessControlManager = webMI.callExtension("SYSTEM.LIBRARY.ATVISE.QUICKDYNAMICS.Access Control Manager");
+	var configuration = {};
+	var baseConfiguration = {
+		id: base.id,
+		elementSymbol: base.elementSymbol,
+		elementPosition: base.elementPosition,
+		elementSizeX: base.elementSizeX,
+		elementSizeY: base.elementSizeY,
+		elementOffsetX: base.elementOffsetX,
+		elementOffsetY: base.elementOffsetY,
+		elementBorderSize: base.elementBorderSize,
+		elementBorderRadius: base.elementBorderRadius,
+		elementBorderColor: base.elementBorderColor,
+		elementColor: base.elementColor,
+		elementBackground: base.elementBackground,
+		elementEventTarget: base.elementEventTarget,
+		elementErrorOnly: base.elementErrorOnly
+	};
+
+	function initialize() {
+		clearTimeout(initializeTimer);
+
+		initializeTimer = setTimeout(() => {
+			configuration = getConfiguration();
+
+			nodes = [];
+			rights = [];
+			rightsDict = {};
+
+			if (configuration.id) element = self.document.getElementById(configuration.id);
+			else console.warn("Access Control Manager: Element ID is not defined in function call");
+
+			if (configuration.id && !element) {
+				console.warn("Access Control Manager: Can't find element with id '" + configuration.id + "'");
+			} else {
+				for (var i = 1; i < 11; i++) {
+					var node = base["node_" + i];
+					var right = base["right_" + i];
+					if (node != undefined && node != "" && right != undefined) {
+						nodes.push(node);
+						rights.push(right);
+					}
+				}
+
+				if (typeof base.alternate === "string") {
+					base.alternate.split(";").forEach((alternateParam) => {
+						let nodeAddress, right;
+						[nodeAddress, right] = alternateParam.split(",");
+
+						if (nodeAddress) {
+							nodes.push(nodeAddress);
+							rights.push(right);
+						}
+					});
+				}
+			}
+
+			_self.update();
+		}, 100);
+	}
+
+	function getConfiguration() {
+		var globalConfiguration = accessControlManager.getConfiguration();
+
+		const localConfig = {
+			id: base.id,
+			elementNotification: globalConfiguration.elementNotification,
+			elementSymbol: baseConfiguration.elementSymbol
+				? baseConfiguration.elementSymbol
+				: globalConfiguration.elementSymbol,
+			elementColor: baseConfiguration.elementColor ? baseConfiguration.elementColor : globalConfiguration.elementColor,
+			elementBackground: baseConfiguration.elementBackground
+				? baseConfiguration.elementBackground
+				: globalConfiguration.elementBackground,
+			elementBorderColor: baseConfiguration.elementBorderColor
+				? baseConfiguration.elementBorderColor
+				: globalConfiguration.elementBorderColor,
+			elementMargin: baseConfiguration.elementMargin
+				? baseConfiguration.elementMargin
+				: globalConfiguration.elementMargin,
+			elementErrorOnly: baseConfiguration.elementErrorOnly
+				? baseConfiguration.elementErrorOnly
+				: globalConfiguration.elementErrorOnly
+		};
+
+		return localConfig;
+	}
+
+	this.addRights = function (nodeAddress, rights) {
+		if (!base.alternate) {
+			base.alternate = "";
+		}
+
+		if (typeof rights === "string") {
+			base.alternate += nodeAddress + "," + rights + ";";
+		} else if (Array.isArray(rights)) {
+			rights.forEach((right) => {
+				base.alternate += nodeAddress + "," + right + ";";
+			});
+		}
+
+		initialize();
+	};
+
+	this.showNotification = function () {
+		odMenu.setSymbol({
+			icon: configuration.elementSymbol,
+			fontScale: 80,
+			color: configuration.elementColor,
+			background: configuration.elementBackground,
+			borderColor: configuration.elementBorderColor,
+			margin: configuration.elementMargin,
+			visible: true
+		});
+	};
+
+	this.showAll = function () {
+		var preCfg = getConfiguration();
+		var includeAll = preCfg.elementErrorOnly == false || preCfg.elementErrorOnly == "false";
+		return includeAll;
+	};
+
+	this.hideNotification = function () {
+		odMenu.setSymbol({});
+	};
+
+	this.update = function () {
+		configuration = getConfiguration();
+
+		if (element === null || element === undefined) return;
+
+		if (nodes.length == 0 || rights.length == 0) return;
+
+		// Making deep copies
+		let cbNodes = Array.from(nodes);
+		let cbRights = Array.from(rights);
+
+		accessControlManager.getRightsDict(cbNodes, cbRights, (response) => {
+			let showNotification = false;
+
+			rightsDict = response;
+
+			let uniqueNodes = [...new Set(cbNodes)];
+			let listedRights = cbRights;
+
+			showNotification = false;
+
+			for (const nodeId in rightsDict) {
+				if (Object.values(rightsDict[nodeId]).includes(false)) {
+					showNotification = true;
+				}
+			}
+
+			menu = [];
+
+			menu.push({
+				mid: "accessControlRights",
+				text: "<i class='fas fa-user-shield' style='margin-left: 0.5em;'></i> <b>T{Access Control}</b>",
+				order: 6000,
+				sub: {}
+			});
+
+			// Remove duplicates from nodes array before iterating over them
+			uniqueNodes.forEach((address) => {
+				// NOTE(migf): At the moment we have to pass the text values for var  items via their property
+				// keys, because otherwise they get sanitized, i.e. any HTML elements get removed. This seems to be a
+				// bug in the generic 'show popup'-function.
+				//
+				// E.g.: menu[0].sub[symbol + " " + nodename] instead of just menu[0].sub[nodename]
+
+				// default
+				if (!configuration) {
+					return;
+				} else if (typeof configuration["elementErrorOnly"] == "undefined") {
+					configuration["elementErrorOnly"] = true;
+				}
+
+				// Just show missing rights in menu
+				var includeAll = configuration.elementErrorOnly == false || configuration.elementErrorOnly == "false";
+
+				if (!(Object.values(rightsDict[address]).includes(false) || includeAll)) {
+					return;
+				}
+
+				let nodename = address.replace(/AGENT.OBJECTS./g, "");
+				let symbol;
+				let createdRightMenus = [];
+
+				if (nodename.length > 20) {
+					nodename = "..." + nodename.substring(nodename.length - 17, nodename.length);
+				}
+
+				if (Object.values(rightsDict[address]).includes(false)) {
+					symbol =
+						"<i class='fas fa-exclamation' style='text-align: center; display: inline-block; width: 1.1em; margin-left: 0.5em; color: #ff0000'></i>&nbsp;";
+				} else {
+					symbol =
+						"<i class='fas fa-check' style='text-align: center; display: inline-block; width: 1.1em; margin-left: 0.5em; color: #15992b'></i>&nbsp;";
+				}
+
+				if (!menu[0].sub[symbol + " " + nodename]) {
+					menu[0].sub[symbol + " " + nodename] = {
+						text: symbol + " " + nodename,
+						sub: {}
+					};
+				}
+
+				listedRights = [...new Set(listedRights)];
+				listedRights.sort(orderRights);
+
+				for (const right of listedRights) {
+					let hasRight = rightsDict[address][right];
+
+					if (hasRight === undefined) {
+						continue;
+					}
+
+					let rightSymbol = rightsDict[address][right]
+						? "<i class='fas fa-check' style='text-align: center; display: inline-block; width: 1.1em; margin-left: 0.5em; color: #15992b;'></i>&nbsp;"
+						: "<i class='fas fa-times' style='text-align: center; display: inline-block; width: 1.1em; margin-left: 0.5em; color: #ff0000;'></i>&nbsp;";
+
+					if (!createdRightMenus.includes(right)) {
+						menu[0].sub[symbol + " " + nodename].sub[rightSymbol + right] = {};
+						menu[0].sub[symbol + " " + nodename].sub[rightSymbol + right].text =
+							rightSymbol + rightsOrderedStrings[right].name;
+						createdRightMenus.push(right);
+					}
+				}
+			});
+
+			if (Object.keys(menu[0].sub).length > 0) {
+				odMenu.addMenu(menu);
+
+				if (configuration.elementNotification && showNotification) {
+					_self.showNotification();
+				} else {
+					_self.hideNotification();
+				}
+			} else {
+				_self.hideNotification();
+			}
+		});
+	};
+
+	this.destroy = function () {
+		clearTimeout(initializeTimer);
+		base = null;
+		element = null;
+		nodes = null;
+		rights = null;
+		rightsDict = null;
+		menu = null;
+		configuration = null;
+	};
+
+	webMI.trigger.connect("com.atvise.access_control_update", function (e) {
+		if (e.value.notification === null) return;
+
+		_self.update();
+	});
+
+	webMI.addEvent(webMI.data, "clientvariableschange", () => {
+		if (element) {
+			initialize();
+		}
+	});
+
+	webMI.addOnunload(function () {
+		_self.destroy();
+	});
+
+	initialize();
+})();
+
+return notifier;
+]]]]><![CDATA[></code>
+</script>
+]]></uax:XmlElement>
+		</Value>
+	</UAVariable>
+	<UAVariable NodeId="ns=1;s=SYSTEM.LIBRARY.ATVISE.QUICKDYNAMICS.Access Control Manager" BrowseName="1:Access Control Manager" DataType="XmlElement" AccessLevel="7" UserAccessLevel="7" Historizing="true">
+		<DisplayName Locale="en">Access Control Manager</DisplayName>
+		<Description Locale="en">Access Control Manager</Description>
+		<References>
+			<Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=SYSTEM.LIBRARY.ATVISE.QUICKDYNAMICS</Reference>
+			<Reference ReferenceType="HasTypeDefinition">QuickDynamicType</Reference>
+		</References>
+		<Value>
+			<uax:XmlElement><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+<script>
+  <metadata>
+    <icon type="image/svg+xml">PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCA4LjQ2NjY2NjcgOC40NjY2NjY3IiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxjaXJjbGUgc3R5bGU9ImZpbGw6cmVkO3N0cm9rZTojMDAwO3N0cm9rZS13aWR0aDouMzY1O3N0cm9rZS1taXRlcmxpbWl0OjQ7c3Ryb2tlLWRhc2hhcnJheTpub25lIiBjeD0iNC4yMzMzMzMxIiBjeT0iNC4yMzMzMzMxIiByPSIzLjgyNjI4NDQiLz48dGV4dCB4bWw6c3BhY2U9InByZXNlcnZlIiBzdHlsZT0iZm9udC1zdHlsZTpub3JtYWw7Zm9udC13ZWlnaHQ6NDAwO2ZvbnQtc2l6ZTo2LjM1cHg7bGluZS1oZWlnaHQ6MS4yNTtmb250LWZhbWlseTpzYW5zLXNlcmlmO3RleHQtYWxpZ246Y2VudGVyO3RleHQtYW5jaG9yOm1pZGRsZTtmaWxsOiMwMDA7ZmlsbC1vcGFjaXR5OjE7c3Ryb2tlOm5vbmU7c3Ryb2tlLXdpZHRoOi4yNjQ1ODMiIHg9IjQuMjMzMzMzMSIgeT0iNi41NDE3MTk0Ij48dHNwYW4gc3R5bGU9ImZvbnQtc3R5bGU6bm9ybWFsO2ZvbnQtdmFyaWFudDpub3JtYWw7Zm9udC13ZWlnaHQ6NzAwO2ZvbnQtc3RyZXRjaDpub3JtYWw7Zm9udC1zaXplOjYuMzVweDtmb250LWZhbWlseTpBcmlhbDstaW5rc2NhcGUtZm9udC1zcGVjaWZpY2F0aW9uOidBcmlhbCBCb2xkJzt0ZXh0LWFsaWduOmNlbnRlcjt0ZXh0LWFuY2hvcjptaWRkbGU7ZmlsbDojZmZmO3N0cm9rZTpub25lO3N0cm9rZS13aWR0aDouMjY0NTgzIiB4PSI0LjIzMzMzMzEiIHk9IjYuNTQxNzE5NCI+ITwvdHNwYW4+PC90ZXh0Pjwvc3ZnPg==</icon>
+    <visible>0</visible>
+    <title>Access Control Manager</title>
+    <description>Handles permission notifications</description>
+  </metadata>
+  <parameter behavior="optional" defaultvalue="false" desc="enable notification dialog" name="dialogEnabled" valuetype="bool"/>
+  <parameter behavior="optional" defaultvalue="true" desc="enable element notification" name="elementNotification" valuetype="bool"/>
+  <parameter behavior="optional" defaultvalue="300" desc="rights buffertime (s)" name="bufferTime" valuetype="number"/>
+  <parameter behavior="optional" defaultvalue="true" desc="clear rights cache on display change" name="updateCacheOnDisplayChange" valuetype="bool"/>
+  <parameter behavior="optional" defaultvalue="SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Advanced.dialogs.message_dialog_small" desc="dialog display" name="dialogDisplay" valuetype="display"/>
+  <parameter behavior="optional" config="Example: &lt;i class='fas fa-ban'&gt;&lt;/i&gt;;&lt;i class='fas fa-exclamation-circle'&gt;&lt;/i&gt;" defaultvalue="&lt;i class='fas fa-exclamation-circle'&gt;&lt;/i&gt;" desc="element notification symbol" name="elementSymbol" valuetype="string"/>
+  <parameter behavior="optional" defaultvalue="#ff0000" desc="element notification color" name="elementColor" valuetype="color"/>
+  <parameter behavior="optional" defaultvalue="#ffffff" desc="element notification background" name="elementBackground" valuetype="color"/>
+  <parameter behavior="optional" defaultvalue="#ffffff" desc="element notification border color" name="elementBorderColor" valuetype="color"/>
+  <parameter behavior="optional" defaultvalue="0" desc="element notification margin" name="elementMargin" valuetype="number"/>
+  <parameter behavior="optional" defaultvalue="true" desc="element notification error only" name="elementErrorOnly" valuetype="bool"/>
+  <code><![CDATA[// This Quick Dynamic manages access control messanges and erros
+var self = this;
+
+if (self.rights_storage == undefined) {
+	self.rights_storage = {};
+	self.currentUser = "";
+	self.requestBufferNodes = [];
+	self.requestCallbacks = [];
+	self.requestActive = false;
+	self.debouncingTimerReference = false;
+	self.dialog = null;
+	self.nodesToUpdate = [];
+	self.retryCounters = {};
+	self.configuration = {
+		dialogEnabled: base.dialogEnabled == "true" || base.dialogEnabled == true ? true : false,
+		elementNotification: base.elementNotification == "true" || base.elementNotification == true ? true : false,
+		bufferTime: parseInt(base.bufferTime),
+		updateCacheOnDisplayChange: base.updateCacheOnDisplayChange,
+		dialogDisplay: base.dialogDisplay,
+		dialogWidth: 600,
+		dialogHeight: 400,
+		elementSymbol: base.elementSymbol,
+		elementColor: base.elementColor,
+		elementBackground: base.elementBackground,
+		elementBorderColor: base.elementBorderColor,
+		elementMargin: base.elementMargin,
+		elementErrorOnly: base.elementErrorOnly,
+		maxNotificationElements: 100000,
+		maxRightsElements: 100000,
+		requestBufferTime: 250,
+		maxRetries: 100,
+		debug_response: ""
+	};
+}
+
+if (!webMI.getAccessControlSupport()) return false;
+
+if (!webMI.rootWindow.acManagerEventsAttached) {
+	webMI.rootWindow.acManagerEventsAttached = true;
+
+	webMI.addEvent(webMI.rootWindow.webMI.data, "clientvariableschange", function (e) {
+		if (e.username === undefined) return;
+
+		// Delete rights for logged out user
+		if (e.username == "" && self.currentUser != "" && self.configuration.bufferTime > 0) {
+			delete self.rights_storage[self.currentUser];
+		}
+
+		// Set current user and fire update
+		self.currentUser = e.username;
+		webMI.trigger.fire("com.atvise.access_control_update", { username: self.currentUser });
+	});
+
+	webMI.addEvent(webMI.rootWindow.webMI.data, "permissionnotification", function (notification) {
+		clearTimeout(self.debouncingTimerReference);
+
+		if (notification && notification.address) {
+			if (self.nodesToUpdate.indexOf(notification.address) == -1) self.nodesToUpdate.push(notification.address);
+		}
+
+		self.debouncingTimerReference = setTimeout(() => {
+			if (self.nodesToUpdate.length == 0) return;
+
+			getRightsFromServer(self.nodesToUpdate, () => {
+				AccessControlManager.update({ notification: notification });
+
+				// Show Dialog when enabled
+				if (self.configuration.dialogEnabled) AccessControlManager.showDialog(notification);
+			});
+
+			self.nodesToUpdate = [];
+		}, 500);
+	});
+}
+
+function getTotalRightsCount() {
+	let rightsCount = 0;
+
+	for (const user in self.rights_storage) {
+		rightsCount += Object.keys(self.rights_storage[user]).length;
+	}
+
+	return rightsCount;
+}
+
+function addRightsToStorage(user, node, rights, timestamp) {
+	const now = Date.now();
+
+	if (!self.rights_storage[user]) {
+		self.rights_storage[user] = {};
+	}
+
+	self.rights_storage[user][node] = { rights: rights, timestamp: timestamp };
+
+	// Clear retry counter for successfully retrieved node
+	var retryKey = `${user}_${node}`;
+	if (self.retryCounters[retryKey]) {
+		delete self.retryCounters[retryKey];
+	}
+
+	// Delete old objects if the limit exceeds the maxRightsElements setting
+	var length = getTotalRightsCount();
+
+	if (length > self.configuration.maxRightsElements) {
+		for (const user in self.rights_storage) {
+			for (const nodeId in self.rights_storage[user]) {
+				const timestamp = self.rights_storage[user][nodeId].timestamp;
+
+				if (timestamp < now - self.configuration.bufferTime) {
+					delete self.rights_storage[user][nodeId];
+				}
+			}
+		}
+	}
+}
+
+function getRightsFromServer(nodes, callback) {
+	for (let i = 0; i < nodes.length; i++) {
+		if (self.requestBufferNodes.indexOf(nodes[i]) == -1) self.requestBufferNodes.push(nodes[i]);
+	}
+
+	self.requestCallbacks.push(callback);
+
+	if (self.requestActive) return;
+	self.requestActive = true;
+	setTimeout(() => {
+		var callbacks = self.requestCallbacks;
+
+		if (webMI.data.getRights && self.configuration.debug_response == "") {
+			let requestBufferNodes = self.requestBufferNodes;
+
+			webMI.data.getRights(self.requestBufferNodes, (e) => {
+				var now = Date.now();
+
+				for (let i = 0; i < e.length; i++) {
+					addRightsToStorage(self.currentUser, requestBufferNodes[i], e[i], now);
+				}
+
+				for (const n in callbacks) callbacks[n]();
+			});
+		} else {
+			var now = Date.now();
+
+			for (let i = 0; i < self.requestBufferNodes.length; i++) {
+				addRightsToStorage(self.currentUser, self.requestBufferNodes[i], self.configuration.debug_response, now);
+			}
+
+			for (const n in callbacks) callbacks[n]();
+		}
+
+		self.requestBufferNodes = [];
+		self.requestCallbacks = [];
+		self.requestActive = false;
+	}, self.configuration.requestBufferTime);
+}
+
+var AccessControlManager = new (function () {
+	var that = this;
+
+	this.getConfiguration = function (option) {
+		if (option) return self.configuration[option];
+		else return self.configuration;
+	};
+
+	this.setConfiguration = function (options, values) {
+		// Convert strings to arrays
+		if (typeof options === "string") options = options.split(";");
+
+		if (typeof values === "string") values = values.split(";");
+		if (typeof values === "boolean") values = [values];
+
+		if (options.length != values.length) return false;
+
+		var successful = false;
+		for (var n = 0; n < options.length; n++) {
+			if (self.configuration[options[n]] != "undefined") {
+				self.configuration[options[n]] = values[n];
+				successful = true;
+			}
+		}
+
+		if (successful) webMI.trigger.fire("com.atvise.access_control_update", { configuration: options, value: values });
+
+		return successful;
+	};
+
+	this.clearRightsStorage = function (address, update) {
+		var ret = false;
+
+		if (typeof address === "string") {
+			if (self.rights_storage[self.currentUser] && self.rights_storage[self.currentUser][address]) {
+				delete self.rights_storage[self.currentUser][address];
+				ret = true;
+			}
+		} else if (typeof address === "object" && address !== null) {
+			for (var i in address) {
+				if (self.rights_storage[self.currentUser] && self.rights_storage[self.currentUser][address[i]]) {
+					delete self.rights_storage[self.currentUser][address[i]];
+					ret = true;
+				}
+			}
+		} else {
+			self.rights_storage = {};
+			ret = true;
+		}
+
+		if (update !== false) webMI.trigger.fire("com.atvise.access_control_update", { rigthsstorage: null });
+		return ret;
+	};
+
+	this.update = function (message) {
+		if (typeof message == "undefined") message = { update: true };
+		webMI.trigger.fire("com.atvise.access_control_update", message);
+	};
+
+	this.isFunction = function (arg) {
+		return typeof arg === "function" || (arg != null && typeof arg === "object" && "call" in arg);
+	};
+
+	this.getRights = function (nodeList, rightOrCallback, guaranteedCallback) {
+		var now = Date.now();
+		var user = self.currentUser;
+		var nodeIds = nodeList;
+		var rights = this.isFunction(rightOrCallback) ? undefined : rightOrCallback;
+		var callback = this.isFunction(rightOrCallback) ? rightOrCallback : guaranteedCallback;
+		var nodesToRequest = [];
+
+		if (nodeIds === "" || !nodeIds || !nodeIds.length) return;
+
+		// Convert strings to arrays
+		if (typeof nodeIds === "string") nodeIds = nodeIds.split(";");
+		if (typeof rights === "string") rights = rights.split(";");
+
+		for (const nodeId of nodeIds) {
+			// Check if right exists or buffertime is exceeded
+			if (self.rights_storage[user] && self.rights_storage[user][nodeId]) {
+				if (
+					self.configuration.bufferTime > 0 &&
+					self.rights_storage[user][nodeId].timestamp < now - self.configuration.bufferTime * 1000
+				) {
+					nodesToRequest.push(nodeId);
+				}
+			} else {
+				nodesToRequest.push(nodeId);
+			}
+		}
+
+		if (nodesToRequest.length > 0) {
+			getRightsFromServer(nodesToRequest, function () {
+				getRightsFromStorage();
+			});
+		} else {
+			getRightsFromStorage();
+		}
+
+		function getRightsFromStorage() {
+			var response = [];
+			var missingNodes = [];
+
+			if (self.rights_storage[self.currentUser] !== undefined && typeof rights === "string") {
+				if (rights === "none" || rights === "raw") {
+					let response = Object.keys(self.rights_storage[self.currentUser]).map((key) => {
+						return self.rights_storage[self.currentUser][key].rights;
+					});
+
+					callback({ result: response });
+
+					return;
+				}
+			}
+
+			if (self.rights_storage[self.currentUser] !== undefined && Array.isArray(rights)) {
+				if (rights.includes("none") || rights.includes("raw")) {
+					let response = Object.keys(self.rights_storage[self.currentUser]).map((key) => {
+						return self.rights_storage[self.currentUser][key].rights;
+					});
+
+					callback({ result: response });
+
+					return;
+				}
+			}
+
+			if (rights) {
+				nodeIds.forEach((nodeId, nodeIndex) => {
+					response[nodeIndex] = {};
+
+					if (
+						self.rights_storage[self.currentUser] !== undefined &&
+						self.rights_storage[self.currentUser][nodeId] !== undefined &&
+						self.rights_storage[self.currentUser][nodeId].rights.rights !== undefined
+					) {
+						response[nodeIndex].address = nodeId;
+						response[nodeIndex].right = rights[nodeIndex];
+						response[nodeIndex].value = self.rights_storage[self.currentUser][nodeId].rights.rights[rights[nodeIndex]];
+					}
+
+					if (response[nodeIndex].value === undefined) {
+						console.warn(
+							`Cache miss: Access control right '${rights[nodeIndex]}' not available for node '${nodeId}'. Attempting to refresh from server.`
+						);
+						if (missingNodes.indexOf(nodeId) === -1) {
+							missingNodes.push(nodeId);
+						}
+					}
+				});
+			} else {
+				nodeIds.forEach((nodeId, nodeIndex) => {
+					if (
+						self.rights_storage[self.currentUser] !== undefined &&
+						self.rights_storage[self.currentUser][nodeId] !== undefined
+					) {
+						response[nodeIndex] = self.rights_storage[self.currentUser][nodeId].rights;
+					} else {
+						console.warn(
+							`Cache miss: Access rights not found in storage for node '${nodeId}'. Attempting to refresh from server.`
+						);
+						if (missingNodes.indexOf(nodeId) === -1) {
+							missingNodes.push(nodeId);
+						}
+						response[nodeIndex] = undefined;
+					}
+				});
+			}
+
+			if (missingNodes.length > 0) {
+				// Check retry limits for each missing node
+				var nodesToRetry = [];
+				var nodesExhausted = [];
+
+				missingNodes.forEach((nodeId) => {
+					var retryKey = `${self.currentUser}_${nodeId}`;
+					if (!self.retryCounters[retryKey]) {
+						self.retryCounters[retryKey] = 0;
+					}
+
+					if (self.retryCounters[retryKey] < self.configuration.maxRetries) {
+						self.retryCounters[retryKey]++;
+						nodesToRetry.push(nodeId);
+					} else {
+						nodesExhausted.push(nodeId);
+					}
+				});
+
+				if (nodesToRetry.length > 0) {
+					console.warn(
+						`Retrying rights request for ${nodesToRetry.length} missing node(s) (attempt ${
+							self.retryCounters[`${self.currentUser}_${nodesToRetry[0]}`]
+						} of ${self.configuration.maxRetries})`
+					);
+					getRightsFromServer(nodesToRetry, function () {
+						getRightsFromStorage();
+					});
+				}
+
+				if (nodesExhausted.length > 0) {
+					console.error(
+						`Failed to retrieve rights for ${nodesExhausted.length} node(s) after ${self.configuration.maxRetries} attempts:`,
+						nodesExhausted
+					);
+					// Clear retry counters for exhausted nodes to allow future retries
+					nodesExhausted.forEach((nodeId) => {
+						var retryKey = `${self.currentUser}_${nodeId}`;
+						delete self.retryCounters[retryKey];
+					});
+				}
+				return;
+			}
+
+			// If only strings containing one value have been passed, return a single value instead of an array.
+			if (
+				rights &&
+				nodeIds.length === 1 &&
+				rights.length === 1 &&
+				response[0] &&
+				typeof nodeList === "string" &&
+				typeof rightOrCallback === "string"
+			) {
+				response = response[0].value;
+			}
+
+			if (!response) {
+				response = false;
+			}
+
+			callback({ result: response });
+		}
+	};
+
+	this.getRightsDict = function (nodeList, rightOrCallback, guaranteedCallback) {
+		const rights = this.isFunction(rightOrCallback) ? undefined : rightOrCallback;
+		const proxyCallback = this.isFunction(rightOrCallback) ? rightOrCallback : guaranteedCallback;
+
+		const innerCallback = (response) => {
+			const responseDict = {};
+
+			nodeList.forEach((nodeId, nodeIdIndex) => {
+				if (!responseDict[nodeId]) {
+					responseDict[nodeId] = {};
+				}
+
+				rights.forEach((rightName) => {
+					if (response.result[nodeIdIndex].right === rightName) {
+						responseDict[nodeId][rightName] = response.result[nodeIdIndex].value;
+					}
+				});
+			});
+
+			proxyCallback(responseDict);
+		};
+
+		if (rights) {
+			this.getRights(nodeList, rights, innerCallback);
+		} else {
+			this.getRights(nodeList, innerCallback);
+		}
+	};
+
+	// Information dialog for access control messanges and erros
+	this.showDialog = function (_notification, width, height, x, y, anchorX, anchorY) {
+		width = width ? width : self.configuration.dialogWidth;
+		height = height ? height : self.configuration.dialogHeight;
+		x = x ? x : null;
+		y = y ? y : null;
+		anchorX = anchorX ? anchorX : null;
+		anchorY = anchorY ? anchorY : null;
+		var text = "T{Request denied by Access Control. Please see error log for details.}";
+
+		if (self.dialog == null) {
+			self.dialog = webMI.display.openWindow({
+				display: self.configuration.dialogDisplay,
+				height: height,
+				width: width,
+				x: x,
+				y: y,
+				anchorX: anchorX,
+				anchorY: anchorY,
+				modal: true,
+				resizable: false,
+				movable: true,
+				scrollbars: false,
+				menubar: false,
+				status: false,
+				toolbar: false,
+				query: {
+					headline: "T{Permission denied}!",
+					message: text,
+					action_btn1: "com.atvise.access_control_confirm_dialog"
+				}
+			});
+
+			self.dialog.cuba = function () {
+				self.dialog = null;
+			};
+
+			webMI.trigger.connect("com.atvise.access_control_confirm_dialog", () => {
+				webMI.display.closeWindow(self.dialog);
+				self.dialog = null;
+			});
+		}
+	};
+
+	/**
+	 * Assistant function set
+	 */
+	this.assist = new (function () {
+		/**
+		 * create node with method and permission checks
+		 * @param nodeOptions
+		 * @param callback
+		 * @param fallback
+		 */
+		this.addNode = function (nodeOptions, callback, fallback) {
+			if (webMI.getMethodSupport().indexOf("AddNode") > -1) {
+				var node = nodeOptions["address"];
+				var parentInNode = nodeOptions["_parent"] ? nodeOptions["address"].indexOf(nodeOptions["_parent"]) == 0 : false;
+
+				/** if parent in options an node starts with parent use parent as default permission node AT-D-14680 **/
+				var baseNode = parentInNode ? nodeOptions["_parent"] : node.substring(0, node.lastIndexOf("."));
+				delete nodeOptions["_parent"];
+
+				var compareRights = [
+					{ node: baseNode, right: "engineer" },
+					{ node: "SYSTEM.LIBRARY.ATVISE.WEBMIMETHODS.AddNode", right: "execute" }
+				];
+
+				this.handleWithPermissions(
+					compareRights,
+					function success() {
+						webMI.data.call("AddNode", nodeOptions, function () {
+							that.clearRightsStorage(node);
+							if (callback) {
+								callback();
+							}
+						});
+					},
+					function failure() {
+						if (fallback) {
+							fallback();
+						}
+					}
+				);
+			} else {
+				console.warn("Can´t create " + node + " (AddNode support is not available)");
+			}
+		};
+
+		/**
+		 * add access control right to node item (opj)
+		 * @param item
+		 * @param compareRights
+		 * @param callback
+		 */
+		this.addRights = function (item, compareRights, callback) {
+			var requiredRights = {
+				nodeIds: [],
+				rights: []
+			};
+
+			for (var c in compareRights) {
+				if (compareRights[c].node && compareRights[c].right) {
+					requiredRights.nodeIds.push(compareRights[c].node);
+					requiredRights.rights.push(compareRights[c].right);
+				}
+			}
+
+			that.getRightsDict(requiredRights.nodeIds, requiredRights.rights, (response) => {
+				item.ac_rights = {};
+
+				for (var c in compareRights) {
+					var responseNode = typeof response[compareRights[c].node] != "undefined";
+					var responseRight = typeof response[compareRights[c].node][compareRights[c].right] != "undefined";
+					if (responseNode && responseRight) {
+						item.ac_rights[compareRights[c].right] = response[compareRights[c].node][compareRights[c].right];
+					} else {
+						item.ac_rights[compareRights[c].right] = false;
+					}
+				}
+
+				callback(item);
+			});
+		};
+
+		/**
+		 * checks node existence with method and permission checks
+		 * @param node
+		 * @param callback
+		 * @param fallback
+		 */
+		this.checkNodeExists = function (node, callback, fallback) {
+			if (webMI.getMethodSupport().indexOf("CheckNodeExists") > -1) {
+				var compareRights = [{ node: "SYSTEM.LIBRARY.ATVISE.WEBMIMETHODS.CheckNodeExists", right: "execute" }];
+
+				this.handleWithPermissions(
+					compareRights,
+					function success() {
+						webMI.data.call("CheckNodeExists", { address: node }, function (e) {
+							if (e.result) {
+								if (callback) {
+									callback();
+								}
+							} else {
+								if (fallback) {
+									fallback();
+								}
+							}
+						});
+					},
+					function failure() {
+						if (fallback) {
+							fallback();
+						}
+					}
+				);
+			} else {
+				console.warn("Can´t check " + node + " (CheckNodeExists support is not available)");
+			}
+		};
+
+		/**
+		 * right response check with callback and fallback in order of success
+		 * @param compareRights
+		 * @param callback ... on success
+		 * @param fallback ... on failure
+		 */
+		this.getPermissions = function (compareRights, callback) {
+			var requiredRights = {
+				nodeIds: [],
+				rights: []
+			};
+
+			for (var c in compareRights) {
+				if ((compareRights[c].node || compareRights[c].nodeId) && (compareRights[c].right || compareRights[c].rights)) {
+					requiredRights.nodeIds.push(compareRights[c].node ? compareRights[c].node : compareRights[c].nodeId);
+					requiredRights.rights.push(compareRights[c].right ? compareRights[c].right : compareRights[c].rights);
+				}
+			}
+
+			that.getRightsDict(requiredRights.nodeIds, requiredRights.rights, (response) => {
+				callback(response);
+				return;
+			});
+		};
+
+		/**
+		 * right response check with callback and fallback in order of success
+		 * @param compareRights
+		 * @param callback ... on success
+		 * @param fallback ... on failure
+		 */
+		this.handleWithPermissions = function (compareRights, callback, fallback) {
+			var requiredRights = {
+				nodeIds: [],
+				rights: []
+			};
+
+			for (var c in compareRights) {
+				if (compareRights[c].node && compareRights[c].right) {
+					requiredRights.nodeIds.push(compareRights[c].node);
+					requiredRights.rights.push(compareRights[c].right);
+				}
+			}
+
+			that.getRightsDict(requiredRights.nodeIds, requiredRights.rights, (response) => {
+				var allRights = [];
+
+				for (var c in compareRights) {
+					var responseNode = typeof response[compareRights[c].node] != "undefined";
+					var responseRight = typeof response[compareRights[c].node][compareRights[c].right] != "undefined";
+
+					if (responseNode && responseRight) {
+						allRights.push(response[compareRights[c].node][compareRights[c].right]);
+					} else {
+						allRights.push(false);
+					}
+				}
+
+				if (!allRights.includes(false) && callback) {
+					try {
+						callback();
+					} catch (ex) {
+						// console.warn("Callback allready invalidated (e.g. page changed during request)!");
+					}
+				} else if (fallback) {
+					try {
+						fallback();
+					} catch (ex) {
+						// console.warn("Fallback allready invalidated (e.g. page changed during request)!");
+					}
+				} else {
+					// console.warn("No fallback defined, skipping progress.");
+				}
+			});
+		};
+	})();
+})();
+
+return AccessControlManager;
+]]]]><![CDATA[></code>
+</script>
+]]></uax:XmlElement>
+		</Value>
+	</UAVariable>
+	<UAObject NodeId="ns=1;s=SYSTEM" BrowseName="1:SYSTEM">
+		<DisplayName Locale="en">SYSTEM</DisplayName>
+		<Description Locale="en">SYSTEM</Description>
+		<References>
+			<Reference ReferenceType="HasComponent" IsForward="false">i=85</Reference>
+			<Reference ReferenceType="HasTypeDefinition">FolderType</Reference>
+		</References>
+		<Extensions>
+			<atvise Upstream="true" ExportedNodeId="ns=1;s=SYSTEM.LIBRARY.ATVISE.SERVERSCRIPTS" ExportedBrowseName="1:SERVERSCRIPTS"></atvise>
+		</Extensions>
+	</UAObject>
+	<UAObject NodeId="ns=1;s=SYSTEM.LIBRARY" BrowseName="1:LIBRARY">
+		<DisplayName Locale="en">LIBRARY</DisplayName>
+		<Description Locale="en">LIBRARY</Description>
+		<References>
+			<Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=SYSTEM</Reference>
+			<Reference ReferenceType="HasTypeDefinition">FolderType</Reference>
+		</References>
+		<Extensions>
+			<atvise Upstream="true"></atvise>
+		</Extensions>
+	</UAObject>
+	<UAObject NodeId="ns=1;s=SYSTEM.LIBRARY.ATVISE" BrowseName="1:ATVISE">
+		<DisplayName Locale="en">ATVISE</DisplayName>
+		<Description Locale="en">ATVISE</Description>
+		<References>
+			<Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=SYSTEM.LIBRARY</Reference>
+			<Reference ReferenceType="HasTypeDefinition">FolderType</Reference>
+		</References>
+		<Extensions>
+			<atvise Upstream="true"></atvise>
+		</Extensions>
+	</UAObject>
+	<UAObject NodeId="ns=1;s=SYSTEM.LIBRARY.ATVISE.SERVERSCRIPTS" BrowseName="1:SERVERSCRIPTS">
+		<DisplayName Locale="en">SERVERSCRIPTS</DisplayName>
+		<Description Locale="en">SERVERSCRIPTS</Description>
+		<References>
+			<Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=SYSTEM.LIBRARY.ATVISE</Reference>
+			<Reference ReferenceType="HasTypeDefinition">FolderType</Reference>
+		</References>
+	</UAObject>
+	<UAObject NodeId="ns=1;s=SYSTEM.LIBRARY.ATVISE.SERVERSCRIPTS.AccessControl" BrowseName="1:AccessControl">
+		<DisplayName Locale="en">AccessControl</DisplayName>
+		<Description Locale="en">AccessControl</Description>
+		<References>
+			<Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=SYSTEM.LIBRARY.ATVISE.SERVERSCRIPTS</Reference>
+			<Reference ReferenceType="HasTypeDefinition">FolderType</Reference>
+		</References>
+	</UAObject>
+	<UAVariable NodeId="ns=1;s=SYSTEM.LIBRARY.ATVISE.SERVERSCRIPTS.AccessControl.Configuration" BrowseName="1:Configuration" DataType="XmlElement" AccessLevel="7" UserAccessLevel="7" Historizing="true">
+		<DisplayName Locale="en">Configuration</DisplayName>
+		<Description Locale="en">Configuration</Description>
+		<References>
+			<Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=SYSTEM.LIBRARY.ATVISE.SERVERSCRIPTS.AccessControl</Reference>
+			<Reference ReferenceType="HasTypeDefinition">ScriptCodeType</Reference>
+		</References>
+		<Value>
+			<uax:XmlElement><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+<script>
+  <metadata>
+    <priority>0</priority>
+  </metadata>
+  <code><![CDATA[/** Utilies shared across exported functions */
+const utils = {
+	validPermissions: [
+		"browse",
+		"read",
+		"write",
+		"engineer",
+		"execute",
+		"accessControl",
+		"scriptConfig",
+		"alarmAdmin",
+		"alarmAcknowledge",
+		"alarmConfirm",
+		"remoteBrowse",
+		"remoteAlarms",
+		"remoteEvents"
+	],
+	validFunctions: [
+		"alarming",
+		"atviseLibrary",
+		"dataSources",
+		"displays",
+		"historyArchives",
+		"localEvents",
+		"objects",
+		"projectLibrary",
+		"redundancy",
+		"security",
+		"SMTPServer",
+		"translations",
+		"types",
+		"versionControlExport",
+		"versionControlImport",
+		"views",
+		"webMIServer",
+		"webServer",
+		"XMLExport",
+		"XMLImport"
+	],
+	rightsSorter: function (right1, right2) {
+		if (!utils.validPermissions.includes(right1)) {
+			throw new Error(`Right ${right1} is not supported by Access Control`);
+		}
+
+		if (!utils.validPermissions.includes(right2)) {
+			throw new Error(`Right ${right2} is not supported by Access Control`);
+		}
+
+		// Uses the order of utils.validPermissions
+		if (utils.validPermissions.indexOf(right1) < utils.validPermissions.indexOf(right2)) {
+			return -1;
+		} else if (utils.validPermissions.indexOf(right1) > utils.validPermissions.indexOf(right2)) {
+			return 1;
+		} else {
+			// In case the rights are sorted before being filtered to unique values
+			return 0;
+		}
+	},
+	getGroupNodeId: function (group) {
+		const groupNodeAddr = `SYSTEM.SECURITY.GROUPS.${group}`;
+		const groupNode = Ua.findNode(groupNodeAddr);
+		const groupNodeExist = Ua.Status(groupNode) != Ua.Status.BADNODEIDUNKNOWN;
+
+		if (!groupNodeExist) {
+			throw new Error(`Group ${group} not found`);
+		}
+
+		return groupNodeAddr;
+	},
+	sortAndStringifyGroupPermissions: function (permissions) {
+		const updatedPermissions = {};
+
+		for (const func in permissions) {
+			if (!utils.validFunctions.includes(func)) {
+				throw new Error(`Function ${func} is not supported by Access Control`);
+			}
+
+			if (Array.isArray(permissions[func])) {
+				updatedPermissions[func] = utils.parseAndJoin(permissions[func]);
+			} else {
+				updatedPermissions[func] = permissions[func];
+			}
+		}
+
+		return JSON.stringify(updatedPermissions);
+	},
+	getSystemPermissionNode: function (group, createIfMissing) {
+		const groupNodeAddr = `SYSTEM.SECURITY.GROUPS.${group}`;
+		const groupNode = Ua.findNode(groupNodeAddr);
+		const groupNodeExist = Ua.Status(groupNode) != Ua.Status.BADNODEIDUNKNOWN;
+
+		if (!groupNodeExist) {
+			throw new Error(`Group with name ${group} does not exist`);
+		}
+
+		const systemPermissionAddr = groupNode.result.nodeId + `.SystemPermission`;
+		let systemPermissionNode = Ua.findNode(systemPermissionAddr);
+
+		const permissionsNodeExist = Ua.Status(systemPermissionNode) != Ua.Status.BADNODEIDUNKNOWN;
+
+		if (!permissionsNodeExist && createIfMissing) {
+			Ua.createNode(systemPermissionAddr, {
+				nodeClass: Ua.NodeClass.VARIABLE,
+				parent: groupNodeAddr,
+				typeDefinition: "VariableTypes.ATVISE.AccessControl.System",
+				dataType: Ua.DataType.STRING,
+				value: "{}"
+			});
+
+			systemPermissionNode = Ua.findNode(systemPermissionAddr);
+		}
+
+		return systemPermissionNode;
+	},
+	getNodePermissionNode: function (nodeId) {
+		const baseNodeAddr = nodeId;
+		const baseNode = Ua.findNode(baseNodeAddr);
+		const baseNodeExist = Ua.Status(baseNode) != Ua.Status.BADNODEIDUNKNOWN;
+
+		if (!baseNodeExist) {
+			throw new Error(`Node with ID ${nodeId} does not exist`);
+		}
+
+		const nodePermissionAddr = baseNodeAddr + `.NodePermission`;
+		let nodePermissionNode = Ua.findNode(nodePermissionAddr);
+
+		return nodePermissionNode;
+	},
+	sortAndStringifyNodePermissions: function (permissions) {
+		const updatedPermissions = {};
+
+		for (const groupName in permissions) {
+			const groupNodeAddr = `SYSTEM.SECURITY.GROUPS.${groupName}`;
+			const groupNode = Ua.findNode(groupNodeAddr);
+			const groupNodeExist = Ua.Status(groupNode) != Ua.Status.BADNODEIDUNKNOWN;
+
+			if (!groupNodeExist) {
+				throw new Error(`Group ${groupName} does not exist`);
+			}
+
+			if (Array.isArray(permissions[groupName])) {
+				updatedPermissions[groupName] = utils.parseAndJoin(permissions[groupName]);
+			} else {
+				updatedPermissions[groupName] = permissions[groupName];
+			}
+		}
+
+		return JSON.stringify(updatedPermissions);
+	},
+	parseAndSplit: function (json) {
+		let parsedJSON = JSON.parse(json);
+
+		for (const property in parsedJSON) {
+			if (parsedJSON[property] === "") {
+				parsedJSON[property] = [];
+			} else if (parsedJSON[property].split(",").length) {
+				parsedJSON[property] = parsedJSON[property].split(",");
+			}
+		}
+
+		return parsedJSON;
+	},
+	parseAndJoin: function (array) {
+		return [...new Set(array)].sort(utils.rightsSorter).join(",");
+	}
+};
+
+/**
+ * Get permissions from group
+ * @param {string} group - Name of the group to get permissions object from
+ * @returns {string|undefined} JSON-String containing permissions of group or undefined
+ */
+function getPermissionsForGroup(group) {
+	utils.getGroupNodeId(group); // !!! for error handling !!!
+
+	const permissionsNode = utils.getSystemPermissionNode(group);
+	const permissionsNodeExist = Ua.Status(permissionsNode) != Ua.Status.BADNODEIDUNKNOWN;
+
+	if (permissionsNodeExist) {
+		return utils.parseAndSplit(permissionsNode.result.value);
+	} else {
+		return;
+	}
+}
+
+/**
+ * Set permissions for group
+ * @param {string} group - Name of the group to set permissions on
+ * @param {object} permissions - Object literal containing updated permissions
+ */
+function setPermissionsForGroup(group, permissions) {
+	const permissionsNode = utils.getSystemPermissionNode(group, true);
+	const permissionsString = utils.sortAndStringifyGroupPermissions(permissions);
+
+	permissionsNode.result.value = permissionsString;
+}
+
+/**
+ * Delete permissions from group
+ * @param {string} group - Name of the group to be deleted
+ * @returns {object|boolean}
+ */
+function deletePermissionsFromGroup(group) {
+	utils.getGroupNodeId(group);
+
+	const permissionsNode = utils.getSystemPermissionNode(group);
+	const permissionsNodeExist = Ua.Status(permissionsNode) != Ua.Status.BADNODEIDUNKNOWN;
+
+	if (permissionsNodeExist) {
+		return permissionsNode.result.remove();
+	} else {
+		return true;
+	}
+}
+
+/**
+ * Get permissions for node
+ * @param {string} nodeId - node address to get permissions object from
+ * @returns {string|undefined} JSON-String containing permissions of node or undefined
+ */
+function getPermissionsForNode(nodeId) {
+	const permissionsNode = utils.getNodePermissionNode(nodeId);
+	const permissionsNodeExist = Ua.Status(permissionsNode) != Ua.Status.BADNODEIDUNKNOWN;
+
+	if (permissionsNodeExist) {
+		return utils.parseAndSplit(permissionsNode.result.value);
+	} else {
+		return;
+	}
+}
+
+/**
+ * Get runtime permissions for node
+ * @param {string} nodeId - node address to get permissions object from
+ * @returns {object|undefined} Object containing permissions of node or undefined if node doesn't exist
+ */
+function getRuntimePermissionsForNode(nodeId) {
+	const baseNodeAddr = nodeId;
+	const baseNode = Ua.findNode(baseNodeAddr);
+	const baseNodeExist = Ua.Status(baseNode) != Ua.Status.BADNODEIDUNKNOWN;
+
+	if (!baseNodeExist) {
+		return undefined;
+	}
+
+	return baseNode.result.permissions;
+}
+
+/**
+ * Set permissions for node
+ * @param {string} nodeId - node address to set permissions on
+ * @param {object} permissions - Object literal containing updated permissions
+ */
+function setPermissionsForNode(nodeId, permissions) {
+	var permissionsAddr = nodeId + `.NodePermission`;
+	var permissionsNode = utils.getNodePermissionNode(nodeId);
+	var permissionsNodeExist = Ua.Status(permissionsNode) != Ua.Status.BADNODEIDUNKNOWN;
+	var permissionsString = utils.sortAndStringifyNodePermissions(permissions);
+
+	if (!permissionsNodeExist) {
+		Ua.createNode(permissionsAddr, {
+			nodeClass: Ua.NodeClass.VARIABLE,
+			parent: nodeId,
+			typeDefinition: "VariableTypes.ATVISE.AccessControl.Node",
+			dataType: Ua.DataType.STRING,
+			value: "{}"
+		});
+
+		permissionsNode = utils.getNodePermissionNode(nodeId);
+	}
+
+	permissionsNode.result.value = permissionsString;
+}
+
+/**
+ * Delete permissions from node address
+ * @param {string} group - node address to delete permissions from
+ * @returns {object|boolean}
+ */
+function deletePermissionsFromNode(nodeId) {
+	const permissionsNode = utils.getNodePermissionNode(nodeId);
+	const permissionsNodeExist = Ua.Status(permissionsNode) != Ua.Status.BADNODEIDUNKNOWN;
+
+	if (permissionsNodeExist) {
+		return permissionsNode.result.remove();
+	} else {
+		return true;
+	}
+}
+
+return {
+	getPermissionsForGroup: getPermissionsForGroup,
+	setPermissionsForGroup: setPermissionsForGroup,
+	deletePermissionsFromGroup: deletePermissionsFromGroup,
+	getPermissionsForNode: getPermissionsForNode,
+	getRuntimePermissionsForNode: getRuntimePermissionsForNode,
+	setPermissionsForNode: setPermissionsForNode,
+	deletePermissionsFromNode: deletePermissionsFromNode
+};
+]]]]><![CDATA[></code>
+</script>
+]]></uax:XmlElement>
+		</Value>
+	</UAVariable>
+</UANodeSet>
